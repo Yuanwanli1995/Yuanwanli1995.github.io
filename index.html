@@ -130,7 +130,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-count">8</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -175,6 +175,173 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2021/08/27/4%20docker%20%E5%91%BD%E4%BB%A4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuanwanli">
+      <meta itemprop="description" content="等不是办法，干才有出路">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="brisk">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/08/27/4%20docker%20%E5%91%BD%E4%BB%A4/" class="post-title-link" itemprop="url">第四讲 docker命令</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-08-27 22:58:00 / 修改时间：23:34:57" itemprop="dateCreated datePublished" datetime="2021-08-27T22:58:00+08:00">2021-08-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BC%96%E7%A8%8B%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">编程笔记</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="4-docker-命令"><a href="#4-docker-命令" class="headerlink" title="4 docker 命令"></a>4 docker 命令</h2><p>docker官网有所有的命令说明(<a target="_blank" rel="noopener" href="https://docs.docker.com/reference/">Reference documentation | Docker Documentation</a>)， 菜鸟网也有中文版本的命令说明。命令详细用法在help和文档中都可以查到，这个不再赘述，主要给出常用命令，对docker能做什么以及怎么做有个概念。</p>
+<h3 id="4-1基础命令"><a href="#4-1基础命令" class="headerlink" title="4.1基础命令"></a>4.1基础命令</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker command --help # 帮助命令</span><br><span class="line">docker info # 系统信息</span><br><span class="line">docker version # 版本信息</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="4-2-镜像命令"><a href="#4-2-镜像命令" class="headerlink" title="4.2 镜像命令"></a>4.2 镜像命令</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker images # 查看镜像</span><br><span class="line">docker search image # 搜索镜像</span><br><span class="line">decher pull image # 下载镜像</span><br><span class="line">docker rmi image # 删除镜像</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-3-容器命令"><a href="#4-3-容器命令" class="headerlink" title="4.3 容器命令"></a>4.3 容器命令</h3><blockquote>
+<p>有了镜像才可以下载容器</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">docker run container # 启动容器</span><br><span class="line">exit # 停止运行并退出容器</span><br><span class="line">ctrl + p + q # 退出容器</span><br><span class="line">docker ps # 查看运行的容器</span><br><span class="line">docker rm container # 删除容器</span><br><span class="line">docker start container # 启动容器</span><br><span class="line">docker restart # 重启容器</span><br><span class="line">docker stop container # 停止容器运行</span><br><span class="line">docker kill container # 强制停止容器</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2021/08/27/3%20docker%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuanwanli">
+      <meta itemprop="description" content="等不是办法，干才有出路">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="brisk">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/08/27/3%20docker%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/" class="post-title-link" itemprop="url">第三讲 docker工作原理</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-08-27 21:58:00 / 修改时间：22:30:06" itemprop="dateCreated datePublished" datetime="2021-08-27T21:58:00+08:00">2021-08-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BC%96%E7%A8%8B%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">编程笔记</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="3-docker是如何工作的？"><a href="#3-docker是如何工作的？" class="headerlink" title="3 docker是如何工作的？"></a>3 docker是如何工作的？</h2><h3 id="3-1运行docker-run-image发生什么"><a href="#3-1运行docker-run-image发生什么" class="headerlink" title="3.1运行docker run image发生什么"></a>3.1运行docker run image发生什么</h3><p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/dockerrun%E6%B5%81%E7%A8%8B%E5%9B%BE.png"></p>
+<h3 id="3-2-docker-底层原理"><a href="#3-2-docker-底层原理" class="headerlink" title="3.2 docker 底层原理"></a>3.2 docker 底层原理</h3><p>docker是一个client-server结构的系统，docker的守护进程运行在宿主机上，通过socket连接。</p>
+<p>dockerserver 接收到dockerclient的指令，就好执行这个命令。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/dock3.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/dock4.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/dock5.png"></p>
+<ul>
+<li>docker比vm更少的抽象层，不需要guest os,省去了很多启动引导过程。</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2021/08/27/2%20docker%E5%AE%89%E8%A3%85/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -200,7 +367,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2021-08-27 18:19:30 / 修改时间：18:21:07" itemprop="dateCreated datePublished" datetime="2021-08-27T18:19:30+08:00">2021-08-27</time>
+      <time title="创建时间：2021-08-27 18:19:30 / 修改时间：21:25:13" itemprop="dateCreated datePublished" datetime="2021-08-27T18:19:30+08:00">2021-08-27</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -252,7 +419,7 @@
 <li><p>启动docker</p>
 </li>
 </ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1 启动  </span></span><br><span class="line">sudo systemctl start docker</span><br><span class="line"><span class="comment"># 2 参看版本</span></span><br><span class="line">docker vsersion</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">  <span class="comment"># 1 启动  </span></span><br><span class="line">  sudo systemctl start docker</span><br><span class="line">  <span class="comment"># 2 参看版本</span></span><br><span class="line">  docker version</span><br><span class="line">  <span class="comment"># 成功以后会出现以下信息:</span></span><br><span class="line">Client: Docker Engine - Community</span><br><span class="line"> Version:           20.10.8</span><br><span class="line"> API version:       1.41</span><br><span class="line"> Go version:        go1.16.6</span><br><span class="line"> Git commit:        3967b7d</span><br><span class="line"> Built:             Fri Jul 30 19:55:49 2021</span><br><span class="line"> OS/Arch:           linux/amd64</span><br><span class="line"> Context:           default</span><br><span class="line"> Experimental:      <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">Server: Docker Engine - Community</span><br><span class="line"> Engine:</span><br><span class="line">  Version:          20.10.8</span><br><span class="line">  API version:      1.41 (minimum version 1.12)</span><br><span class="line">  Go version:       go1.16.6</span><br><span class="line">  Git commit:       75249d8</span><br><span class="line">  Built:            Fri Jul 30 19:54:13 2021</span><br><span class="line">  OS/Arch:          linux/amd64</span><br><span class="line">  Experimental:     <span class="literal">false</span></span><br><span class="line"> containerd:</span><br><span class="line">  Version:          1.4.9</span><br><span class="line">  GitCommit:        e25210fe30a0a703442421b0f60afac609f950a3</span><br><span class="line"> runc:</span><br><span class="line">  Version:          1.0.1</span><br><span class="line">  GitCommit:        v1.0.1-0-g4144b63</span><br><span class="line"> docker-init:</span><br><span class="line">  Version:          0.19.0</span><br><span class="line">  GitCommit:        de40ad0</span><br></pre></td></tr></table></figure>
 
 <ol start="5">
 <li>docker hello word </li>
@@ -386,98 +553,6 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2021/08/26/%E3%80%8A%E7%89%A7%E7%BE%8A%E4%BA%BA%E7%9A%84%E5%A5%87%E5%B9%BB%E4%B9%8B%E6%97%85%E3%80%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yuanwanli">
-      <meta itemprop="description" content="等不是办法，干才有出路">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="brisk">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/08/26/%E3%80%8A%E7%89%A7%E7%BE%8A%E4%BA%BA%E7%9A%84%E5%A5%87%E5%B9%BB%E4%B9%8B%E6%97%85%E3%80%8B/" class="post-title-link" itemprop="url">牧羊人的奇幻之旅</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-08-26 22:36:00" itemprop="dateCreated datePublished" datetime="2021-08-26T22:36:00+08:00">2021-08-26</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-08-27 10:26:07" itemprop="dateModified" datetime="2021-08-27T10:26:07+08:00">2021-08-27</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">读书笔记</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="第一章"><a href="#第一章" class="headerlink" title="第一章"></a>第一章</h2><p>有一个小伙子喜欢旅行，他为了实现自己的愿望，没有依从父亲的期望，成为了一个牧羊人。</p>
-<p>牧羊人四处游荡，只要有水草的地方都可以去。他识字，常带一本书。 再一次卖羊毛时爱上了商店老板的女儿。 </p>
-<p>他重复做一个梦，一个小男孩告诉他金字塔地下有宝藏。</p>
-<p>吉普赛女巫和撒冷之王告诉他宝藏可能存在，并鼓励他追寻自己的梦。</p>
-<h2 id="第二章"><a href="#第二章" class="headerlink" title="第二章"></a>第二章</h2><p>牧羊人终于没有忍受住宝藏的诱惑，卖掉了羊，接受了撒冷王的祝福之后和占卜的宝石，出发去了埃及。到了一个陌生的国度，他才发现，语言不通。因为语言不同，他在港口被一个年轻人骗去了所有的财产。</p>
-<p>他感到失望，十分怀念放羊的快乐生活。占卜的宝石给他一个好的预示，他收拾好了心情继续前进。</p>
-<p>可是在水晶玻璃店的老板那里了解到，金字塔离这里几千公里，他无法筹集到这么多的路费。</p>
-<p>他绝望了，只能在玻璃店里工作希望能挣到回家的路费和买羊群的钱。</p>
-<h2 id="第三章"><a href="#第三章" class="headerlink" title="第三章"></a>第三章</h2><p>他慢慢适应了枯燥的工作，但他心里并不喜爱这份工作。他希望能通过一些改变改善玻璃点的生意，老板是喜欢维持现状，也不想挣更多的钱，他害怕知道原来自己可以做到，但自己没有去做。老板心里也有一个梦——去朝圣一次，他依靠这个梦维持一成不变的生活，也不准备去实现这个梦。</p>
-<p>最终老板让牧羊人做了一些改变，店里的生意变得很好， 而小伙子很快赚够了回家和买羊的钱，他离开了。</p>
-<p>但是他犹豫是回去继续做一个牧羊人还是去金字塔追梦。</p>
-<p>他遇到了一个英国探险家，他来寻找神秘的炼金术士，他们居然拥有相同的占卜宝石，这可能是神谕，他们一起跟着一个商队准备穿越大沙漠了。</p>
-<p>沙漠非常凶险，一旦迷失方向就可能被困在沙漠里，路上认识了驼夫们，他们拥有不同的故事。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2021/08/26/%E5%8A%A0%E8%BD%BDgithub%E5%BE%88%E6%85%A2%E6%80%8E%E4%B9%88%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -546,6 +621,98 @@
 207.97.227.243 http://www.github.com`
 </code></pre>
 <p> 保存即可</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2021/08/26/%E3%80%8A%E7%89%A7%E7%BE%8A%E4%BA%BA%E7%9A%84%E5%A5%87%E5%B9%BB%E4%B9%8B%E6%97%85%E3%80%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuanwanli">
+      <meta itemprop="description" content="等不是办法，干才有出路">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="brisk">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/08/26/%E3%80%8A%E7%89%A7%E7%BE%8A%E4%BA%BA%E7%9A%84%E5%A5%87%E5%B9%BB%E4%B9%8B%E6%97%85%E3%80%8B/" class="post-title-link" itemprop="url">牧羊人的奇幻之旅</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-08-26 22:36:00" itemprop="dateCreated datePublished" datetime="2021-08-26T22:36:00+08:00">2021-08-26</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-08-27 10:26:07" itemprop="dateModified" datetime="2021-08-27T10:26:07+08:00">2021-08-27</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">读书笔记</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="第一章"><a href="#第一章" class="headerlink" title="第一章"></a>第一章</h2><p>有一个小伙子喜欢旅行，他为了实现自己的愿望，没有依从父亲的期望，成为了一个牧羊人。</p>
+<p>牧羊人四处游荡，只要有水草的地方都可以去。他识字，常带一本书。 再一次卖羊毛时爱上了商店老板的女儿。 </p>
+<p>他重复做一个梦，一个小男孩告诉他金字塔地下有宝藏。</p>
+<p>吉普赛女巫和撒冷之王告诉他宝藏可能存在，并鼓励他追寻自己的梦。</p>
+<h2 id="第二章"><a href="#第二章" class="headerlink" title="第二章"></a>第二章</h2><p>牧羊人终于没有忍受住宝藏的诱惑，卖掉了羊，接受了撒冷王的祝福之后和占卜的宝石，出发去了埃及。到了一个陌生的国度，他才发现，语言不通。因为语言不同，他在港口被一个年轻人骗去了所有的财产。</p>
+<p>他感到失望，十分怀念放羊的快乐生活。占卜的宝石给他一个好的预示，他收拾好了心情继续前进。</p>
+<p>可是在水晶玻璃店的老板那里了解到，金字塔离这里几千公里，他无法筹集到这么多的路费。</p>
+<p>他绝望了，只能在玻璃店里工作希望能挣到回家的路费和买羊群的钱。</p>
+<h2 id="第三章"><a href="#第三章" class="headerlink" title="第三章"></a>第三章</h2><p>他慢慢适应了枯燥的工作，但他心里并不喜爱这份工作。他希望能通过一些改变改善玻璃点的生意，老板是喜欢维持现状，也不想挣更多的钱，他害怕知道原来自己可以做到，但自己没有去做。老板心里也有一个梦——去朝圣一次，他依靠这个梦维持一成不变的生活，也不准备去实现这个梦。</p>
+<p>最终老板让牧羊人做了一些改变，店里的生意变得很好， 而小伙子很快赚够了回家和买羊的钱，他离开了。</p>
+<p>但是他犹豫是回去继续做一个牧羊人还是去金字塔追梦。</p>
+<p>他遇到了一个英国探险家，他来寻找神秘的炼金术士，他们居然拥有相同的占卜宝石，这可能是神谕，他们一起跟着一个商队准备穿越大沙漠了。</p>
+<p>沙漠非常凶险，一旦迷失方向就可能被困在沙漠里，路上认识了驼夫们，他们拥有不同的故事。</p>
 
       
     </div>
@@ -687,7 +854,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-08-27 10:26:37" itemprop="dateModified" datetime="2021-08-27T10:26:37+08:00">2021-08-27</time>
+        <time title="修改时间：2021-08-27 18:33:13" itemprop="dateModified" datetime="2021-08-27T18:33:13+08:00">2021-08-27</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">

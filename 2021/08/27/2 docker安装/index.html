@@ -29,7 +29,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/docker%E6%9E%B6%E6%9E%84%E5%9B%BE.png">
 <meta property="article:published_time" content="2021-08-27T10:19:30.000Z">
-<meta property="article:modified_time" content="2021-08-27T10:21:07.120Z">
+<meta property="article:modified_time" content="2021-08-27T13:25:13.677Z">
 <meta property="article:author" content="yuanwanli">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/docker%E6%9E%B6%E6%9E%84%E5%9B%BE.png">
@@ -135,7 +135,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-count">8</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -206,7 +206,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2021-08-27 18:19:30 / 修改时间：18:21:07" itemprop="dateCreated datePublished" datetime="2021-08-27T18:19:30+08:00">2021-08-27</time>
+      <time title="创建时间：2021-08-27 18:19:30 / 修改时间：21:25:13" itemprop="dateCreated datePublished" datetime="2021-08-27T18:19:30+08:00">2021-08-27</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -258,7 +258,7 @@
 <li><p>启动docker</p>
 </li>
 </ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1 启动  </span></span><br><span class="line">sudo systemctl start docker</span><br><span class="line"><span class="comment"># 2 参看版本</span></span><br><span class="line">docker vsersion</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">  <span class="comment"># 1 启动  </span></span><br><span class="line">  sudo systemctl start docker</span><br><span class="line">  <span class="comment"># 2 参看版本</span></span><br><span class="line">  docker version</span><br><span class="line">  <span class="comment"># 成功以后会出现以下信息:</span></span><br><span class="line">Client: Docker Engine - Community</span><br><span class="line"> Version:           20.10.8</span><br><span class="line"> API version:       1.41</span><br><span class="line"> Go version:        go1.16.6</span><br><span class="line"> Git commit:        3967b7d</span><br><span class="line"> Built:             Fri Jul 30 19:55:49 2021</span><br><span class="line"> OS/Arch:           linux/amd64</span><br><span class="line"> Context:           default</span><br><span class="line"> Experimental:      <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">Server: Docker Engine - Community</span><br><span class="line"> Engine:</span><br><span class="line">  Version:          20.10.8</span><br><span class="line">  API version:      1.41 (minimum version 1.12)</span><br><span class="line">  Go version:       go1.16.6</span><br><span class="line">  Git commit:       75249d8</span><br><span class="line">  Built:            Fri Jul 30 19:54:13 2021</span><br><span class="line">  OS/Arch:          linux/amd64</span><br><span class="line">  Experimental:     <span class="literal">false</span></span><br><span class="line"> containerd:</span><br><span class="line">  Version:          1.4.9</span><br><span class="line">  GitCommit:        e25210fe30a0a703442421b0f60afac609f950a3</span><br><span class="line"> runc:</span><br><span class="line">  Version:          1.0.1</span><br><span class="line">  GitCommit:        v1.0.1-0-g4144b63</span><br><span class="line"> docker-init:</span><br><span class="line">  Version:          0.19.0</span><br><span class="line">  GitCommit:        de40ad0</span><br></pre></td></tr></table></figure>
 
 <ol start="5">
 <li>docker hello word </li>
@@ -296,6 +296,9 @@
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/2021/08/27/3%20docker%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/" rel="next" title="第三讲 docker工作原理">
+                  第三讲 docker工作原理 <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
     </footer>
