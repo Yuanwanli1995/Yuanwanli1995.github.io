@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yuanwanli1995.github.io","root":"/","images":"/images","scheme":"Pisces","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="第一课 智慧中台总体介绍1 智慧中台概况1.1 智慧中台是什么？中国移动智慧中台，ability as a servece 能力即服务，不是一个物理系统，而是一套应用服务体系，是应用软件，硬件设备，规范标准，组织文化，流程等一系列元素有机结合并形成的运行机制。 由三个中台组成：  业务中台，场景化的能力封装，是全新业务能力体系的重塑与构建。 数据中台，能力基础，实现集团海量数据资源向资产、资本的转">
+<meta property="og:type" content="article">
+<meta property="og:title" content="智慧中台系统">
+<meta property="og:url" content="http://yuanwanli1995.github.io/2021/08/30/%E6%99%BA%E6%85%A7%E4%B8%AD%E5%8F%B0/index.html">
+<meta property="og:site_name" content="brisk">
+<meta property="og:description" content="第一课 智慧中台总体介绍1 智慧中台概况1.1 智慧中台是什么？中国移动智慧中台，ability as a servece 能力即服务，不是一个物理系统，而是一套应用服务体系，是应用软件，硬件设备，规范标准，组织文化，流程等一系列元素有机结合并形成的运行机制。 由三个中台组成：  业务中台，场景化的能力封装，是全新业务能力体系的重塑与构建。 数据中台，能力基础，实现集团海量数据资源向资产、资本的转">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E4%B8%AD%E5%8F%B01.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E4%B8%AD%E5%8F%B02.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E4%B8%AD%E5%8F%B03.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E6%99%BA%E6%85%A7%E4%B8%AD%E5%8F%B01.png">
+<meta property="og:image" content="e:/blogpic/智慧中台2.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E6%99%BA%E6%85%A7%E4%B8%AD%E5%8F%B03.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E6%99%BA%E6%85%A7%E4%B8%AD%E5%8F%B04.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E6%99%BA%E6%85%A7%E4%B8%AD%E5%8F%B05.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E6%99%BA%E6%85%A7%E4%B8%AD%E5%8F%B06.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E6%99%BA%E6%85%A7%E4%B8%AD%E5%8F%B07.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E6%99%BA%E6%85%A7%E4%B8%AD%E5%8F%B08.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E6%99%BA%E6%85%A7%E4%B8%AD%E5%8F%B09.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E6%99%BA%E6%85%A7%E4%B8%AD%E5%8F%B010.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E6%99%BA%E6%85%A7%E4%B8%AD%E5%8F%B011.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E6%99%BA%E6%85%A7%E4%B8%AD%E5%8F%B012.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E6%99%BA%E6%85%A7%E4%B8%AD%E5%8F%B013.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E6%99%BA%E6%85%A7%E4%B8%AD%E5%8F%B014.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E6%99%BA%E6%85%A7%E4%B8%AD%E5%8F%B015.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E6%99%BA%E6%85%A7%E4%B8%AD%E5%8F%B016.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E6%99%BA%E6%85%A7%E4%B8%AD%E5%8F%B017.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E6%99%BA%E6%85%A7%E4%B8%AD%E5%8F%B018.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E6%99%BA%E6%85%A7%E4%B8%AD%E5%8F%B019.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E6%99%BA%E6%85%A7%E4%B8%AD%E5%8F%B020.png">
+<meta property="article:published_time" content="2021-08-30T12:24:00.000Z">
+<meta property="article:modified_time" content="2021-09-08T01:03:35.550Z">
+<meta property="article:author" content="yuanwanli">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E4%B8%AD%E5%8F%B01.png">
+
+
+<link rel="canonical" href="http://yuanwanli1995.github.io/2021/08/30/%E6%99%BA%E6%85%A7%E4%B8%AD%E5%8F%B0/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://yuanwanli1995.github.io/2021/08/30/%E6%99%BA%E6%85%A7%E4%B8%AD%E5%8F%B0/","path":"2021/08/30/智慧中台/","title":"智慧中台系统"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>智慧中台系统 | brisk</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">brisk</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">welcome</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E8%AF%BE-%E6%99%BA%E6%85%A7%E4%B8%AD%E5%8F%B0%E6%80%BB%E4%BD%93%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">第一课 智慧中台总体介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%99%BA%E6%85%A7%E4%B8%AD%E5%8F%B0%E6%A6%82%E5%86%B5"><span class="nav-number">1.1.</span> <span class="nav-text">1 智慧中台概况</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-%E6%99%BA%E6%85%A7%E4%B8%AD%E5%8F%B0%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 智慧中台是什么？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-%E6%BA%90%E8%B5%B7"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 源起</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-%E7%89%B9%E7%82%B9"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.3 特点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4-%E6%84%BF%E6%99%AF"><span class="nav-number">1.1.4.</span> <span class="nav-text">1.4 愿景</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%99%BA%E6%85%A7%E4%B8%AD%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%80%9D%E8%B7%AF%E4%B8%8E%E7%9B%AE%E6%A0%87"><span class="nav-number">1.2.</span> <span class="nav-text">2 智慧中台工作思路与目标</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-%E5%85%85%E5%88%86%E8%AE%A4%E8%AF%86%E6%99%BA%E6%85%A7%E4%B8%AD%E5%8F%B0%E9%87%8D%E8%A6%81%E6%88%98%E7%95%A5%E6%84%8F%E4%B9%89"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 充分认识智慧中台重要战略意义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-%E6%99%BA%E6%85%A7%E4%B8%AD%E5%8F%B0%E7%9A%84%E6%80%BB%E4%BD%93%E5%AE%9A%E4%BD%8D"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 智慧中台的总体定位</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">1.2.3.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-%E6%99%BA%E6%85%A7%E4%B8%AD%E5%8F%B0%E4%BD%93%E7%B3%BB%E5%86%85%E6%B6%B5"><span class="nav-number">1.2.4.</span> <span class="nav-text">2.3 智慧中台体系内涵</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-%E6%99%BA%E6%85%A7%E4%B8%AD%E5%8F%B0%E7%9A%84%E6%80%BB%E4%BD%93%E5%B7%A5%E4%BD%9C%E8%A6%81%E6%B1%82"><span class="nav-number">1.2.5.</span> <span class="nav-text">2.4 智慧中台的总体工作要求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-%E6%99%BA%E6%85%A7%E4%B8%AD%E5%8F%B0%E7%9A%84%E5%8F%91%E5%B1%95%E7%9B%AE%E6%A0%87"><span class="nav-number">1.2.6.</span> <span class="nav-text">2.5 智慧中台的发展目标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-6-%E6%99%BA%E6%85%A7%E4%B8%AD%E5%8F%B0%E7%9A%84%E4%BB%B7%E5%80%BC"><span class="nav-number">1.2.7.</span> <span class="nav-text">2.6 智慧中台的价值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-7%E7%BB%9F%E4%B8%80%E6%9E%B6%E6%9E%84%E8%A7%84%E5%88%92%E6%B1%87%E8%81%9A%E5%85%A8%E7%BD%91%E8%83%BD%E5%8A%9B"><span class="nav-number">1.2.8.</span> <span class="nav-text">2.7统一架构规划汇聚全网能力</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%99%BA%E6%85%A7%E4%B8%AD%E5%A4%A9%E7%9A%84%E5%BB%BA%E8%AE%BE%E5%8E%9F%E5%88%99"><span class="nav-number">1.3.</span> <span class="nav-text">3 智慧中天的建设原则</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-%E4%B8%AD%E5%8F%B0%E8%83%BD%E5%8A%9B%E5%BB%BA%E8%AE%BE%E5%8E%9F%E5%88%99-%E4%B8%89%E4%B8%AA%E5%9D%9A%E6%8C%81"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1 中台能力建设原则  三个坚持</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-%E4%B8%AD%E5%8F%B0%E8%83%BD%E5%8A%9B%E5%BB%BA%E8%AE%BE%E5%8E%9F%E5%88%99-%E4%B8%89%E4%B8%AA%E7%BB%9F%E4%B8%80"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2 中台能力建设原则  三个统一</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E6%99%BA%E6%85%A7%E4%B8%AD%E5%8F%B0%E8%83%BD%E5%8A%9B%E8%BF%90%E8%90%A5%E4%BD%93%E7%B3%BB"><span class="nav-number">1.4.</span> <span class="nav-text">4 智慧中台能力运营体系</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-%E6%99%BA%E6%85%A7%E4%B8%AD%E5%8F%B0%E7%BB%9F%E4%B8%80%E8%BF%90%E8%90%A5%E4%BD%93%E7%B3%BB"><span class="nav-number">1.4.1.</span> <span class="nav-text">4.1 智慧中台统一运营体系</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-%E5%A4%9A%E5%85%83%E5%8C%96%E8%83%BD%E5%8A%9B%E5%BC%80%E6%94%BE%E9%80%82%E9%85%8D%E5%90%84%E7%B1%BB%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">1.4.2.</span> <span class="nav-text">4.2 多元化能力开放适配各类解决方案</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-%E6%89%93%E9%80%A0%E6%95%B0%E6%99%BA%E5%8C%96%E5%90%88%E4%BD%9C%E5%BC%80%E6%94%BE%E7%94%9F%E6%80%81"><span class="nav-number">1.4.3.</span> <span class="nav-text">4.3  打造数智化合作开放生态</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-4-%E7%AE%A1%E7%90%86%E7%BB%84%E7%BB%87%E4%BD%93%E7%B3%BB%E4%BF%9D%E9%9A%9C%E8%90%BD%E5%9C%B0%E5%AE%9E%E6%96%BD"><span class="nav-number">1.4.4.</span> <span class="nav-text">4.4 管理组织体系保障落地实施</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-5-%E8%B7%B5%E8%A1%8C%E4%B8%AD%E5%8F%B0%E6%96%87%E5%8C%96%E5%BD%A2%E6%88%90%E6%80%9D%E6%83%B3%E8%A1%8C%E5%8A%A8%E6%96%B0%E8%87%AA%E8%A7%89"><span class="nav-number">1.4.5.</span> <span class="nav-text">4.5 践行中台文化形成思想行动新自觉</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-6-%E6%AD%A3%E7%A1%AE%E8%AE%A4%E8%AF%86%E5%87%A0%E4%B8%AA%E6%A6%82%E5%BF%B5"><span class="nav-number">1.4.6.</span> <span class="nav-text">4.6 正确认识几个概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-7-%E6%AD%A3%E7%A1%AE%E8%AE%A4%E8%AF%86%E5%87%A0%E4%B8%AA%E5%85%B3%E7%B3%BB"><span class="nav-number">1.4.7.</span> <span class="nav-text">4.7 正确认识几个关系</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-8-%E5%B0%8F%E7%BB%93"><span class="nav-number">1.4.8.</span> <span class="nav-text">4.8 小结</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E8%AF%BE-%E4%B8%9A%E5%8A%A1%E4%B8%AD%E5%8F%B0%E6%9E%84%E5%BB%BA%E6%80%9D%E8%B7%AF"><span class="nav-number">2.</span> <span class="nav-text">第二课 业务中台构建思路</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E4%B8%9A%E5%8A%A1%E4%B8%AD%E5%8F%B0%E6%80%BB%E4%BD%93%E5%AE%9A%E4%BD%8D"><span class="nav-number">2.1.</span> <span class="nav-text">1 业务中台总体定位</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-%E4%B8%9A%E5%8A%A1%E6%80%BB%E5%8F%B0%E7%9A%84%E5%AE%9A%E4%BD%8D"><span class="nav-number">2.1.1.</span> <span class="nav-text">1.1 业务总台的定位</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-%E4%B8%9A%E5%8A%A1%E4%B8%AD%E5%8F%B0%E7%9A%84%E9%83%A8%E7%BD%B2%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.1.2.</span> <span class="nav-text">1.2 业务中台的部署模式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E4%B8%9A%E5%8A%A1%E4%B8%AD%E5%8F%B0%E7%9A%84%E8%83%BD%E5%8A%9B%E8%A7%84%E5%88%92"><span class="nav-number">2.2.</span> <span class="nav-text">2 业务中台的能力规划</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yuanwanli</p>
+  <div class="site-description" itemprop="description">等不是办法，干才有出路</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2021/08/30/%E6%99%BA%E6%85%A7%E4%B8%AD%E5%8F%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuanwanli">
+      <meta itemprop="description" content="等不是办法，干才有出路">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="brisk">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          智慧中台系统
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-08-30 20:24:00" itemprop="dateCreated datePublished" datetime="2021-08-30T20:24:00+08:00">2021-08-30</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-09-08 09:03:35" itemprop="dateModified" datetime="2021-09-08T09:03:35+08:00">2021-09-08</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E9%9B%86%E5%9B%A2%E8%AF%BE%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">集团课程</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="第一课-智慧中台总体介绍"><a href="#第一课-智慧中台总体介绍" class="headerlink" title="第一课 智慧中台总体介绍"></a>第一课 智慧中台总体介绍</h2><h3 id="1-智慧中台概况"><a href="#1-智慧中台概况" class="headerlink" title="1 智慧中台概况"></a>1 智慧中台概况</h3><h4 id="1-1-智慧中台是什么？"><a href="#1-1-智慧中台是什么？" class="headerlink" title="1.1 智慧中台是什么？"></a>1.1 智慧中台是什么？</h4><p>中国移动智慧中台，ability as a servece 能力即服务，不是一个物理系统，而是一套应用服务体系，是应用软件，硬件设备，规范标准，组织文化，流程等一系列元素有机结合并形成的运行机制。</p>
+<p>由三个中台组成：</p>
+<ol>
+<li>业务中台，场景化的能力封装，是全新业务能力体系的重塑与构建。</li>
+<li>数据中台，能力基础，实现集团海量数据资源向资产、资本的转换。</li>
+<li>技术中台，能力中枢，是全集团共性技术能力的集合。</li>
+</ol>
+<blockquote>
+<p>三个中台相互作用，共同积淀能力，支撑发展、注智赋能</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E4%B8%AD%E5%8F%B01.png"></p>
+<h4 id="1-2-源起"><a href="#1-2-源起" class="headerlink" title="1.2 源起"></a>1.2 源起</h4><p>如果把中国移动的产品比作一道道美味佳肴，那么中台能力就是各类食材，各省专业公司像是一家集农场后厨前厅于一体的餐厅要素，生产能力加工和产品输出的一个个环节，都需要亲力亲为，重复建设多条生产线，而如今伴随着全社会数字化转型加速，客户需求千变万化，自产自销模式弊端明显，急需高效集约的方式取支撑市场高质量发展，我们就是在这样的战略驱动和发展需求中诞生。</p>
+<h4 id="1-3-特点"><a href="#1-3-特点" class="headerlink" title="1.3 特点"></a>1.3 特点</h4><ul>
+<li><p>我们是全集团各单位可开放可共享能力的集合，全集团只有一个中台，各单位的系统可以为中台贡献能力，但各系统本身不是中台，我们不会将各单位原有餐厅推倒重建，而是通过甄选和复用各单位的优秀特色能力，构建各单位之间能力复用等数字化连接，实现优势食材特色菜谱专业厨具的高效共享，有效降低成本，切实提升效率。</p>
+</li>
+<li><p>我们的运转遵循统一规划统一规则统一门户统一运营体系，统一开放合作统一资源配置统一考核激励的七统一原则哟，能力的提供者使用者管理者和运营者四种角色共同参与，统一单位可以兼具多个角色，不同角色间高效协同灵活转变，统一门户是痊愈能力的供需平台，生产变革的运营平台，中台文化的培育平台，他不是公司各类能力的直接承载平台，也不是直接面向市场的产品销售渠道，而是中台运转流程的运营枢纽，实现能力全生命周期的可视可管可控。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E4%B8%AD%E5%8F%B02.png"></p>
+</li>
+<li><p>我们提供三种能力复用模式，一是自助超市模式，您可以直接申请调用APISDK等各种能力要素，在自由系统环境中进行开发，二是共享厨房模式，您可以入住paas平台，使用中台提供的全套开发环境组件和能力要素，自主开发，进而提升全集团应用开发标准化和资源集约化水平，三是快餐车模式，您可以直接选择SaaS服务，即订即用，支持云化和私有化部署，快速满足标准化程度较高的需求。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E4%B8%AD%E5%8F%B03.png"></p>
+</li>
+</ul>
+<h4 id="1-4-愿景"><a href="#1-4-愿景" class="headerlink" title="1.4 愿景"></a>1.4 愿景</h4><p>各单位要跳出自身角色，打破烟囱式建设的惯性依赖，修成复用优先，主动沉淀的心，自觉共同构建服务协同合作效率的妆台，文化富勇优先在开发新应用建设新系统皮，首先要通过统一门户查找申请能复用的三台能力门户，一键下单，农场直接供货，最大程度用好中台主动沉淀，在规划新建系统和优化现有能力时，要主动萃取打磨共性能力，注册大门户，为做好做强中台作出积极贡献。</p>
+<p>​       2021年，中国移动智慧中台开始进入全面运营，我们倡导开门见中台协同，用中台边建设边运营边完善，为公司和社会的数字化转型不断积淀能力，支撑发展，铸制不能。</p>
+<h3 id="2-智慧中台工作思路与目标"><a href="#2-智慧中台工作思路与目标" class="headerlink" title="2 智慧中台工作思路与目标"></a>2 智慧中台工作思路与目标</h3><h4 id="2-1-充分认识智慧中台重要战略意义"><a href="#2-1-充分认识智慧中台重要战略意义" class="headerlink" title="2.1 充分认识智慧中台重要战略意义"></a>2.1 充分认识智慧中台重要战略意义</h4><p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E6%99%BA%E6%85%A7%E4%B8%AD%E5%8F%B01.png"></p>
+<h4 id="2-2-智慧中台的总体定位"><a href="#2-2-智慧中台的总体定位" class="headerlink" title="2.2 智慧中台的总体定位"></a>2.2 智慧中台的总体定位</h4><h4 id=""><a href="#" class="headerlink" title=""></a><img src="E:\blogpic\智慧中台2.png"></h4><h4 id="2-3-智慧中台体系内涵"><a href="#2-3-智慧中台体系内涵" class="headerlink" title="2.3 智慧中台体系内涵"></a>2.3 智慧中台体系内涵</h4><p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E6%99%BA%E6%85%A7%E4%B8%AD%E5%8F%B03.png"></p>
+<h4 id="2-4-智慧中台的总体工作要求"><a href="#2-4-智慧中台的总体工作要求" class="headerlink" title="2.4 智慧中台的总体工作要求"></a>2.4 智慧中台的总体工作要求</h4><p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E6%99%BA%E6%85%A7%E4%B8%AD%E5%8F%B04.png"></p>
+<p><strong>七个统一</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E6%99%BA%E6%85%A7%E4%B8%AD%E5%8F%B05.png"></p>
+<h4 id="2-5-智慧中台的发展目标"><a href="#2-5-智慧中台的发展目标" class="headerlink" title="2.5 智慧中台的发展目标"></a>2.5 智慧中台的发展目标</h4><p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E6%99%BA%E6%85%A7%E4%B8%AD%E5%8F%B06.png"></p>
+<h4 id="2-6-智慧中台的价值"><a href="#2-6-智慧中台的价值" class="headerlink" title="2.6 智慧中台的价值"></a>2.6 智慧中台的价值</h4><p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E6%99%BA%E6%85%A7%E4%B8%AD%E5%8F%B07.png"></p>
+<h4 id="2-7统一架构规划汇聚全网能力"><a href="#2-7统一架构规划汇聚全网能力" class="headerlink" title="2.7统一架构规划汇聚全网能力"></a>2.7统一架构规划汇聚全网能力</h4><p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E6%99%BA%E6%85%A7%E4%B8%AD%E5%8F%B08.png"></p>
+<h3 id="3-智慧中天的建设原则"><a href="#3-智慧中天的建设原则" class="headerlink" title="3 智慧中天的建设原则"></a>3 智慧中天的建设原则</h3><h4 id="3-1-中台能力建设原则-三个坚持"><a href="#3-1-中台能力建设原则-三个坚持" class="headerlink" title="3.1 中台能力建设原则  三个坚持"></a>3.1 中台能力建设原则  三个坚持</h4><p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E6%99%BA%E6%85%A7%E4%B8%AD%E5%8F%B09.png"></p>
+<h4 id="3-2-中台能力建设原则-三个统一"><a href="#3-2-中台能力建设原则-三个统一" class="headerlink" title="3.2 中台能力建设原则  三个统一"></a>3.2 中台能力建设原则  三个统一</h4><p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E6%99%BA%E6%85%A7%E4%B8%AD%E5%8F%B010.png"></p>
+<h3 id="4-智慧中台能力运营体系"><a href="#4-智慧中台能力运营体系" class="headerlink" title="4 智慧中台能力运营体系"></a>4 智慧中台能力运营体系</h3><h4 id="4-1-智慧中台统一运营体系"><a href="#4-1-智慧中台统一运营体系" class="headerlink" title="4.1 智慧中台统一运营体系"></a>4.1 智慧中台统一运营体系</h4><p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E6%99%BA%E6%85%A7%E4%B8%AD%E5%8F%B011.png"></p>
+<h4 id="4-2-多元化能力开放适配各类解决方案"><a href="#4-2-多元化能力开放适配各类解决方案" class="headerlink" title="4.2 多元化能力开放适配各类解决方案"></a>4.2 多元化能力开放适配各类解决方案</h4><p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E6%99%BA%E6%85%A7%E4%B8%AD%E5%8F%B012.png"></p>
+<h4 id="4-3-打造数智化合作开放生态"><a href="#4-3-打造数智化合作开放生态" class="headerlink" title="4.3  打造数智化合作开放生态"></a>4.3  打造数智化合作开放生态</h4><p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E6%99%BA%E6%85%A7%E4%B8%AD%E5%8F%B013.png"></p>
+<h4 id="4-4-管理组织体系保障落地实施"><a href="#4-4-管理组织体系保障落地实施" class="headerlink" title="4.4 管理组织体系保障落地实施"></a>4.4 管理组织体系保障落地实施</h4><p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E6%99%BA%E6%85%A7%E4%B8%AD%E5%8F%B014.png"></p>
+<h4 id="4-5-践行中台文化形成思想行动新自觉"><a href="#4-5-践行中台文化形成思想行动新自觉" class="headerlink" title="4.5 践行中台文化形成思想行动新自觉"></a>4.5 践行中台文化形成思想行动新自觉</h4><p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E6%99%BA%E6%85%A7%E4%B8%AD%E5%8F%B015.png" alt=" "></p>
+<h4 id="4-6-正确认识几个概念"><a href="#4-6-正确认识几个概念" class="headerlink" title="4.6 正确认识几个概念"></a>4.6 正确认识几个概念</h4><p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E6%99%BA%E6%85%A7%E4%B8%AD%E5%8F%B016.png"></p>
+<h4 id="4-7-正确认识几个关系"><a href="#4-7-正确认识几个关系" class="headerlink" title="4.7 正确认识几个关系"></a>4.7 正确认识几个关系</h4><p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E6%99%BA%E6%85%A7%E4%B8%AD%E5%8F%B017.png"></p>
+<h4 id="4-8-小结"><a href="#4-8-小结" class="headerlink" title="4.8 小结"></a>4.8 小结</h4><p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E6%99%BA%E6%85%A7%E4%B8%AD%E5%8F%B018.png"></p>
+<h2 id="第二课-业务中台构建思路"><a href="#第二课-业务中台构建思路" class="headerlink" title="第二课 业务中台构建思路"></a>第二课 业务中台构建思路</h2><h3 id="1-业务中台总体定位"><a href="#1-业务中台总体定位" class="headerlink" title="1 业务中台总体定位"></a>1 业务中台总体定位</h3><h4 id="1-1-业务总台的定位"><a href="#1-1-业务总台的定位" class="headerlink" title="1.1 业务总台的定位"></a>1.1 业务总台的定位</h4><p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E6%99%BA%E6%85%A7%E4%B8%AD%E5%8F%B019.png"></p>
+<h4 id="1-2-业务中台的部署模式"><a href="#1-2-业务中台的部署模式" class="headerlink" title="1.2 业务中台的部署模式"></a>1.2 业务中台的部署模式</h4><p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E6%99%BA%E6%85%A7%E4%B8%AD%E5%8F%B020.png"></p>
+<h3 id="2-业务中台的能力规划"><a href="#2-业务中台的能力规划" class="headerlink" title="2 业务中台的能力规划"></a>2 业务中台的能力规划</h3>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/08/28/6%20%E5%9B%BE%E5%BD%A2%E4%BA%A4%E4%BA%92%E9%9D%A2%E6%9D%BF/" rel="prev" title="第六讲 docker图形交互面面板">
+                  <i class="fa fa-chevron-left"></i> 第六讲 docker图形交互面面板
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/09/03/%E7%AC%AC%E5%85%AB%E8%AE%B2-docker%E5%AE%B9%E5%99%A8%E6%95%B0%E6%8D%AE%E5%8D%B7/" rel="next" title="第八讲 docker容器数据卷">
+                  第八讲 docker容器数据卷 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuanwanli</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
