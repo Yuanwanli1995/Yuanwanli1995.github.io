@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yuanwanli1995.github.io","root":"/","images":"/images","scheme":"Pisces","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="计算机网路课程目标笔记中科大 郑烇老师计算网络课程 掌握计算机网路   基本概念 常用原理 常用技术  如何学好这门课   注重基础概念的理解， 大量基础概念 注重逻辑推理   下功夫  课程内容 计算机网络和互联网 应用层 传输层 网络层： 数据平面 网络层： 控制平面 数据链路层和局域网 网络安全 无线和移动网路 多媒体网路 网路管理  第一章 概论1.1 什么是internet概念定义 ：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机网路">
+<meta property="og:url" content="http://yuanwanli1995.github.io/2021/09/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E8%B7%AF%E8%AF%BE%E7%A8%8B%E7%9B%AE%E6%A0%87/index.html">
+<meta property="og:site_name" content="brisk">
+<meta property="og:description" content="计算机网路课程目标笔记中科大 郑烇老师计算网络课程 掌握计算机网路   基本概念 常用原理 常用技术  如何学好这门课   注重基础概念的理解， 大量基础概念 注重逻辑推理   下功夫  课程内容 计算机网络和互联网 应用层 传输层 网络层： 数据平面 网络层： 控制平面 数据链路层和局域网 网络安全 无线和移动网路 多媒体网路 网路管理  第一章 概论1.1 什么是internet概念定义 ：">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E7%BD%91%E8%B7%AF1.jpg">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E7%BD%91%E8%B7%AF2.png">
+<meta property="article:published_time" content="2021-09-08T10:24:00.000Z">
+<meta property="article:modified_time" content="2021-09-09T10:04:12.109Z">
+<meta property="article:author" content="yuanwanli">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E7%BD%91%E8%B7%AF1.jpg">
+
+
+<link rel="canonical" href="http://yuanwanli1995.github.io/2021/09/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E8%B7%AF%E8%AF%BE%E7%A8%8B%E7%9B%AE%E6%A0%87/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://yuanwanli1995.github.io/2021/09/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E8%B7%AF%E8%AF%BE%E7%A8%8B%E7%9B%AE%E6%A0%87/","path":"2021/09/08/计算机网路课程目标/","title":"计算机网路"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>计算机网路 | brisk</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">brisk</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">welcome</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E8%B7%AF%E8%AF%BE%E7%A8%8B%E7%9B%AE%E6%A0%87"><span class="nav-number">1.</span> <span class="nav-text">计算机网路课程目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9"><span class="nav-number">2.</span> <span class="nav-text">课程内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%A6%82%E8%AE%BA"><span class="nav-number">3.</span> <span class="nav-text">第一章 概论</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E4%BB%80%E4%B9%88%E6%98%AFinternet"><span class="nav-number">3.1.</span> <span class="nav-text">1.1 什么是internet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">3.2.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E7%BD%91%E8%B7%AF%E8%BE%B9%E7%BC%98"><span class="nav-number">3.3.</span> <span class="nav-text">1.2 网路边缘</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yuanwanli</p>
+  <div class="site-description" itemprop="description">等不是办法，干才有出路</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2021/09/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E8%B7%AF%E8%AF%BE%E7%A8%8B%E7%9B%AE%E6%A0%87/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuanwanli">
+      <meta itemprop="description" content="等不是办法，干才有出路">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="brisk">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          计算机网路
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-09-08 18:24:00" itemprop="dateCreated datePublished" datetime="2021-09-08T18:24:00+08:00">2021-09-08</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-09-09 18:04:12" itemprop="dateModified" datetime="2021-09-09T18:04:12+08:00">2021-09-09</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="计算机网路课程目标"><a href="#计算机网路课程目标" class="headerlink" title="计算机网路课程目标"></a>计算机网路课程目标</h2><p>笔记中科大 郑烇老师计算网络课程</p>
+<p>掌握计算机网路</p>
+<ol>
+<li> 基本概念</li>
+<li>常用原理</li>
+<li>常用技术</li>
+</ol>
+<p>如何学好这门课 </p>
+<ul>
+<li>注重基础概念的理解， 大量基础概念</li>
+<li>注重逻辑推理  </li>
+<li>下功夫</li>
+</ul>
+<h2 id="课程内容"><a href="#课程内容" class="headerlink" title="课程内容"></a>课程内容</h2><ul>
+<li>计算机网络和互联网</li>
+<li>应用层</li>
+<li>传输层</li>
+<li>网络层： 数据平面</li>
+<li>网络层： 控制平面</li>
+<li>数据链路层和局域网</li>
+<li>网络安全</li>
+<li>无线和移动网路</li>
+<li>多媒体网路</li>
+<li>网路管理</li>
+</ul>
+<h2 id="第一章-概论"><a href="#第一章-概论" class="headerlink" title="第一章 概论"></a>第一章 概论</h2><h3 id="1-1-什么是internet"><a href="#1-1-什么是internet" class="headerlink" title="1.1 什么是internet"></a>1.1 什么是internet</h3><p>概念定义 ： </p>
+<ul>
+<li>网络， 节点和边组成的结构</li>
+<li>计算机网络， 有计算机为点组成的网络结构</li>
+<li>节点， 主机节点，(host, end system)主机及其上运行的应用程序。交换节点，路由器交换机等网络交换设备</li>
+<li>边，通信道路。接入网链路，主机连接到互联网的链路。主干链路，路由器间的链路。</li>
+<li>协议，对等层的实体（或多个实体）进行通信的规则的集合。规定pdu的格式，次序，动作。</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E7%BD%91%E8%B7%AF1.jpg"></p>
+<ol>
+<li>物理层：简单地说，物理层协议对与基本物理信号传输有关的机械、电气等功能进行描述。若生产相互连接的两个设备的两个厂商都遵循相同物理层规范，则二者必定能被连接在一起，并能接收对方发来的电、光或其他的物理信号，而且能正确地将这些物理信号理解为二进制的0和1序列。物理层只负责正确地接收和发送比特，并不关心这些比特的具体含义。</li>
+<li>数据链路层<strong>：</strong>数据链路层简称链路层，它依赖物理层提供的比特传输能力把数据组织成为有边界的传输单位，称为“帧”。链路层把来自网络层的数据组织成“帧”，然后再通过物理层向外发送。当然，链路层也要负责从来自物理层的比特序列（或者字节序列）中区分出一个个的帧，并将帧中的数据传递给网络层。为了将各个帧区分开来，需要在帧的头部和尾部附加一些特点的信息，这个过程称为“封装”，其相反的过程称为“解封装”。“封装”的概念不只在链路层中存在，在更高的各层协议中同样存在。所有层上的“封装”问题的共同特征是把来自高层的封装单位根据本层的需要附加上特定信息形成本层的封装单位，然后向低层传递，同时把来自低层的数据解封装后向高层传递。另外，链路层还可以有其他的诸如差错校验、流量控制等功能，但要理解整个协议体系，则首先应记住它和帧之间的密切关系，因为帧使无头无尾的比特序列变成容易控制的有界单位。</li>
+<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E7%BD%91%E7%BB%9C%E5%B1%82">网络层</a>：网络层解决如何标识通信各方和数据如何从源到达目的这个问题。网络层用特定的网络层地址来标识整个网络中的一个节点，并负责使来自传输层的应该到达某个网络层地址的数据能够被送达这个网络层地址所对应的网络节点。网络层的封装单位称为“包”，“包”需要被进一步封装成链路层的帧然后才能通过物理层发送出去，而在接收方，包在链路层的帧中被解封装出来。最典型的的网络层协议就是在Internet中使用的IP协议，它使用IP地址唯一地标识Internet中的一台主机，路由设备根据IP包中的目的IP地址将IP包一步步转发至目的主机。</li>
+<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E4%BC%A0%E8%BE%93%E5%B1%82">传输层</a>：依赖物理层、数据链路层和网络层，任意一个网络节点都能把任何信息传递到其他任意节点，而传输层在物理层、数据链路层和网络层提供的节点间的通信能力基础上进一步提供了面向应用的服务。传输层向上层提供屏蔽了传输细节的数据传输服务，将来自高层的数据进行分段并将来自低层的数据重组，对数据传输进行差错恢复和流量控制。通过对每个网络节点的多个进程进行标识，传输层可以实现对网络层的多路复用。</li>
+<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E4%BC%9A%E8%AF%9D%E5%B1%82/4329656">会话层</a>：会话层用于建立和管理不同主机的两个进程之间的对话。会话层可以管理对话，可允许对话在两个方向上同时进行，也可以强制对话同时只在一个方向上进行。在后一种情况下，会话层可以提供会话令牌来控制某时刻哪一方可以发生数据。会话层还可以提供同步服务，它可以在数据流中插入同步点，每当因网络出现故障而造成大量数据传输中断时，通过同步点机制可以使两个进程之间的数据传输不需要从头开始，而是从最后一个同步点开始继续传输。</li>
+<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E8%A1%A8%E7%A4%BA%E5%B1%82/4329716">表示层</a>：表示层协议规定对来自应用层的数据如何进行表达，例如采用什么样的文字编码、是否及如何进行压缩、是否及如何加密等。</li>
+<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%BA%94%E7%94%A8%E5%B1%82/16412033">应用层</a>：应用层是ISO/OSI模型中最靠近用户的一层，<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%BA%94%E7%94%A8%E5%B1%82%E5%8D%8F%E8%AE%AE/3668945">应用层协议</a>直接面对用户的需求，例如与发送邮件相关的应用层协议可以规定诸如邮件地址的格式、邮件内容的段落表示、客户与服务器进行交互的命令串等。</li>
+</ol>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E7%BD%91%E8%B7%AF2.png"></p>
+<ul>
+<li> PDU,协议数据单元</li>
+</ul>
+<blockquote>
+<p>从服务角度，internet分为分布式应用和提供服务的基础设施。</p>
+</blockquote>
+<h3 id="1-2-网路边缘"><a href="#1-2-网路边缘" class="headerlink" title="1.2 网路边缘"></a>1.2 网路边缘</h3><p>网路结构分为三种：</p>
+<ol>
+<li>网路边缘，主机，应用程序</li>
+<li>网路核心，互联着的路由器，网路的网路</li>
+<li>接入网、物理媒体， 有线或者无限通信链路</li>
+</ol>
+<p>网路边缘的两种模式</p>
+<ol>
+<li> 客户/服务器模式，客户端向服务器请求，接收服务。如web客户端/服务器；email客户端/服务器。</li>
+<li>对等(peer-peer)模式</li>
+</ol>
+<p>面向连接的服务TCP </p>
+<ul>
+<li>可靠的，有序的，确认重传</li>
+<li>浏流量控制，发送方不好淹没接收方</li>
+<li>拥塞控制，当网络拥塞时，发送方降低发送频率</li>
+</ul>
+<p>无连接的服务UDP</p>
+<ul>
+<li>不打招呼，不可靠</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/09/08/2021-09-08-%E7%AC%AC%E5%8D%81%E4%B8%80%E8%AE%B2-docker%E7%BD%91%E7%BB%9C/" rel="prev" title="第十一讲 docker网络">
+                  <i class="fa fa-chevron-left"></i> 第十一讲 docker网络
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/09/13/2021-09-13-linux%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%9C%E4%B8%8E%E7%A3%81%E7%9B%98%E5%88%92%E5%88%86/" rel="next" title="linux存储结果与磁盘划分">
+                  linux存储结果与磁盘划分 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuanwanli</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
