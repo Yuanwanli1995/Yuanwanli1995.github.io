@@ -130,7 +130,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-count">22</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -166,6 +166,119 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2021/09/03/%E7%AC%AC%E5%85%AB%E8%AE%B2-docker%E5%AE%B9%E5%99%A8%E6%95%B0%E6%8D%AE%E5%8D%B7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuanwanli">
+      <meta itemprop="description" content="等不是办法，干才有出路">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="brisk">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/09/03/%E7%AC%AC%E5%85%AB%E8%AE%B2-docker%E5%AE%B9%E5%99%A8%E6%95%B0%E6%8D%AE%E5%8D%B7/" class="post-title-link" itemprop="url">第八讲 docker容器数据卷</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-09-03 09:17:10" itemprop="dateCreated datePublished" datetime="2021-09-03T09:17:10+08:00">2021-09-03</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-09-08 11:25:24" itemprop="dateModified" datetime="2021-09-08T11:25:24+08:00">2021-09-08</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BC%96%E7%A8%8B%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">编程笔记</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="第八讲-docker容器数据卷"><a href="#第八讲-docker容器数据卷" class="headerlink" title="第八讲 docker容器数据卷"></a>第八讲 docker容器数据卷</h2><h3 id="8-1-容器数据卷是什么"><a href="#8-1-容器数据卷是什么" class="headerlink" title="8.1 容器数据卷是什么"></a>8.1 容器数据卷是什么</h3><p>当我们在使用docker容器的时候，会产生一系列的数据文件，这些数据文件在我们关闭docker容器时是会消失的，但是其中产生的部分内容我们是希望能够把它给保存起来另作用途的，Docker将应用与运行环境打包成容器发布，我们希望在运行过程钟产生的部分数据是可以持久化的的，而且容器之间我们希望能够实现数据共享。容器数据卷可以帮助我们实现这个需求。docker容器数据卷可以看成使我们生活中常用的u盘，它存在于一个或多个的容器中，由docker挂载到容器，但不属于联合文件系统，Docker不会在容器删除时删除其挂载的数据卷。</p>
+<blockquote>
+<p>特点：</p>
+</blockquote>
+<p>1：数据卷可以在容器之间共享或重用数据</p>
+<p>2：数据卷中的更改可以直接生效</p>
+<p>3：数据卷中的更改不会包含在镜像的更新中</p>
+<p>4：数据卷的生命周期一直持续到没有容器使用它为止</p>
+<h3 id="8-2-如何添加容器数据卷"><a href="#8-2-如何添加容器数据卷" class="headerlink" title="8.2 如何添加容器数据卷"></a>8.2 如何添加容器数据卷</h3><h4 id="8-2-1-通过命令挂载"><a href="#8-2-1-通过命令挂载" class="headerlink" title="8.2.1 通过命令挂载"></a>8.2.1 通过命令挂载</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"># 1 通过docker run -v 挂载 </span><br><span class="line">[root@VM-4-6-centos lighthouse]# docker run -it -v /home/test:/home centos </span><br><span class="line">[root@672f22246a83 /]# [root@VM-4-6-centos lighthouse]# </span><br><span class="line">[root@VM-4-6-centos lighthouse]# docker ps </span><br><span class="line">CONTAINER ID   IMAGE     COMMAND       CREATED          STATUS          PORTS     NAMES</span><br><span class="line">672f22246a83   centos    &quot;/bin/bash&quot;   22 seconds ago   Up 22 seconds             # 2 通过</span><br><span class="line"># 2 docker inspect containerID 查看挂载是否成功</span><br><span class="line">[root@VM-4-6-centos lighthouse]# docker inspect 672f22246a83</span><br><span class="line">&quot;Mounts&quot;: [</span><br><span class="line">            &#123;</span><br><span class="line">                &quot;Type&quot;: &quot;bind&quot;,</span><br><span class="line">                &quot;Source&quot;: &quot;/home/test&quot;,  </span><br><span class="line">                &quot;Destination&quot;: &quot;/home&quot;,</span><br><span class="line">                &quot;Mode&quot;: &quot;&quot;,</span><br><span class="line">                &quot;RW&quot;: true,</span><br><span class="line">                &quot;Propagation&quot;: &quot;rprivate&quot;</span><br><span class="line"># 3手动查看挂载是否成功，能否同步文件</span><br><span class="line">[root@VM-4-6-centos lighthouse]# cd /home/test </span><br><span class="line"># 新建测试文件mounttest.tet</span><br><span class="line">[root@VM-4-6-centos test]# touch mounttest.tet </span><br><span class="line">[root@VM-4-6-centos test]# ls</span><br><span class="line">mounttest.tet</span><br><span class="line">[root@VM-4-6-centos test]# docker exec -it 672f22246a83 /bin/bash </span><br><span class="line">[root@672f22246a83 /]# cd /home </span><br><span class="line"># 查看容器对应文件是否同步</span><br><span class="line">[root@672f22246a83 home]# ls</span><br><span class="line">mounttest.tet</span><br><span class="line"># 生成反向同步测试文件</span><br><span class="line">[root@672f22246a83 home]# touch mounttest111.tet </span><br><span class="line">[root@672f22246a83 home]# read escape sequence</span><br><span class="line">[root@VM-4-6-centos test]# ls </span><br><span class="line">mounttest111.tet  mounttest.tet</span><br><span class="line"># 双向同步 </span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>案例： 部署mysql容器数据卷</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"># 启动mysql容器并挂载文件</span><br><span class="line">[root@VM-4-6-centos ~]# docker images </span><br><span class="line">REPOSITORY            TAG       IMAGE ID       CREATED        SIZE</span><br><span class="line">tomcat                latest    266d1269bb29   2 weeks ago    668MB</span><br><span class="line">nginx                 latest    dd34e67e3371   2 weeks ago    133MB</span><br><span class="line">mysql                 latest    5a4e492065c7   2 weeks ago    514MB</span><br><span class="line">centos                latest    300e315adb2f   8 months ago   209MB</span><br><span class="line"></span><br><span class="line">[root@VM-4-6-centos ~]# docker run -d -p 1433:3306 -v /home/mysql/conf:/etc/mysql/conf.d </span><br><span class="line">-v /home/mysql/data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=123456 --name mysql001 mysql:latest</span><br><span class="line">8988e75401bcbbc73d018ae14c8fce9f53ae3e9e4f15058436f839039dd9cdcf</span><br><span class="line"></span><br><span class="line">[root@VM-4-6-centos ~]# docker ps </span><br><span class="line">CONTAINER ID   IMAGE          COMMAND                  CREATED          STATUS          PORTS                                              NAMES</span><br><span class="line">8988e75401bc   mysql:latest   &quot;docker-entrypoint.s…&quot;   12 seconds ago   Up 11 seconds   33060/tcp, 0.0.0.0:80-&gt;3306/tcp, :::80-&gt;3306/tcp   mysql001</span><br><span class="line">672f22246a83   centos         &quot;/bin/bash&quot;              6 hours ago      Up 6 hours                                                         interesting_tu</span><br><span class="line"></span><br><span class="line">[root@VM-4-6-centos ~]# docker inspect mysql001</span><br><span class="line"></span><br><span class="line">        &quot;Mounts&quot;: [</span><br><span class="line">            &#123;</span><br><span class="line">                &quot;Type&quot;: &quot;bind&quot;,</span><br><span class="line">                &quot;Source&quot;: &quot;/home/mysql/data&quot;,</span><br><span class="line">                &quot;Destination&quot;: &quot;/var/lib/mysql&quot;,</span><br><span class="line">                &quot;Mode&quot;: &quot;&quot;,</span><br><span class="line">                &quot;RW&quot;: true,</span><br><span class="line">                &quot;Propagation&quot;: &quot;rprivate&quot;</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                &quot;Type&quot;: &quot;bind&quot;,</span><br><span class="line">                &quot;Source&quot;: &quot;/home/mysql/conf&quot;,</span><br><span class="line">                &quot;Destination&quot;: &quot;/etc/mysql/conf.d&quot;,</span><br><span class="line">                &quot;Mode&quot;: &quot;&quot;,</span><br><span class="line">                &quot;RW&quot;: true,</span><br><span class="line">                &quot;Propagation&quot;: &quot;rprivate&quot;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>具名挂载和匿名挂载 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"># 匿名挂载</span><br><span class="line">-v 容器内路径!</span><br><span class="line">$ docker run -d -P --name nginx01 -v /etc/nginx nginx</span><br><span class="line"></span><br><span class="line"># 查看所有的volume(卷)的情况</span><br><span class="line">$ docker volume ls    </span><br><span class="line">DRIVER              VOLUME NAME # 容器内的卷名(匿名卷挂载)</span><br><span class="line">local               21159a8518abd468728cdbe8594a75b204a10c26be6c36090cde1ee88965f0d0</span><br><span class="line">local               b17f52d38f528893dd5720899f555caf22b31bf50b0680e7c6d5431dbda2802c</span><br><span class="line">         </span><br><span class="line"># 这里发现，这种就是匿名挂载，我们在 -v只写了容器内的路径，没有写容器外的路径！</span><br><span class="line"></span><br><span class="line"># 具名挂载 -P:表示随机映射端口</span><br><span class="line">$ docker run -d -P --name nginx02 -v juming-nginx:/etc/nginx nginx</span><br><span class="line">9663cfcb1e5a9a1548867481bfddab9fd7824a6dc4c778bf438a040fe891f0ee</span><br><span class="line"></span><br><span class="line"># 查看所有的volume(卷)的情况</span><br><span class="line">$ docker volume ls                  </span><br><span class="line">DRIVER              VOLUME NAME</span><br><span class="line">local               21159a8518abd468728cdbe8594a75b204a10c26be6c36090cde1ee88965f0d0</span><br><span class="line">local               b17f52d38f528893dd5720899f555caf22b31bf50b0680e7c6d5431dbda2802c</span><br><span class="line">local               juming-nginx #多了一个名字</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 通过 -v 卷名：查看容器内路径</span><br><span class="line"># 查看一下这个卷</span><br><span class="line">$ docker volume inspect juming-nginx</span><br><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        &quot;CreatedAt&quot;: &quot;2020-05-23T13:55:34+08:00&quot;,</span><br><span class="line">        &quot;Driver&quot;: &quot;local&quot;,</span><br><span class="line">        &quot;Labels&quot;: null,</span><br><span class="line">        &quot;Mountpoint&quot;: &quot;/var/lib/docker/volumes/juming-nginx/_data&quot;, #默认目录</span><br><span class="line">        &quot;Name&quot;: &quot;juming-nginx&quot;,</span><br><span class="line">        &quot;Options&quot;: null,</span><br><span class="line">        &quot;Scope&quot;: &quot;local&quot;</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>所有的docker容器内的卷，没有指定目录的情况下都是在**/var/lib/docker/volumes/自定义的卷名/_data**下，<br><strong>如果指定了目录，docker volume ls 是查看不到的</strong>。</p>
+<p><strong>区分三种挂载方式</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 三种挂载： 匿名挂载、具名挂载、指定路径挂载</span><br><span class="line">-v 容器内路径			#匿名挂载</span><br><span class="line">-v 卷名：容器内路径		  #具名挂载</span><br><span class="line">-v /宿主机路径：容器内路径 #指定路径挂载 docker volume ls 是查看不到的</span><br></pre></td></tr></table></figure>
+
+<p>拓展：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 通过 -v 容器内路径： ro rw 改变读写权限</span><br><span class="line">ro #readonly 只读</span><br><span class="line">rw #readwrite 可读可写</span><br><span class="line">$ docker run -d -P --name nginx05 -v juming:/etc/nginx:ro nginx</span><br><span class="line">$ docker run -d -P --name nginx05 -v juming:/etc/nginx:rw nginx</span><br><span class="line"># ro 只要看到ro就说明这个路径只能通过宿主机来操作，容器内部是无法操作！</span><br></pre></td></tr></table></figure>
+
+<h3 id="8-3-通过dockerfile挂载"><a href="#8-3-通过dockerfile挂载" class="headerlink" title="8.3 通过dockerfile挂载"></a>8.3 通过dockerfile挂载</h3><p>dockerfile就是是一个用来构建镜像的文本文件，文本内容包含了一条条构建镜像所需的指令和说明。 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"># 创建一个dockerfile文件，名字可以随便建议Dockerfile</span><br><span class="line"># 文件中的内容： 指令(大写) + 参数</span><br><span class="line">$ vim dockerfile1</span><br><span class="line">    FROM centos 					# 当前这个镜像是以centos为基础的</span><br><span class="line"></span><br><span class="line">    VOLUME [&quot;volume01&quot;,&quot;volume02&quot;] 	# 挂载卷的卷目录列表(多个目录)</span><br><span class="line"></span><br><span class="line">    CMD echo &quot;-----end-----&quot;		# 输出一下用于测试</span><br><span class="line">    CMD /bin/bash					# 默认走bash控制台</span><br><span class="line"></span><br><span class="line"># 这里的每个命令，就是镜像的一层！</span><br><span class="line"># 构建出这个镜像 </span><br><span class="line">-f dockerfile1 			# f代表file，指这个当前文件的地址(这里是当前目录下的dockerfile1)</span><br><span class="line">-t caoshipeng/centos 	# t就代表target，指目标目录(注意caoshipeng镜像名前不能加斜杠‘/’)</span><br><span class="line">. 						# 表示生成在当前目录下</span><br><span class="line">$ docker build -f dockerfile1 -t caoshipeng/centos .</span><br><span class="line">Sending build context to Docker daemon   2.56kB</span><br><span class="line">Step 1/4 : FROM centos</span><br><span class="line">latest: Pulling from library/centos</span><br><span class="line">8a29a15cefae: Already exists </span><br><span class="line">Digest: sha256:fe8d824220415eed5477b63addf40fb06c3b049404242b31982106ac204f6700</span><br><span class="line">Status: Downloaded newer image for centos:latest</span><br><span class="line"> ---&gt; 470671670cac</span><br><span class="line">Step 2/4 : VOLUME [&quot;volume01&quot;,&quot;volume02&quot;] 			# 卷名列表</span><br><span class="line"> ---&gt; Running in c18eefc2c233</span><br><span class="line">Removing intermediate container c18eefc2c233</span><br><span class="line"> ---&gt; 623ae1d40fb8</span><br><span class="line">Step 3/4 : CMD echo &quot;-----end-----&quot;					# 输出 脚本命令</span><br><span class="line"> ---&gt; Running in 70e403669f3c</span><br><span class="line">Removing intermediate container 70e403669f3c</span><br><span class="line"> ---&gt; 0eba1989c4e6</span><br><span class="line">Step 4/4 : CMD /bin/bash</span><br><span class="line"> ---&gt; Running in 4342feb3a05b</span><br><span class="line">Removing intermediate container 4342feb3a05b</span><br><span class="line"> ---&gt; f4a6b0d4d948</span><br><span class="line">Successfully built f4a6b0d4d948</span><br><span class="line">Successfully tagged caoshipeng/centos:latest</span><br><span class="line"></span><br><span class="line"># 查看自己构建的镜像</span><br><span class="line">$ docker images</span><br><span class="line">REPOSITORY          TAG          IMAGE ID            CREATED              SIZE</span><br><span class="line">caoshipeng/centos   latest       f4a6b0d4d948        About a minute ago   237MB</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>启动新建的镜像 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">[root@VM-4-6-centos lib]#docker run -it new/centos /bin/bash</span><br><span class="line">#</span><br><span class="line">[root@VM-4-6-centos lib]# docker ps</span><br><span class="line">CONTAINER ID   IMAGE        COMMAND                  CREATED         STATUS         PORTS                 NAMES</span><br><span class="line">d0da4c77e1a9   new/centos   &quot;/bin/bash&quot;              5 minutes ago   Up 5 minutes                         priceless_hawking</span><br><span class="line"></span><br><span class="line"># 查看挂载</span><br><span class="line">[root@VM-4-6-centos lib]# docker inspect d0da4c77e1a9</span><br><span class="line">&quot;Mounts&quot;: [</span><br><span class="line">            &#123;</span><br><span class="line">                &quot;Type&quot;: &quot;volume&quot;,</span><br><span class="line">                &quot;Name&quot;: &quot;575269012a409d421b59c45cc5591a7ac7b44d4fa5cbf80a196817c589ea3848&quot;,</span><br><span class="line">                &quot;Source&quot;: &quot;/var/lib/docker/volumes/575269012a409d421b59c45cc5591a7ac7b44d4fa5cbf80a196817c589ea3848/_data&quot;,</span><br><span class="line">                &quot;Destination&quot;: &quot;colume2&quot;,#  挂载成功</span><br><span class="line">                &quot;Driver&quot;: &quot;local&quot;,</span><br><span class="line">                &quot;Mode&quot;: &quot;&quot;,</span><br><span class="line">                &quot;RW&quot;: true,</span><br><span class="line">                &quot;Propagation&quot;: &quot;&quot;</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                &quot;Type&quot;: &quot;volume&quot;,</span><br><span class="line">                &quot;Name&quot;: &quot;099c9f4fe900e5550ca4ad2aff381b09e969c158ca62591b1817d9a8b26d1967&quot;,</span><br><span class="line">                &quot;Source&quot;: &quot;/var/lib/docker/volumes/099c9f4fe900e5550ca4ad2aff381b09e969c158ca62591b1817d9a8b26d1967/_data&quot;,</span><br><span class="line">                &quot;Destination&quot;: &quot;volume1&quot;,</span><br><span class="line">                &quot;Driver&quot;: &quot;local&quot;,</span><br><span class="line">                &quot;Mode&quot;: &quot;&quot;,</span><br><span class="line">                &quot;RW&quot;: true,</span><br><span class="line">                &quot;Propagation&quot;: &quot;&quot;</span><br><span class="line">            &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="8-4-数据卷容器"><a href="#8-4-数据卷容器" class="headerlink" title="8.4 数据卷容器"></a>8.4 数据卷容器</h4><p>多个容器数据之间实现数据共享 。 实例： </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">[root@VM-4-6-centos /]# docker images</span><br><span class="line">hello-world           latest    d1165f221234   6 months ago     13.3kB</span><br><span class="line">centos                latest    300e315adb2f   9 months ago     209MB</span><br><span class="line"></span><br><span class="line"># 容器1 </span><br><span class="line">[root@VM-4-6-centos /]# docker run -it --name centos01 new/centos </span><br><span class="line">[root@fff6b286c371 /]# ls</span><br><span class="line">bin  colume2  dev  etc	home  lib  lib64  lost+found  media  mnt  opt  proc  root  run	sbin  srv  sys	tmp  usr  var  volume1</span><br><span class="line">[root@fff6b286c371 /]# cd volume1/</span><br><span class="line"></span><br><span class="line"># 容器1 挂载目录下 新建测试文件</span><br><span class="line">[root@fff6b286c371 volume1]# touch test.txt </span><br><span class="line">[root@fff6b286c371 volume1]# ls</span><br><span class="line">test.txt</span><br><span class="line">[root@fff6b286c371 volume1]# [root@VM-4-6-centos /]# </span><br><span class="line"></span><br><span class="line"># 容器2继承容器1 </span><br><span class="line">[root@VM-4-6-centos /]# docker run -it --name centos02 --volumes-from  centos01 new/centos</span><br><span class="line">[root@41f919150a90 /]# ls</span><br><span class="line">bin  colume2  dev  etc	home  lib  lib64  lost+found  media  mnt  opt  proc  root  run	sbin  srv  sys	tmp  usr  var  volume1</span><br><span class="line">[root@41f919150a90 /]# cd volume1</span><br><span class="line">[root@41f919150a90 volume1]# ls</span><br><span class="line">test.txt</span><br><span class="line"># 容器2 与容器1 实现数据共享</span><br><span class="line">[root@41f919150a90 volume1]# [root@VM-4-6-centos /]# </span><br><span class="line"></span><br><span class="line"># 查看挂载宿主机地址 </span><br><span class="line">[root@VM-4-6-centos /]# docker inspect centos01 </span><br><span class="line">        &quot;Mounts&quot;: [</span><br><span class="line">            &#123;</span><br><span class="line">                &quot;Type&quot;: &quot;volume&quot;,</span><br><span class="line">                &quot;Name&quot;: &quot;b83567b3f8e3818762cd87e5dc7c48a98846929f4c035d5eadc3c89ea364746b&quot;,</span><br><span class="line">                &quot;Source&quot;: &quot;/var/lib/docker/volumes/b83567b3f8e3818762cd87e5dc7c48a98846929f4c035d5eadc3c89ea364746b/_data&quot;,</span><br><span class="line">                &quot;Destination&quot;: &quot;volume1&quot;,</span><br><span class="line">                &quot;Driver&quot;: &quot;local&quot;,</span><br><span class="line">                &quot;Mode&quot;: &quot;&quot;,</span><br><span class="line">                &quot;RW&quot;: true,</span><br><span class="line">                &quot;Propagation&quot;: &quot;&quot;</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">[root@VM-4-6-centos /]# docker inspect centos01 </span><br><span class="line">        &quot;Mounts&quot;: [</span><br><span class="line">            &#123;</span><br><span class="line">                &quot;Type&quot;: &quot;volume&quot;,</span><br><span class="line">                &quot;Name&quot;: &quot;b83567b3f8e3818762cd87e5dc7c48a98846929f4c035d5eadc3c89ea364746b&quot;,</span><br><span class="line">                &quot;Source&quot;: &quot;/var/lib/docker/volumes/b83567b3f8e3818762cd87e5dc7c48a98846929f4c035d5eadc3c89ea364746b/_data&quot;,</span><br><span class="line">                &quot;Destination&quot;: &quot;volume1&quot;,</span><br><span class="line">                &quot;Driver&quot;: &quot;local&quot;,</span><br><span class="line">                &quot;Mode&quot;: &quot;&quot;,</span><br><span class="line">                &quot;RW&quot;: true,</span><br><span class="line">                &quot;Propagation&quot;: &quot;&quot;</span><br><span class="line">            &#125;,</span><br><span class="line"># 发现两个容器挂载在宿主机的同一位置 </span><br><span class="line"># 即使所有挂载的容器被删除， 宿主机的文件不受影响 </span><br><span class="line">[root@VM-4-6-centos /]# docker rm  centos02</span><br><span class="line">centos02</span><br><span class="line">[root@VM-4-6-centos /]# docker rm  centos01</span><br><span class="line">centos01</span><br><span class="line">[root@VM-4-6-centos home]# cd /var/lib/docker/volumes/</span><br><span class="line">[root@VM-4-6-centos volumes]# cd b83567b3f8e3818762cd87e5dc7c48a98846929f4c035d5eadc3c89ea364746b/</span><br><span class="line">[root@VM-4-6-centos b83567b3f8e3818762cd87e5dc7c48a98846929f4c035d5eadc3c89ea364746b]# ls</span><br><span class="line">_data</span><br><span class="line">[root@VM-4-6-centos b83567b3f8e3818762cd87e5dc7c48a98846929f4c035d5eadc3c89ea364746b]# cd _data</span><br><span class="line">[root@VM-4-6-centos _data]# ls</span><br><span class="line">test.txt</span><br><span class="line"># 测试表明， 即使删除所有容器，宿主机上的文件也会持久化储存。</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -896,7 +1009,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2021/08/26/%E5%BC%80%E5%A7%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">
+    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2021/08/26/%E3%80%8A%E7%89%A7%E7%BE%8A%E4%BA%BA%E7%9A%84%E5%A5%87%E5%B9%BB%E4%B9%8B%E6%97%85%E3%80%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -909,7 +1022,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/08/26/%E5%BC%80%E5%A7%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">我为什么要记读书笔记</a>
+          <a href="/2021/08/26/%E3%80%8A%E7%89%A7%E7%BE%8A%E4%BA%BA%E7%9A%84%E5%A5%87%E5%B9%BB%E4%B9%8B%E6%97%85%E3%80%8B/" class="post-title-link" itemprop="url">牧羊人的奇幻之旅</a>
         </h2>
 
         <div class="post-meta-container">
@@ -927,7 +1040,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-08-27 10:27:55" itemprop="dateModified" datetime="2021-08-27T10:27:55+08:00">2021-08-27</time>
+        <time title="修改时间：2021-09-07 13:31:16" itemprop="dateModified" datetime="2021-09-07T13:31:16+08:00">2021-09-07</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -949,11 +1062,29 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="1"><a href="#1" class="headerlink" title="1"></a>1</h2><p>最近几年一直有读书的习惯，每个月也有读几本书，我深知读书记笔记可以加深印象，促进理解。但不是每一篇都记了笔记。</p>
-<h2 id="2"><a href="#2" class="headerlink" title="2"></a>2</h2><p>我习惯使用kindle看书，因为kindle下载书籍很方便，而且kindle很便捷，在地铁、车上随时随地都可以使用。但是记笔记没那么方便了，大多数时候一本书看完了就好像完成了一个任务一样，就懒得再去思考整理记笔记了。 </p>
-<h2 id="3"><a href="#3" class="headerlink" title="3"></a>3</h2><p>虽然我看书也不求收获，基本当成一个对抗无聊、转移注意力使得自己尽量不在网上冲浪的习惯， 当然遇到质量高的书籍也确实十分有趣。但我近来越发感受到人对事物的了解或对知识的理解是有程度的区别的，这是很显然易见的问题，但我对这个问题的重视并不够。举例来说，有一次导师让我审稿一篇文章，我拿到论文游览一遍之后，懵了，虽然大部分句子都能读通，但完全不知道作者在做什么。没有办法，我只能一遍一遍的读，我明显能感觉到，越看越明白了。第十次读完的时候，我差不多看懂了，第十五次读完的时候，完成了一篇审稿意见。回过头来看，我大受震撼，这里蕴含的规律就是古人说的”书读百遍，其意自现”。这是感性的认识， 认识论的观点就是“认识运动是不断反复和无限发展的，即人类的认识是永无止境、无限发展的，它表现为实践、认识、再实现、再认识的无限循环过程，由低级阶段向高级阶段不断推移的永无止境的前进运动，这种无限发展过程，在形式上是循环往复，实质上是前进上升“。</p>
-<h2 id="4"><a href="#4" class="headerlink" title="4"></a>4</h2><p>我说这些是什么意思呢？我就是想说，根据我的经验，对于我来说，读书若只是风卷残云过一遍，当时可能有点印象，但一段时间过后，就什么也不记得啦。《非暴力沟通》我看了2遍，你让我说说非暴力沟通的方法，我答不上来。认识指导实践，认识若只停留在表面，那么如何指导实践呢？ 也就是学习要学的深一点。 </p>
-<h2 id="5"><a href="#5" class="headerlink" title="5"></a>5</h2><p>那么如何深一点呢？ 如何深入的理解，与作者对话，带入自己的经验呢？方法有很多，可以多读几遍、向别人转述，也可以记笔记。在记笔记的时候有助于引导加深记忆，引导自己思考。<br>所以以后在这里记笔记啦。</p>
+          <h2 id="第一章"><a href="#第一章" class="headerlink" title="第一章"></a>第一章</h2><p>有一个小伙子喜欢旅行，他为了实现自己的愿望，没有依从父亲的期望，成为了一个牧羊人。</p>
+<p>牧羊人四处游荡，只要有水草的地方都可以去。他识字，常带一本书。 再一次卖羊毛时爱上了商店老板的女儿。 </p>
+<p>他重复做一个梦，一个小男孩告诉他金字塔地下有宝藏。</p>
+<p>吉普赛女巫和撒冷之王告诉他宝藏可能存在，并鼓励他追寻自己的梦。</p>
+<h2 id="第二章"><a href="#第二章" class="headerlink" title="第二章"></a>第二章</h2><p>牧羊人终于没有忍受住宝藏的诱惑，卖掉了羊，接受了撒冷王的祝福之后和占卜的宝石，出发去了埃及。到了一个陌生的国度，他才发现，语言不通。因为语言不同，他在港口被一个年轻人骗去了所有的财产。</p>
+<p>他感到失望，十分怀念放羊的快乐生活。占卜的宝石给他一个好的预示，他收拾好了心情继续前进。</p>
+<p>可是在水晶玻璃店的老板那里了解到，金字塔离这里几千公里，他无法筹集到这么多的路费。</p>
+<p>他绝望了，只能在玻璃店里工作希望能挣到回家的路费和买羊群的钱。</p>
+<h2 id="第三章"><a href="#第三章" class="headerlink" title="第三章"></a>第三章</h2><p>他慢慢适应了枯燥的工作，但他心里并不喜爱这份工作。他希望能通过一些改变改善玻璃点的生意，老板是喜欢维持现状，也不想挣更多的钱，他害怕知道原来自己可以做到，但自己没有去做。老板心里也有一个梦——去朝圣一次，他依靠这个梦维持一成不变的生活，也不准备去实现这个梦。</p>
+<p>最终老板让牧羊人做了一些改变，店里的生意变得很好， 而小伙子很快赚够了回家和买羊的钱，他离开了。</p>
+<p>但是他犹豫是回去继续做一个牧羊人还是去金字塔追梦。</p>
+<p>他遇到了一个英国探险家，他来寻找神秘的炼金术士，他们居然拥有相同的占卜宝石，这可能是神谕，他们一起跟着一个商队准备穿越大沙漠了。</p>
+<p>沙漠非常凶险，一旦迷失方向就可能被困在沙漠里，路上认识了驼夫们，他们拥有不同的故事。</p>
+<h2 id="第四章"><a href="#第四章" class="headerlink" title="第四章"></a>第四章</h2><p>在沙漠中前进的过程中，商队听到了消息，战争就要来了。</p>
+<p>驼夫们也并不慌张，他们相信命运已经注定，今天死亡和任何一天死亡并没有区别。 </p>
+<p>终于， 他们遇到了一篇绿洲。 </p>
+<p>英国人在绿洲里找到炼金术士，在炼金术士的指引下，继续追寻他的炼金之路。</p>
+<p>而牧羊人在这里遇到了他的真爱，部落里的女子。牧羊人告白之后， 她们两个人相爱了。 </p>
+<p>牧羊人看到了预示—绿洲将会被进攻，他想部落报告了此事，部落相信了。但如果没有敌人来袭，牧羊人将献出生命。</p>
+<p>有一位神秘的骑士过来考验牧羊人勇气，并给他一些在沙漠生存的建议。</p>
+<h2 id="第五章"><a href="#第五章" class="headerlink" title="第五章"></a>第五章</h2><p>少年和炼金术士出发去追寻心的指引，与沙漠里心爱的女人告别，途中遇到了战争，被部落的首领绑架，被抢了所有的财产，之后通过天地之心展现神迹活了下去。</p>
+<h2 id="第六章"><a href="#第六章" class="headerlink" title="第六章"></a>第六章</h2><p>牧羊少年历经万难，终于来到了金字塔脚下，他不停的挖，始终找不到宝藏。  之后被难民抓住，一顿暴打之下他说出来自己的来历，不想被难民嘲讽，之前他也反复做一个梦，在牧羊人栖息的大树下有一个宝藏，但他却没有愚蠢的相信。牧羊人才知道原来他一直追寻的宝藏就在他身边。 </p>
+<h2 id="终章"><a href="#终章" class="headerlink" title="终章"></a>终章</h2><p>少年回到了家乡，找到了宝藏， 回馈了吉普赛人，然后寻找他沙漠里的爱人</p>
 
       
     </div>
@@ -1048,108 +1179,6 @@
 207.97.227.243 http://www.github.com`
 </code></pre>
 <p> 保存即可</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2021/08/26/%E3%80%8A%E7%89%A7%E7%BE%8A%E4%BA%BA%E7%9A%84%E5%A5%87%E5%B9%BB%E4%B9%8B%E6%97%85%E3%80%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yuanwanli">
-      <meta itemprop="description" content="等不是办法，干才有出路">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="brisk">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/08/26/%E3%80%8A%E7%89%A7%E7%BE%8A%E4%BA%BA%E7%9A%84%E5%A5%87%E5%B9%BB%E4%B9%8B%E6%97%85%E3%80%8B/" class="post-title-link" itemprop="url">牧羊人的奇幻之旅</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-08-26 22:36:00" itemprop="dateCreated datePublished" datetime="2021-08-26T22:36:00+08:00">2021-08-26</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-09-07 13:31:16" itemprop="dateModified" datetime="2021-09-07T13:31:16+08:00">2021-09-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">读书笔记</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="第一章"><a href="#第一章" class="headerlink" title="第一章"></a>第一章</h2><p>有一个小伙子喜欢旅行，他为了实现自己的愿望，没有依从父亲的期望，成为了一个牧羊人。</p>
-<p>牧羊人四处游荡，只要有水草的地方都可以去。他识字，常带一本书。 再一次卖羊毛时爱上了商店老板的女儿。 </p>
-<p>他重复做一个梦，一个小男孩告诉他金字塔地下有宝藏。</p>
-<p>吉普赛女巫和撒冷之王告诉他宝藏可能存在，并鼓励他追寻自己的梦。</p>
-<h2 id="第二章"><a href="#第二章" class="headerlink" title="第二章"></a>第二章</h2><p>牧羊人终于没有忍受住宝藏的诱惑，卖掉了羊，接受了撒冷王的祝福之后和占卜的宝石，出发去了埃及。到了一个陌生的国度，他才发现，语言不通。因为语言不同，他在港口被一个年轻人骗去了所有的财产。</p>
-<p>他感到失望，十分怀念放羊的快乐生活。占卜的宝石给他一个好的预示，他收拾好了心情继续前进。</p>
-<p>可是在水晶玻璃店的老板那里了解到，金字塔离这里几千公里，他无法筹集到这么多的路费。</p>
-<p>他绝望了，只能在玻璃店里工作希望能挣到回家的路费和买羊群的钱。</p>
-<h2 id="第三章"><a href="#第三章" class="headerlink" title="第三章"></a>第三章</h2><p>他慢慢适应了枯燥的工作，但他心里并不喜爱这份工作。他希望能通过一些改变改善玻璃点的生意，老板是喜欢维持现状，也不想挣更多的钱，他害怕知道原来自己可以做到，但自己没有去做。老板心里也有一个梦——去朝圣一次，他依靠这个梦维持一成不变的生活，也不准备去实现这个梦。</p>
-<p>最终老板让牧羊人做了一些改变，店里的生意变得很好， 而小伙子很快赚够了回家和买羊的钱，他离开了。</p>
-<p>但是他犹豫是回去继续做一个牧羊人还是去金字塔追梦。</p>
-<p>他遇到了一个英国探险家，他来寻找神秘的炼金术士，他们居然拥有相同的占卜宝石，这可能是神谕，他们一起跟着一个商队准备穿越大沙漠了。</p>
-<p>沙漠非常凶险，一旦迷失方向就可能被困在沙漠里，路上认识了驼夫们，他们拥有不同的故事。</p>
-<h2 id="第四章"><a href="#第四章" class="headerlink" title="第四章"></a>第四章</h2><p>在沙漠中前进的过程中，商队听到了消息，战争就要来了。</p>
-<p>驼夫们也并不慌张，他们相信命运已经注定，今天死亡和任何一天死亡并没有区别。 </p>
-<p>终于， 他们遇到了一篇绿洲。 </p>
-<p>英国人在绿洲里找到炼金术士，在炼金术士的指引下，继续追寻他的炼金之路。</p>
-<p>而牧羊人在这里遇到了他的真爱，部落里的女子。牧羊人告白之后， 她们两个人相爱了。 </p>
-<p>牧羊人看到了预示—绿洲将会被进攻，他想部落报告了此事，部落相信了。但如果没有敌人来袭，牧羊人将献出生命。</p>
-<p>有一位神秘的骑士过来考验牧羊人勇气，并给他一些在沙漠生存的建议。</p>
-<h2 id="第五章"><a href="#第五章" class="headerlink" title="第五章"></a>第五章</h2><p>少年和炼金术士出发去追寻心的指引，与沙漠里心爱的女人告别，途中遇到了战争，被部落的首领绑架，被抢了所有的财产，之后通过天地之心展现神迹活了下去。</p>
-<h2 id="第六章"><a href="#第六章" class="headerlink" title="第六章"></a>第六章</h2><p>牧羊少年历经万难，终于来到了金字塔脚下，他不停的挖，始终找不到宝藏。  之后被难民抓住，一顿暴打之下他说出来自己的来历，不想被难民嘲讽，之前他也反复做一个梦，在牧羊人栖息的大树下有一个宝藏，但他却没有愚蠢的相信。牧羊人才知道原来他一直追寻的宝藏就在他身边。 </p>
-<h2 id="终章"><a href="#终章" class="headerlink" title="终章"></a>终章</h2><p>少年回到了家乡，找到了宝藏， 回馈了吉普赛人，然后寻找他沙漠里的爱人</p>
 
       
     </div>
