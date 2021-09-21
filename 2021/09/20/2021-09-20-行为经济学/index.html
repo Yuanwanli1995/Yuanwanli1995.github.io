@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yuanwanli1995.github.io","root":"/","images":"/images","scheme":"Pisces","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="导论第十二讲 损失厌恶： 赢与输总是绝对的吗？损失厌恶：人们讨厌损失 但真的是一种非理性的行为吗?  实验： 训练猴子使用硬币。  从进化论，错配的角度来说，损失厌恶让我更有动力， 有更大的冒险欲望。大脑对盈利和损失是不对称的。  例子：为什么经营不好的时候， 公司不减低工资而去裁员。降低工资会给员工带来损失厌恶。 框架效应： 同样一个东西， 可以在一个框架下，是盈利的。另一个框架下，是损失的。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="行为经济学">
+<meta property="og:url" content="http://yuanwanli1995.github.io/2021/09/20/2021-09-20-%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A6/index.html">
+<meta property="og:site_name" content="brisk">
+<meta property="og:description" content="导论第十二讲 损失厌恶： 赢与输总是绝对的吗？损失厌恶：人们讨厌损失 但真的是一种非理性的行为吗?  实验： 训练猴子使用硬币。  从进化论，错配的角度来说，损失厌恶让我更有动力， 有更大的冒险欲望。大脑对盈利和损失是不对称的。  例子：为什么经营不好的时候， 公司不减低工资而去裁员。降低工资会给员工带来损失厌恶。 框架效应： 同样一个东西， 可以在一个框架下，是盈利的。另一个框架下，是损失的。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A61.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A62.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A63.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A65.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A66.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A67.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A68.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A69.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A610.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A611.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A612.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A613.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A613.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A615.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A616.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A617.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A618.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A619.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A620.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A621.png">
+<meta property="article:published_time" content="2021-09-19T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-09-21T01:37:32.235Z">
+<meta property="article:author" content="yuanwanli">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A61.png">
+
+
+<link rel="canonical" href="http://yuanwanli1995.github.io/2021/09/20/2021-09-20-%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A6/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://yuanwanli1995.github.io/2021/09/20/2021-09-20-%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A6/","path":"2021/09/20/2021-09-20-行为经济学/","title":"行为经济学"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>行为经济学 | brisk</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">brisk</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">welcome</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%BC%E8%AE%BA"><span class="nav-number">1.</span> <span class="nav-text">导论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%8D%81%E4%BA%8C%E8%AE%B2-%E6%8D%9F%E5%A4%B1%E5%8E%8C%E6%81%B6%EF%BC%9A-%E8%B5%A2%E4%B8%8E%E8%BE%93%E6%80%BB%E6%98%AF%E7%BB%9D%E5%AF%B9%E7%9A%84%E5%90%97%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">第十二讲 损失厌恶： 赢与输总是绝对的吗？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%8D%81%E4%B8%89%E8%AE%B2%EF%BC%9A-%E7%AA%81%E5%87%BA%E4%BA%8B%E4%BB%B6%E6%94%BE%E5%A4%A7%EF%BC%9A-%E4%B8%BA%E4%BB%80%E4%B9%88%E6%9C%89%E4%BA%BA%E4%B9%B0%E5%BD%A9%E7%A5%A8"><span class="nav-number">3.</span> <span class="nav-text">第十三讲： 突出事件放大： 为什么有人买彩票</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%8D%81%E5%9B%9B%E8%AE%B2%EF%BC%9A%E5%BF%83%E6%99%BA%E8%B4%A6%E6%88%B7%EF%BC%9A%E6%88%91%E4%BB%AC%E6%8A%8A%E9%92%B1%E5%AD%98%E5%9C%A8%E5%93%AA-%EF%BC%9F"><span class="nav-number">4.</span> <span class="nav-text">第十四讲：心智账户：我们把钱存在哪 ？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%8D%81%E4%BA%94%E7%AB%A0%EF%BC%9A-%E7%BE%8A%E7%BE%A4%E6%95%88%E5%BA%94%EF%BC%9A%E4%BA%BA%E4%B8%BA%E4%BB%80%E4%B9%88%E5%96%9C%E6%AC%A2%E6%A8%A1%E4%BB%BF"><span class="nav-number">5.</span> <span class="nav-text">第十五章： 羊群效应：人为什么喜欢模仿</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%8D%81%E5%85%AD%E7%AB%A0%EF%BC%9A-%E5%BD%93%E5%89%8D%E5%81%8F%E5%B7%AE-%E6%8B%96%E5%BB%B6%E7%97%87%E6%98%AF%E6%80%8E%E4%B9%88%E6%9D%A5%E7%9A%84%EF%BC%9F"><span class="nav-number">6.</span> <span class="nav-text">第十六章： 当前偏差 拖延症是怎么来的？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC17%E8%AE%B2-%E5%B8%82%E5%9C%BA%E6%83%85%E7%BB%AA%EF%BC%9A%E6%80%8E%E4%B9%88%E8%A1%A1%E9%87%8F%E9%9D%9E%E7%90%86%E6%80%A7%EF%BC%9F"><span class="nav-number">7.</span> <span class="nav-text">第17讲 市场情绪：怎么衡量非理性？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC18%E8%AE%B2-%E4%BD%8E%E9%A3%8E%E9%99%A9%E7%AD%96%E7%95%A5%EF%BC%9A%E4%BD%8E%E9%A3%8E%E9%99%A9%E5%8F%AF%E4%BB%A5%E6%9C%89%E9%AB%98%E6%94%B6%E7%9B%8A%E4%B9%88%EF%BC%9F"><span class="nav-number">8.</span> <span class="nav-text">第18讲 低风险策略：低风险可以有高收益么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC19%E8%AE%B2-%E9%AB%98%E5%93%81%E8%B4%A8%E7%AD%96%E7%95%A5%EF%BC%9A%E5%B7%B4%E8%8F%B2%E7%89%B9%E7%9C%9F%E7%9A%84%E5%96%9C%E6%AC%A2%E4%BB%B7%E5%80%BC%E6%8A%95%E8%B5%84%E4%B9%88%EF%BC%9F"><span class="nav-number">9.</span> <span class="nav-text">第19讲 高品质策略：巴菲特真的喜欢价值投资么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC20%E8%AE%B2-%E9%87%8F%E5%8C%96%E6%8A%95%E8%B5%84%E7%9A%84%E9%A3%8E%E9%99%A9%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F"><span class="nav-number">10.</span> <span class="nav-text">第20讲 量化投资的风险有哪些？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E5%8D%81%E4%B8%80%E8%AE%B2%EF%BC%9A-%E9%87%8F%E5%8C%96%E6%8A%95%E8%B5%84%E8%AF%AF%E5%8C%BA%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F"><span class="nav-number">11.</span> <span class="nav-text">第二十一讲： 量化投资误区有哪些？</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yuanwanli</p>
+  <div class="site-description" itemprop="description">等不是办法，干才有出路</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2021/09/20/2021-09-20-%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuanwanli">
+      <meta itemprop="description" content="等不是办法，干才有出路">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="brisk">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          行为经济学
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-09-20 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-20T00:00:00+08:00">2021-09-20</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-09-21 09:37:32" itemprop="dateModified" datetime="2021-09-21T09:37:32+08:00">2021-09-21</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BB%8F%E6%B5%8E%E5%AD%A6%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">经济学笔记</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="导论"><a href="#导论" class="headerlink" title="导论"></a>导论</h2><h2 id="第十二讲-损失厌恶：-赢与输总是绝对的吗？"><a href="#第十二讲-损失厌恶：-赢与输总是绝对的吗？" class="headerlink" title="第十二讲 损失厌恶： 赢与输总是绝对的吗？"></a>第十二讲 损失厌恶： 赢与输总是绝对的吗？</h2><p>损失厌恶：人们讨厌损失</p>
+<p>但真的是一种非理性的行为吗? </p>
+<p>实验： 训练猴子使用硬币。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A61.png"></p>
+<p>从进化论，错配的角度来说，损失厌恶让我更有动力， 有更大的冒险欲望。大脑对盈利和损失是不对称的。 </p>
+<p>例子：为什么经营不好的时候， 公司不减低工资而去裁员。降低工资会给员工带来损失厌恶。</p>
+<p>框架效应： 同样一个东西， 可以在一个框架下，是盈利的。另一个框架下，是损失的。</p>
+<p>处置效应： 卖掉挣钱的，保留亏钱的。 </p>
+<p>应用： </p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A62.png"></p>
+<p>改进：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A63.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A65.png"></p>
+<p>沉没成本： </p>
+<p>已经失去的损失，我们不应该再留恋他。</p>
+<h2 id="第十三讲：-突出事件放大：-为什么有人买彩票"><a href="#第十三讲：-突出事件放大：-为什么有人买彩票" class="headerlink" title="第十三讲： 突出事件放大： 为什么有人买彩票"></a>第十三讲： 突出事件放大： 为什么有人买彩票</h2><p>小概率事件高估： 预期中的偏差 </p>
+<p>突出事件较大的权重： 偏好的偏差</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A66.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A67.png"></p>
+<h2 id="第十四讲：心智账户：我们把钱存在哪-？"><a href="#第十四讲：心智账户：我们把钱存在哪-？" class="headerlink" title="第十四讲：心智账户：我们把钱存在哪 ？"></a>第十四讲：心智账户：我们把钱存在哪 ？</h2><p>心智账户，人常把钱分到不同的想象的账户里</p>
+<p>由于CEO和部门经理的心智账户不同，导致不同投资策略。 </p>
+<p>每个人的心智账户都不同。 </p>
+<p>一块100元巧克力自己吃，你可能会觉得贵，但是买送给女朋友，你觉得不贵。</p>
+<p>因为自己消费的账户和社交不是一个账户</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A68.png"></p>
+<p><strong>禀赋效应</strong>是指当个人一旦拥有某项物品，那么他对该物品价值的评价要比未拥有之前大大提高。它是由Richard Thaler(1980)提出的。这一<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E7%8E%B0%E8%B1%A1/2808631">现象</a>可以用<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E8%A1%8C%E4%B8%BA%E9%87%91%E8%9E%8D%E5%AD%A6/58795">行为金融学</a>中的“<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%8D%9F%E5%A4%B1%E5%8E%8C%E6%81%B6/2921704">损失厌恶</a>”理论来解释，该理论认为一定量的损失给人们带来的效用降低要多过相同的收益给人们带来的效用增加。因此人们在决策过程中对利害的权衡是不均衡的，对“避害”的考虑远大于对“趋利”的考虑。出于对损失的畏惧，人们在出卖商品时往往索要过高的价格。</p>
+<h2 id="第十五章：-羊群效应：人为什么喜欢模仿"><a href="#第十五章：-羊群效应：人为什么喜欢模仿" class="headerlink" title="第十五章： 羊群效应：人为什么喜欢模仿"></a>第十五章： 羊群效应：人为什么喜欢模仿</h2><p>羊群效应：人类的群体模仿行为</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A69.png"></p>
+<p>人有盲目跟从的冲动 。</p>
+<p>镜像神经元：来体会别人的感受</p>
+<h2 id="第十六章：-当前偏差-拖延症是怎么来的？"><a href="#第十六章：-当前偏差-拖延症是怎么来的？" class="headerlink" title="第十六章： 当前偏差 拖延症是怎么来的？"></a>第十六章： 当前偏差 拖延症是怎么来的？</h2><p>当前偏差：当前的折现率会高于未来的折现率。会导致我们更看重当前的快乐。</p>
+<p>原因：错配</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A610.png"></p>
+<p>当前偏差和讲话语言有没有未来时态有关</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A611.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A612.png"></p>
+<p>自控是需要消耗能量的，累的时候更难自控</p>
+<p>冥想有助于增加前额皮层的灰质 </p>
+<p>呼吸变慢有助于让你冷静</p>
+<h2 id="第17讲-市场情绪：怎么衡量非理性？"><a href="#第17讲-市场情绪：怎么衡量非理性？" class="headerlink" title="第17讲 市场情绪：怎么衡量非理性？"></a>第17讲 市场情绪：怎么衡量非理性？</h2><p>投资者情绪高：投资者对它有过分的需求，过高的预期，并非基本面的原因</p>
+<p>各种偏差的总结。</p>
+<p>投资者心情影响股票市场。 </p>
+<p>投资者心情可能受到月亮的影响。</p>
+<p>罪恶股票和社会价值股票的差异</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A613.png"></p>
+<p>如何测量市场情绪？</p>
+<p>ipo数量， 新开账户等。</p>
+<p>百度指数 </p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A613.png"></p>
+<h2 id="第18讲-低风险策略：低风险可以有高收益么？"><a href="#第18讲-低风险策略：低风险可以有高收益么？" class="headerlink" title="第18讲 低风险策略：低风险可以有高收益么？"></a>第18讲 低风险策略：低风险可以有高收益么？</h2><h2 id="第19讲-高品质策略：巴菲特真的喜欢价值投资么？"><a href="#第19讲-高品质策略：巴菲特真的喜欢价值投资么？" class="headerlink" title="第19讲 高品质策略：巴菲特真的喜欢价值投资么？"></a>第19讲 高品质策略：巴菲特真的喜欢价值投资么？</h2><p>大佬的投资策略</p>
+<p>索罗斯和沃森 ：低风险高收益</p>
+<p>巴菲特： 高品质投资， 价值投资</p>
+<h2 id="第20讲-量化投资的风险有哪些？"><a href="#第20讲-量化投资的风险有哪些？" class="headerlink" title="第20讲 量化投资的风险有哪些？"></a>第20讲 量化投资的风险有哪些？</h2><p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A615.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A616.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A617.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A618.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A619.png"></p>
+<p>量化投资策略三个风险： </p>
+<p>失效风险</p>
+<p>流通性风险 </p>
+<p>模型风险</p>
+<h2 id="第二十一讲：-量化投资误区有哪些？"><a href="#第二十一讲：-量化投资误区有哪些？" class="headerlink" title="第二十一讲： 量化投资误区有哪些？"></a>第二十一讲： 量化投资误区有哪些？</h2><p>1 基本面好就会收益率高，不一定。 国家GDP增速好不一定股票表现好， 新新行业不一定比老行业收益率高。 </p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A620.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A621.png"></p>
+<p>2 AI 投资不一定比人好。 </p>
+<p>3 智能投顾效果有限</p>
+<p>4 在国外市场得出的经验不一定在中国有效</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/09/13/2021-09-13-linux%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%9C%E4%B8%8E%E7%A3%81%E7%9B%98%E5%88%92%E5%88%86/" rel="prev" title="linux存储结果与磁盘划分">
+                  <i class="fa fa-chevron-left"></i> linux存储结果与磁盘划分
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/09/21/2021-09-21-1984/" rel="next" title="1984">
+                  1984 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuanwanli</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
