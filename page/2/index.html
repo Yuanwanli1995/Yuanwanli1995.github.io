@@ -130,7 +130,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-count">25</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -166,6 +166,121 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2021/09/08/2021-09-08-dockerfile%E5%BC%80%E5%8F%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuanwanli">
+      <meta itemprop="description" content="等不是办法，干才有出路">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="brisk">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/09/08/2021-09-08-dockerfile%E5%BC%80%E5%8F%91/" class="post-title-link" itemprop="url">dockerfile开发</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-09-08 11:26:00 / 修改时间：15:28:31" itemprop="dateCreated datePublished" datetime="2021-09-08T11:26:00+08:00">2021-09-08</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="第九讲-dockerfile-开发"><a href="#第九讲-dockerfile-开发" class="headerlink" title="第九讲 dockerfile 开发"></a>第九讲 dockerfile 开发</h2><h3 id="9-1-什么是dockerfile"><a href="#9-1-什么是dockerfile" class="headerlink" title="9.1 什么是dockerfile"></a>9.1 什么是dockerfile</h3><p>Dockerfile 是一个用来构建镜像的文本文件，文本内容包含了一条条构建镜像所需的指令和说明。</p>
+<h3 id="9-2-dockerfile构建镜像的流程"><a href="#9-2-dockerfile构建镜像的流程" class="headerlink" title="9.2 dockerfile构建镜像的流程"></a>9.2 dockerfile构建镜像的流程</h3><ol>
+<li> 编写一个dockerfile文本</li>
+<li>docker bulild构建一个镜像</li>
+<li>docker run 运行镜像 </li>
+<li>docker push 发布镜像(dockerhub， 阿里云镜像仓库)</li>
+</ol>
+<h3 id="9-3-dockerfile-命令"><a href="#9-3-dockerfile-命令" class="headerlink" title="9.3 dockerfile 命令"></a>9.3 dockerfile 命令</h3><p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/dockerfile%E5%91%BD%E4%BB%A4.jpg"></p>
+<h4 id="9-4-实例测试——新建一个带vim和net-tools的centos镜像"><a href="#9-4-实例测试——新建一个带vim和net-tools的centos镜像" class="headerlink" title="9.4 实例测试——新建一个带vim和net-tools的centos镜像"></a>9.4 实例测试——新建一个带vim和net-tools的centos镜像</h4><ol>
+<li> 编写dockerfle </li>
+</ol>
+   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@VM-4-6-centos mydocker]# vim dockerfile1 </span><br><span class="line">FROM centos </span><br><span class="line">MAINTAINER ywl&lt;yuan.wanli@qq.com&gt;</span><br><span class="line">ENV MYPATH /usr/local </span><br><span class="line">WORKDIR $MYPATH </span><br><span class="line">RUN yum -y install vim </span><br><span class="line">RUN yum -y install net-tools </span><br><span class="line">EXPOSE 80 </span><br><span class="line">CMD ehco $MYPATH</span><br><span class="line">CMD /bin/bash </span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><p>构建镜像 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br></pre></td><td class="code"><pre><span class="line">[root@VM-4-6-centos mydocker]# docker build --help </span><br><span class="line"></span><br><span class="line">Usage:  docker build [OPTIONS] PATH | URL | -</span><br><span class="line"></span><br><span class="line">Build an image from a Dockerfile</span><br><span class="line"></span><br><span class="line">Options:</span><br><span class="line">      --add-host list           Add a custom host-to-IP mapping (host:ip)</span><br><span class="line">      --build-arg list          Set build-time variables</span><br><span class="line">      --cache-from strings      Images to consider as cache sources</span><br><span class="line">      --cgroup-parent string    Optional parent cgroup for the container</span><br><span class="line">      --compress                Compress the build context using gzip</span><br><span class="line">      --cpu-period int          Limit the CPU CFS (Completely Fair Scheduler) period</span><br><span class="line">      --cpu-quota int           Limit the CPU CFS (Completely Fair Scheduler) quota</span><br><span class="line">  -c, --cpu-shares int          CPU shares (relative weight)</span><br><span class="line">      --cpuset-cpus string      CPUs in which to allow execution (0-3, 0,1)</span><br><span class="line">      --cpuset-mems string      MEMs in which to allow execution (0-3, 0,1)</span><br><span class="line">      --disable-content-trust   Skip image verification (default true)</span><br><span class="line">  -f, --file string             Name of the Dockerfile (Default is &#x27;PATH/Dockerfile&#x27;)</span><br><span class="line">      --force-rm                Always remove intermediate containers</span><br><span class="line">      --iidfile string          Write the image ID to the file</span><br><span class="line">      --isolation string        Container isolation technology</span><br><span class="line">      --label list              Set metadata for an image</span><br><span class="line">  -m, --memory bytes            Memory limit</span><br><span class="line">      --memory-swap bytes       Swap limit equal to memory plus swap: &#x27;-1&#x27; to enable unlimited swap</span><br><span class="line">      --network string          Set the networking mode for the RUN instructions during build (default &quot;default&quot;)</span><br><span class="line">      --no-cache                Do not use cache when building the image</span><br><span class="line">      --pull                    Always attempt to pull a newer version of the image</span><br><span class="line">  -q, --quiet                   Suppress the build output and print image ID on success</span><br><span class="line">      --rm                      Remove intermediate containers after a successful build (default true)</span><br><span class="line">      --security-opt strings    Security options</span><br><span class="line">      --shm-size bytes          Size of /dev/shm</span><br><span class="line">  -t, --tag list                Name and optionally a tag in the &#x27;name:tag&#x27; format</span><br><span class="line">      --target string           Set the target build stage to build.</span><br><span class="line">      --ulimit ulimit           Ulimit options (default [])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[root@VM-4-6-centos mydocker]# docker build -f dockerfile1 -t mycentos:1.0 .</span><br><span class="line">Sending build context to Docker daemon  2.048kB</span><br><span class="line">Step 1/9 : FROM centos</span><br><span class="line"> ---&gt; 300e315adb2f</span><br><span class="line">Step 2/9 : MAINTAINER ywl&lt;yuan.wanli@qq.com&gt;</span><br><span class="line"> ---&gt; Running in 2f009ebbce45</span><br><span class="line">Removing intermediate container 2f009ebbce45</span><br><span class="line"> ---&gt; 3e039c5d5963</span><br><span class="line">Step 3/9 : ENV MYPATH /usr/local</span><br><span class="line"> ---&gt; Running in 902ec92baf9a</span><br><span class="line">Removing intermediate container 902ec92baf9a</span><br><span class="line"> ---&gt; 0d77fd7a4baf</span><br><span class="line">Step 4/9 : WORKDIR $MYPATH</span><br><span class="line"> ---&gt; Running in 9d8012ef4523</span><br><span class="line">Removing intermediate container 9d8012ef4523</span><br><span class="line"> ---&gt; 7f363b93ec76</span><br><span class="line">Step 5/9 : RUN yum -y install vim</span><br><span class="line"> ---&gt; Running in 9e54c5f8edfe</span><br><span class="line">CentOS Linux 8 - AppStream                      6.7 MB/s | 8.8 MB     00:01    </span><br><span class="line">CentOS Linux 8 - BaseOS                         4.6 MB/s | 5.6 MB     00:01    </span><br><span class="line">CentOS Linux 8 - Extras                          21 kB/s |  10 kB     00:00    </span><br><span class="line">Dependencies resolved.</span><br><span class="line">================================================================================</span><br><span class="line"> Package             Arch        Version                   Repository      Size</span><br><span class="line">================================================================================</span><br><span class="line">Installing:</span><br><span class="line"> vim-enhanced        x86_64      2:8.0.1763-15.el8         appstream      1.4 M</span><br><span class="line">Installing dependencies:</span><br><span class="line"> gpm-libs            x86_64      1.20.7-17.el8             appstream       39 k</span><br><span class="line"> vim-common          x86_64      2:8.0.1763-15.el8         appstream      6.3 M</span><br><span class="line"> vim-filesystem      noarch      2:8.0.1763-15.el8         appstream       48 k</span><br><span class="line"> which               x86_64      2.21-12.el8               baseos          49 k</span><br><span class="line"></span><br><span class="line">Transaction Summary</span><br><span class="line">================================================================================</span><br><span class="line">Install  5 Packages</span><br><span class="line"></span><br><span class="line">Total download size: 7.8 M</span><br><span class="line">Installed size: 30 M</span><br><span class="line">Downloading Packages:</span><br><span class="line">(1/5): gpm-libs-1.20.7-17.el8.x86_64.rpm        425 kB/s |  39 kB     00:00    </span><br><span class="line">(2/5): vim-filesystem-8.0.1763-15.el8.noarch.rp 1.6 MB/s |  48 kB     00:00    </span><br><span class="line">(3/5): vim-enhanced-8.0.1763-15.el8.x86_64.rpm  4.6 MB/s | 1.4 MB     00:00    </span><br><span class="line">(4/5): which-2.21-12.el8.x86_64.rpm             280 kB/s |  49 kB     00:00    </span><br><span class="line">(5/5): vim-common-8.0.1763-15.el8.x86_64.rpm    9.4 MB/s | 6.3 MB     00:00    </span><br><span class="line">--------------------------------------------------------------------------------</span><br><span class="line">Total                                           5.2 MB/s | 7.8 MB     00:01     </span><br><span class="line">warning: /var/cache/dnf/appstream-02e86d1c976ab532/packages/gpm-libs-1.20.7-17.el8.x86_64.rpm: Header V3 RSA/SHA256 Signature, key ID 8483c65d: NOKEY</span><br><span class="line">CentOS Linux 8 - AppStream                      1.6 MB/s | 1.6 kB     00:00    </span><br><span class="line">Importing GPG key 0x8483C65D:</span><br><span class="line"> Userid     : &quot;CentOS (CentOS Official Signing Key) &lt;security@centos.org&gt;&quot;</span><br><span class="line"> Fingerprint: 99DB 70FA E1D7 CE22 7FB6 4882 05B5 55B3 8483 C65D</span><br><span class="line"> From       : /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial</span><br><span class="line">Key imported successfully</span><br><span class="line">Running transaction check</span><br><span class="line">Transaction check succeeded.</span><br><span class="line">Running transaction test</span><br><span class="line">Transaction test succeeded.</span><br><span class="line">Running transaction</span><br><span class="line">  Preparing        :                                                        1/1 </span><br><span class="line">  Installing       : which-2.21-12.el8.x86_64                               1/5 </span><br><span class="line">  Installing       : vim-filesystem-2:8.0.1763-15.el8.noarch                2/5 </span><br><span class="line">  Installing       : vim-common-2:8.0.1763-15.el8.x86_64                    3/5 </span><br><span class="line">  Installing       : gpm-libs-1.20.7-17.el8.x86_64                          4/5 </span><br><span class="line">  Running scriptlet: gpm-libs-1.20.7-17.el8.x86_64                          4/5 </span><br><span class="line">  Installing       : vim-enhanced-2:8.0.1763-15.el8.x86_64                  5/5 </span><br><span class="line">  Running scriptlet: vim-enhanced-2:8.0.1763-15.el8.x86_64                  5/5 </span><br><span class="line">  Running scriptlet: vim-common-2:8.0.1763-15.el8.x86_64                    5/5 </span><br><span class="line">  Verifying        : gpm-libs-1.20.7-17.el8.x86_64                          1/5 </span><br><span class="line">  Verifying        : vim-common-2:8.0.1763-15.el8.x86_64                    2/5 </span><br><span class="line">  Verifying        : vim-enhanced-2:8.0.1763-15.el8.x86_64                  3/5 </span><br><span class="line">  Verifying        : vim-filesystem-2:8.0.1763-15.el8.noarch                4/5 </span><br><span class="line">  Verifying        : which-2.21-12.el8.x86_64                               5/5 </span><br><span class="line"></span><br><span class="line">Installed:</span><br><span class="line">  gpm-libs-1.20.7-17.el8.x86_64         vim-common-2:8.0.1763-15.el8.x86_64    </span><br><span class="line">  vim-enhanced-2:8.0.1763-15.el8.x86_64 vim-filesystem-2:8.0.1763-15.el8.noarch</span><br><span class="line">  which-2.21-12.el8.x86_64             </span><br><span class="line"></span><br><span class="line">Complete!</span><br><span class="line">Removing intermediate container 9e54c5f8edfe</span><br><span class="line"> ---&gt; 5dea379858f6</span><br><span class="line">Step 6/9 : RUN yum -y install net-tools</span><br><span class="line"> ---&gt; Running in a238f0f61bd1</span><br><span class="line">Last metadata expiration check: 0:00:11 ago on Wed Sep  8 05:20:26 2021.</span><br><span class="line">Dependencies resolved.</span><br><span class="line">================================================================================</span><br><span class="line"> Package         Architecture Version                        Repository    Size</span><br><span class="line">================================================================================</span><br><span class="line">Installing:</span><br><span class="line"> net-tools       x86_64       2.0-0.52.20160912git.el8       baseos       322 k</span><br><span class="line"></span><br><span class="line">Transaction Summary</span><br><span class="line">================================================================================</span><br><span class="line">Install  1 Package</span><br><span class="line"></span><br><span class="line">Total download size: 322 k</span><br><span class="line">Installed size: 942 k</span><br><span class="line">Downloading Packages:</span><br><span class="line">net-tools-2.0-0.52.20160912git.el8.x86_64.rpm   1.1 MB/s | 322 kB     00:00    </span><br><span class="line">--------------------------------------------------------------------------------</span><br><span class="line">Total                                           547 kB/s | 322 kB     00:00     </span><br><span class="line">Running transaction check</span><br><span class="line">Transaction check succeeded.</span><br><span class="line">Running transaction test</span><br><span class="line">Transaction test succeeded.</span><br><span class="line">Running transaction</span><br><span class="line">  Preparing        :                                                        1/1 </span><br><span class="line">  Installing       : net-tools-2.0-0.52.20160912git.el8.x86_64              1/1 </span><br><span class="line">  Running scriptlet: net-tools-2.0-0.52.20160912git.el8.x86_64              1/1 </span><br><span class="line">  Verifying        : net-tools-2.0-0.52.20160912git.el8.x86_64              1/1 </span><br><span class="line"></span><br><span class="line">Installed:</span><br><span class="line">  net-tools-2.0-0.52.20160912git.el8.x86_64                                     </span><br><span class="line"></span><br><span class="line">Complete!</span><br><span class="line">Removing intermediate container a238f0f61bd1</span><br><span class="line"> ---&gt; fe15f2802369</span><br><span class="line">Step 7/9 : EXPOSE 80</span><br><span class="line"> ---&gt; Running in dd05e3d35f52</span><br><span class="line">Removing intermediate container dd05e3d35f52</span><br><span class="line"> ---&gt; 8b2ed813e0cc</span><br><span class="line">Step 8/9 : CMD ehco $MYPATH</span><br><span class="line"> ---&gt; Running in 3abafde69c99</span><br><span class="line">Removing intermediate container 3abafde69c99</span><br><span class="line"> ---&gt; 7a93ce354052</span><br><span class="line">Step 9/9 : CMD /bin/bash</span><br><span class="line"> ---&gt; Running in 0737c0226cf2</span><br><span class="line">Removing intermediate container 0737c0226cf2</span><br><span class="line"> ---&gt; b531a51cbc3e</span><br><span class="line">Successfully built b531a51cbc3e</span><br><span class="line">Successfully tagged mycentos:1.0</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li><p>测试 </p>
+<p>   查看镜像</p>
+   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@VM-4-6-centos mydocker]# docker images </span><br><span class="line">REPOSITORY            TAG       IMAGE ID       CREATED         SIZE</span><br><span class="line">mycentos              1.0       b531a51cbc3e   4 minutes ago   307MB</span><br><span class="line">centos                latest    300e315adb2f   9 months ago    209MB</span><br></pre></td></tr></table></figure>
+
+<p>   运行一个容器 </p>
+   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@VM-4-6-centos mydocker]# docker run -it b531a51cbc3e</span><br><span class="line">[root@915fe46d200b local]# ls</span><br><span class="line">bin  etc  games  include  lib  lib64  libexec  sbin  share  src</span><br><span class="line">[root@915fe46d200b local]# pwd </span><br><span class="line">/usr/local</span><br><span class="line">[root@915fe46d200b local]# vim test.txt</span><br></pre></td></tr></table></figure></li>
+<li><p>查看镜像构建历史 </p>
+   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@VM-4-6-centos mydocker]# docker history --human b531a51cbc3e</span><br><span class="line">IMAGE          CREATED          CREATED BY                                      SIZE      COMMENT</span><br><span class="line">b531a51cbc3e   14 minutes ago   /bin/sh -c #(nop)  CMD [&quot;/bin/sh&quot; &quot;-c&quot; &quot;/bin…   0B     </span><br><span class="line">7a93ce354052   14 minutes ago   /bin/sh -c #(nop)  CMD [&quot;/bin/sh&quot; &quot;-c&quot; &quot;ehco…   0B     </span><br><span class="line">8b2ed813e0cc   14 minutes ago   /bin/sh -c #(nop)  EXPOSE 80                    0B     </span><br><span class="line">fe15f2802369   14 minutes ago   /bin/sh -c yum -y install net-tools             29.5M </span><br><span class="line">5dea379858f6   14 minutes ago   /bin/sh -c yum -y install vim                   68.1MB </span><br><span class="line">7f363b93ec76   14 minutes ago   /bin/sh -c #(nop) WORKDIR /usr/local            0B     </span><br><span class="line">0d77fd7a4baf   14 minutes ago   /bin/sh -c #(nop)  ENV MYPATH=/usr/local        0B     </span><br><span class="line">3e039c5d5963   14 minutes ago   /bin/sh -c #(nop)  MAINTAINER ywl&lt;yuan.wanli…   0B     </span><br><span class="line">300e315adb2f   9 months ago     /bin/sh -c #(nop)  CMD [&quot;/bin/bash&quot;]            0B     </span><br><span class="line">&lt;missing&gt;      9 months ago     /bin/sh -c #(nop)  LABEL org.label-schema.sc…   0B     </span><br><span class="line">&lt;missing&gt;      9 months ago     /bin/sh -c #(nop) ADD file:bd7a2aed6ede423b7…   209MB </span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>9.5 CMD 于 ENTRYPOINT区别 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CMD				# 指定这个容器启动的时候要运行的命令，只有最后一个会生效，可被替代。</span><br><span class="line">ENTRYPOINT	   # 指定这个容器启动的时候要运行的命令，可以追加命令*</span><br></pre></td></tr></table></figure>
+
+<p>测试CMD </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"># 编写dockerfile文件</span><br><span class="line">$ vim dockerfile-test-cmd</span><br><span class="line">FROM centos</span><br><span class="line">CMD [&quot;ls&quot;,&quot;-a&quot;]					# 启动后执行 ls -a 命令</span><br><span class="line"></span><br><span class="line"># 构建镜像</span><br><span class="line">$ docker build  -f dockerfile-test-cmd -t cmd-test:0.1 .</span><br><span class="line"></span><br><span class="line"># 运行镜像</span><br><span class="line">$ docker run cmd-test:0.1		# 由结果可得，运行后就执行了 ls -a 命令</span><br><span class="line">.</span><br><span class="line">..</span><br><span class="line">.dockerenv</span><br><span class="line">bin</span><br><span class="line">dev</span><br><span class="line">etc</span><br><span class="line">home</span><br><span class="line"></span><br><span class="line"># 想追加一个命令  -l 成为ls -al：展示列表详细数据</span><br><span class="line">$ docker run cmd-test:0.1 -l</span><br><span class="line">docker: Error response from daemon: OCI runtime create failed: container_linux.go:349: starting container process caused &quot;exec: \&quot;-l\&quot;:</span><br><span class="line">executable file not found in $PATH&quot;: unknown.</span><br><span class="line">ERRO[0000] error waiting for container: context canceled </span><br><span class="line"></span><br><span class="line"># cmd的情况下 -l 替换了CMD[&quot;ls&quot;,&quot;-l&quot;] 而 -l  不是命令所以报错</span><br></pre></td></tr></table></figure>
+
+<p>测试ENTRYPOINT </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"># 编写dockerfile文件</span><br><span class="line">$ vim dockerfile-test-entrypoint</span><br><span class="line">FROM centos</span><br><span class="line">ENTRYPOINT [&quot;ls&quot;,&quot;-a&quot;]</span><br><span class="line"></span><br><span class="line"># 构建镜像</span><br><span class="line">$ docker build  -f dockerfile-test-entrypoint -t cmd-test:0.1 .</span><br><span class="line"></span><br><span class="line"># 运行镜像</span><br><span class="line">$ docker run entrypoint-test:0.1</span><br><span class="line">.</span><br><span class="line">..</span><br><span class="line">.dockerenv</span><br><span class="line">bin</span><br><span class="line">dev</span><br><span class="line">etc</span><br><span class="line">home</span><br><span class="line">lib</span><br><span class="line">lib64</span><br><span class="line">lost+found ...</span><br><span class="line"></span><br><span class="line"># 我们的命令，是直接拼接在我们得ENTRYPOINT命令后面的</span><br><span class="line">$ docker run entrypoint-test:0.1 -l</span><br><span class="line">total 56</span><br><span class="line">drwxr-xr-x   1 root root 4096 May 16 06:32 .</span><br><span class="line">drwxr-xr-x   1 root root 4096 May 16 06:32 ..</span><br><span class="line">-rwxr-xr-x   1 root root    0 May 16 06:32 .dockerenv</span><br><span class="line">lrwxrwxrwx   1 root root    7 May 11  2019 bin -&gt; usr/bin</span><br><span class="line">drwxr-xr-x   5 root root  340 May 16 06:32 dev</span><br><span class="line">drwxr-xr-x   1 root root 4096 May 16 06:32 etc</span><br><span class="line">drwxr-xr-x   2 root root 4096 May 11  2019 home</span><br><span class="line">lrwxrwxrwx   1 root root    7 May 11  2019 lib -&gt; usr/lib</span><br><span class="line">lrwxrwxrwx   1 root root    9 May 11  2019 lib64 -&gt; usr/lib64 ....</span><br></pre></td></tr></table></figure>
+
+<p>Dockerfile中很多命令都十分的相似，我们需要了解它们的区别，我们最好的学习就是对比他们然后测试效果！</p>
+<h2 id="实战：Tomcat镜像"><a href="#实战：Tomcat镜像" class="headerlink" title="实战：Tomcat镜像"></a>实战：Tomcat镜像</h2><h5 id="1、准备镜像文件"><a href="#1、准备镜像文件" class="headerlink" title="1、准备镜像文件"></a>1、准备镜像文件</h5><p>准备tomcat 和 jdk 到当前目录，编写好README</p>
+<h5 id="2、编写dokerfile"><a href="#2、编写dokerfile" class="headerlink" title="2、编写dokerfile"></a>2、编写dokerfile</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">$ vim dockerfile</span><br><span class="line">FROM centos 										# 基础镜像centos</span><br><span class="line">MAINTAINER cao&lt;1165680007@qq.com&gt;					# 作者</span><br><span class="line">COPY README /usr/local/README 						# 复制README文件</span><br><span class="line">ADD jdk-8u231-linux-x64.tar.gz /usr/local/ 			# 添加jdk，ADD 命令会自动解压</span><br><span class="line">ADD apache-tomcat-9.0.35.tar.gz /usr/local/ 		# 添加tomcat，ADD 命令会自动解压</span><br><span class="line">RUN yum -y install vim								# 安装 vim 命令</span><br><span class="line">ENV MYPATH /usr/local 								# 环境变量设置 工作目录</span><br><span class="line">WORKDIR $MYPATH</span><br><span class="line"></span><br><span class="line">ENV JAVA_HOME /usr/local/jdk1.8.0_231 				# 环境变量： JAVA_HOME环境变量</span><br><span class="line">ENV CLASSPATH $JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar</span><br><span class="line"></span><br><span class="line">ENV CATALINA_HOME /usr/local/apache-tomcat-9.0.35 	# 环境变量： tomcat环境变量</span><br><span class="line">ENV CATALINA_BASH /usr/local/apache-tomcat-9.0.35</span><br><span class="line"></span><br><span class="line"># 设置环境变量 分隔符是：</span><br><span class="line">ENV PATH $PATH:$JAVA_HOME/bin:$CATALINA_HOME/lib:$CATALINA_HOME/bin 	</span><br><span class="line"></span><br><span class="line">EXPOSE 8080 										# 设置暴露的端口</span><br><span class="line"></span><br><span class="line">CMD /usr/local/apache-tomcat-9.0.35/bin/startup.sh &amp;&amp; tail -F /usr/local/apache-tomcat-9.0.35/logs/catalina.out 					# 设置默认命令</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="3、构建镜像"><a href="#3、构建镜像" class="headerlink" title="3、构建镜像"></a>3、构建镜像</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 因为dockerfile命名使用默认命名 因此不用使用-f 指定文件</span><br><span class="line">$ docker build -t mytomcat:0.1 .</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="4、run镜像"><a href="#4、run镜像" class="headerlink" title="4、run镜像"></a>4、run镜像</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># -d:后台运行 -p:暴露端口 --name:别名 -v:绑定路径 </span><br><span class="line">$ docker run -d -p 8080:8080 --name tomcat01 </span><br><span class="line">-v /home/kuangshen/build/tomcat/test:/usr/local/apache-tomcat-9.0.35/webapps/test </span><br><span class="line">-v /home/kuangshen/build/tomcat/tomcatlogs/:/usr/local/apache-tomcat-9.0.35/logs mytomcat:0.1</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h5 id="5、访问测试"><a href="#5、访问测试" class="headerlink" title="5、访问测试"></a>5、访问测试</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ docker exec -it 自定义容器的id /bin/bash</span><br><span class="line">$ cul localhost:8080</span><br></pre></td></tr></table></figure>
+
+<h5 id="6、发布项目"><a href="#6、发布项目" class="headerlink" title="6、发布项目"></a>6、发布项目</h5><p>(由于做了卷挂载，我们直接在本地编写项目就可以发布了！)</p>
+<p>发现：项目部署成功，可以直接访问！</p>
+<p>我们以后开发的步骤：需要掌握Dockerfile的编写！我们之后的一切都是使用docker镜像来发布运行！</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1235,100 +1350,6 @@
 </blockquote>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#1 找到配置文件</span><br><span class="line"> cd /etc/docker/daemon.json</span><br><span class="line">#2 vim编辑配置文件</span><br><span class="line"> vim /etc/docker/daemon.json</span><br><span class="line">#3 添加以下内容并保存</span><br><span class="line">    &#123;</span><br><span class="line">    &quot;registry-mirrors&quot;: [</span><br><span class="line">     &quot;https://mirror.ccs.tencentyun.com&quot;</span><br><span class="line">    ]</span><br><span class="line">    &#125;</span><br><span class="line">#4 重启docker生效</span><br><span class="line"> systemctl restart docker</span><br></pre></td></tr></table></figure>
 
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2021/08/27/1%20docker%E6%A6%82%E8%BF%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yuanwanli">
-      <meta itemprop="description" content="等不是办法，干才有出路">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="brisk">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/08/27/1%20docker%E6%A6%82%E8%BF%B0/" class="post-title-link" itemprop="url">docker 概述</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-08-27 14:00:00" itemprop="dateCreated datePublished" datetime="2021-08-27T14:00:00+08:00">2021-08-27</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-09-09 23:22:30" itemprop="dateModified" datetime="2021-09-09T23:22:30+08:00">2021-09-09</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%BC%96%E7%A8%8B%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">编程笔记</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="1-docker概述"><a href="#1-docker概述" class="headerlink" title="1  docker概述"></a>1  docker概述</h2><h3 id="1-1-docker是什么？"><a href="#1-1-docker是什么？" class="headerlink" title="1.1 docker是什么？"></a>1.1 docker是什么？</h3><p>开发和运维的环境不同，可能导致程序在开发的环境中可以正常运行而在运维的环境中出错。为了解决这个问题， docker可以将项目和环境一起打包，可以保持项目和环境保持一致。（问题驱动，需求驱动）</p>
-<h3 id="1-2-docker发展"><a href="#1-2-docker发展" class="headerlink" title="1.2 docker发展"></a>1.2 docker发展</h3><ol>
-<li>Docker 公司位于旧金山，由法裔美籍开发者和企业家 Solumon Hykes 创立，起初是一家名为 dotCloud 的提供Paas的公司。</li>
-<li>2013年，dotCloud 的 PaaS 业务并不景气，公司需要寻求新的突破。于是他们聘请了 Ben Golub 作为新的 CEO，将公司重命名为“Docker”，放弃dotCloud PaaS 平台，怀揣着“将 Docker 和容器技术推向全世界”的使命，开启了一段新的征程。</li>
-<li>现今的Docker 公司已经通过多轮融资，吸纳了来自硅谷的几家风投公司的累计超过 2.4 亿美元的投资。</li>
-<li>docker相比于虚拟机，十分的小巧，启动快速 </li>
-</ol>
-<h3 id="1-3-docker的特点"><a href="#1-3-docker的特点" class="headerlink" title="1.3 docker的特点"></a>1.3 docker的特点</h3><p>与传统虚拟化方法相比， 传统的虚拟机虚拟完整的硬件， 然后在系统上运行软件，而容器没有硬件和内核，所以非常轻便， 而且容器之间隔离的。</p>
-<p><img src="E:\blogpic\docker1.png"><img src="E:\blogpic\docker2.png" alt="docker2"></p>
-<h3 id="1-4-使用docker后-DevOps-开发与运维的变化"><a href="#1-4-使用docker后-DevOps-开发与运维的变化" class="headerlink" title="1.4  使用docker后 DevOps 开发与运维的变化"></a>1.4  使用docker后 DevOps 开发与运维的变化</h3><ol>
-<li> 应用更快速的交付和部署，传统一堆帮助文档需要安装环境，现在一键部署</li>
-<li> 更便捷的升级和扩缩容，项目打包成一个镜像，像搭积木一样部署</li>
-<li> 更简单的系统运维，开发测试运维的环境高度一致</li>
-<li> 更高效的计算资源利用，一个服务器上可以运行多个容器，提高资源利用效率。 </li>
-</ol>
 
       
     </div>
