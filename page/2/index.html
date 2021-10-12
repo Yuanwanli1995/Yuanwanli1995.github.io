@@ -130,13 +130,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-count">38</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
   </nav>
@@ -166,6 +166,636 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2021/09/23/golang%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuanwanli">
+      <meta itemprop="description" content="等不是办法，干才有出路">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="brisk">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/09/23/golang%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">golang学习笔记</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-09-23 11:05:00 / 修改时间：19:05:17" itemprop="dateCreated datePublished" datetime="2021-09-23T11:05:00+08:00">2021-09-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BC%96%E7%A8%8B%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">编程笔记</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="1-golang开山篇"><a href="#1-golang开山篇" class="headerlink" title="1 golang开山篇"></a>1 golang开山篇</h2><p>本笔记来自尚硅谷课程<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1ME411Y71o">《Golang入门到实战教程》</a></p>
+<h3 id="1-1-golang学习方向"><a href="#1-1-golang学习方向" class="headerlink" title="1.1 golang学习方向"></a>1.1 golang学习方向</h3><ul>
+<li> 区块链研发工程师</li>
+<li>go服务器端/游戏软件工程师</li>
+<li>go分布式/云计算工程师</li>
+</ul>
+<h3 id="1-2-应用领域"><a href="#1-2-应用领域" class="headerlink" title="1.2 应用领域"></a>1.2 应用领域</h3><ul>
+<li>区块链（blockchain technology）的应用开发,  也称分布式账本技术， 是一种互联网数据库技术，其特点是去中心化、公开透明，让每个人均可参与数据库记录</li>
+<li>后端服务器应用， 如美团后台流量支撑，游戏后端。</li>
+<li>云计算、云服务器 </li>
+</ul>
+<h3 id="1-3-学习方法推荐"><a href="#1-3-学习方法推荐" class="headerlink" title="1.3 学习方法推荐"></a>1.3 学习方法推荐</h3><ul>
+<li>高效而愉快的学习</li>
+<li>先建立一个整体框架，然后再扣细节</li>
+<li>在实际工作中，要培养用到什么，能够快速学习的能力</li>
+<li>要先 know how, 在 know why——工科</li>
+<li>软件编程是一们做中学的学科</li>
+<li>适当的囫囵吞枣</li>
+<li>学习软件编程是在琢磨别人怎么做 #向优美的代码学习</li>
+</ul>
+<h3 id="1-4-go语言吉祥物"><a href="#1-4-go语言吉祥物" class="headerlink" title="1.4 go语言吉祥物"></a>1.4 go语言吉祥物</h3><p>金花鼠gordon </p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/go1.png"></p>
+<h3 id="1-4-讲课方式的说明"><a href="#1-4-讲课方式的说明" class="headerlink" title="1.4 讲课方式的说明"></a>1.4 讲课方式的说明</h3><ol>
+<li>努力做到通俗易懂</li>
+<li>注重语言体系，同时兼顾技术细节</li>
+<li>在实际工作中， 如何快速的掌握一个技术的分享，讲解 </li>
+</ol>
+<p><strong>如何快速深入的学习技术</strong>？(建议)</p>
+<p>需求-&gt;现有技术的缺陷-&gt;学习新技术-&gt;快速入门-&gt;框架-&gt;不断补充细节</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line">    id1(需求)--&gt;id2(现有技术的缺陷)--&gt;id3(学习新技术)--&gt;id4(快速入门)--&gt;id5(理解框架)--&gt;id6(不断积累补充细节)</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="2-Golang导论"><a href="#2-Golang导论" class="headerlink" title="2 Golang导论"></a>2 Golang导论</h2><h3 id="2-1-什么是程序？"><a href="#2-1-什么是程序？" class="headerlink" title="2.1 什么是程序？"></a>2.1 什么是程序？</h3><p>要让人做事需要告诉他做什么事，让程序做一件事要告诉计算机怎么做。 </p>
+<blockquote>
+<p>程序：为了让计算机执行某些操作或解决某个问题而编写的一系列有序指令的集合。 </p>
+</blockquote>
+<h3 id="2-2-go诞生小故事"><a href="#2-2-go诞生小故事" class="headerlink" title="2.2 go诞生小故事"></a>2.2 go诞生小故事</h3><p>核心开发团队：</p>
+<ul>
+<li> Ken Thompson  </li>
+<li>Rob Pike </li>
+<li>Robert Griesemer</li>
+</ul>
+<h3 id="2-3-google-创造golang的原因"><a href="#2-3-google-创造golang的原因" class="headerlink" title="2.3 google 创造golang的原因"></a>2.3 google 创造golang的原因</h3><ol>
+<li>计算机硬件技术更新频繁，性能提高很快， 目前主流的编程语言发展明显落后于硬件，不能合理利用多核多cpu的优势提升软件系统性能 </li>
+<li>软件系统复杂度越来越高，维护成本越来越高，目前缺乏一个足够简介高效的编程语言（认为现有的编程语言，风格不够统一，计算能力不够，处理大并发不够好）</li>
+<li>企业运行维护很多c/c++的项目，c/c++程序速度虽然很快，但是编译速度确实很慢，还存在内存泄漏的问题。 </li>
+</ol>
+<h3 id="2-4-golang-的发展历程"><a href="#2-4-golang-的发展历程" class="headerlink" title="2.4 golang 的发展历程"></a>2.4 golang 的发展历程</h3><ul>
+<li> 2007，谷歌工程师Rob Pike, Ken Thomson, Robert Griesemer开始设计一门全新的语言，这是go的原型。 </li>
+<li>2009年11月10日， google将go语言以开放源代码的放方向向全球发布</li>
+<li>2015年8月19日， go 1.5版本发布， 本次更新移除了最后参与的c代码</li>
+<li>2017年2月17日，go1.8版本发布</li>
+<li>2017年8月24日， go语言1.9发布</li>
+<li>2018年2月16日， go语言1.10发布</li>
+</ul>
+<h3 id="2-5-go的语言特点"><a href="#2-5-go的语言特点" class="headerlink" title="2.5 go的语言特点"></a>2.5 go的语言特点</h3><ul>
+<li><p> go语言保证了既能达到静态编译语言的安全和性能，又达到了动态语言开发维护的高效率。使用一个表达式来形容go语言： go = c+ python </p>
+</li>
+<li><p>从c语言中继承了很多理念，包括表达式语法，控制结构， 基础数据结构，调用参数传值，指针等。</p>
+</li>
+<li><p>引入包的的概念， 用于组织程序结构，go语言每一个文件都要归属一个包，而不能单独存在 </p>
+</li>
+<li><p>垃圾回收机制， 内存自动回收，不需要开发人员管理</p>
+</li>
+<li><p>天然并发</p>
+<ol>
+<li>从语言层面支持并发，实现简单</li>
+<li>goroutine，轻量级线程，可实现大并发处理，高效利用多核</li>
+<li>基于CPS(communicating sequential processes)实现</li>
+</ol>
+</li>
+<li><p>吸收了管道通信机制， 形成go特有的管道channel，通过channel，可以实现不同观点goroute之间的相互通信</p>
+</li>
+<li><p>函数可以返回 多个值 </p>
+</li>
+<li><p>切片slice, 延时执行 </p>
+</li>
+</ul>
+<h3 id="2-4-开发工具的介绍"><a href="#2-4-开发工具的介绍" class="headerlink" title="2.4 开发工具的介绍"></a>2.4 开发工具的介绍</h3><h4 id="2-4-1-工具介绍"><a href="#2-4-1-工具介绍" class="headerlink" title="2.4.1 工具介绍"></a>2.4.1 工具介绍</h4><ul>
+<li>visual studio code, 提供go语言的语法高亮， 安装go语言插件，支持智能提示</li>
+<li>sublime text </li>
+<li>vim </li>
+<li>emacs </li>
+<li>eclipse </li>
+<li>liteIDE </li>
+<li>jitBrains</li>
+</ul>
+<h4 id="2-4-2-工具选择"><a href="#2-4-2-工具选择" class="headerlink" title="2.4.2 工具选择"></a>2.4.2 工具选择</h4><p>先使用vscode, 到对go由一定的了解之后， 再换成其他的工具</p>
+<p>为什么呢？</p>
+<blockquote>
+<p>更深刻的理解go语言技术，培养代码感</p>
+<p>有利于公司面试， 手撕代码</p>
+</blockquote>
+<h4 id="2-4-3-配置sdk"><a href="#2-4-3-配置sdk" class="headerlink" title="2.4.3 配置sdk"></a>2.4.3 配置sdk</h4><p><a target="_blank" rel="noopener" href="https://golang.google.cn/dl/">中文官网</a>下载安装即可</p>
+<p>安装好自动配置环境变量</p>
+<h4 id="2-4-4-vscode下载安装"><a href="#2-4-4-vscode下载安装" class="headerlink" title="2.4.4 vscode下载安装"></a>2.4.4 vscode下载安装</h4><p>官网[<a target="_blank" rel="noopener" href="https://code.visualstudio.com/download">Download Visual Studio Code - Mac, Linux, Windows</a>]下载安装</p>
+<h3 id="2-5-go-开发快速入门"><a href="#2-5-go-开发快速入门" class="headerlink" title="2.5 go 开发快速入门"></a>2.5 go 开发快速入门</h3><h4 id="2-5-1-需求"><a href="#2-5-1-需求" class="headerlink" title="2.5.1 需求"></a>2.5.1 需求</h4><p>开发一个hello.go程序，输出 ”hello, world“</p>
+<h4 id="2-5-2步骤"><a href="#2-5-2步骤" class="headerlink" title="2.5.2步骤"></a>2.5.2步骤</h4><ol>
+<li>目录结构</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/go3.png"></p>
+<ol start="2">
+<li>代码 </li>
+</ol>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 输出 hello world </span></span><br><span class="line"><span class="keyword">package</span> main </span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	fmt.Println(<span class="string">&quot;hello world&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li> 说明 </li>
+</ol>
+<ul>
+<li> go 文件后缀是.go</li>
+<li>package main, 所在文件的包是main, 在go中，每个文件都必须属于一个包</li>
+<li>import “fmt”, 引入一个包fmt， 引入后可以使用其函数 </li>
+<li>func main(){} ,<ol>
+<li>func是一个关键字，表示一个函数 </li>
+<li>main是函数名， 是一个主函数， 即程序的入口</li>
+</ol>
+</li>
+<li>fmt.Pritln(“hello, world”) ， 调用fmt函数Pirntln输出</li>
+</ul>
+<ol start="4">
+<li> 编译 </li>
+</ol>
+<p>   cmd中编译: go build</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">D:\&gt;<span class="title">cd</span> <span class="title">D</span>:\<span class="title">gopackage</span>\<span class="title">src</span>\<span class="title">go_code</span>\<span class="title">project01</span>\<span class="title">main</span>\</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">D</span>:\<span class="title">gopackage</span>\<span class="title">src</span>\<span class="title">go_code</span>\<span class="title">project01</span>\<span class="title">main</span> 的目录</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">2021-09-23  18:52    &lt;<span class="title">DIR</span>&gt;          .</span></span><br><span class="line"><span class="function">2021-09-23  18:52    &lt;<span class="title">DIR</span>&gt;          ..</span></span><br><span class="line"><span class="function">2021-09-23  18:36                97 <span class="title">hello.go</span></span></span><br><span class="line"><span class="function">               1 个文件             97 字节</span></span><br><span class="line"><span class="function">               2 个目录 91,778,326,528 可用字节</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">D</span>:\<span class="title">gopackage</span>\<span class="title">src</span>\<span class="title">go_code</span>\<span class="title">project01</span>\<span class="title">main</span>&gt;<span class="title">go</span> <span class="title">build</span> <span class="title">hello.go</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">D</span>:\<span class="title">gopackage</span>\<span class="title">src</span>\<span class="title">go_code</span>\<span class="title">project01</span>\<span class="title">main</span>&gt;<span class="title">dir</span></span></span><br><span class="line"><span class="function"> 驱动器 <span class="title">D</span> 中的卷是 代码</span></span><br><span class="line"><span class="function"> 卷的序列号是 <span class="title">EC0E</span>-<span class="title">DCEA</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"> <span class="title">D</span>:\<span class="title">gopackage</span>\<span class="title">src</span>\<span class="title">go_code</span>\<span class="title">project01</span>\<span class="title">main</span> 的目录</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">2021-09-23  18:56    &lt;<span class="title">DIR</span>&gt;          .</span></span><br><span class="line"><span class="function">2021-09-23  18:56    &lt;<span class="title">DIR</span>&gt;          ..</span></span><br><span class="line"><span class="function">2021-09-23  18:56         1,924,608 <span class="title">hello.exe</span></span></span><br><span class="line"><span class="function">2021-09-23  18:36                97 <span class="title">hello.go</span></span></span><br><span class="line"><span class="function">               2 个文件      1,924,705 字节</span></span><br><span class="line"><span class="function">               2 个目录 91,776,401,408 可用字节</span></span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>运行 </li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">D:\gopackage\src\go_code\project01\main&gt;hello,go</span><br><span class="line">hello world</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2021/09/22/%E3%80%8A%E6%88%91%E4%BB%AC%E3%80%8B%20%E6%91%98%E5%BD%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuanwanli">
+      <meta itemprop="description" content="等不是办法，干才有出路">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="brisk">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/09/22/%E3%80%8A%E6%88%91%E4%BB%AC%E3%80%8B%20%E6%91%98%E5%BD%95/" class="post-title-link" itemprop="url">《我们》</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-09-22 00:00:00 / 修改时间：08:59:18" itemprop="dateCreated datePublished" datetime="2021-09-22T00:00:00+08:00">2021-09-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">读书笔记</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="《我们》-摘录"><a href="#《我们》-摘录" class="headerlink" title="《我们》 摘录"></a>《我们》 摘录</h2><p>叶甫盖尼·扎米亚京  陈超译 </p>
+<ul>
+<li>上帝曾经让天堂里那两位作出自己的选择：或者选择没有自由的幸福，或者选择没有幸福的自由，第三种选择是没有的。</li>
+<li>“这表明，你喜欢。你怕它，是因为它的力量大于你。你讨厌它，是因为你怕它。你喜欢它，是因为你无法使它顺从你。人只喜欢他无法占有的东西。”</li>
+<li>自由与犯罪是密不可分的，就像…嗯，就像飞机的运动与它的速度，当它速度为零时，它就是静止的，当人没有自由时，他就不会犯罪。这是很清楚的道理。不让人犯罪的唯一途径就是剥夺他的自由。</li>
+<li>“告诉我们什么是最后的数字，最终的数字，最大的数字。” “但这太荒唐了！数字的数目是无限的，怎么会有最后的数字呢？” “那怎么会有最后的革命呢？最后的革命是不存在的：革命是无休止的。” </li>
+</ul>
+<p><strong>附录部分：</strong></p>
+<ul>
+<li>革命无处不在， 革命蕴涵在万物之中。他是无限的，没有最后的革命，也没有最终的数字。 社会革命只是无限的数字革命中的一个：革命的法则不是社会法则，而是无法估量的更伟大的法则。它是普世的宇宙法则——就像能亮守恒法则和能量耗散法则。终有一天，一道确切的革命法则公式将会确立，在这道公司里，国家、阶级、星星——还有书籍，都会作为数字变量加以描述。</li>
+<li>有害的文学作品要比有用的文学作品更有意义，因为它在与熵对抗，它是对抗僵化、硬化、结痂、苔藓、静止的手段。 </li>
+<li>异端对于健康是必须的，如果没有异端，就应该催生异端。 </li>
+<li>孩子们是最勇敢的哲学家，他们赤裸裸的来到世上，不为最细微的教条、绝对真理、信条所蒙蔽。这就是为什么他们问的每一个问题都很荒唐、天真而又复杂的惊人。</li>
+<li>生机勃勃的人总在犯错，总是在追寻、提问、受折磨。</li>
+<li>答案可能是错的，哲学可能是谬误——错误比真理更有价值：真理就像机器， 而错误是鲜活的。</li>
+<li>荒唐吗？是的。平行线相交也是荒唐的，但它只是在欧几里得的经典几何才是荒唐的。在非欧几何里，它是一则定理，你需要做的就是不再局限于平面，超越平面。</li>
+<li>刺痛自己是很困难的，甚至是危险的。但对于那些活着的人来说，在今天像昨天一样生活是更加困难的事情。 </li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2021/09/21/2021-09-21-1984/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuanwanli">
+      <meta itemprop="description" content="等不是办法，干才有出路">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="brisk">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/09/21/2021-09-21-1984/" class="post-title-link" itemprop="url">《1984》</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-09-21 20:20:20" itemprop="dateCreated datePublished" datetime="2021-09-21T20:20:20+08:00">2021-09-21</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-10-03 20:15:49" itemprop="dateModified" datetime="2021-10-03T20:15:49+08:00">2021-10-03</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">读书笔记</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="《1984》摘录"><a href="#《1984》摘录" class="headerlink" title="《1984》摘录"></a>《1984》摘录</h3><ul>
+<li><p>有史以来，大概自从新石器时代结束以来，世上就有三种人，即上等人、中等人、下等人。 这三种人的目标是完全不可调和的。上等人的目标是要保持他们的地位。中等人的目标是要同高等人交换地位。下等人的特点始终是，他们劳苦之余无暇旁顾，偶而才顾到日常生活以外的事，因此他们如果有目标的话，无非是取消一切差别，建立一个人人平等的社会。这样，在历史上始终存在着一场一而再再而三发生的斗争，其大致轮廓相同。 他们（上等人）就被中等人所推翻，因为中等人标榜自己为自由和正义而奋斗，把下等人争取到自己一边来。中等人一旦达到目的就把下等人重又推回到原来的被奴役地位，自己变成了上等人。不久，其他两等人中有一等人，或者两等人都分裂出一批新的中等人来，这场斗争就周而复始。 三等人中只有下等人从来没有实现过自己的目标，哪怕是暂时实现自己的目标。 从下等人的观点来看，历史若有变化，大不了是主子名字改变而已。 中等人只要还在争取权力的时候，总是利用自由、正义、博爱这种好听的字眼。 中等人在平等的旗帜下闹革命，一旦推翻了原来的暴政，自己又建立了新的暴政。</p>
+</li>
+<li><p>在本世纪中叶出现的所谓“取消私有制”，实际上意味着把财产集中到比以前更少得多的一批人手中；不同的只是：新主人是一个集团，而不是一批个人。</p>
+</li>
+<li><p>把等级社会永久化的问题却比这深刻得多。统治集团只有在四种情况下才会丧失权力：或者是被外部力量所征服；或者是统治无能，群众起来造反；或者是让一个强大而不满的中等人集团出现；或者是自己丧失了统治的信心和意志。这四个原因并不单个起作用，在某种程度上总是同时存在。统治阶级如能防止这四个原因的产生就能永久当权。 在实际生活中，无产阶级者是没有机会升入党内的。他们中间最有天赋的人，若有可能成为不满的核心人物，则干脆由思想警察逐个消灭掉。</p>
+</li>
+<li><p>从无产阶级那里，没有什么可以担心的。你不去惹他们，他们就会一代又一代地、一个世纪又一个世纪地做工、繁殖、死亡，不仅没有造反的冲动，而且也没有能力理解可以有一个不同于目前世界的世界。只有在工业技术的发展使得你必须给他们以较高的教育的时候，他们才会具有危险性；但是由于军事和商业竞争已不复重要，民众教育水平实际已趋下降。群众有什么看法，或者没有什么看法，已被视为无足轻重的事。因为他们没有智力，所以不妨给予学术自由。而在一个党员身上，哪怕在最无足轻重的问题上都不容有丝毫的不同意见。</p>
+</li>
+<li><p>历史不是一面镜子，而是黑板上的记号，可以随时擦去，随时填补。更为可怕的是，一旦涂改了，你找不到证据去证明这是篡改历史的行为。</p>
+</li>
+<li><p>他们生了下来以后就在街头长大，十二岁去做工，经过短短一个美丽的情窦初开时期，在二十岁就结了婚，上三十岁就开始衰老，大多数人在六十岁就死掉了。重体力活、照顾家庭子女、同邻居吵架、电影、足球、啤酒，而尤其是赌博，就是他们心目中的一切。</p>
+</li>
+<li><p>党的一句口号说：“谁控制过去就控制未来；谁控制现在就控制过去。”虽然从其性质来说，过去是可以改变的，但是却从来没有改变过。凡是现在是正确的东西，永远也是正确的。</p>
+</li>
+<li><p>但如果不是纯粹为了某件事，他还是能忍着和她一起生活的，那就是性。</p>
+</li>
+<li><p>除非他们觉醒，否则永远不会反抗；但除非他们反抗，否则不会觉醒。</p>
+</li>
+<li><p>“你做爱时，耗尽了全部力气，然后你感到愉快，对一切都无所谓。他们不能忍受你有这种感觉，他们想要你时时保持精力充沛。所有那些来来去去的操练、欢呼、挥舞旗帜等等，都无非是另外的性发泄方式。如果你内心感觉愉快，你干吗还要为老大哥、三年计划、两分钟仇恨会以及所有别的操蛋玩意儿激动？”</p>
+</li>
+<li><p>“你腰部以下才是个造反派。”他告诉她。 她觉得这句话异常精彩，高兴得一把抱住他。</p>
+</li>
+<li><p>可是，又不想就这样死去，即使看不到未来，也还是要尽可能地延长现在的生活。只能活一天算一天，得过且过。就好比人的肺一遇空气就会呼吸一样，这是一种本能。</p>
+</li>
+<li><p>寡头集体主义政体的实质，不是父业子承的世袭，而是特定世界观与生活方式的传承与延续，由死人传至活人。统治阶层之所以是统治阶层，便因为只要它指定继任者，政权就可以延续。党所在意的不是血统在政治上的维系而是党本身的存在。由谁掌权并不重要，重要的是，保持社会等级制度始终如一。 </p>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2021/09/20/2021-09-20-%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuanwanli">
+      <meta itemprop="description" content="等不是办法，干才有出路">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="brisk">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/09/20/2021-09-20-%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A6/" class="post-title-link" itemprop="url">行为经济学</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-09-20 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-20T00:00:00+08:00">2021-09-20</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-09-21 09:37:32" itemprop="dateModified" datetime="2021-09-21T09:37:32+08:00">2021-09-21</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BB%8F%E6%B5%8E%E5%AD%A6%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">经济学笔记</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="导论"><a href="#导论" class="headerlink" title="导论"></a>导论</h2><h2 id="第十二讲-损失厌恶：-赢与输总是绝对的吗？"><a href="#第十二讲-损失厌恶：-赢与输总是绝对的吗？" class="headerlink" title="第十二讲 损失厌恶： 赢与输总是绝对的吗？"></a>第十二讲 损失厌恶： 赢与输总是绝对的吗？</h2><p>损失厌恶：人们讨厌损失</p>
+<p>但真的是一种非理性的行为吗? </p>
+<p>实验： 训练猴子使用硬币。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A61.png"></p>
+<p>从进化论，错配的角度来说，损失厌恶让我更有动力， 有更大的冒险欲望。大脑对盈利和损失是不对称的。 </p>
+<p>例子：为什么经营不好的时候， 公司不减低工资而去裁员。降低工资会给员工带来损失厌恶。</p>
+<p>框架效应： 同样一个东西， 可以在一个框架下，是盈利的。另一个框架下，是损失的。</p>
+<p>处置效应： 卖掉挣钱的，保留亏钱的。 </p>
+<p>应用： </p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A62.png"></p>
+<p>改进：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A63.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A65.png"></p>
+<p>沉没成本： </p>
+<p>已经失去的损失，我们不应该再留恋他。</p>
+<h2 id="第十三讲：-突出事件放大：-为什么有人买彩票"><a href="#第十三讲：-突出事件放大：-为什么有人买彩票" class="headerlink" title="第十三讲： 突出事件放大： 为什么有人买彩票"></a>第十三讲： 突出事件放大： 为什么有人买彩票</h2><p>小概率事件高估： 预期中的偏差 </p>
+<p>突出事件较大的权重： 偏好的偏差</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A66.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A67.png"></p>
+<h2 id="第十四讲：心智账户：我们把钱存在哪-？"><a href="#第十四讲：心智账户：我们把钱存在哪-？" class="headerlink" title="第十四讲：心智账户：我们把钱存在哪 ？"></a>第十四讲：心智账户：我们把钱存在哪 ？</h2><p>心智账户，人常把钱分到不同的想象的账户里</p>
+<p>由于CEO和部门经理的心智账户不同，导致不同投资策略。 </p>
+<p>每个人的心智账户都不同。 </p>
+<p>一块100元巧克力自己吃，你可能会觉得贵，但是买送给女朋友，你觉得不贵。</p>
+<p>因为自己消费的账户和社交不是一个账户</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A68.png"></p>
+<p><strong>禀赋效应</strong>是指当个人一旦拥有某项物品，那么他对该物品价值的评价要比未拥有之前大大提高。它是由Richard Thaler(1980)提出的。这一<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E7%8E%B0%E8%B1%A1/2808631">现象</a>可以用<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E8%A1%8C%E4%B8%BA%E9%87%91%E8%9E%8D%E5%AD%A6/58795">行为金融学</a>中的“<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%8D%9F%E5%A4%B1%E5%8E%8C%E6%81%B6/2921704">损失厌恶</a>”理论来解释，该理论认为一定量的损失给人们带来的效用降低要多过相同的收益给人们带来的效用增加。因此人们在决策过程中对利害的权衡是不均衡的，对“避害”的考虑远大于对“趋利”的考虑。出于对损失的畏惧，人们在出卖商品时往往索要过高的价格。</p>
+<h2 id="第十五章：-羊群效应：人为什么喜欢模仿"><a href="#第十五章：-羊群效应：人为什么喜欢模仿" class="headerlink" title="第十五章： 羊群效应：人为什么喜欢模仿"></a>第十五章： 羊群效应：人为什么喜欢模仿</h2><p>羊群效应：人类的群体模仿行为</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A69.png"></p>
+<p>人有盲目跟从的冲动 。</p>
+<p>镜像神经元：来体会别人的感受</p>
+<h2 id="第十六章：-当前偏差-拖延症是怎么来的？"><a href="#第十六章：-当前偏差-拖延症是怎么来的？" class="headerlink" title="第十六章： 当前偏差 拖延症是怎么来的？"></a>第十六章： 当前偏差 拖延症是怎么来的？</h2><p>当前偏差：当前的折现率会高于未来的折现率。会导致我们更看重当前的快乐。</p>
+<p>原因：错配</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A610.png"></p>
+<p>当前偏差和讲话语言有没有未来时态有关</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A611.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A612.png"></p>
+<p>自控是需要消耗能量的，累的时候更难自控</p>
+<p>冥想有助于增加前额皮层的灰质 </p>
+<p>呼吸变慢有助于让你冷静</p>
+<h2 id="第17讲-市场情绪：怎么衡量非理性？"><a href="#第17讲-市场情绪：怎么衡量非理性？" class="headerlink" title="第17讲 市场情绪：怎么衡量非理性？"></a>第17讲 市场情绪：怎么衡量非理性？</h2><p>投资者情绪高：投资者对它有过分的需求，过高的预期，并非基本面的原因</p>
+<p>各种偏差的总结。</p>
+<p>投资者心情影响股票市场。 </p>
+<p>投资者心情可能受到月亮的影响。</p>
+<p>罪恶股票和社会价值股票的差异</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A613.png"></p>
+<p>如何测量市场情绪？</p>
+<p>ipo数量， 新开账户等。</p>
+<p>百度指数 </p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A613.png"></p>
+<h2 id="第18讲-低风险策略：低风险可以有高收益么？"><a href="#第18讲-低风险策略：低风险可以有高收益么？" class="headerlink" title="第18讲 低风险策略：低风险可以有高收益么？"></a>第18讲 低风险策略：低风险可以有高收益么？</h2><h2 id="第19讲-高品质策略：巴菲特真的喜欢价值投资么？"><a href="#第19讲-高品质策略：巴菲特真的喜欢价值投资么？" class="headerlink" title="第19讲 高品质策略：巴菲特真的喜欢价值投资么？"></a>第19讲 高品质策略：巴菲特真的喜欢价值投资么？</h2><p>大佬的投资策略</p>
+<p>索罗斯和沃森 ：低风险高收益</p>
+<p>巴菲特： 高品质投资， 价值投资</p>
+<h2 id="第20讲-量化投资的风险有哪些？"><a href="#第20讲-量化投资的风险有哪些？" class="headerlink" title="第20讲 量化投资的风险有哪些？"></a>第20讲 量化投资的风险有哪些？</h2><p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A615.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A616.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A617.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A618.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A619.png"></p>
+<p>量化投资策略三个风险： </p>
+<p>失效风险</p>
+<p>流通性风险 </p>
+<p>模型风险</p>
+<h2 id="第二十一讲：-量化投资误区有哪些？"><a href="#第二十一讲：-量化投资误区有哪些？" class="headerlink" title="第二十一讲： 量化投资误区有哪些？"></a>第二十一讲： 量化投资误区有哪些？</h2><p>1 基本面好就会收益率高，不一定。 国家GDP增速好不一定股票表现好， 新新行业不一定比老行业收益率高。 </p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A620.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A621.png"></p>
+<p>2 AI 投资不一定比人好。 </p>
+<p>3 智能投顾效果有限</p>
+<p>4 在国外市场得出的经验不一定在中国有效</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2021/09/19/%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%A4%87%E6%B3%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuanwanli">
+      <meta itemprop="description" content="等不是办法，干才有出路">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="brisk">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/09/19/%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%A4%87%E6%B3%A8/" class="post-title-link" itemprop="url">二进制备注</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-09-19 18:15:00" itemprop="dateCreated datePublished" datetime="2021-09-19T18:15:00+08:00">2021-09-19</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-10-03 18:15:44" itemprop="dateModified" datetime="2021-10-03T18:15:44+08:00">2021-10-03</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BC%96%E7%A8%8B%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">编程笔记</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>二进制备注 </p>
+<p>待整理</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br></pre></td><td class="code"><pre><span class="line">在Node节点部署组件</span><br><span class="line">Master apiserver启用TLS认证后，Node节点kubelet组件想要加入集群，必须使用CA签发的有效证书才能与apiserver通信，当Node节点很多时，签署证书是一件很繁琐的事情，因此有了TLS Bootstrapping机制，kubelet会以一个低权限用户自动向apiserver申请证书，kubelet的证书由apiserver动态签署。</span><br><span class="line"></span><br><span class="line">master节点部署</span><br><span class="line">将kubelet-bootstrap用户绑定到系统集群角色</span><br><span class="line">[root@master ~]# /opt/kubernetes/bin/kubectl create clusterrolebinding kubelet-bootstrap \</span><br><span class="line">  --clusterrole=system:node-bootstrapper \</span><br><span class="line">  --user=kubelet-bootstrap</span><br><span class="line"></span><br><span class="line">创建kubeconfig文件:</span><br><span class="line">在生成kubernetes证书的目录下执行以下命令生成kubeconfig文件：</span><br><span class="line">[root@master ~]# cd /k8s</span><br><span class="line">指定apiserver 内网负载均衡地址</span><br><span class="line">[root@master k8s]# KUBE_APISERVER=&quot;https://10.206.176.19:6443&quot;</span><br><span class="line">[root@master k8s]# BOOTSTRAP_TOKEN=674c457d4dcf2eefe4920d7dbb6b0ddc   #这个和上面创建token文件的一致</span><br><span class="line"></span><br><span class="line">设置集群参数</span><br><span class="line">[root@master k8s]# /opt/kubernetes/bin/kubectl config set-cluster kubernetes \</span><br><span class="line">  --certificate-authority=./ca.pem \</span><br><span class="line">  --embed-certs=true \</span><br><span class="line">  --server=$&#123;KUBE_APISERVER&#125; \</span><br><span class="line">  --kubeconfig=bootstrap.kubeconfig</span><br><span class="line"></span><br><span class="line">设置客户端认证参数</span><br><span class="line">[root@master k8s]# /opt/kubernetes/bin/kubectl config set-credentials kubelet-bootstrap \</span><br><span class="line">  --token=$&#123;BOOTSTRAP_TOKEN&#125; \</span><br><span class="line">  --kubeconfig=bootstrap.kubeconfig</span><br><span class="line"></span><br><span class="line">设置上下文参数</span><br><span class="line">[root@master k8s]# /opt/kubernetes/bin/kubectl config set-context default \</span><br><span class="line">  --cluster=kubernetes \</span><br><span class="line">  --user=kubelet-bootstrap \</span><br><span class="line">  --kubeconfig=bootstrap.kubeconfig</span><br><span class="line"></span><br><span class="line">设置默认上下文</span><br><span class="line">[root@master k8s]# /opt/kubernetes/bin/kubectl config use-context default --kubeconfig=bootstrap.kubeconfig</span><br><span class="line"></span><br><span class="line">创建kube-proxy kubeconfig文件</span><br><span class="line"></span><br><span class="line">[root@master k8s]# /opt/kubernetes/bin/kubectl config set-cluster kubernetes \</span><br><span class="line">  --certificate-authority=./ca.pem \</span><br><span class="line">  --embed-certs=true \</span><br><span class="line">  --server=$&#123;KUBE_APISERVER&#125; \</span><br><span class="line">  --kubeconfig=kube-proxy.kubeconfig</span><br><span class="line"></span><br><span class="line">[root@master k8s]# /opt/kubernetes/bin/kubectl config set-credentials kube-proxy \</span><br><span class="line">  --client-certificate=./kube-proxy.pem \</span><br><span class="line">  --client-key=./kube-proxy-key.pem \</span><br><span class="line">  --embed-certs=true \</span><br><span class="line">  --kubeconfig=kube-proxy.kubeconfig</span><br><span class="line"></span><br><span class="line">[root@master k8s]# /opt/kubernetes/bin/kubectl config set-context default \</span><br><span class="line">  --cluster=kubernetes \</span><br><span class="line">  --user=kube-proxy \</span><br><span class="line">  --kubeconfig=kube-proxy.kubeconfig</span><br><span class="line"></span><br><span class="line">[root@master k8s]# /opt/kubernetes/bin/kubectl config use-context default --kubeconfig=kube-proxy.kubeconfig</span><br><span class="line"></span><br><span class="line">[root@master k8s]# ls    #会多出下面两个.kubeconfig文件</span><br><span class="line">bootstrap.kubeconfig  kube-proxy.kubeconfig</span><br><span class="line"></span><br><span class="line">将这两个文件拷贝到Node节点/opt/kubernetes/cfg目录下。 !!!!不能忽略</span><br><span class="line">[root@master k8s]# scp bootstrap.kubeconfig  kube-proxy.kubeconfig node1:/opt/kubernetes/cfg</span><br><span class="line">[root@master k8s]# scp bootstrap.kubeconfig  kube-proxy.kubeconfig node2:/opt/kubernetes/cfg</span><br><span class="line"></span><br><span class="line">部署kubelet组件</span><br><span class="line">将前面下载的二进制包中的kubelet和kube-proxy拷贝到/opt/kubernetes/bin目录下。 </span><br><span class="line">（master节点）</span><br><span class="line">cd /root/kubernetes/server/bin/</span><br><span class="line">scp kubelet kube-proxy node1:/opt/kubernetes/bin</span><br><span class="line">scp kubelet kube-proxy node2:/opt/kubernetes/bin</span><br><span class="line">----------------------下面这些操作在所有node节点完成：---------------------------</span><br><span class="line">创建kubelet配置文件：</span><br><span class="line"># vim /opt/kubernetes/cfg/kubelet</span><br><span class="line">KUBELET_OPTS=&quot;--logtostderr=true \</span><br><span class="line">--v=4 \</span><br><span class="line">--hostname-override=192.168.13.142 \</span><br><span class="line">--kubeconfig=/opt/kubernetes/cfg/kubelet.kubeconfig \</span><br><span class="line">--bootstrap-kubeconfig=/opt/kubernetes/cfg/bootstrap.kubeconfig \</span><br><span class="line">--config=/opt/kubernetes/cfg/kubelet.config \</span><br><span class="line">--cert-dir=/opt/kubernetes/ssl \</span><br><span class="line">--pod-infra-container-image=registry.cn-hangzhou.aliyuncs.com/google-containers/pause-amd64:3.0&quot;</span><br><span class="line">===============================================================</span><br><span class="line">参数说明：</span><br><span class="line">* --hostname-override 在集群中显示的主机名（你改成node1，node2也可以）</span><br><span class="line">* --kubeconfig 指定kubeconfig文件位置，会自动生成</span><br><span class="line">* --bootstrap-kubeconfig 指定刚才生成的bootstrap.kubeconfig文件</span><br><span class="line">* --cert-dir 颁发证书存放位置</span><br><span class="line">* --pod-infra-container-image 管理Pod网络的镜像</span><br><span class="line">===============================================================</span><br><span class="line">其中/opt/kubernetes/cfg/kubelet.config配置文件如下：</span><br><span class="line"># vim /opt/kubernetes/cfg/kubelet.config</span><br><span class="line">kind: KubeletConfiguration</span><br><span class="line">apiVersion: kubelet.config.k8s.io/v1beta1</span><br><span class="line">address: 192.168.13.142</span><br><span class="line">port: 10250</span><br><span class="line">readOnlyPort: 10255</span><br><span class="line">cgroupDriver: cgroupfs</span><br><span class="line">clusterDNS: [&quot;10.0.0.2&quot;]</span><br><span class="line">clusterDomain: cluster.local.</span><br><span class="line">failSwapOn: false</span><br><span class="line">authentication:</span><br><span class="line">  anonymous:</span><br><span class="line">    enabled: true </span><br><span class="line">  webhook:</span><br><span class="line">    enabled: false</span><br><span class="line"></span><br><span class="line">systemd管理kubelet组件：</span><br><span class="line"># vim /usr/lib/systemd/system/kubelet.service </span><br><span class="line">[Unit]</span><br><span class="line">Description=Kubernetes Kubelet</span><br><span class="line">After=docker.service</span><br><span class="line">Requires=docker.service</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">EnvironmentFile=/opt/kubernetes/cfg/kubelet</span><br><span class="line">ExecStart=/opt/kubernetes/bin/kubelet $KUBELET_OPTS</span><br><span class="line">Restart=on-failure</span><br><span class="line">KillMode=process</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br><span class="line"></span><br><span class="line">启动：</span><br><span class="line"># systemctl daemon-reload</span><br><span class="line"># systemctl enable kubelet</span><br><span class="line"># systemctl start kubelet</span><br><span class="line"></span><br><span class="line">master节点：</span><br><span class="line">在Master审批Node加入集群：</span><br><span class="line">启动后还没加入到集群中，需要手动允许该节点才可以。</span><br><span class="line">在Master节点查看请求签名的Node：</span><br><span class="line">[root@master ~]# /opt/kubernetes/bin/kubectl get csr</span><br><span class="line">找到NAME</span><br><span class="line">[root@master ~]# /opt/kubernetes/bin/kubectl certificate approve 刚刚获取到的NAME</span><br><span class="line">[root@master ~]# /opt/kubernetes/bin/kubectl get node</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">node节点：</span><br><span class="line">部署kube-proxy组件</span><br><span class="line">创建kube-proxy配置文件：</span><br><span class="line"># vim /opt/kubernetes/cfg/kube-proxy</span><br><span class="line">KUBE_PROXY_OPTS=&quot;--logtostderr=true \</span><br><span class="line">--v=4 \</span><br><span class="line">--hostname-override=192.168.13.142 \</span><br><span class="line">--cluster-cidr=10.0.0.0/24 \</span><br><span class="line">--kubeconfig=/opt/kubernetes/cfg/kube-proxy.kubeconfig&quot;</span><br><span class="line"></span><br><span class="line">systemd管理kube-proxy组件：</span><br><span class="line"># vim /usr/lib/systemd/system/kube-proxy.service </span><br><span class="line">[Unit]</span><br><span class="line">Description=Kubernetes Proxy</span><br><span class="line">After=network.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">EnvironmentFile=-/opt/kubernetes/cfg/kube-proxy</span><br><span class="line">ExecStart=/opt/kubernetes/bin/kube-proxy $KUBE_PROXY_OPTS</span><br><span class="line">Restart=on-failure</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br><span class="line"></span><br><span class="line">启动：</span><br><span class="line"># systemctl daemon-reload</span><br><span class="line"># systemctl enable kube-proxy</span><br><span class="line"># systemctl start kube-proxy</span><br><span class="line"></span><br><span class="line">master节点：</span><br><span class="line">查看集群状态</span><br><span class="line">[root@master ~]# /opt/kubernetes/bin/kubectl get node</span><br><span class="line">NAME             STATUS    ROLES     AGE       VERSION</span><br><span class="line">192.168.13.142   Ready     &lt;none&gt;    1h        v1.11.0</span><br><span class="line">192.168.13.143   Ready     &lt;none&gt;    1h        v1.11.0</span><br><span class="line">[root@master ~]# /opt/kubernetes/bin/kubectl get cs</span><br><span class="line">NAME                 STATUS    MESSAGE              ERROR</span><br><span class="line">scheduler            Healthy   ok                   </span><br><span class="line">controller-manager   Healthy   ok                   </span><br><span class="line">etcd-1               Healthy   &#123;&quot;health&quot;: &quot;true&quot;&#125;   </span><br><span class="line">etcd-2               Healthy   &#123;&quot;health&quot;: &quot;true&quot;&#125;   </span><br><span class="line">etcd-0               Healthy   &#123;&quot;health&quot;: &quot;true&quot;&#125;   </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -711,719 +1341,6 @@
 
 <p>总结：</p>
 <p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/docker17.png"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2021/09/08/typora%E2%80%94%E2%80%94github+pigGo%E6%90%AD%E5%BB%BA%E5%8F%AF%E7%94%A8%E7%9A%84%E5%85%8D%E8%B4%B9%E5%9B%BE%E5%BA%8A/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yuanwanli">
-      <meta itemprop="description" content="等不是办法，干才有出路">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="brisk">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/09/08/typora%E2%80%94%E2%80%94github+pigGo%E6%90%AD%E5%BB%BA%E5%8F%AF%E7%94%A8%E7%9A%84%E5%85%8D%E8%B4%B9%E5%9B%BE%E5%BA%8A/" class="post-title-link" itemprop="url">typora——github+pigGo搭建可用的免费图床</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-09-08 11:50:54" itemprop="dateCreated datePublished" datetime="2021-09-08T11:50:54+08:00">2021-09-08</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2021/09/08/githubpages+hexo-%E6%9E%84%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yuanwanli">
-      <meta itemprop="description" content="等不是办法，干才有出路">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="brisk">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/09/08/githubpages+hexo-%E6%9E%84%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" class="post-title-link" itemprop="url">githubpages+hexo 构建个人博客</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-09-08 11:47:42" itemprop="dateCreated datePublished" datetime="2021-09-08T11:47:42+08:00">2021-09-08</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2021/09/08/2021-09-08-dockerfile%E5%BC%80%E5%8F%91/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yuanwanli">
-      <meta itemprop="description" content="等不是办法，干才有出路">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="brisk">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/09/08/2021-09-08-dockerfile%E5%BC%80%E5%8F%91/" class="post-title-link" itemprop="url">dockerfile开发</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2021-09-08 11:26:00 / 修改时间：15:28:31" itemprop="dateCreated datePublished" datetime="2021-09-08T11:26:00+08:00">2021-09-08</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="第九讲-dockerfile-开发"><a href="#第九讲-dockerfile-开发" class="headerlink" title="第九讲 dockerfile 开发"></a>第九讲 dockerfile 开发</h2><h3 id="9-1-什么是dockerfile"><a href="#9-1-什么是dockerfile" class="headerlink" title="9.1 什么是dockerfile"></a>9.1 什么是dockerfile</h3><p>Dockerfile 是一个用来构建镜像的文本文件，文本内容包含了一条条构建镜像所需的指令和说明。</p>
-<h3 id="9-2-dockerfile构建镜像的流程"><a href="#9-2-dockerfile构建镜像的流程" class="headerlink" title="9.2 dockerfile构建镜像的流程"></a>9.2 dockerfile构建镜像的流程</h3><ol>
-<li> 编写一个dockerfile文本</li>
-<li>docker bulild构建一个镜像</li>
-<li>docker run 运行镜像 </li>
-<li>docker push 发布镜像(dockerhub， 阿里云镜像仓库)</li>
-</ol>
-<h3 id="9-3-dockerfile-命令"><a href="#9-3-dockerfile-命令" class="headerlink" title="9.3 dockerfile 命令"></a>9.3 dockerfile 命令</h3><p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/dockerfile%E5%91%BD%E4%BB%A4.jpg"></p>
-<h4 id="9-4-实例测试——新建一个带vim和net-tools的centos镜像"><a href="#9-4-实例测试——新建一个带vim和net-tools的centos镜像" class="headerlink" title="9.4 实例测试——新建一个带vim和net-tools的centos镜像"></a>9.4 实例测试——新建一个带vim和net-tools的centos镜像</h4><ol>
-<li> 编写dockerfle </li>
-</ol>
-   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@VM-4-6-centos mydocker]# vim dockerfile1 </span><br><span class="line">FROM centos </span><br><span class="line">MAINTAINER ywl&lt;yuan.wanli@qq.com&gt;</span><br><span class="line">ENV MYPATH /usr/local </span><br><span class="line">WORKDIR $MYPATH </span><br><span class="line">RUN yum -y install vim </span><br><span class="line">RUN yum -y install net-tools </span><br><span class="line">EXPOSE 80 </span><br><span class="line">CMD ehco $MYPATH</span><br><span class="line">CMD /bin/bash </span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li><p>构建镜像 </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br></pre></td><td class="code"><pre><span class="line">[root@VM-4-6-centos mydocker]# docker build --help </span><br><span class="line"></span><br><span class="line">Usage:  docker build [OPTIONS] PATH | URL | -</span><br><span class="line"></span><br><span class="line">Build an image from a Dockerfile</span><br><span class="line"></span><br><span class="line">Options:</span><br><span class="line">      --add-host list           Add a custom host-to-IP mapping (host:ip)</span><br><span class="line">      --build-arg list          Set build-time variables</span><br><span class="line">      --cache-from strings      Images to consider as cache sources</span><br><span class="line">      --cgroup-parent string    Optional parent cgroup for the container</span><br><span class="line">      --compress                Compress the build context using gzip</span><br><span class="line">      --cpu-period int          Limit the CPU CFS (Completely Fair Scheduler) period</span><br><span class="line">      --cpu-quota int           Limit the CPU CFS (Completely Fair Scheduler) quota</span><br><span class="line">  -c, --cpu-shares int          CPU shares (relative weight)</span><br><span class="line">      --cpuset-cpus string      CPUs in which to allow execution (0-3, 0,1)</span><br><span class="line">      --cpuset-mems string      MEMs in which to allow execution (0-3, 0,1)</span><br><span class="line">      --disable-content-trust   Skip image verification (default true)</span><br><span class="line">  -f, --file string             Name of the Dockerfile (Default is &#x27;PATH/Dockerfile&#x27;)</span><br><span class="line">      --force-rm                Always remove intermediate containers</span><br><span class="line">      --iidfile string          Write the image ID to the file</span><br><span class="line">      --isolation string        Container isolation technology</span><br><span class="line">      --label list              Set metadata for an image</span><br><span class="line">  -m, --memory bytes            Memory limit</span><br><span class="line">      --memory-swap bytes       Swap limit equal to memory plus swap: &#x27;-1&#x27; to enable unlimited swap</span><br><span class="line">      --network string          Set the networking mode for the RUN instructions during build (default &quot;default&quot;)</span><br><span class="line">      --no-cache                Do not use cache when building the image</span><br><span class="line">      --pull                    Always attempt to pull a newer version of the image</span><br><span class="line">  -q, --quiet                   Suppress the build output and print image ID on success</span><br><span class="line">      --rm                      Remove intermediate containers after a successful build (default true)</span><br><span class="line">      --security-opt strings    Security options</span><br><span class="line">      --shm-size bytes          Size of /dev/shm</span><br><span class="line">  -t, --tag list                Name and optionally a tag in the &#x27;name:tag&#x27; format</span><br><span class="line">      --target string           Set the target build stage to build.</span><br><span class="line">      --ulimit ulimit           Ulimit options (default [])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[root@VM-4-6-centos mydocker]# docker build -f dockerfile1 -t mycentos:1.0 .</span><br><span class="line">Sending build context to Docker daemon  2.048kB</span><br><span class="line">Step 1/9 : FROM centos</span><br><span class="line"> ---&gt; 300e315adb2f</span><br><span class="line">Step 2/9 : MAINTAINER ywl&lt;yuan.wanli@qq.com&gt;</span><br><span class="line"> ---&gt; Running in 2f009ebbce45</span><br><span class="line">Removing intermediate container 2f009ebbce45</span><br><span class="line"> ---&gt; 3e039c5d5963</span><br><span class="line">Step 3/9 : ENV MYPATH /usr/local</span><br><span class="line"> ---&gt; Running in 902ec92baf9a</span><br><span class="line">Removing intermediate container 902ec92baf9a</span><br><span class="line"> ---&gt; 0d77fd7a4baf</span><br><span class="line">Step 4/9 : WORKDIR $MYPATH</span><br><span class="line"> ---&gt; Running in 9d8012ef4523</span><br><span class="line">Removing intermediate container 9d8012ef4523</span><br><span class="line"> ---&gt; 7f363b93ec76</span><br><span class="line">Step 5/9 : RUN yum -y install vim</span><br><span class="line"> ---&gt; Running in 9e54c5f8edfe</span><br><span class="line">CentOS Linux 8 - AppStream                      6.7 MB/s | 8.8 MB     00:01    </span><br><span class="line">CentOS Linux 8 - BaseOS                         4.6 MB/s | 5.6 MB     00:01    </span><br><span class="line">CentOS Linux 8 - Extras                          21 kB/s |  10 kB     00:00    </span><br><span class="line">Dependencies resolved.</span><br><span class="line">================================================================================</span><br><span class="line"> Package             Arch        Version                   Repository      Size</span><br><span class="line">================================================================================</span><br><span class="line">Installing:</span><br><span class="line"> vim-enhanced        x86_64      2:8.0.1763-15.el8         appstream      1.4 M</span><br><span class="line">Installing dependencies:</span><br><span class="line"> gpm-libs            x86_64      1.20.7-17.el8             appstream       39 k</span><br><span class="line"> vim-common          x86_64      2:8.0.1763-15.el8         appstream      6.3 M</span><br><span class="line"> vim-filesystem      noarch      2:8.0.1763-15.el8         appstream       48 k</span><br><span class="line"> which               x86_64      2.21-12.el8               baseos          49 k</span><br><span class="line"></span><br><span class="line">Transaction Summary</span><br><span class="line">================================================================================</span><br><span class="line">Install  5 Packages</span><br><span class="line"></span><br><span class="line">Total download size: 7.8 M</span><br><span class="line">Installed size: 30 M</span><br><span class="line">Downloading Packages:</span><br><span class="line">(1/5): gpm-libs-1.20.7-17.el8.x86_64.rpm        425 kB/s |  39 kB     00:00    </span><br><span class="line">(2/5): vim-filesystem-8.0.1763-15.el8.noarch.rp 1.6 MB/s |  48 kB     00:00    </span><br><span class="line">(3/5): vim-enhanced-8.0.1763-15.el8.x86_64.rpm  4.6 MB/s | 1.4 MB     00:00    </span><br><span class="line">(4/5): which-2.21-12.el8.x86_64.rpm             280 kB/s |  49 kB     00:00    </span><br><span class="line">(5/5): vim-common-8.0.1763-15.el8.x86_64.rpm    9.4 MB/s | 6.3 MB     00:00    </span><br><span class="line">--------------------------------------------------------------------------------</span><br><span class="line">Total                                           5.2 MB/s | 7.8 MB     00:01     </span><br><span class="line">warning: /var/cache/dnf/appstream-02e86d1c976ab532/packages/gpm-libs-1.20.7-17.el8.x86_64.rpm: Header V3 RSA/SHA256 Signature, key ID 8483c65d: NOKEY</span><br><span class="line">CentOS Linux 8 - AppStream                      1.6 MB/s | 1.6 kB     00:00    </span><br><span class="line">Importing GPG key 0x8483C65D:</span><br><span class="line"> Userid     : &quot;CentOS (CentOS Official Signing Key) &lt;security@centos.org&gt;&quot;</span><br><span class="line"> Fingerprint: 99DB 70FA E1D7 CE22 7FB6 4882 05B5 55B3 8483 C65D</span><br><span class="line"> From       : /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial</span><br><span class="line">Key imported successfully</span><br><span class="line">Running transaction check</span><br><span class="line">Transaction check succeeded.</span><br><span class="line">Running transaction test</span><br><span class="line">Transaction test succeeded.</span><br><span class="line">Running transaction</span><br><span class="line">  Preparing        :                                                        1/1 </span><br><span class="line">  Installing       : which-2.21-12.el8.x86_64                               1/5 </span><br><span class="line">  Installing       : vim-filesystem-2:8.0.1763-15.el8.noarch                2/5 </span><br><span class="line">  Installing       : vim-common-2:8.0.1763-15.el8.x86_64                    3/5 </span><br><span class="line">  Installing       : gpm-libs-1.20.7-17.el8.x86_64                          4/5 </span><br><span class="line">  Running scriptlet: gpm-libs-1.20.7-17.el8.x86_64                          4/5 </span><br><span class="line">  Installing       : vim-enhanced-2:8.0.1763-15.el8.x86_64                  5/5 </span><br><span class="line">  Running scriptlet: vim-enhanced-2:8.0.1763-15.el8.x86_64                  5/5 </span><br><span class="line">  Running scriptlet: vim-common-2:8.0.1763-15.el8.x86_64                    5/5 </span><br><span class="line">  Verifying        : gpm-libs-1.20.7-17.el8.x86_64                          1/5 </span><br><span class="line">  Verifying        : vim-common-2:8.0.1763-15.el8.x86_64                    2/5 </span><br><span class="line">  Verifying        : vim-enhanced-2:8.0.1763-15.el8.x86_64                  3/5 </span><br><span class="line">  Verifying        : vim-filesystem-2:8.0.1763-15.el8.noarch                4/5 </span><br><span class="line">  Verifying        : which-2.21-12.el8.x86_64                               5/5 </span><br><span class="line"></span><br><span class="line">Installed:</span><br><span class="line">  gpm-libs-1.20.7-17.el8.x86_64         vim-common-2:8.0.1763-15.el8.x86_64    </span><br><span class="line">  vim-enhanced-2:8.0.1763-15.el8.x86_64 vim-filesystem-2:8.0.1763-15.el8.noarch</span><br><span class="line">  which-2.21-12.el8.x86_64             </span><br><span class="line"></span><br><span class="line">Complete!</span><br><span class="line">Removing intermediate container 9e54c5f8edfe</span><br><span class="line"> ---&gt; 5dea379858f6</span><br><span class="line">Step 6/9 : RUN yum -y install net-tools</span><br><span class="line"> ---&gt; Running in a238f0f61bd1</span><br><span class="line">Last metadata expiration check: 0:00:11 ago on Wed Sep  8 05:20:26 2021.</span><br><span class="line">Dependencies resolved.</span><br><span class="line">================================================================================</span><br><span class="line"> Package         Architecture Version                        Repository    Size</span><br><span class="line">================================================================================</span><br><span class="line">Installing:</span><br><span class="line"> net-tools       x86_64       2.0-0.52.20160912git.el8       baseos       322 k</span><br><span class="line"></span><br><span class="line">Transaction Summary</span><br><span class="line">================================================================================</span><br><span class="line">Install  1 Package</span><br><span class="line"></span><br><span class="line">Total download size: 322 k</span><br><span class="line">Installed size: 942 k</span><br><span class="line">Downloading Packages:</span><br><span class="line">net-tools-2.0-0.52.20160912git.el8.x86_64.rpm   1.1 MB/s | 322 kB     00:00    </span><br><span class="line">--------------------------------------------------------------------------------</span><br><span class="line">Total                                           547 kB/s | 322 kB     00:00     </span><br><span class="line">Running transaction check</span><br><span class="line">Transaction check succeeded.</span><br><span class="line">Running transaction test</span><br><span class="line">Transaction test succeeded.</span><br><span class="line">Running transaction</span><br><span class="line">  Preparing        :                                                        1/1 </span><br><span class="line">  Installing       : net-tools-2.0-0.52.20160912git.el8.x86_64              1/1 </span><br><span class="line">  Running scriptlet: net-tools-2.0-0.52.20160912git.el8.x86_64              1/1 </span><br><span class="line">  Verifying        : net-tools-2.0-0.52.20160912git.el8.x86_64              1/1 </span><br><span class="line"></span><br><span class="line">Installed:</span><br><span class="line">  net-tools-2.0-0.52.20160912git.el8.x86_64                                     </span><br><span class="line"></span><br><span class="line">Complete!</span><br><span class="line">Removing intermediate container a238f0f61bd1</span><br><span class="line"> ---&gt; fe15f2802369</span><br><span class="line">Step 7/9 : EXPOSE 80</span><br><span class="line"> ---&gt; Running in dd05e3d35f52</span><br><span class="line">Removing intermediate container dd05e3d35f52</span><br><span class="line"> ---&gt; 8b2ed813e0cc</span><br><span class="line">Step 8/9 : CMD ehco $MYPATH</span><br><span class="line"> ---&gt; Running in 3abafde69c99</span><br><span class="line">Removing intermediate container 3abafde69c99</span><br><span class="line"> ---&gt; 7a93ce354052</span><br><span class="line">Step 9/9 : CMD /bin/bash</span><br><span class="line"> ---&gt; Running in 0737c0226cf2</span><br><span class="line">Removing intermediate container 0737c0226cf2</span><br><span class="line"> ---&gt; b531a51cbc3e</span><br><span class="line">Successfully built b531a51cbc3e</span><br><span class="line">Successfully tagged mycentos:1.0</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
-<li><p>测试 </p>
-<p>   查看镜像</p>
-   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@VM-4-6-centos mydocker]# docker images </span><br><span class="line">REPOSITORY            TAG       IMAGE ID       CREATED         SIZE</span><br><span class="line">mycentos              1.0       b531a51cbc3e   4 minutes ago   307MB</span><br><span class="line">centos                latest    300e315adb2f   9 months ago    209MB</span><br></pre></td></tr></table></figure>
-
-<p>   运行一个容器 </p>
-   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@VM-4-6-centos mydocker]# docker run -it b531a51cbc3e</span><br><span class="line">[root@915fe46d200b local]# ls</span><br><span class="line">bin  etc  games  include  lib  lib64  libexec  sbin  share  src</span><br><span class="line">[root@915fe46d200b local]# pwd </span><br><span class="line">/usr/local</span><br><span class="line">[root@915fe46d200b local]# vim test.txt</span><br></pre></td></tr></table></figure></li>
-<li><p>查看镜像构建历史 </p>
-   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@VM-4-6-centos mydocker]# docker history --human b531a51cbc3e</span><br><span class="line">IMAGE          CREATED          CREATED BY                                      SIZE      COMMENT</span><br><span class="line">b531a51cbc3e   14 minutes ago   /bin/sh -c #(nop)  CMD [&quot;/bin/sh&quot; &quot;-c&quot; &quot;/bin…   0B     </span><br><span class="line">7a93ce354052   14 minutes ago   /bin/sh -c #(nop)  CMD [&quot;/bin/sh&quot; &quot;-c&quot; &quot;ehco…   0B     </span><br><span class="line">8b2ed813e0cc   14 minutes ago   /bin/sh -c #(nop)  EXPOSE 80                    0B     </span><br><span class="line">fe15f2802369   14 minutes ago   /bin/sh -c yum -y install net-tools             29.5M </span><br><span class="line">5dea379858f6   14 minutes ago   /bin/sh -c yum -y install vim                   68.1MB </span><br><span class="line">7f363b93ec76   14 minutes ago   /bin/sh -c #(nop) WORKDIR /usr/local            0B     </span><br><span class="line">0d77fd7a4baf   14 minutes ago   /bin/sh -c #(nop)  ENV MYPATH=/usr/local        0B     </span><br><span class="line">3e039c5d5963   14 minutes ago   /bin/sh -c #(nop)  MAINTAINER ywl&lt;yuan.wanli…   0B     </span><br><span class="line">300e315adb2f   9 months ago     /bin/sh -c #(nop)  CMD [&quot;/bin/bash&quot;]            0B     </span><br><span class="line">&lt;missing&gt;      9 months ago     /bin/sh -c #(nop)  LABEL org.label-schema.sc…   0B     </span><br><span class="line">&lt;missing&gt;      9 months ago     /bin/sh -c #(nop) ADD file:bd7a2aed6ede423b7…   209MB </span><br></pre></td></tr></table></figure></li>
-</ol>
-<p>9.5 CMD 于 ENTRYPOINT区别 </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CMD				# 指定这个容器启动的时候要运行的命令，只有最后一个会生效，可被替代。</span><br><span class="line">ENTRYPOINT	   # 指定这个容器启动的时候要运行的命令，可以追加命令*</span><br></pre></td></tr></table></figure>
-
-<p>测试CMD </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"># 编写dockerfile文件</span><br><span class="line">$ vim dockerfile-test-cmd</span><br><span class="line">FROM centos</span><br><span class="line">CMD [&quot;ls&quot;,&quot;-a&quot;]					# 启动后执行 ls -a 命令</span><br><span class="line"></span><br><span class="line"># 构建镜像</span><br><span class="line">$ docker build  -f dockerfile-test-cmd -t cmd-test:0.1 .</span><br><span class="line"></span><br><span class="line"># 运行镜像</span><br><span class="line">$ docker run cmd-test:0.1		# 由结果可得，运行后就执行了 ls -a 命令</span><br><span class="line">.</span><br><span class="line">..</span><br><span class="line">.dockerenv</span><br><span class="line">bin</span><br><span class="line">dev</span><br><span class="line">etc</span><br><span class="line">home</span><br><span class="line"></span><br><span class="line"># 想追加一个命令  -l 成为ls -al：展示列表详细数据</span><br><span class="line">$ docker run cmd-test:0.1 -l</span><br><span class="line">docker: Error response from daemon: OCI runtime create failed: container_linux.go:349: starting container process caused &quot;exec: \&quot;-l\&quot;:</span><br><span class="line">executable file not found in $PATH&quot;: unknown.</span><br><span class="line">ERRO[0000] error waiting for container: context canceled </span><br><span class="line"></span><br><span class="line"># cmd的情况下 -l 替换了CMD[&quot;ls&quot;,&quot;-l&quot;] 而 -l  不是命令所以报错</span><br></pre></td></tr></table></figure>
-
-<p>测试ENTRYPOINT </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"># 编写dockerfile文件</span><br><span class="line">$ vim dockerfile-test-entrypoint</span><br><span class="line">FROM centos</span><br><span class="line">ENTRYPOINT [&quot;ls&quot;,&quot;-a&quot;]</span><br><span class="line"></span><br><span class="line"># 构建镜像</span><br><span class="line">$ docker build  -f dockerfile-test-entrypoint -t cmd-test:0.1 .</span><br><span class="line"></span><br><span class="line"># 运行镜像</span><br><span class="line">$ docker run entrypoint-test:0.1</span><br><span class="line">.</span><br><span class="line">..</span><br><span class="line">.dockerenv</span><br><span class="line">bin</span><br><span class="line">dev</span><br><span class="line">etc</span><br><span class="line">home</span><br><span class="line">lib</span><br><span class="line">lib64</span><br><span class="line">lost+found ...</span><br><span class="line"></span><br><span class="line"># 我们的命令，是直接拼接在我们得ENTRYPOINT命令后面的</span><br><span class="line">$ docker run entrypoint-test:0.1 -l</span><br><span class="line">total 56</span><br><span class="line">drwxr-xr-x   1 root root 4096 May 16 06:32 .</span><br><span class="line">drwxr-xr-x   1 root root 4096 May 16 06:32 ..</span><br><span class="line">-rwxr-xr-x   1 root root    0 May 16 06:32 .dockerenv</span><br><span class="line">lrwxrwxrwx   1 root root    7 May 11  2019 bin -&gt; usr/bin</span><br><span class="line">drwxr-xr-x   5 root root  340 May 16 06:32 dev</span><br><span class="line">drwxr-xr-x   1 root root 4096 May 16 06:32 etc</span><br><span class="line">drwxr-xr-x   2 root root 4096 May 11  2019 home</span><br><span class="line">lrwxrwxrwx   1 root root    7 May 11  2019 lib -&gt; usr/lib</span><br><span class="line">lrwxrwxrwx   1 root root    9 May 11  2019 lib64 -&gt; usr/lib64 ....</span><br></pre></td></tr></table></figure>
-
-<p>Dockerfile中很多命令都十分的相似，我们需要了解它们的区别，我们最好的学习就是对比他们然后测试效果！</p>
-<h2 id="实战：Tomcat镜像"><a href="#实战：Tomcat镜像" class="headerlink" title="实战：Tomcat镜像"></a>实战：Tomcat镜像</h2><h5 id="1、准备镜像文件"><a href="#1、准备镜像文件" class="headerlink" title="1、准备镜像文件"></a>1、准备镜像文件</h5><p>准备tomcat 和 jdk 到当前目录，编写好README</p>
-<h5 id="2、编写dokerfile"><a href="#2、编写dokerfile" class="headerlink" title="2、编写dokerfile"></a>2、编写dokerfile</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">$ vim dockerfile</span><br><span class="line">FROM centos 										# 基础镜像centos</span><br><span class="line">MAINTAINER cao&lt;1165680007@qq.com&gt;					# 作者</span><br><span class="line">COPY README /usr/local/README 						# 复制README文件</span><br><span class="line">ADD jdk-8u231-linux-x64.tar.gz /usr/local/ 			# 添加jdk，ADD 命令会自动解压</span><br><span class="line">ADD apache-tomcat-9.0.35.tar.gz /usr/local/ 		# 添加tomcat，ADD 命令会自动解压</span><br><span class="line">RUN yum -y install vim								# 安装 vim 命令</span><br><span class="line">ENV MYPATH /usr/local 								# 环境变量设置 工作目录</span><br><span class="line">WORKDIR $MYPATH</span><br><span class="line"></span><br><span class="line">ENV JAVA_HOME /usr/local/jdk1.8.0_231 				# 环境变量： JAVA_HOME环境变量</span><br><span class="line">ENV CLASSPATH $JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar</span><br><span class="line"></span><br><span class="line">ENV CATALINA_HOME /usr/local/apache-tomcat-9.0.35 	# 环境变量： tomcat环境变量</span><br><span class="line">ENV CATALINA_BASH /usr/local/apache-tomcat-9.0.35</span><br><span class="line"></span><br><span class="line"># 设置环境变量 分隔符是：</span><br><span class="line">ENV PATH $PATH:$JAVA_HOME/bin:$CATALINA_HOME/lib:$CATALINA_HOME/bin 	</span><br><span class="line"></span><br><span class="line">EXPOSE 8080 										# 设置暴露的端口</span><br><span class="line"></span><br><span class="line">CMD /usr/local/apache-tomcat-9.0.35/bin/startup.sh &amp;&amp; tail -F /usr/local/apache-tomcat-9.0.35/logs/catalina.out 					# 设置默认命令</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<h5 id="3、构建镜像"><a href="#3、构建镜像" class="headerlink" title="3、构建镜像"></a>3、构建镜像</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 因为dockerfile命名使用默认命名 因此不用使用-f 指定文件</span><br><span class="line">$ docker build -t mytomcat:0.1 .</span><br></pre></td></tr></table></figure>
-
-
-
-<h5 id="4、run镜像"><a href="#4、run镜像" class="headerlink" title="4、run镜像"></a>4、run镜像</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># -d:后台运行 -p:暴露端口 --name:别名 -v:绑定路径 </span><br><span class="line">$ docker run -d -p 8080:8080 --name tomcat01 </span><br><span class="line">-v /home/kuangshen/build/tomcat/test:/usr/local/apache-tomcat-9.0.35/webapps/test </span><br><span class="line">-v /home/kuangshen/build/tomcat/tomcatlogs/:/usr/local/apache-tomcat-9.0.35/logs mytomcat:0.1</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h5 id="5、访问测试"><a href="#5、访问测试" class="headerlink" title="5、访问测试"></a>5、访问测试</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ docker exec -it 自定义容器的id /bin/bash</span><br><span class="line">$ cul localhost:8080</span><br></pre></td></tr></table></figure>
-
-<h5 id="6、发布项目"><a href="#6、发布项目" class="headerlink" title="6、发布项目"></a>6、发布项目</h5><p>(由于做了卷挂载，我们直接在本地编写项目就可以发布了！)</p>
-<p>发现：项目部署成功，可以直接访问！</p>
-<p>我们以后开发的步骤：需要掌握Dockerfile的编写！我们之后的一切都是使用docker镜像来发布运行！</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2021/09/07/2021-09-07-%E3%80%8A%E5%B9%B8%E7%A6%8F%E7%9A%84%E5%8B%87%E6%B0%94%E3%80%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yuanwanli">
-      <meta itemprop="description" content="等不是办法，干才有出路">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="brisk">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/09/07/2021-09-07-%E3%80%8A%E5%B9%B8%E7%A6%8F%E7%9A%84%E5%8B%87%E6%B0%94%E3%80%8B/" class="post-title-link" itemprop="url">《幸福的勇气》</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-09-07 13:31:00" itemprop="dateCreated datePublished" datetime="2021-09-07T13:31:00+08:00">2021-09-07</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-09-08 09:03:25" itemprop="dateModified" datetime="2021-09-08T09:03:25+08:00">2021-09-08</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">读书笔记</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="人们误解了阿德勒的思想"><a href="#人们误解了阿德勒的思想" class="headerlink" title="人们误解了阿德勒的思想"></a>人们误解了阿德勒的思想</h1><blockquote>
-<p>加入有人一接触阿德勒思想便立即感激的说，“活的更轻松了”，那么这个人一定是大大误解了阿德勒。因为，如果真正理解了阿德勒对我们提出的要求，那就一定会震惊于他的严厉。 </p>
-</blockquote>
-<p>确实，如果一种观点或思想能做的让你在相同的境遇下，活的更轻松一些，减少痛苦。那么并不能说明这种思想的正确性，完全可能是宗教。 另外，难道人去追求的思想，就一定是使得自己活的更轻松的观点吗？如果说，现实就是，付出一些辛苦也可以获得幸福，我想我们也没有理由抱怨。我们不应该期望，存在一种思想，只要了解它，我们就可以轻而易举获得幸福，而不需要付出，这就是自娱自乐，自欺欺人的说辞。</p>
-<blockquote>
-<p>幸福并非一劳永逸的事情，必须在幸福之路上坚持不懈地努力向前。</p>
-</blockquote>
-<h2 id="第一章-可恶的他人-可怜的自己"><a href="#第一章-可恶的他人-可怜的自己" class="headerlink" title="第一章 可恶的他人 可怜的自己"></a>第一章 可恶的他人 可怜的自己</h2><h4 id="1阿德勒心理学是宗教吗"><a href="#1阿德勒心理学是宗教吗" class="headerlink" title="1阿德勒心理学是宗教吗"></a>1阿德勒心理学是宗教吗</h4><p>首先，阿德勒心理学不是传统的科学，因为其不可证伪。</p>
-<p>宗教和哲学的区别是宗教说故事，而哲学永远在求知。 </p>
-<p>宗教宣传无所不知，而哲学成为自己无知之知。 </p>
-<h4 id="2-教育的目标是自立"><a href="#2-教育的目标是自立" class="headerlink" title="2 教育的目标是自立"></a>2 教育的目标是自立</h4><blockquote>
-<p>教育的目标价简而言之就是自立</p>
-<p>人人都有逃脱无力状态不断追求进步的需求，也就是优越性追求。</p>
-<p>教育不是干涉，而是帮助其自立</p>
-</blockquote>
-<h4 id="3-所谓尊重就是实事求是的看待一个人"><a href="#3-所谓尊重就是实事求是的看待一个人" class="headerlink" title="3 所谓尊重就是实事求是的看待一个人"></a>3 所谓尊重就是实事求是的看待一个人</h4><blockquote>
-<p>尊重就是实事求是的看待一个人并认识到其独特个性的能力 ——埃里克 弗洛姆</p>
-<p>不做任何否定，不做任何强迫，接受并尊重那个人真实的样子</p>
-</blockquote>
-<p>即使是你不喜欢的、 你反感的、你觉得没有用的、你觉得没有价值、你觉得违反公共秩序和社会良俗的 ，但是 是 真实的。 </p>
-<blockquote>
-<p>尊重就是要努力低使对方能成长和发展自己</p>
-<p>即使你能够将其带到水边也无法强迫其喝水</p>
-</blockquote>
-<h4 id="4-关心他人兴趣"><a href="#4-关心他人兴趣" class="headerlink" title="4 关心他人兴趣"></a>4 关心他人兴趣</h4><blockquote>
-<p>对他人的兴趣给予更多关心</p>
-<p>用他的眼睛去看，用他的耳朵去听，用他人的心去感受</p>
-<p>孩子们并不认为自己的兴趣粗俗 </p>
-</blockquote>
-<p>这一点并不一定，一个人经常做的事并不非要是其内心也十分肯定的事。人的行为受到多方面的影响，并不是只有自己喜不喜欢决定。 </p>
-<h4 id="5-加入拥有同样的心灵和人生"><a href="#5-加入拥有同样的心灵和人生" class="headerlink" title="5 加入拥有同样的心灵和人生"></a>5 加入拥有同样的心灵和人生</h4><blockquote>
-<p>人不是活在客观的世界而是活在自己营造的主观世界里 </p>
-<p>假如我拥有和此人一样的心灵和人生情况会如何？</p>
-<p>共鸣是接近他人的技术和态度</p>
-</blockquote>
-<h4 id="6-勇气会传染，尊重也会"><a href="#6-勇气会传染，尊重也会" class="headerlink" title="6 勇气会传染，尊重也会"></a>6 勇气会传染，尊重也会</h4><blockquote>
-<p>正因为对他们是人， 才必须给予最大的尊重。不俯视、不仰视、不讨好、平等以待、对他们感兴趣的事物产生共鸣。 </p>
-<p>由你开始，即使没人理解和赞同，你也必须首先点亮火把，展示勇气和尊重。火把照亮的范围最多也就是半径数米，也许感觉像是一个人走在空无一人的夜道路上。但是数百米外的人也可以看到你所举着的火把。大家就会知道那里有人，有光，走过去有路。不久，你的周围就会聚集数十数百盏火把，数十数百的人们都会被这些火把照亮。 </p>
-</blockquote>
-<h4 id="7-无法改变的真正理由"><a href="#7-无法改变的真正理由" class="headerlink" title="7 无法改变的真正理由"></a>7 无法改变的真正理由</h4><blockquote>
-<p>在判定自己言行以及他人言行时，思考其背后所蕴含的目的。</p>
-<p>无法改变的真正理由是，不想改变。</p>
-<p>决定我们生活方式的并不是过去的经历，而是我们自己赋予经历的意义。</p>
-<p>为了肯定现在而去肯定不幸的经历</p>
-<p>我们这个世界上根本不存在什么真正意义的过去</p>
-</blockquote>
-<h4 id="8-你的现在决定了过去"><a href="#8-你的现在决定了过去" class="headerlink" title="8 你的现在决定了过去"></a>8 你的现在决定了过去</h4><blockquote>
-<p>历史是被时代掌权者不断篡改的一个巨大故事。历史常常按照掌权者指定的是非观被巧妙的篡改。一切年表和史书都是被篡改过的伪书，目的就是为了证明时代掌权者的正统性。</p>
-<p>人人都是“我”这个故事的编纂者，为了证明现在我的正统性，其过去往往会被随意改写。</p>
-<p>人会从过去发生的庞大事件系统中只选择符合现在目的的时间按并赋予其意义，继而当作自己的记忆。反过来说就是不符合现在目的的事件就会被抹掉。</p>
-</blockquote>
-<h4 id="9-可恶的他人，可怜的自己"><a href="#9-可恶的他人，可怜的自己" class="headerlink" title="9 可恶的他人，可怜的自己"></a>9 可恶的他人，可怜的自己</h4><blockquote>
-<p>心理咨询者无非是在讨论可恶的他人或可怜的自己</p>
-</blockquote>
-<h4 id="10-阿德勒心理学并无魔法"><a href="#10-阿德勒心理学并无魔法" class="headerlink" title="10 阿德勒心理学并无魔法"></a>10 阿德勒心理学并无魔法</h4><blockquote>
-<p>我并非因为冷漠而置若罔闻，是因为这些事情不值得讨论。</p>
-<p>阿德勒心理学要讨论的是 ”以后要怎么做？“</p>
-<p>阿德勒心理学并不是神秘的魔法，而是具有建设性和科学性并基于对人的尊重的一种理解人性的心理学。</p>
-</blockquote>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2021/09/07/2021-09-07-%E5%BF%83%E7%90%86%E5%AD%A6%E5%AF%BC%E8%AE%BA/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yuanwanli">
-      <meta itemprop="description" content="等不是办法，干才有出路">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="brisk">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/09/07/2021-09-07-%E5%BF%83%E7%90%86%E5%AD%A6%E5%AF%BC%E8%AE%BA/" class="post-title-link" itemprop="url">心理学导论</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-09-07 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-07T00:00:00+08:00">2021-09-07</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-09-24 10:56:47" itemprop="dateModified" datetime="2021-09-24T10:56:47+08:00">2021-09-24</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%BF%83%E7%90%86%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">心理学学习笔记</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="1-心理学不是什么？"><a href="#1-心理学不是什么？" class="headerlink" title="1 心理学不是什么？"></a>1 心理学不是什么？</h3><ol>
-<li>心理学不是算命，不是看面相，不是看星座。</li>
-<li>心理学不仅是心理治疗，研究人心理的方方面面。</li>
-<li>“心理就是让人开心一点，正面一点，积极一点” 并不是这样</li>
-<li>心理学研究不仅仅是常识，心理学可以发现常识的错误。</li>
-</ol>
-<h3 id="2-什么是心理学？"><a href="#2-什么是心理学？" class="headerlink" title="2 什么是心理学？"></a>2 什么是心理学？</h3><p>定义：心理学是一门研究人的行为、心理过程的科学。</p>
-<p>理解：</p>
-<ol>
-<li>首先心理学是一门科学，需要证伪、客观、预测、经验、观察、假设、测试。 是用科学的方法得出的结论，而并非凭空想象。</li>
-<li>其次心理学研究生的是人的外在行为和心理特征。 </li>
-</ol>
-<blockquote>
-<p>学科的定义可以从两发面分析讨论，学科研究的问题与方法</p>
-</blockquote>
-<p>心理过程包括那些？</p>
-<ul>
-<li>感觉，是个体对刺激物个别属性的觉察，它是客观的、直接的，是大脑的一种机能。</li>
-<li>知觉， 是对刺激物的整体觉察，是对感觉信息的整合和解释，它主观色彩更浓。</li>
-<li>记忆， 是人获取信息并加工储存并提取信息的过程</li>
-<li>学习，人们有经验产生的知识活行为，产生相对永久的改变</li>
-<li>判断， 思维是信息的交换、加工和理解的过程。</li>
-<li>决策，</li>
-<li>情绪， 情绪是由内外刺激所引发的一种主观状态， 它由主观的感受、生理的反应、认知的评估、行为的反应等四种成分交互而成。</li>
-<li>意识，意识是对我们自身、对行为、对周围世界的觉知，是人类特有的心理现象。</li>
-<li>社会关系</li>
-<li>社会行为</li>
-<li>道德意识</li>
-</ul>
-<p>心理学的一些概念：</p>
-<ul>
-<li>自我，指个人心目中对自己的印象包括对自己存在的认识，身体能力、性格、态度、思想等方面的认识。</li>
-<li>动机和需要， 激发和维持和调节二体进行某种活动，并出示该活动朝向某一目标的心理倾向或动力。</li>
-<li>社会心理学，人在社会环境中的行为、思想和情感、包括社会认知、社会关系社会影响等。</li>
-<li>发展心理学， 发展心理学研究欣慰和能力的逐步变化，包括生命从过一个受精卵到死亡的每个阶段。</li>
-<li>创造，创造力或创造性才思，是一种基于概念工具以及精神上技巧的人类精神现象而最终产生或发展为创意启发及直觉的过程。</li>
-<li>审美，即人所进行的一切创造和欣赏美的活动。是构成人对现实的审美关系，满足人的精神需要的实践、心理活动。是理智与直觉、认识与创造、功利性与非功利性的统一。</li>
-<li>幸福，幸福不单单是快乐情绪，快乐与幸福的区别在于，快乐常指个人的、短时间的情绪感受；幸福则涉及到与他人、家庭的长期正面的交互过程，以及度事业、生活发展的积极的体验和认识 。</li>
-<li>道德，指衡量行为正当与否的观念标准。</li>
-<li>文化，指生物在其发展的过程中逐步积累起来的跟自身生活相关的知识或经验，是其适应自然环境或周围环境的体现，不同的人对文化的有不同的定义，广义上的文化包括文字、语言、建筑、饮食、工具、技能、知识、习俗、艺术等。</li>
-</ul>
-<blockquote>
-<p>心理学的负向倾向，即心理学多研究人的负面情绪的倾向。、</p>
-</blockquote>
-<h3 id="3-心理学研究领域"><a href="#3-心理学研究领域" class="headerlink" title="3 心理学研究领域"></a>3 心理学研究领域</h3><p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%BF%83%E7%90%86%E5%AD%A61.png"></p>
-<h3 id="4-实验方法简介"><a href="#4-实验方法简介" class="headerlink" title="4 实验方法简介"></a>4 实验方法简介</h3><p>科学研究方法的三大原则 ：</p>
-<ul>
-<li>证据</li>
-<li>证明</li>
-<li>证伪</li>
-</ul>
-<p>问题的提出，设计实验，数据收集，探索分析</p>
-<ul>
-<li>真实验，指的是有操纵、有控制、能够随机分派被试的实验研究。 </li>
-<li>准实验，指的是无需安排被试，运用原始样本在比较自然的情况下进行实验处理的研究。</li>
-<li>数据收集指的是研究者为了描述或解释心理现象而采用观察、自我报告或生理计量等方法采集心理或行为数据的过程。（观察法、自我报告、自动采集）</li>
-<li>自我报告法，是心理学用来研究人的心理活动的一种方法，有被测试者对自我主观体验和主观状态进行自我观察，并进行自我评定。</li>
-</ul>
-<h3 id="5-社会赞许性及数据采集"><a href="#5-社会赞许性及数据采集" class="headerlink" title="5 社会赞许性及数据采集"></a>5 社会赞许性及数据采集</h3><ul>
-<li><p>社会赞许性, 是个体为了给他人留下好印象或出于自己的心理的需要， 而表现出良好形象的倾向。</p>
-</li>
-<li><p>朴素现实主义，我们经常不认为自己不知道，而认为自己知道，也就是我们认为自己所让认为的世界就是现实世界。 </p>
-</li>
-<li><p>简单重复效应,  或单纯曝光效应，指的是我们会偏好自己熟悉的事物。</p>
-</li>
-<li><p>自动采集法，记录社交网络数据</p>
-</li>
-</ul>
-<h3 id="6-实验研究设计"><a href="#6-实验研究设计" class="headerlink" title="6 实验研究设计"></a>6 实验研究设计</h3><p>三种方法：描述性研究，相关性研究</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%BF%83%E7%90%86%E5%AD%A62.png"></p>
-<p><strong>为什么相关不等于因果？</strong></p>
-<ol>
-<li> 因果比相关更复杂</li>
-<li> 受到第三方因素影响</li>
-</ol>
-<h3 id="7-伦理问题"><a href="#7-伦理问题" class="headerlink" title="7 伦理问题"></a>7 伦理问题</h3><p><strong>伦理原则</strong></p>
-<ol>
-<li><p>知情同意， 需要被试者在自觉、自愿的条件下，参加心理学的实验，不能强迫，不能欺骗，实验前应尽量地告诉被试实验的足够多的内容，可以随时退出实验。</p>
-</li>
-<li><p> 事后说明， 被试要求，事后说明，如果试验中有不适当的地方，不应该牵涉到的隐私，必须让被试有足够的了解，有身体、心理的不适，必须使其恢复。</p>
-</li>
-<li><p>最小风险原则，不能侵犯被试的隐私，不能造成伤害，最起码的标准，就是被试者走进实验室是啥样，出来也应该是啥样。  </p>
-</li>
-</ol>
-<p><strong>人类有五大终极问题 NBICS</strong> </p>
-<ol>
-<li>N, 纳米技术</li>
-<li>B, 生物科学</li>
-<li>I, 信息技术</li>
-<li>C, 认知思维科学</li>
-<li>S, 社会科学</li>
-</ol>
-<h3 id="8-心理学的历史"><a href="#8-心理学的历史" class="headerlink" title="8 心理学的历史"></a>8 心理学的历史</h3><p>心理学有一个长期的过去，但是只有一个短暂的历史——艾宾浩斯</p>
-<ol>
-<li><p> 冯特创建心理学第一个实验 冯特心理学之父 。学生铁钦拿，将心理学实验带到美国，结构主义。</p>
-</li>
-<li><p>机能主义， 是心理学历史的第二个流派， 主张研究人类意识及其功能。詹姆士为首。 威廉 詹姆斯 认为意识就像一条生命的泉水，源源不断融入到我们的心中，所以他创造了一个概念 - 意识流。 信奉达尔文主义，认为人类的心理活动，都是几千万年， 人类进化选择出来的心理特征和心理特质， 都有其存在的意义。</p>
-</li>
-<li><p>精神分析理论 佛洛依德 , 20世纪最有影响的心理学家，对人类的哲学，艺术，历史学，社会学，政治学都有非常大的影响。 主要理论，冰山理论，潜意识理论，心理发展阶段理论，心理防御机制。很多观点和理论缺乏科学证据。</p>
-</li>
-<li><p>行为主义，约翰-华生， 研究可以观察、测量、定义的心理学变量——行为。行为是人类外显的表现，可以做具体的观察、研究。是对外在刺激一种自发、自动的反应。   任何人如果给予足够的行为和塑造，可以让他变成我们所期望的任何其他人。——华生  斯金钠  郭任远</p>
-</li>
-<li><p>人文主义， 马斯洛 人类有很多的需求， 有些需求，是我们基本的生存需求，但是人类也有很多更高级的追求，在基本需求满足以后，我们人类一定会追求高级的心理需求。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%BF%83%E7%90%86%E5%AD%A64.png"></p>
-<p>自我实现者的十五种的心理特质</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%BF%83%E7%90%86%E5%AD%A65.png"></p>
-<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%BF%83%E7%90%866.png"></p>
-</li>
-</ol>
-<p><strong>为什么心理学有这么多的学派？</strong> </p>
-<p>核心的问题， 心理学的复杂， 心理活动的不可琢磨， 心理研究的巨大挑战。</p>
-<p>各个流派抓住了心理的不同角度， 整合起来就形成了对心理的基本判断。 </p>
-<p><strong>心理学未来如何发展呢</strong>？</p>
-<ol>
-<li>认知神经领域， 结合脑科学更深刻认识人的认知过程。</li>
-<li>文化心理学，东方和西方人在思维，意识上有许多差异。</li>
-<li>积极心理学 ，马丁 撒里格曼 ，心理学应该关注人的美德，优点和优良行为。</li>
-</ol>
-<h3 id="9-感觉是什么"><a href="#9-感觉是什么" class="headerlink" title="9 感觉是什么"></a>9 感觉是什么</h3><ul>
-<li> 感觉是人脑对直接作用于各种感官系统的一种个体属性的直接反应。</li>
-<li>五大感官系统， 视觉、听觉、触觉、嗅觉、味觉。 </li>
-</ul>
-<p>感官系统的分析角度 </p>
-<ol>
-<li> 信息的来源</li>
-<li>感官的生理器官 </li>
-<li>产生的心理现象</li>
-</ol>
-<h3 id="10-感觉的作用"><a href="#10-感觉的作用" class="headerlink" title="10 感觉的作用"></a>10 感觉的作用</h3><p>感觉让我生活的更加的积极，主动。失去感觉，让人类非常痛苦。</p>
-<h3 id="11、12-知觉的特性"><a href="#11、12-知觉的特性" class="headerlink" title="11、12 知觉的特性"></a>11、12 知觉的特性</h3><ul>
-<li>知觉， 是人类对刺激物体的整体的观察、感受、整合、加工和解释</li>
-</ul>
-<p>感觉和知觉的关系：</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>对象</th>
-<th>反应方式</th>
-<th>特点</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>感觉</td>
-<td>事物的个别属性</td>
-<td>直接反应</td>
-<td>更客观</td>
-</tr>
-<tr>
-<td>知觉</td>
-<td>事物的整体属性</td>
-<td>间接反应</td>
-<td>更主观</td>
-</tr>
-</tbody></table>
-<p>两种加工方式：</p>
-<ol>
-<li> 自下而上， 指对刺激的分析始于感觉受体，然后再上升至大脑和心理的层次。这是我们在日常生活中应用的非常广泛的一种加工方式</li>
-<li> 自上而下， 根据我们的经验和预期，先从较高的水平的心理过程来完成信息的加工和处理， 进而形成感官认识</li>
-</ol>
-<ul>
-<li><p>知觉整体性， 指在知觉过程中，人们不是孤立地反映刺激物的分别特性和属性，而是多个个别属性的有机综合，反映事物的整体和关系</p>
-<blockquote>
-<p>格式塔，是德文Gestalt的英译， 具有不同部分，分离特性的有机整体。格式塔心理学四大原则：</p>
-</blockquote>
-<ol>
-<li>接近律， 是人们对知觉场中客体的知觉， 是根据他们各部分彼此接近或邻近的程度而组合在一起的， 各部分越是接近，组合在一起的可能性就越大。</li>
-<li>相似律，人在知觉时， 对刺激要素相似的项目，只要不被接近因素干扰，会倾向于把它们联合在一起</li>
-<li>连续律，在知觉过程中，人们往往倾向于使知觉对象的直线继续成为直线，使曲线继续成为曲线</li>
-<li>相关律， 将图形看出成一个整体，而不是部分</li>
-</ol>
-</li>
-<li><p>知觉的选择性， 指个体根据自己的需要于兴趣，有目的的把某些刺激信息或刺激的某些方面作为知觉对象而把其他事物作为背景进行组织加工的过程。主体和背景可以互换。</p>
-</li>
-<li><p>知觉的理解性，指人在知觉事物的过程中，不是被动的把知觉对象的特点记录下来，而是以过去的知识经验为依据，力求对知觉对象进行某种解释，使它具有一定意义。</p>
-</li>
-</ul>
-<blockquote>
-<p>东方人更关注背景，西风人更关注对象</p>
-<p>东方人相对判断。西方人注重绝对判断</p>
-</blockquote>
-<ul>
-<li> 知觉的恒常性，指客观条件在一定范围内改变时， 我们的知觉映像在相当程度上却保持着它的稳定性(大小、形状、颜色)</li>
-</ul>
-<h3 id="13-什么是思维-？"><a href="#13-什么是思维-？" class="headerlink" title="13 什么是思维 ？"></a>13 什么是思维 ？</h3><ul>
-<li> 思维， 人类认识世界最高级的形式</li>
-</ul>
-<blockquote>
-<p>thinking is for doing </p>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">flowchart TB</span><br><span class="line">id1(思维的目的)--&gt;id2(行动)---id3(表达) &amp; id4(沟通) &amp; id5(应用)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li> 思维组织方式， 通过组织信息（表象、概念、语言），对信息整合、利用</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">flowchart TB</span><br><span class="line">id1(思维的使用)--&gt;id2(加工信息)---id3(归纳) &amp; id4(推理) &amp; id5(判断)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>表象，对外部世界的直观形象，是感觉与思维之间的桥梁</li>
-<li>知识表征的特点：形象鲜明，活跃，具有动感</li>
-</ul>
-<h3 id="14-想象与概念"><a href="#14-想象与概念" class="headerlink" title="14  想象与概念"></a>14  想象与概念</h3><ul>
-<li>想象，利用记忆中的表象创造新的形象</li>
-<li>想象的作用：<ol>
-<li> 预见未来</li>
-<li>补充知识和经验的不足</li>
-<li>替代作用</li>
-</ol>
-</li>
-<li>想象进行的方法<ol>
-<li>粘合</li>
-<li>夸张</li>
-<li>典型化</li>
-<li>联想</li>
-</ol>
-</li>
-<li>概念， 概念是我们人类形成的对事物本质的认识，它包括特质的认识，也就是这个事物它有什么特点。也包括区别性的认识，也就是这个事物和其他事物有什么不同。 <ol>
-<li>互相联系</li>
-<li>层次差别</li>
-<li>通过词汇表达</li>
-<li>具体或抽象</li>
-</ol>
-</li>
-<li>概念形成的特点<ol>
-<li>概念具有层次，层次网络模型</li>
-<li>有定性的词汇来确定</li>
-<li>原型理论</li>
-</ol>
-</li>
-<li>层次网络模型，指概念之间以节点而存在，每个节点之间相互联络，组成了一个语义存在网络存在于我们大脑之中，触动这个语义网络的一个概念，其他相关联的概念由此而产生</li>
-</ul>
-<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%BF%83%E7%90%86%E5%AD%A69.png"></p>
-<ul>
-<li> 启动效应， priming effect. 指通过启动某一种概念，引发与之相关概念的活动。它是心理学用来研究人类心理的影响，因果关系非常重要的研究范式。 </li>
-<li>原型理论， 指人们根据原型来对概念进行组织。所谓原型，是指一个概念中最有代表性的事物。</li>
-</ul>
-<h3 id="15-问题解决"><a href="#15-问题解决" class="headerlink" title="15 问题解决"></a>15 问题解决</h3><p>解决问题的方法：</p>
-<ol>
-<li> 算术的方法 ，不断尝试所以的方法</li>
-<li> 启发式的方法 ，代表性，可用性</li>
-</ol>
-<h3 id="16-影响问题解决的因素"><a href="#16-影响问题解决的因素" class="headerlink" title="16 影响问题解决的因素"></a>16 影响问题解决的因素</h3><p>影响问题解决的因素</p>
-<ol>
-<li> 知识表征， 我们对信息的整合和存储</li>
-</ol>
-<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%BF%83%E7%90%86%E5%AD%A610.png"></p>
-<ol start="2">
-<li> 思维定势， 指人们在解决问题时，常倾向于使用以前曾经成功使用过的策略</li>
-<li> 功能定势，指某一件事物的应用往往局限在它最常用的功能上，而对其他可能你的创造性应用视而不见，这会大大限制问题的解决的效率</li>
-<li>动机和情绪 </li>
-<li>环境、文化、客观条件</li>
-</ol>
-<ul>
-<li> 证实误差，指我们往往只关心那些能证明我们的结论是正确的证据，而对那些可能推翻我们的结论的事实视而不见。</li>
-</ul>
 
       
     </div>

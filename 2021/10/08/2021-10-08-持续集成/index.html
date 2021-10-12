@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yuanwanli1995.github.io","root":"/","images":"/images","scheme":"Pisces","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="应用云化部署与运维工程师学习专区1 持续集成与交付1.1 持续集成与交付的原则1.1.1 软件交付痛点 1.1.2 持续集成的作用、过程和优势 作用    过程   1.1.3 CI工具 1.1.4 项目产品的自动化构建 1.1.5 持续测试  1.1.6 持续改进  总结  持续集成、持续交付、持续部署 持续集成的工具   思考题：  持续集成和持续交付是一个意思  错误。持续交付是把持续集成的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="持续集成">
+<meta property="og:url" content="http://yuanwanli1995.github.io/2021/10/08/2021-10-08-%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/index.html">
+<meta property="og:site_name" content="brisk">
+<meta property="og:description" content="应用云化部署与运维工程师学习专区1 持续集成与交付1.1 持续集成与交付的原则1.1.1 软件交付痛点 1.1.2 持续集成的作用、过程和优势 作用    过程   1.1.3 CI工具 1.1.4 项目产品的自动化构建 1.1.5 持续测试  1.1.6 持续改进  总结  持续集成、持续交付、持续部署 持续集成的工具   思考题：  持续集成和持续交付是一个意思  错误。持续交付是把持续集成的">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA1.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA2.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA3.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA4.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA5.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA6.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA7.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA8.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA9.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA10.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA11.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA12.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA13.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA14.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA15.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA16.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA17.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA18.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA19.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA20.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA21.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA22.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA23.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA24.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA25.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA26.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA27.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA28.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA29.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA30.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA31.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA32.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA33.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA34.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA35.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA36.png">
+<meta property="article:published_time" content="2021-10-07T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-10-08T16:21:25.334Z">
+<meta property="article:author" content="yuanwanli">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA1.png">
+
+
+<link rel="canonical" href="http://yuanwanli1995.github.io/2021/10/08/2021-10-08-%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://yuanwanli1995.github.io/2021/10/08/2021-10-08-%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/","path":"2021/10/08/2021-10-08-持续集成/","title":"持续集成"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>持续集成 | brisk</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">brisk</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">welcome</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E4%BA%91%E5%8C%96%E9%83%A8%E7%BD%B2%E4%B8%8E%E8%BF%90%E7%BB%B4%E5%B7%A5%E7%A8%8B%E5%B8%88%E5%AD%A6%E4%B9%A0%E4%B8%93%E5%8C%BA"><span class="nav-number">1.</span> <span class="nav-text">应用云化部署与运维工程师学习专区</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E4%B8%8E%E4%BA%A4%E4%BB%98"><span class="nav-number">1.1.</span> <span class="nav-text">1 持续集成与交付</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E4%B8%8E%E4%BA%A4%E4%BB%98%E7%9A%84%E5%8E%9F%E5%88%99"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 持续集成与交付的原则</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-1-%E8%BD%AF%E4%BB%B6%E4%BA%A4%E4%BB%98%E7%97%9B%E7%82%B9"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">1.1.1 软件交付痛点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-2-%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E7%9A%84%E4%BD%9C%E7%94%A8%E3%80%81%E8%BF%87%E7%A8%8B%E5%92%8C%E4%BC%98%E5%8A%BF"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">1.1.2 持续集成的作用、过程和优势</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-3-CI%E5%B7%A5%E5%85%B7"><span class="nav-number">1.1.1.3.</span> <span class="nav-text">1.1.3 CI工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-4-%E9%A1%B9%E7%9B%AE%E4%BA%A7%E5%93%81%E7%9A%84%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%84%E5%BB%BA"><span class="nav-number">1.1.1.4.</span> <span class="nav-text">1.1.4 项目产品的自动化构建</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-5-%E6%8C%81%E7%BB%AD%E6%B5%8B%E8%AF%95"><span class="nav-number">1.1.1.5.</span> <span class="nav-text">1.1.5 持续测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-6-%E6%8C%81%E7%BB%AD%E6%94%B9%E8%BF%9B"><span class="nav-number">1.1.1.6.</span> <span class="nav-text">1.1.6 持续改进</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-CI%E5%AE%9E%E9%99%85%E4%BA%A4%E4%BB%98%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 CI实际交付中的应用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-1-%E6%8C%81%E7%BB%AD%E4%BA%A4%E4%BB%98%E7%9A%84%E7%A0%94%E5%8F%91%E6%B5%81%E7%A8%8B"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">1.2.1 持续交付的研发流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-2-%E9%AB%98%E8%B4%A8%E9%87%8F%E7%9A%84%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E6%8F%90%E9%AB%98%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E8%B4%A8%E9%87%8F"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">1.2.2 高质量的单元测试提高软件开发质量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">1.1.2.3.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-3-%E6%AF%8F%E6%97%A5%E6%9E%84%E5%BB%BA%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-number">1.1.2.4.</span> <span class="nav-text">1.2.3 每日构建中的应用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-4-%E5%9F%BA%E4%BA%8E%E8%84%9A%E6%9C%AC%E7%9A%84%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2"><span class="nav-number">1.1.2.5.</span> <span class="nav-text">1.2.4 基于脚本的自动化部署</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-%E5%90%AF%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95%E7%9A%84%E7%90%86%E8%AE%BA%E5%92%8C%E6%96%B9%E6%B3%95"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.3 启动化测试的理论和方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-1-%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95%E7%9A%84%E5%AE%9E%E6%96%BD%E8%83%8C%E6%99%AF"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">1.3.1 自动化测试的实施背景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-2-%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95%E6%95%88%E5%BA%94%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95%E7%9B%AE%E6%A0%87"><span class="nav-number">1.1.3.2.</span> <span class="nav-text">1.3.2 自动化测试效应与自动化测试目标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-3-%E5%88%86%E5%B1%82%E8%87%AA%E5%8A%A8%E5%93%88%E6%B5%8B%E8%AF%95"><span class="nav-number">1.1.3.3.</span> <span class="nav-text">1.3.3  分层自动哈测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-4-%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E8%BF%87%E7%A8%8B%E4%B8%AD%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95%E6%B5%81%E7%A8%8B"><span class="nav-number">1.1.3.4.</span> <span class="nav-text">1.3.4  持续集成过程中自动化测试流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#-1"><span class="nav-number">1.1.3.5.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-5-%E5%88%86%E5%B1%82%E8%87%AA%E5%8A%A8%E5%93%88%E6%B5%8B%E8%AF%95%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-number">1.1.3.6.</span> <span class="nav-text">1.3.5 分层自动哈测试的应用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95%E5%AE%9E%E8%B7%B5"><span class="nav-number">1.1.4.</span> <span class="nav-text">1.4 自动化测试实践</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4-1-%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95"><span class="nav-number">1.1.4.1.</span> <span class="nav-text">1.4.1 单元测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4-2-%E6%8E%A5%E5%8F%A3%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95%E5%BA%94%E7%94%A8%EF%BC%9Apostman"><span class="nav-number">1.1.4.2.</span> <span class="nav-text">1.4.2 接口自动化测试应用：postman</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4-3-%E6%8E%A5%E5%8F%A3%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95-request"><span class="nav-number">1.1.4.3.</span> <span class="nav-text">1.4.3 接口自动化测试 request</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4-4-UI%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95"><span class="nav-number">1.1.4.4.</span> <span class="nav-text">1.4.4 UI自动化测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4-5-selenium-%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6"><span class="nav-number">1.1.4.5.</span> <span class="nav-text">1.4.5 selenium 自动化测试框架</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E4%B8%8E%E4%BA%A4%E4%BA%92%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-number">1.1.5.</span> <span class="nav-text">1.5 持续集成与交互工具的使用方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-5-1-%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E5%B7%A5%E5%85%B7"><span class="nav-number">1.1.5.1.</span> <span class="nav-text">1.5.1 持续集成工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-5-2-%E5%88%9B%E5%BB%BA%E4%BB%BB%E5%8A%A1"><span class="nav-number">1.1.5.2.</span> <span class="nav-text">1.5.2 创建任务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-5-3-%E8%BF%9B%E8%A1%8C%E6%9E%84%E5%BB%BA"><span class="nav-number">1.1.5.3.</span> <span class="nav-text">1.5.3 进行构建</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-5-4-%E8%87%AA%E5%8A%A8%E5%93%88%E6%9E%84%E5%BB%BA"><span class="nav-number">1.1.5.4.</span> <span class="nav-text">1.5.4 自动哈构建</span></a></li></ol></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yuanwanli</p>
+  <div class="site-description" itemprop="description">等不是办法，干才有出路</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">38</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2021/10/08/2021-10-08-%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuanwanli">
+      <meta itemprop="description" content="等不是办法，干才有出路">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="brisk">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          持续集成
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-10-08 00:00:00" itemprop="dateCreated datePublished" datetime="2021-10-08T00:00:00+08:00">2021-10-08</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-10-09 00:21:25" itemprop="dateModified" datetime="2021-10-09T00:21:25+08:00">2021-10-09</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%85%AC%E5%8F%B8%E5%9F%B9%E8%AE%AD/" itemprop="url" rel="index"><span itemprop="name">公司培训</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="应用云化部署与运维工程师学习专区"><a href="#应用云化部署与运维工程师学习专区" class="headerlink" title="应用云化部署与运维工程师学习专区"></a>应用云化部署与运维工程师学习专区</h1><h2 id="1-持续集成与交付"><a href="#1-持续集成与交付" class="headerlink" title="1 持续集成与交付"></a>1 持续集成与交付</h2><h3 id="1-1-持续集成与交付的原则"><a href="#1-1-持续集成与交付的原则" class="headerlink" title="1.1 持续集成与交付的原则"></a>1.1 持续集成与交付的原则</h3><h4 id="1-1-1-软件交付痛点"><a href="#1-1-1-软件交付痛点" class="headerlink" title="1.1.1 软件交付痛点"></a>1.1.1 软件交付痛点</h4><p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA1.png"></p>
+<h4 id="1-1-2-持续集成的作用、过程和优势"><a href="#1-1-2-持续集成的作用、过程和优势" class="headerlink" title="1.1.2 持续集成的作用、过程和优势"></a>1.1.2 持续集成的作用、过程和优势</h4><ul>
+<li>作用</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA2.png"></p>
+<ul>
+<li>过程</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA3.png"></p>
+<h4 id="1-1-3-CI工具"><a href="#1-1-3-CI工具" class="headerlink" title="1.1.3 CI工具"></a>1.1.3 CI工具</h4><p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA4.png"></p>
+<h4 id="1-1-4-项目产品的自动化构建"><a href="#1-1-4-项目产品的自动化构建" class="headerlink" title="1.1.4 项目产品的自动化构建"></a>1.1.4 项目产品的自动化构建</h4><p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA5.png"></p>
+<h4 id="1-1-5-持续测试"><a href="#1-1-5-持续测试" class="headerlink" title="1.1.5 持续测试"></a>1.1.5 持续测试</h4><p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA6.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA7.png"></p>
+<h4 id="1-1-6-持续改进"><a href="#1-1-6-持续改进" class="headerlink" title="1.1.6 持续改进"></a>1.1.6 持续改进</h4><p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA8.png"></p>
+<blockquote>
+<p>总结</p>
+<ul>
+<li>持续集成、持续交付、持续部署</li>
+<li>持续集成的工具</li>
+</ul>
+</blockquote>
+<p>思考题：</p>
+<ol>
+<li>持续集成和持续交付是一个意思</li>
+</ol>
+<p>错误。持续交付是把持续集成的版本放到类生产环境中。</p>
+<ol start="2">
+<li> 目前那款CI工具较常用？</li>
+</ol>
+<p>Jenkins</p>
+<h3 id="1-2-CI实际交付中的应用"><a href="#1-2-CI实际交付中的应用" class="headerlink" title="1.2 CI实际交付中的应用"></a>1.2 CI实际交付中的应用</h3><h4 id="1-2-1-持续交付的研发流程"><a href="#1-2-1-持续交付的研发流程" class="headerlink" title="1.2.1 持续交付的研发流程"></a>1.2.1 持续交付的研发流程</h4><p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA9.png"></p>
+<h4 id="1-2-2-高质量的单元测试提高软件开发质量"><a href="#1-2-2-高质量的单元测试提高软件开发质量" class="headerlink" title="1.2.2 高质量的单元测试提高软件开发质量"></a>1.2.2 高质量的单元测试提高软件开发质量</h4><p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA10.png"></p>
+<h4 id=""><a href="#" class="headerlink" title=""></a><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA11.png"></h4><p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA12.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA13.png"></p>
+<h4 id="1-2-3-每日构建中的应用"><a href="#1-2-3-每日构建中的应用" class="headerlink" title="1.2.3 每日构建中的应用"></a>1.2.3 每日构建中的应用</h4><p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA14.png"></p>
+<h4 id="1-2-4-基于脚本的自动化部署"><a href="#1-2-4-基于脚本的自动化部署" class="headerlink" title="1.2.4 基于脚本的自动化部署"></a>1.2.4 基于脚本的自动化部署</h4><p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA15.png"></p>
+<blockquote>
+<p>总结</p>
+<ul>
+<li> 研发过程中持续交付的应用</li>
+<li>TDD测试驱动开发（Test Driven Development）</li>
+<li>脚本部署</li>
+</ul>
+</blockquote>
+<ol>
+<li> 通过TDD可以降低开发者负担</li>
+</ol>
+<p>正确</p>
+<ol start="2">
+<li> 如下哪些是TDD的优点？ </li>
+</ol>
+<p>A 研发周期长  B 快速反馈 C 保护机制 D 提前澄清需求</p>
+<p>答案：BCD</p>
+<h3 id="1-3-启动化测试的理论和方法"><a href="#1-3-启动化测试的理论和方法" class="headerlink" title="1.3 启动化测试的理论和方法"></a>1.3 启动化测试的理论和方法</h3><h4 id="1-3-1-自动化测试的实施背景"><a href="#1-3-1-自动化测试的实施背景" class="headerlink" title="1.3.1 自动化测试的实施背景"></a>1.3.1 自动化测试的实施背景</h4><p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA16.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA17.png"></p>
+<h4 id="1-3-2-自动化测试效应与自动化测试目标"><a href="#1-3-2-自动化测试效应与自动化测试目标" class="headerlink" title="1.3.2 自动化测试效应与自动化测试目标"></a>1.3.2 自动化测试效应与自动化测试目标</h4><p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA18.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA19.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA20.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA21.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA22.png"></p>
+<h4 id="1-3-3-分层自动哈测试"><a href="#1-3-3-分层自动哈测试" class="headerlink" title="1.3.3  分层自动哈测试"></a>1.3.3  分层自动哈测试</h4><p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA23.png"></p>
+<h4 id="1-3-4-持续集成过程中自动化测试流程"><a href="#1-3-4-持续集成过程中自动化测试流程" class="headerlink" title="1.3.4  持续集成过程中自动化测试流程"></a>1.3.4  持续集成过程中自动化测试流程</h4><p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA24.png"></p>
+<h4 id="-1"><a href="#-1" class="headerlink" title=""></a><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA25.png"></h4><h4 id="1-3-5-分层自动哈测试的应用"><a href="#1-3-5-分层自动哈测试的应用" class="headerlink" title="1.3.5 分层自动哈测试的应用"></a>1.3.5 分层自动哈测试的应用</h4><p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA26.png"></p>
+<blockquote>
+<p>总结：</p>
+<ul>
+<li> 自动化测试的实时背景</li>
+<li>自动化测试的收益比</li>
+<li>自动化测试的各层工具</li>
+</ul>
+</blockquote>
+<ol>
+<li>selenium属于接口自动化测试阶段的工具</li>
+</ol>
+<p>错误 </p>
+<ol start="2">
+<li> 常见的UI自动化测试工具有哪些</li>
+</ol>
+<p>A selenium B appinm D postman D jnuit </p>
+<p>答案：AB</p>
+<h3 id="1-4-自动化测试实践"><a href="#1-4-自动化测试实践" class="headerlink" title="1.4 自动化测试实践"></a>1.4 自动化测试实践</h3><h4 id="1-4-1-单元测试"><a href="#1-4-1-单元测试" class="headerlink" title="1.4.1 单元测试"></a>1.4.1 单元测试</h4><p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA27.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA28.png"></p>
+<h4 id="1-4-2-接口自动化测试应用：postman"><a href="#1-4-2-接口自动化测试应用：postman" class="headerlink" title="1.4.2 接口自动化测试应用：postman"></a>1.4.2 接口自动化测试应用：postman</h4><p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA29.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA30.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA31.png"></p>
+<h4 id="1-4-3-接口自动化测试-request"><a href="#1-4-3-接口自动化测试-request" class="headerlink" title="1.4.3 接口自动化测试 request"></a>1.4.3 接口自动化测试 request</h4><p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA32.png"></p>
+<h4 id="1-4-4-UI自动化测试"><a href="#1-4-4-UI自动化测试" class="headerlink" title="1.4.4 UI自动化测试"></a>1.4.4 UI自动化测试</h4><p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA33.png"></p>
+<h4 id="1-4-5-selenium-自动化测试框架"><a href="#1-4-5-selenium-自动化测试框架" class="headerlink" title="1.4.5 selenium 自动化测试框架"></a>1.4.5 selenium 自动化测试框架</h4><p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA34.png"></p>
+<blockquote>
+<p> 总结</p>
+<ul>
+<li> 单元、接口与UI工具的应用</li>
+<li>自动化测试框架的应用 </li>
+</ul>
+</blockquote>
+<ol>
+<li>selenium 中仍包含RC </li>
+</ol>
+<p>错误</p>
+<ol start="2">
+<li> 如下selenium的哪个版本已经被淘汰</li>
+</ol>
+<p>A selenium3 B selenium2 C selenium1 </p>
+<p>C </p>
+<h3 id="1-5-持续集成与交互工具的使用方法"><a href="#1-5-持续集成与交互工具的使用方法" class="headerlink" title="1.5 持续集成与交互工具的使用方法"></a>1.5 持续集成与交互工具的使用方法</h3><h4 id="1-5-1-持续集成工具"><a href="#1-5-1-持续集成工具" class="headerlink" title="1.5.1 持续集成工具"></a>1.5.1 持续集成工具</h4><p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA35.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E5%8D%8E%E4%B8%BA36.png"></p>
+<h4 id="1-5-2-创建任务"><a href="#1-5-2-创建任务" class="headerlink" title="1.5.2 创建任务"></a>1.5.2 创建任务</h4><h4 id="1-5-3-进行构建"><a href="#1-5-3-进行构建" class="headerlink" title="1.5.3 进行构建"></a>1.5.3 进行构建</h4><h4 id="1-5-4-自动哈构建"><a href="#1-5-4-自动哈构建" class="headerlink" title="1.5.4 自动哈构建"></a>1.5.4 自动哈构建</h4>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/10/03/2021-20-03-%E3%80%8A%E5%8F%97%E6%88%92%E3%80%8B/" rel="prev" title="《受戒》">
+                  <i class="fa fa-chevron-left"></i> 《受戒》
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/10/10/2021-10-10-%E3%80%8A%E7%BB%8F%E6%B5%8E%E5%AD%A6%E9%80%9A%E8%AF%86%E3%80%8B/" rel="next" title="《经济学通识》">
+                  《经济学通识》 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuanwanli</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

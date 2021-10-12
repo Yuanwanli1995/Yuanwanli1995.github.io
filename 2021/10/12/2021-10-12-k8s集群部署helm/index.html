@@ -20,25 +20,27 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"yuanwanli1995.github.io","root":"/","images":"/images","scheme":"Pisces","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
-<meta name="description" content="等不是办法，干才有出路">
-<meta property="og:type" content="website">
-<meta property="og:title" content="brisk">
-<meta property="og:url" content="http://yuanwanli1995.github.io/categories/%E5%BF%83%E7%90%86%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
+<meta name="description" content="安装helm  1234tar -xvf helm-v2.16.6-linux-amd64.tar.gz mv linux-amd64&#x2F;helm &#x2F;usr&#x2F;local&#x2F;bin&#x2F;helm version #查看helm client版本    1234567891011121314151617181920cat &gt; rbac-config.yaml &lt;&lt; EOF apiVersio">
+<meta property="og:type" content="article">
+<meta property="og:title" content="k8s集群部署helm">
+<meta property="og:url" content="http://yuanwanli1995.github.io/2021/10/12/2021-10-12-k8s%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2helm/index.html">
 <meta property="og:site_name" content="brisk">
-<meta property="og:description" content="等不是办法，干才有出路">
+<meta property="og:description" content="安装helm  1234tar -xvf helm-v2.16.6-linux-amd64.tar.gz mv linux-amd64&#x2F;helm &#x2F;usr&#x2F;local&#x2F;bin&#x2F;helm version #查看helm client版本    1234567891011121314151617181920cat &gt; rbac-config.yaml &lt;&lt; EOF apiVersio">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-10-11T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-10-12T10:23:40.798Z">
 <meta property="article:author" content="yuanwanli">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://yuanwanli1995.github.io/categories/%E5%BF%83%E7%90%86%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+<link rel="canonical" href="http://yuanwanli1995.github.io/2021/10/12/2021-10-12-k8s%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2helm/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"categories/心理学学习笔记/index.html","title":""}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://yuanwanli1995.github.io/2021/10/12/2021-10-12-k8s%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2helm/","path":"2021/10/12/2021-10-12-k8s集群部署helm/","title":"k8s集群部署helm"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>分类: 心理学学习笔记 | brisk</title>
+<title>k8s集群部署helm | brisk</title>
   
 
 
@@ -165,50 +167,100 @@
 </noscript>
 
 
-    <div class="main-inner category posts-collapse">
+    <div class="main-inner post posts-expand">
 
 
   
-  
-  
-  <div class="post-block">
-    <div class="post-content">
-      <div class="collection-title">
-        <h2 class="collection-header">心理学学习笔记
-          <small>分类</small>
-        </h2>
-      </div>
 
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2021/10/12/2021-10-12-k8s%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2helm/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuanwanli">
+      <meta itemprop="description" content="等不是办法，干才有出路">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="brisk">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          k8s集群部署helm
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
       
-    <div class="collection-year">
-      <span class="collection-header">2021</span>
+
+      <time title="创建时间：2021-10-12 00:00:00 / 修改时间：18:23:40" itemprop="dateCreated datePublished" datetime="2021-10-12T00:00:00+08:00">2021-10-12</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>安装helm </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tar -xvf helm-v2.16.6-linux-amd64.tar.gz</span><br><span class="line"> mv linux-amd64/helm /usr/local/bin/</span><br><span class="line">helm version #查看helm client版本</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">cat &gt; rbac-config.yaml &lt;&lt; EOF </span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: ServiceAccount</span><br><span class="line">metadata:</span><br><span class="line">  name: tiller</span><br><span class="line">  namespace: kube-system</span><br><span class="line">---</span><br><span class="line">apiVersion: rbac.authorization.k8s.io/v1beta1</span><br><span class="line">kind: ClusterRoleBinding</span><br><span class="line">metadata:</span><br><span class="line">  name: tiller</span><br><span class="line">roleRef:</span><br><span class="line">  apiGroup: rbac.authorization.k8s.io</span><br><span class="line">  kind: ClusterRole</span><br><span class="line">  name: cluster-admin</span><br><span class="line">subjects:</span><br><span class="line">  - kind: ServiceAccount</span><br><span class="line">    name: tiller</span><br><span class="line">    namespace: kube-system</span><br><span class="line">EOF </span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl create -f rbac-config.yaml</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 阿里源</span><br><span class="line">helm init --service-account tiller --upgrade -i registry.cn-hangzhou.aliyuncs.com/google_containers/tiller:v2.16.6 --stable-repo-url https://kubernetes.oss-cn-hangzhou.aliyuncs.com/charts</span><br><span class="line"></span><br></pre></td></tr></table></figure>
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2021-09-07T00:00:00+08:00"
-              content="2021-09-07">
-          09-07
-        </time>
-      </div>
+    
+    
+    
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/09/07/2021-09-07-%E5%BF%83%E7%90%86%E5%AD%A6%E5%AF%BC%E8%AE%BA/" itemprop="url">
-            <span itemprop="name">心理学导论</span>
-          </a>
-      </div>
+    <footer class="post-footer">
 
-      
-    </header>
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/10/11/2021-10-11-RKE%E9%83%A8%E7%BD%B2K8S/" rel="prev" title="RKE部署K8S">
+                  <i class="fa fa-chevron-left"></i> RKE部署K8S
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
   </article>
+</div>
 
-    </div>
-  </div>
-  
-  
-  
+
+
+
+
 
 </div>
   </main>
