@@ -130,13 +130,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-count">39</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
   </nav>
@@ -166,6 +166,293 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2021/09/08/2021-09-08-%E7%AC%AC%E5%8D%81%E4%B8%80%E8%AE%B2-docker%E7%BD%91%E7%BB%9C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuanwanli">
+      <meta itemprop="description" content="等不是办法，干才有出路">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="brisk">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/09/08/2021-09-08-%E7%AC%AC%E5%8D%81%E4%B8%80%E8%AE%B2-docker%E7%BD%91%E7%BB%9C/" class="post-title-link" itemprop="url">第十一讲 docker网络</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-09-08 16:22:00 / 修改时间：21:59:03" itemprop="dateCreated datePublished" datetime="2021-09-08T16:22:00+08:00">2021-09-08</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="第十一讲-docker网络"><a href="#第十一讲-docker网络" class="headerlink" title="第十一讲 docker网络"></a>第十一讲 docker网络</h2><p>清空镜像</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker rmi -f $(docker images -aq)</span><br></pre></td></tr></table></figure>
+
+<p>查看网卡</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[root@VM-4-6-centos ~]# ip addr </span><br><span class="line">1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000</span><br><span class="line">    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00</span><br><span class="line">    inet 127.0.0.1/8 scope host lo</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet6 ::1/128 scope host </span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000</span><br><span class="line">    link/ether 52:54:00:e6:fb:2d brd ff:ff:ff:ff:ff:ff</span><br><span class="line">    inet 10.0.4.6/22 brd 10.0.7.255 scope global eth0</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet6 fe80::5054:ff:fee6:fb2d/64 scope link </span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">3: docker0: &lt;NO-CARRIER,BROADCAST,MULTICAST,UP&gt; mtu 1500 qdisc noqueue state DOWN group default </span><br><span class="line">    link/ether 02:42:d6:9a:ed:b7 brd ff:ff:ff:ff:ff:ff</span><br><span class="line">    inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet6 fe80::42:d6ff:fe9a:edb7/64 scope link </span><br><span class="line">       valid_lft forever preferred_lft forever</span><br></pre></td></tr></table></figure>
+
+<p>docker如何处理容器于宿主机的网络</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"># 测试  运行一个tomcat</span><br><span class="line">$ docker run -d -P --name tomcat01 tomcat</span><br><span class="line"></span><br><span class="line"># 查看容器内部网络地址</span><br><span class="line">$ docker exec -it 容器id ip addr</span><br><span class="line"></span><br><span class="line"># 发现容器启动的时候会得到一个 eth0@if91 ip地址，docker分配！</span><br><span class="line">$ ip addr</span><br><span class="line">1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1</span><br><span class="line">    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00</span><br><span class="line">    inet 127.0.0.1/8 scope host lo</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">261: eth0@if91: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc noqueue state UP group default </span><br><span class="line">    link/ether 02:42:ac:12:00:02 brd ff:ff:ff:ff:ff:ff link-netnsid 0</span><br><span class="line">    inet 172.18.0.2/16 brd 172.18.255.255 scope global eth0</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line"></span><br><span class="line">       </span><br><span class="line"># 思考？ linux能不能ping通容器内部！ 可以 容器内部可以ping通外界吗？ 可以！</span><br><span class="line">$ ping 172.18.0.2</span><br><span class="line">PING 172.18.0.2 (172.18.0.2) 56(84) bytes of data.</span><br><span class="line">64 bytes from 172.18.0.2: icmp_seq=1 ttl=64 time=0.069 ms</span><br><span class="line">64 bytes from 172.18.0.2: icmp_seq=2 ttl=64 time=0.074 ms</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><p>我们每启动一个docker容器，docker就会给docker容器分配一个ip，我们只要按照了docker，就会有一个docker0桥接模式，使用的技术是veth-pair技术！</p>
+</li>
+<li><p>再启动一个容器测试，发现又多了一对网络. </p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/docker19.png"></p>
+</li>
+</ol>
+<p>我们发现这个容器带来网卡，都是一对对的,veth-pair 就是一对的虚拟设备接口，他们都是成对出现的，一端连着协议，一端彼此相连正因为有这个特性 veth-pair 充当一个桥梁，连接各种虚拟网络设备的OpenStac,Docker容器之间的连接，OVS的连接，都是使用evth-pair技术</p>
+<p>3、我们来测试下tomcat01和tomcat02是否可以ping通</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#获取tomcat01的ip 172.17.0.2</span><br><span class="line">$ docker-tomcat docker exec -it tomcat01 ip addr  </span><br><span class="line">550: eth0@if551: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc noqueue state UP group default </span><br><span class="line">link/ether 02:42:ac:11:00:02 brd ff:ff:ff:ff:ff:ff link-netnsid 0</span><br><span class="line">inet 172.17.0.2/16 brd 172.17.255.255 scope global eth0</span><br><span class="line"> valid_lft forever preferred_lft forever</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 让tomcat02 ping tomcat01       </span><br><span class="line">$ docker-tomcat docker exec -it tomcat02 ping 172.17.0.2</span><br><span class="line">PING 172.17.0.2 (172.17.0.2) 56(84) bytes of data.</span><br><span class="line">64 bytes from 172.17.0.2: icmp_seq=1 ttl=64 time=0.098 ms</span><br><span class="line">64 bytes from 172.17.0.2: icmp_seq=2 ttl=64 time=0.071 ms</span><br><span class="line"></span><br><span class="line"># 结论：容器和容器之间是可以互相ping通</span><br></pre></td></tr></table></figure>
+
+<p><strong>网络模型图</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/docker20.png"></p>
+<p>结论：tomcat01和tomcat02公用一个路由器，docker0。</p>
+<p>所有的容器不指定网络的情况下，都是docker0路由的，docker会给我们的容器分配一个默认的可用ip。</p>
+<blockquote>
+<p>小结</p>
+</blockquote>
+<p>Docker使用的是Linux的桥接，宿主机是一个Docker容器的网桥 docker0</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/docker21.png"></p>
+<p>Docker中所有网络接口都是虚拟的，虚拟的转发效率高（内网传递文件）</p>
+<p>只要容器删除，对应的网桥一对就没了！</p>
+<p><strong>思考一个场景：我们编写了一个微服务，database url=ip: 项目不重启，数据ip换了，我们希望可以处理这个问题，可以通过名字来进行访问容器</strong>？</p>
+<h5 id="–-link"><a href="#–-link" class="headerlink" title="–-link"></a>–-link</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$ docker exec -it tomcat02 ping tomca01   # ping不通</span><br><span class="line">ping: tomca01: Name or service not known</span><br><span class="line"></span><br><span class="line"># 运行一个tomcat03 --link tomcat02 </span><br><span class="line">$ docker run -d -P --name tomcat03 --link tomcat02 tomcat</span><br><span class="line">5f9331566980a9e92bc54681caaac14e9fc993f14ad13d98534026c08c0a9aef</span><br><span class="line"></span><br><span class="line"># 3连接2</span><br><span class="line"># 用tomcat03 ping tomcat02 可以ping通</span><br><span class="line">$ docker exec -it tomcat03 ping tomcat02</span><br><span class="line">PING tomcat02 (172.17.0.3) 56(84) bytes of data.</span><br><span class="line">64 bytes from tomcat02 (172.17.0.3): icmp_seq=1 ttl=64 time=0.115 ms</span><br><span class="line">64 bytes from tomcat02 (172.17.0.3): icmp_seq=2 ttl=64 time=0.080 ms</span><br><span class="line"></span><br><span class="line"># 2连接3</span><br><span class="line"># 用tomcat02 ping tomcat03 ping不通</span><br></pre></td></tr></table></figure>
+
+<p><strong>探究：</strong></p>
+<p>docker network inspect 网络id 网段相同</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/docker22.png"></p>
+<p>docker inspect tomcat03</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/docker23.png"></p>
+<p>查看tomcat03里面的/etc/hosts发现有tomcat02的配置</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/docker24.png"></p>
+<p>–link 本质就是在hosts配置中添加映射</p>
+<p>现在使用Docker已经不建议使用–link了！</p>
+<p>自定义网络，不适用docker0！</p>
+<p>docker0问题：不支持容器名连接访问！</p>
+<h5 id="自定义网络"><a href="#自定义网络" class="headerlink" title="自定义网络"></a>自定义网络</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">docker network</span><br><span class="line">connect     -- Connect a container to a network</span><br><span class="line">create      -- Creates a new network with a name specified by the</span><br><span class="line">disconnect  -- Disconnects a container from a network</span><br><span class="line">inspect     -- Displays detailed information on a network</span><br><span class="line">ls          -- Lists all the networks created by the user</span><br><span class="line">prune       -- Remove all unused networks</span><br><span class="line">rm          -- Deletes one or more networks</span><br></pre></td></tr></table></figure>
+
+<p><strong>网络模式</strong></p>
+<p>bridge ：桥接 docker（默认，自己创建也是用bridge模式）</p>
+<p>none ：不配置网络，一般不用</p>
+<p>host ：和所主机共享网络</p>
+<p>container ：容器网络连通（用得少！局限很大）</p>
+<p>测试</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 我们直接启动的命令 --net bridge,而这个就是我们得docker0</span><br><span class="line"># bridge就是docker0</span><br><span class="line">$ docker run -d -P --name tomcat01 tomcat</span><br><span class="line">等价于 =&gt; docker run -d -P --name tomcat01 --net bridge tomcat</span><br><span class="line"></span><br><span class="line"># docker0，特点：默认，域名不能访问。 --link可以打通连接，但是很麻烦！</span><br><span class="line"># 我们可以 自定义一个网络</span><br><span class="line">$ docker network create --driver bridge --subnet 192.168.0.0/16 --gateway 192.168.0.1 mynet</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/docker25.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker network inspect mynet;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/docker27.png"></p>
+<p>启动两个tomcat,再次查看网络情况,在自定义的网络下，服务可以互相ping通，不用使用–link.</p>
+<p>我们自定义的网络docker当我们维护好了对应的关系，推荐我们平时这样使用网络！</p>
+<p>好处：</p>
+<p>redis -不同的集群使用不同的网络，保证集群是安全和健康的</p>
+<p>mysql-不同的集群使用不同的网络，保证集群是安全和健康的</p>
+<h2 id="网络连通"><a href="#网络连通" class="headerlink" title="网络连通"></a>网络连通</h2><p>容器和网卡的网路连通 </p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/docker28.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 测试两个不同的网络连通  再启动两个tomcat 使用默认网络，即docker0</span><br><span class="line">$ docker run -d -P --name tomcat01 tomcat</span><br><span class="line">$ docker run -d -P --name tomcat02 tomcat</span><br><span class="line"># 此时ping不通</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/docker29.png"></p>
+<p>结论：假设要跨网络操作别人，就需要使用docker network connect 连通！</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2021/09/08/2021-09-08-%E7%AC%AC%E5%8D%81%E8%AE%B2-%E5%8F%91%E5%B8%83docker%E9%95%9C%E5%83%8F-dockerhub%E3%80%81%E9%98%BF%E9%87%8C%E4%BA%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuanwanli">
+      <meta itemprop="description" content="等不是办法，干才有出路">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="brisk">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/09/08/2021-09-08-%E7%AC%AC%E5%8D%81%E8%AE%B2-%E5%8F%91%E5%B8%83docker%E9%95%9C%E5%83%8F-dockerhub%E3%80%81%E9%98%BF%E9%87%8C%E4%BA%91/" class="post-title-link" itemprop="url">第十讲 发布docker镜像 dockerhub、阿里云</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-09-08 15:20:00 / 修改时间：15:49:46" itemprop="dateCreated datePublished" datetime="2021-09-08T15:20:00+08:00">2021-09-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BC%96%E7%A8%8B%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">编程笔记</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="第十讲-发布docker镜像"><a href="#第十讲-发布docker镜像" class="headerlink" title="第十讲 发布docker镜像"></a>第十讲 发布docker镜像</h2><h4 id="10-1-发布到dockerhub"><a href="#10-1-发布到dockerhub" class="headerlink" title="10.1 发布到dockerhub"></a>10.1 发布到dockerhub</h4><p>1、地址 <a target="_blank" rel="noopener" href="https://hub.docker.com/">https://hub.docker.com/</a></p>
+<p>2、确定这个账号可以登录</p>
+<p>3、登录</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$ docker login --help</span><br><span class="line">Usage:  docker login [OPTIONS] [SERVER]</span><br><span class="line"></span><br><span class="line">Log in to a Docker registry.</span><br><span class="line">If no server is specified, the default is defined by the daemon.</span><br><span class="line"></span><br><span class="line">Options:</span><br><span class="line">  -p, --password string   Password</span><br><span class="line">      --password-stdin    Take the password from stdin</span><br><span class="line">  -u, --username string   Username</span><br><span class="line"></span><br><span class="line">$ docker login -u 你的用户名 -p 你的密码</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>4、提交 push镜像</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/docker18.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 会发现push不上去，因为如果没有前缀的话默认是push到 官方的library</span><br><span class="line"># 解决方法：</span><br><span class="line"># 第一种 build的时候添加你的dockerhub用户名，然后在push就可以放到自己的仓库了</span><br><span class="line">$ docker build -t kuangshen/mytomcat:0.1 .</span><br><span class="line"></span><br><span class="line"># 第二种 使用docker tag #然后再次push</span><br><span class="line">$ docker tag 容器id kuangshen/mytomcat:1.0 #然后再次push</span><br><span class="line">$ docker push kuangshen/mytomcat:1.0</span><br></pre></td></tr></table></figure>
+
+<p>10.2 发布到阿里云镜像</p>
+<p>看官网 很详细<a target="_blank" rel="noopener" href="https://cr.console.aliyun.com/repository/">https://cr.console.aliyun.com/repository/</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker login --username=zchengx registry.cn-shenzhen.aliyuncs.com</span><br><span class="line">$ sudo docker tag [ImageId] registry.cn-shenzhen.aliyuncs.com/dsadxzc/cheng:[镜像版本号]</span><br><span class="line"></span><br><span class="line"># 修改id 和 版本</span><br><span class="line">sudo docker tag a5ef1f32aaae registry.cn-shenzhen.aliyuncs.com/dsadxzc/cheng:1.0</span><br><span class="line"># 修改版本</span><br><span class="line">$ sudo docker push registry.cn-shenzhen.aliyuncs.com/dsadxzc/cheng:[镜像版本号]</span><br></pre></td></tr></table></figure>
+
+<p>总结：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/docker17.png"></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2021/09/08/typora%E2%80%94%E2%80%94github+pigGo%E6%90%AD%E5%BB%BA%E5%8F%AF%E7%94%A8%E7%9A%84%E5%85%8D%E8%B4%B9%E5%9B%BE%E5%BA%8A/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuanwanli">
+      <meta itemprop="description" content="等不是办法，干才有出路">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="brisk">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/09/08/typora%E2%80%94%E2%80%94github+pigGo%E6%90%AD%E5%BB%BA%E5%8F%AF%E7%94%A8%E7%9A%84%E5%85%8D%E8%B4%B9%E5%9B%BE%E5%BA%8A/" class="post-title-link" itemprop="url">typora——github+pigGo搭建可用的免费图床</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-09-08 11:50:54" itemprop="dateCreated datePublished" datetime="2021-09-08T11:50:54+08:00">2021-09-08</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -856,7 +1143,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-09-08 11:25:24" itemprop="dateModified" datetime="2021-09-08T11:25:24+08:00">2021-09-08</time>
+        <time title="修改时间：2021-10-14 23:08:44" itemprop="dateModified" datetime="2021-10-14T23:08:44+08:00">2021-10-14</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1461,338 +1748,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2021/08/28/7%20docker%E9%95%9C%E5%83%8F%E5%8A%A0%E8%BD%BD%E5%8E%9F%E7%90%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yuanwanli">
-      <meta itemprop="description" content="等不是办法，干才有出路">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="brisk">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/08/28/7%20docker%E9%95%9C%E5%83%8F%E5%8A%A0%E8%BD%BD%E5%8E%9F%E7%90%86/" class="post-title-link" itemprop="url">第七讲 docker镜像加载原理</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-08-28 11:40:10" itemprop="dateCreated datePublished" datetime="2021-08-28T11:40:10+08:00">2021-08-28</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-09-03 09:49:08" itemprop="dateModified" datetime="2021-09-03T09:49:08+08:00">2021-09-03</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%BC%96%E7%A8%8B%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">编程笔记</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="7-docker镜像加载原理"><a href="#7-docker镜像加载原理" class="headerlink" title="7 docker镜像加载原理"></a>7 docker镜像加载原理</h2><h3 id="7-1联合文件系统-Union-Filesystem"><a href="#7-1联合文件系统-Union-Filesystem" class="headerlink" title="7.1联合文件系统(Union Filesystem)"></a>7.1联合文件系统(Union Filesystem)</h3><p>联合文件系统是一种分层、轻量级并且高性能的文件系统，它支持对文件系统的修改作为一次提交来一层层的叠加，同时可以将不同目录挂载到同一个虚拟文件系统下。<br>联合文件系统是 Docker 镜像的基础。镜像可以通过分层来进行继承，基于基础镜像（没有父镜像），可以制作各种具体的应用镜像。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/docker11.png"></p>
-<p>特性：一次同时加载多个文件系统，但从外面看起来，只能看到一个文件系统，联合加载会把各层文件系统叠加起来，这样最终的文件系统会包含所有底层的文件和目录。</p>
-<h3 id="7-2-docker-镜像加载"><a href="#7-2-docker-镜像加载" class="headerlink" title="7.2 docker 镜像加载"></a>7.2 docker 镜像加载</h3><p>docker的镜像实际上由一层一层的文件系统组成，这种层级的文件系统UnionFS。<br>boots(boot file system）主要包含 bootloader和 Kernel, bootloader主要是引导加 kernel, Linux刚启动时会加bootfs文件系统，在 Docker镜像的最底层是 boots。这一层与我们典型的Linux/Unix系统是一样的，包含boot加載器和内核。当boot加载完成之后整个内核就都在内存中了，此时内存的使用权已由 bootfs转交给内核，此时系统也会卸载bootfs。<br>rootfs（root file system),在 bootfs之上。包含的就是典型 Linux系统中的/dev,/proc,/bin,/etc等标准目录和文件。 rootfs就是各种不同的操作系统发行版，比如 Ubuntu, Centos等等。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/docker12.png"></p>
-<p>对于个精简的OS,rootfs可以很小，只需要包合最基本的命令，工具和程序库就可以了，因为底层直接用Host的kernel，自己只需要提供rootfs就可以了。由此可见对于不同的Linux发行版， boots基本是一致的， rootfs会有差別，因此不同的发行版可以公用bootfs.</p>
-<p>虚拟机是分钟级别，容器是秒级！</p>
-<h3 id="7-3-分层"><a href="#7-3-分层" class="headerlink" title="7.3 分层"></a>7.3 分层</h3><p>当我们去观察镜像的下载的输出日志，是在一层一层下载。这中分层最大的好处就是资源共享。比如有多个镜像都从相同的Base镜像构建而来，那么宿主机只需在磁盘上保留一份base镜像，同时内存中也只需要加载一份base镜像，这样就可以为所有的容器服务了，而且镜像的每一层都可以被共享。</p>
-<p>查看镜像分层的方式可以通过<code>docker image inspect</code> 命令</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br></pre></td><td class="code"><pre><span class="line">[root@VM-4-6-centos lighthouse]# docker image inspect tomcat</span><br><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        &quot;Id&quot;: &quot;sha256:266d1269bb298d6a3259fc2c2a9deaedf8be945482a2d596b64f73343289a56c&quot;,</span><br><span class="line">        &quot;RepoTags&quot;: [</span><br><span class="line">            &quot;tomcat:latest&quot;</span><br><span class="line">        ],</span><br><span class="line">        &quot;RepoDigests&quot;: [</span><br><span class="line">            &quot;tomcat@sha256:1af502b6fd35c1d4ab6f24dc9bd36b58678a068ff1206c25acc129fb90b2a76a&quot;</span><br><span class="line">        ],</span><br><span class="line">        &quot;Parent&quot;: &quot;&quot;,</span><br><span class="line">        &quot;Comment&quot;: &quot;&quot;,</span><br><span class="line">        &quot;Created&quot;: &quot;2021-08-18T20:48:04.549796116Z&quot;,</span><br><span class="line">        &quot;Container&quot;: &quot;d2ecb6a64fdc3e7fef05d7909154d295574519fa144d8507cf7c9a5a6c5ea8b3&quot;,</span><br><span class="line">        &quot;ContainerConfig&quot;: &#123;</span><br><span class="line">            &quot;Hostname&quot;: &quot;d2ecb6a64fdc&quot;,</span><br><span class="line">            &quot;Domainname&quot;: &quot;&quot;,</span><br><span class="line">            &quot;User&quot;: &quot;&quot;,</span><br><span class="line">            &quot;AttachStdin&quot;: false,</span><br><span class="line">            &quot;AttachStdout&quot;: false,</span><br><span class="line">            &quot;AttachStderr&quot;: false,</span><br><span class="line">            &quot;ExposedPorts&quot;: &#123;</span><br><span class="line">                &quot;8080/tcp&quot;: &#123;&#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            &quot;Tty&quot;: false,</span><br><span class="line">            &quot;OpenStdin&quot;: false,</span><br><span class="line">            &quot;StdinOnce&quot;: false,</span><br><span class="line">            &quot;Env&quot;: [</span><br><span class="line">                &quot;PATH=/usr/local/tomcat/bin:/usr/local/openjdk-11/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin&quot;,</span><br><span class="line">                &quot;JAVA_HOME=/usr/local/openjdk-11&quot;,</span><br><span class="line">                &quot;LANG=C.UTF-8&quot;,</span><br><span class="line">                &quot;JAVA_VERSION=11.0.12&quot;,</span><br><span class="line">                &quot;CATALINA_HOME=/usr/local/tomcat&quot;,</span><br><span class="line">                &quot;TOMCAT_NATIVE_LIBDIR=/usr/local/tomcat/native-jni-lib&quot;,</span><br><span class="line">                &quot;LD_LIBRARY_PATH=/usr/local/tomcat/native-jni-lib&quot;,</span><br><span class="line">                &quot;GPG_KEYS=48F8E69F6390C9F25CFEDCD268248959359E722B A9C5DF4D22E99998D9875A5110C01C5A2F6059E7 DCFD35E0BF8CA7344752DE8B6FB21E8933C60243&quot;,</span><br><span class="line">                &quot;TOMCAT_MAJOR=9&quot;,</span><br><span class="line">                &quot;TOMCAT_VERSION=9.0.52&quot;,</span><br><span class="line">                &quot;TOMCAT_SHA512=35e007e8e30e12889da27f9c71a6f4997b9cb5023b703d99add5de9271828e7d8d4956bf34dd2f48c7c71b4f8480f318c9067a4cd2a6d76eaae466286db4897b&quot;</span><br><span class="line">            ],</span><br><span class="line">            &quot;Cmd&quot;: [</span><br><span class="line">                &quot;/bin/sh&quot;,</span><br><span class="line">                &quot;-c&quot;,</span><br><span class="line">                &quot;#(nop) &quot;,</span><br><span class="line">                &quot;CMD [\&quot;catalina.sh\&quot; \&quot;run\&quot;]&quot;</span><br><span class="line">            ],</span><br><span class="line">            &quot;Image&quot;: &quot;sha256:5196276371ce4bad78ffcbb6032a04d381437b0719075d11ae1c24f496303f32&quot;,</span><br><span class="line">            &quot;Volumes&quot;: null,</span><br><span class="line">            &quot;WorkingDir&quot;: &quot;/usr/local/tomcat&quot;,</span><br><span class="line">            &quot;Entrypoint&quot;: null,</span><br><span class="line">            &quot;OnBuild&quot;: null,</span><br><span class="line">            &quot;Labels&quot;: &#123;&#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;DockerVersion&quot;: &quot;20.10.7&quot;,</span><br><span class="line">        &quot;Author&quot;: &quot;&quot;,</span><br><span class="line">        &quot;Config&quot;: &#123;</span><br><span class="line">            &quot;Hostname&quot;: &quot;&quot;,</span><br><span class="line">            &quot;Domainname&quot;: &quot;&quot;,</span><br><span class="line">            &quot;User&quot;: &quot;&quot;,</span><br><span class="line">            &quot;AttachStdin&quot;: false,</span><br><span class="line">            &quot;AttachStdout&quot;: false,</span><br><span class="line">            &quot;AttachStderr&quot;: false,</span><br><span class="line">            &quot;ExposedPorts&quot;: &#123;</span><br><span class="line">                &quot;8080/tcp&quot;: &#123;&#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            &quot;Tty&quot;: false,</span><br><span class="line">            &quot;OpenStdin&quot;: false,</span><br><span class="line">            &quot;StdinOnce&quot;: false,</span><br><span class="line">            &quot;Env&quot;: [</span><br><span class="line">                &quot;PATH=/usr/local/tomcat/bin:/usr/local/openjdk-11/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin&quot;,</span><br><span class="line">                &quot;JAVA_HOME=/usr/local/openjdk-11&quot;,</span><br><span class="line">                &quot;LANG=C.UTF-8&quot;,</span><br><span class="line">                &quot;JAVA_VERSION=11.0.12&quot;,</span><br><span class="line">                &quot;CATALINA_HOME=/usr/local/tomcat&quot;,</span><br><span class="line">                &quot;TOMCAT_NATIVE_LIBDIR=/usr/local/tomcat/native-jni-lib&quot;,</span><br><span class="line">                &quot;LD_LIBRARY_PATH=/usr/local/tomcat/native-jni-lib&quot;,</span><br><span class="line">                &quot;GPG_KEYS=48F8E69F6390C9F25CFEDCD268248959359E722B A9C5DF4D22E99998D9875A5110C01C5A2F6059E7 DCFD35E0BF8CA7344752DE8B6FB21E8933C60243&quot;,</span><br><span class="line">                &quot;TOMCAT_MAJOR=9&quot;,</span><br><span class="line">                &quot;TOMCAT_VERSION=9.0.52&quot;,</span><br><span class="line">                &quot;TOMCAT_SHA512=35e007e8e30e12889da27f9c71a6f4997b9cb5023b703d99add5de9271828e7d8d4956bf34dd2f48c7c71b4f8480f318c9067a4cd2a6d76eaae466286db4897b&quot;</span><br><span class="line">            ],</span><br><span class="line">            &quot;Cmd&quot;: [</span><br><span class="line">                &quot;catalina.sh&quot;,</span><br><span class="line">                &quot;run&quot;</span><br><span class="line">            ],</span><br><span class="line">            &quot;Image&quot;: &quot;sha256:5196276371ce4bad78ffcbb6032a04d381437b0719075d11ae1c24f496303f32&quot;,</span><br><span class="line">            &quot;Volumes&quot;: null,</span><br><span class="line">            &quot;WorkingDir&quot;: &quot;/usr/local/tomcat&quot;,</span><br><span class="line">            &quot;Entrypoint&quot;: null,</span><br><span class="line">            &quot;OnBuild&quot;: null,</span><br><span class="line">            &quot;Labels&quot;: null</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;Architecture&quot;: &quot;amd64&quot;,</span><br><span class="line">        &quot;Os&quot;: &quot;linux&quot;,</span><br><span class="line">        &quot;Size&quot;: 667866261,</span><br><span class="line">        &quot;VirtualSize&quot;: 667866261,</span><br><span class="line">        &quot;GraphDriver&quot;: &#123;</span><br><span class="line">            &quot;Data&quot;: &#123;</span><br><span class="line">                &quot;LowerDir&quot;: &quot;/var/lib/docker/overlay2/14d6effb2d8347a8f2140b8eb6bb914ffe5209cc9ed880c55657cb8e6c30f0b4/diff:/var/lib/docker/overlay2/304d8484e5dd5fd4386fd5fefcd8e32ef38743801a7bf3ba513fb3ff8f38ad89/diff:/var/lib/docker/overlay2/bd7bfc9ebc87f6f5c11e110877e54b7e2180aac478637a207b105b4b319e925e/diff:/var/lib/docker/overlay2/00ca651a87602d2e11175f932c6f32fd7b43ae98159416ad908fa050b47b3fed/diff:/var/lib/docker/overlay2/aa5cce0f487b2a05c13bb8929a2411314690d2b4d305cd3e1bc171cb1b173089/diff:/var/lib/docker/overlay2/3815d6dbfabe611f9dc4ffac4690fb4c72870794c7ea9d2e930487d0eaa6d5f4/diff:/var/lib/docker/overlay2/f14c65162848b2a6061d043343db3ccff14c64bf99d6fe3bb947331fc7882778/diff:/var/lib/docker/overlay2/7acfe353937d2289e2cbf8b63e938e579b5a5d952cefe0973125b38555c04416/diff:/var/lib/docker/overlay2/67693c8b74406bd5c6603fe38ce5e5ac9380eca61504103ae70e35c5703d8d57/diff&quot;,</span><br><span class="line">                &quot;MergedDir&quot;: &quot;/var/lib/docker/overlay2/517208d37dec0c6abf702063df2aec59802520e1e5ef5b6bcefce7a6f3a379aa/merged&quot;,</span><br><span class="line">                &quot;UpperDir&quot;: &quot;/var/lib/docker/overlay2/517208d37dec0c6abf702063df2aec59802520e1e5ef5b6bcefce7a6f3a379aa/diff&quot;,</span><br><span class="line">                &quot;WorkDir&quot;: &quot;/var/lib/docker/overlay2/517208d37dec0c6abf702063df2aec59802520e1e5ef5b6bcefce7a6f3a379aa/work&quot;</span><br><span class="line">            &#125;,</span><br><span class="line">            &quot;Name&quot;: &quot;overlay2&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;RootFS&quot;: &#123;</span><br><span class="line">            &quot;Type&quot;: &quot;layers&quot;,</span><br><span class="line">            &quot;Layers&quot;: [</span><br><span class="line">                &quot;sha256:c2ddc1bc2645ab5d982c60434d8bbc6aecee1bd4e8eee0df7fd08c96df2d58bb&quot;,</span><br><span class="line">                &quot;sha256:62d14713f2e98841ec3927e3ab611b13e414a21fb82fc0e604a9008ac53e45dc&quot;,</span><br><span class="line">                &quot;sha256:1235daf38153d083ae5b4f605acc54f9401143b5fbd033801ba373a8cfb04845&quot;,</span><br><span class="line">                &quot;sha256:7d890913ab6955350bdd25d04c60dd444db13890c401cbcdc8e00e9bd29c90fc&quot;,</span><br><span class="line">                &quot;sha256:c2e2307780ac2fa0d39cec874c4545156da890c1bcc42b3259114ac29bb598f1&quot;,</span><br><span class="line">                &quot;sha256:75f6a0e6e441cd3d74125443fc73eb26bf9ceb557b269b25bddaa2ef459227f7&quot;,</span><br><span class="line">                &quot;sha256:b19f17003e5ae07f7aba99f95736627aaa1ff3c92832f7d6920158dc6b138bcf&quot;,</span><br><span class="line">                &quot;sha256:2dad09b8a57e12408adc0366cbd2a642eaab1c82bbfb2b442245928b60d337f1&quot;,</span><br><span class="line">                &quot;sha256:83a14c3e974e700768197a3061f840618a924d3154fcb338a85b6da5fd4eb886&quot;,</span><br><span class="line">                &quot;sha256:19f8bd134bcf7c5870f8294b1d3bba4c970d0b622772865e44d200d248ed2676&quot;</span><br><span class="line">            ]</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;Metadata&quot;: &#123;</span><br><span class="line">            &quot;LastTagTime&quot;: &quot;0001-01-01T00:00:00Z&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>理解：</p>
-</blockquote>
-<p>所有的 Docker镜像都起始于一个基础镜像层，当进行修改或培加新的内容时，就会在当前镜像层之上，创建新的镜像层。举一个简单的例子，假如基于 Ubuntu Linux16.04创建一个新的镜像，这就是新镜像的第一层；如果在该镜像中添加 Python包，就会在基础镜像层之上创建第二个镜像层；如果继续添加一个安全补丁，就会创健第三个镜像层该像当前已经包含3个镜像层，如下图所示,在添加额外的镜像层的同时，镜像始终保持是当前所有镜像的组合。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/docker13.png"></p>
-<p>在添加额外的镜像层的同时，镜像始终保持是当前所有镜像的组合，理解这一点非常重要。下图中举了一个简单的例子，每个镜像层包含3个文件，而镜像包含了来自两个镜像层的6个文件。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/docker14.png"></p>
-<p>上图中的镜像层跟之前图中的略有区別，主要目的是便于展示文件<br>下图中展示了一个稍微复杂的三层镜像，在外部看来整个镜像只有6个文件，这是因为最上层中的文件7是文件5的一个更新版。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/docker15.png"></p>
-<p>文种情況下，上层镜像层中的文件覆盖了底层镜像层中的文件。这样就使得文件的更新版本作为一个新镜像层添加到镜像当中</p>
-<p>Docker通过存储引擎（新版本采用快照机制）的方式来实现镜像层堆栈，并保证多镜像层对外展示为统一的文件系统</p>
-<p>Linux上可用的存储引撃有AUFS、 Overlay2、 Device Mapper、Btrfs以及ZFS。顾名思义，每种存储引擎都基于 Linux中对应的件系统或者块设备技术，井且每种存储引擎都有其独有的性能特点。</p>
-<p>Docker在 Windows上仅支持 windowsfilter 一种存储引擎，该引擎基于NTFS文件系统之上实现了分层和CoW [1]。</p>
-<p>下图展示了与系统显示相同的三层镜像。所有镜像层堆并合井，对外提供统一的视图。<br><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/docker16.png"></p>
-<blockquote>
-<p>特点</p>
-</blockquote>
-<p>Docker 镜像都是只读的，当容器启动时，一个新的可写层加载到镜像的顶部！</p>
-<p>这一层就是我们通常说的容器层，容器之下的都叫镜像层！</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2021/08/28/5%20docker%E5%AE%9E%E4%BE%8B%E6%93%8D%E4%BD%9C/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yuanwanli">
-      <meta itemprop="description" content="等不是办法，干才有出路">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="brisk">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/08/28/5%20docker%E5%AE%9E%E4%BE%8B%E6%93%8D%E4%BD%9C/" class="post-title-link" itemprop="url">第五讲 docker实例操作</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2021-08-28 08:20:10 / 修改时间：11:43:42" itemprop="dateCreated datePublished" datetime="2021-08-28T08:20:10+08:00">2021-08-28</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%BC%96%E7%A8%8B%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">编程笔记</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="5-docker实例操作"><a href="#5-docker实例操作" class="headerlink" title="5 docker实例操作"></a>5 docker实例操作</h2><h3 id="5-1-部署Nginx"><a href="#5-1-部署Nginx" class="headerlink" title="5.1 部署Nginx"></a>5.1 部署Nginx</h3><p><code>1 搜索nginx镜像 </code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">root@VM-4-6-centos /]# docker search nginx</span><br><span class="line">NAME                              DESCRIPTION                                     STARS     OFFICIAL   AUTOMATED</span><br><span class="line">nginx                             Official build of Nginx.                        15374     [OK]       </span><br><span class="line">jwilder/nginx-proxy               Automated Nginx reverse proxy for docker con…   2060                 [OK]</span><br><span class="line">richarvey/nginx-php-fpm           Container running Nginx + PHP-FPM capable of…   816                  [OK]</span><br><span class="line">jc21/nginx-proxy-manager          Docker container for managing Nginx proxy ho…   236   </span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>docker hub可以看大更详细的镜像信息</p>
-</blockquote>
-<p><code>2 下载镜像</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@VM-4-6-centos /]# docker pull nginx</span><br><span class="line">Using default tag: latest</span><br><span class="line">latest: Pulling from library/nginx</span><br><span class="line">e1acddbe380c: Pull complete </span><br><span class="line">e21006f71c6f: Pull complete </span><br><span class="line">f3341cc17e58: Pull complete </span><br><span class="line">2a53fa598ee2: Pull complete </span><br><span class="line">12455f71a9b5: Pull complete </span><br><span class="line">b86f2ba62d17: Pull complete </span><br><span class="line">Digest: sha256:4d4d96ac750af48c6a551d757c1cbfc071692309b491b70b2b8976e102dd3fef</span><br><span class="line">Status: Downloaded newer image for nginx:latest</span><br><span class="line">docker.io/library/nginx:latest </span><br><span class="line"># 下载成功</span><br></pre></td></tr></table></figure>
-
-<p><code>3 查看镜像</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@VM-4-6-centos lighthouse]# docker images </span><br><span class="line">REPOSITORY    TAG       IMAGE ID       CREATED        SIZE</span><br><span class="line">nginx         latest    dd34e67e3371   10 days ago    133MB</span><br></pre></td></tr></table></figure>
-
-<p><code>4  运行容器</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@VM-4-6-centos lighthouse]# docker run -d --name nginx001 -p 80:80 nginx</span><br><span class="line">44c86d145d151622d0e7512050c4fead714047be0256c7f6af098ec0452ba428</span><br></pre></td></tr></table></figure>
-
-<p><code>5 查看容器</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@VM-4-6-centos lighthouse]# docker ps</span><br><span class="line">CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS          PORTS                               NAMES</span><br><span class="line">44c86d145d15   nginx     &quot;/docker-entrypoint.…&quot;   35 minutes ago   Up 35 minutes   0.0.0.0:80-&gt;80/tcp, :::80-&gt;80/tcp   nginx001</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p><code>6 测试</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@VM-4-6-centos lighthouse]# docker exec -it nginx001 /bin/bash</span><br><span class="line">root@44c86d145d15:/# ls</span><br><span class="line">bin   dev                  docker-entrypoint.sh  home  lib64  mnt  proc  run   srv  tmp  var</span><br><span class="line">boot  docker-entrypoint.d  etc                   lib   media  opt  root  sbin  sys  usr</span><br></pre></td></tr></table></figure>
-
-<p>外网访问：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/docker6.png"></p>
-<p><code>7关闭容器</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@VM-4-6-centos lighthouse]# docker stop nginx001</span><br><span class="line">nginx001</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="5-2-部署tomcat"><a href="#5-2-部署tomcat" class="headerlink" title="5.2 部署tomcat"></a>5.2 部署tomcat</h3><p><code>1 搜索nginx镜像 </code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@VM-4-6-centos lighthouse]# docker search tomcat </span><br><span class="line">NAME                          DESCRIPTION                                     STARS     OFFICIAL   AUTOMATED</span><br><span class="line">tomcat                        Apache Tomcat is an open source implementati…   3106      [OK]       </span><br><span class="line">tomee                         Apache TomEE is an all-Apache Java EE certif…   92        [OK]       </span><br><span class="line">dordoka/tomcat                Ubuntu 14.04, Oracle JDK 8 and Tomcat 8 base…   58                   [OK]</span><br><span class="line">kubeguide/tomcat-app          Tomcat image for Chapter 1                      30                   </span><br><span class="line">consol/tomcat-7.0             Tomcat 7.0.57, 8080, &quot;admin/admin&quot;              18                   [OK]</span><br><span class="line">cloudesire/tomcat             Tomcat server, 6/7/8                            15                   [OK]</span><br><span class="line">aallam/tomcat-mysql           Debian, Oracle JDK, Tomcat &amp; MySQL              13                   [OK]</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>docker hub可以看大更详细的镜像信息</p>
-</blockquote>
-<p><code>2 下载镜像</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[root@VM-4-6-centos lighthouse]# docker pull tomcat </span><br><span class="line">Using default tag: latest</span><br><span class="line">latest: Pulling from library/tomcat</span><br><span class="line">1cfaf5c6f756: Pull complete </span><br><span class="line">c4099a935a96: Pull complete </span><br><span class="line">f6e2960d8365: Pull complete </span><br><span class="line">dffd4e638592: Pull complete </span><br><span class="line">a60431b16af7: Pull complete </span><br><span class="line">4869c4e8de8d: Pull complete </span><br><span class="line">9815a275e5d0: Pull complete </span><br><span class="line">c36aa3d16702: Pull complete </span><br><span class="line">cc2e74b6c3db: Pull complete </span><br><span class="line">1827dd5c8bb0: Pull complete </span><br><span class="line">Digest: sha256:1af502b6fd35c1d4ab6f24dc9bd36b58678a068ff1206c25acc129fb90b2a76a</span><br><span class="line">Status: Downloaded newer image for tomcat:latest</span><br><span class="line">docker.io/library/tomcat:latest</span><br><span class="line"># 下载成功</span><br></pre></td></tr></table></figure>
-
-<p><code>3 查看镜像</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@VM-4-6-centos lighthouse]# docker images</span><br><span class="line">REPOSITORY    TAG       IMAGE ID       CREATED        SIZE</span><br><span class="line">tomcat        latest    266d1269bb29   9 days ago     668MB</span><br><span class="line">nginx         latest    dd34e67e3371   10 days ago    133MB</span><br></pre></td></tr></table></figure>
-
-<p><code>4  运行容器</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@VM-4-6-centos lighthouse]# docker run -d --name tomcat001 -p 80:8080 tomcat</span><br><span class="line">4400a14a931baa9fbc324d003ce26e06debba3456435b233ed5b77eccf7b4379</span><br></pre></td></tr></table></figure>
-
-<p><code>5 查看容器</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@VM-4-6-centos lighthouse]# docker ps</span><br><span class="line">CONTAINER ID   IMAGE     COMMAND             CREATED          STATUS          PORTS                                         NAMES</span><br><span class="line">4400a14a931b   tomcat    &quot;catalina.sh run&quot;   25 seconds ago   Up 25 seconds   0.0.0.0:80-&gt;80/tcp, :::80-&gt;80/tcp, 8080/tcp   tomcat001</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p><code>6 测试</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@VM-4-6-centos lighthouse]# docker exec -it tomcat001 /bin/bash</span><br><span class="line">root@4400a14a931b:/usr/local/tomcat# ls</span><br><span class="line">BUILDING.txt     LICENSE  README.md      RUNNING.txt  conf  logs            temp     webapps.dist</span><br><span class="line">CONTRIBUTING.md  NOTICE   RELEASE-NOTES  bin          lib   native-jni-lib  webapps  work</span><br><span class="line">root@4400a14a931b:/usr/local/tomcat# cp -r  webapps.dist/*  webapps</span><br></pre></td></tr></table></figure>
-
-<p>外网访问：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/docker7.png"></p>
-<p>7关闭容器`</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@VM-4-6-centos lighthouse]# docker stop tomcat001</span><br><span class="line">tomcat001</span><br></pre></td></tr></table></figure>
-
-<p>经过实例的练习之后，前面学的命令熟练了许多。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2021/08/27/4%20docker%20%E5%91%BD%E4%BB%A4/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yuanwanli">
-      <meta itemprop="description" content="等不是办法，干才有出路">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="brisk">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/08/27/4%20docker%20%E5%91%BD%E4%BB%A4/" class="post-title-link" itemprop="url">第四讲 docker命令</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-08-27 22:58:00" itemprop="dateCreated datePublished" datetime="2021-08-27T22:58:00+08:00">2021-08-27</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-08-28 13:11:19" itemprop="dateModified" datetime="2021-08-28T13:11:19+08:00">2021-08-28</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%BC%96%E7%A8%8B%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">编程笔记</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="4-docker-命令"><a href="#4-docker-命令" class="headerlink" title="4 docker 命令"></a>4 docker 命令</h2><p>docker官网有所有的命令说明(<a target="_blank" rel="noopener" href="https://docs.docker.com/reference/">Reference documentation | Docker Documentation</a>)， 菜鸟网也有中文版本的命令说明。命令详细用法在help和文档中都可以查到，这个不再赘述，主要给出常用命令，对docker能做什么以及怎么做有个概念。</p>
-<h3 id="4-1基础命令"><a href="#4-1基础命令" class="headerlink" title="4.1基础命令"></a>4.1基础命令</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker command --help # 帮助命令</span><br><span class="line">docker info # 系统信息</span><br><span class="line">docker version # 版本信息</span><br></pre></td></tr></table></figure>
-
-<h3 id="4-2-镜像命令"><a href="#4-2-镜像命令" class="headerlink" title="4.2 镜像命令"></a>4.2 镜像命令</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker images # 查看镜像</span><br><span class="line">docker search image # 搜索镜像</span><br><span class="line">decher pull image # 下载镜像</span><br><span class="line">docker rmi image # 删除镜像</span><br></pre></td></tr></table></figure>
-
-<h3 id="4-3-容器命令"><a href="#4-3-容器命令" class="headerlink" title="4.3 容器命令"></a>4.3 容器命令</h3><blockquote>
-<p>有了镜像才可以下载容器</p>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">docker run container # 启动容器</span><br><span class="line">exit # 停止运行并退出容器</span><br><span class="line">ctrl + p + q # 退出容器</span><br><span class="line">docker ps # 查看运行的容器</span><br><span class="line">docker rm container # 删除容器</span><br><span class="line">docker start container # 启动容器</span><br><span class="line">docker restart # 重启容器</span><br><span class="line">docker stop container # 停止容器运行</span><br><span class="line">docker kill container # 强制停止容器</span><br></pre></td></tr></table></figure>
-
-<h3 id="4-4-其他常用命令"><a href="#4-4-其他常用命令" class="headerlink" title="4.4 其他常用命令"></a>4.4 其他常用命令</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">docker logs # 查看日志</span><br><span class="line">docker ps # 查看容器进程</span><br><span class="line">docker top # 查看容器内进程</span><br><span class="line">docker inspect # 查看镜像的元数据</span><br><span class="line">docker exec container_id # 进入在执行的容器打开新的终端</span><br><span class="line">docker attach container_id # 进入容器正在执行的终端</span><br><span class="line">docker ps container_id:path hostpath # 容器内复制文件到宿主机</span><br></pre></td></tr></table></figure>
-
-<p>按照字母排序总结： </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">attach    Attach to a running container  #当前shell下attach连接指定运行镜像</span><br><span class="line">build     Build an image from a Dockerfile  #通过Dockerfile定制镜像</span><br><span class="line">commit    Create a new image from a containers changes  #提交当前容器为新的镜像</span><br><span class="line">cp    Copy files/folders from a container to a HOSTDIR or to STDOUT  #从容器中拷贝指定文件或者目录到宿主机中</span><br><span class="line">create    Create a new container  #创建一个新的容器，同run 但不启动容器</span><br><span class="line">diff    Inspect changes on a containers filesystem  #查看docker容器变化</span><br><span class="line">events    Get real time events from the server#从docker服务获取容器实时事件</span><br><span class="line">exec    Run a command in a running container#在已存在的容器上运行命令</span><br><span class="line">export    Export a containers filesystem as a tar archive  #导出容器的内容流作为一个tar归档文件(对应import)</span><br><span class="line">history    Show the history of an image  #展示一个镜像形成历史</span><br><span class="line">images    List images  #列出系统当前镜像</span><br><span class="line">import    Import the contents from a tarball to create a filesystem image  #从tar包中的内容创建一个新的文件系统映像(对应export)</span><br><span class="line">info    Display system-wide information  #显示系统相关信息</span><br><span class="line">inspect    Return low-level information on a container or image  #查看容器详细信息</span><br><span class="line">kill    Kill a running container  #kill指定docker容器</span><br><span class="line">load    Load an image from a tar archive or STDIN  #从一个tar包中加载一个镜像(对应save)</span><br><span class="line">login    Register or log in to a Docker registry#注册或者登陆一个docker源服务器</span><br><span class="line">logout    Log out from a Docker registry  #从当前Docker registry退出</span><br><span class="line">logs    Fetch the logs of a container  #输出当前容器日志信息</span><br><span class="line">pause    Pause all processes within a container#暂停容器</span><br><span class="line">port    List port mappings or a specific mapping for the CONTAINER  #查看映射端口对应的容器内部源端口</span><br><span class="line">ps    List containers  #列出容器列表</span><br><span class="line">pull    Pull an image or a repository from a registry  #从docker镜像源服务器拉取指定镜像或者库镜像</span><br><span class="line">push    Push an image or a repository to a registry  #推送指定镜像或者库镜像至docker源服务器</span><br><span class="line">rename    Rename a container  #重命名容器</span><br><span class="line">restart    Restart a running container  #重启运行的容器</span><br><span class="line">rm    Remove one or more containers  #移除一个或者多个容器</span><br><span class="line">rmi    Remove one or more images  #移除一个或多个镜像(无容器使用该镜像才可以删除，否则需要删除相关容器才可以继续或者-f强制删除)</span><br><span class="line">run    Run a command in a new container  #创建一个新的容器并运行一个命令</span><br><span class="line">save    Save an image(s) to a tar archive#保存一个镜像为一个tar包(对应load)</span><br><span class="line">search    Search the Docker Hub for images  #在docker</span><br><span class="line">hub中搜索镜像</span><br><span class="line">start    Start one or more stopped containers#启动容器</span><br><span class="line">stats    Display a live stream of container(s) resource usage statistics  #统计容器使用资源</span><br><span class="line">stop    Stop a running container  #停止容器</span><br><span class="line">tag         Tag an image into a repository  #给源中镜像打标签</span><br><span class="line">top       Display the running processes of a container #查看容器中运行的进程信息</span><br><span class="line">unpause    Unpause all processes within a container  #取消暂停容器</span><br><span class="line">version    Show the Docker version information#查看容器版本号</span><br><span class="line">wait         Block until a container stops, then print its exit code  #截取容器停止时的退出状态值</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/docker%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93.png"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
@@ -1806,7 +1761,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
