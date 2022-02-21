@@ -4930,4 +4930,37 @@ dos2unix  filename
         <category>k8s</category>
       </categories>
   </entry>
+  <entry>
+    <title>django学习笔记</title>
+    <url>/2022/01/06/2022-01-06-django%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<p>开始django</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 安装特定版本的django </span><br><span class="line">pip install django==1.11.4 </span><br><span class="line"># 安装django会按照 django-admin命令行工具</span><br><span class="line"># 创建一个新的项目</span><br><span class="line">mkdir myproject </span><br><span class="line">cd myproject </span><br><span class="line">django-admin startproject myproject </span><br><span class="line"># 结构目录如下</span><br><span class="line">myproject/                  &lt;-- 高级别的文件夹</span><br><span class="line"> |-- myproject/             &lt;-- Django项目文件夹</span><br><span class="line"> |    |-- myproject/</span><br><span class="line"> |    |    |-- __init__.py</span><br><span class="line"> |    |    |-- settings.py</span><br><span class="line"> |    |    |-- urls.py</span><br><span class="line"> |    |    |-- wsgi.py</span><br><span class="line"> |    +-- manage.py</span><br></pre></td></tr></table></figure>
+
+<p>最初的项目结构由五个文件组成：</p>
+<ul>
+<li><strong>manage.py</strong>：使用<strong>django-admin</strong>命令行工具的快捷方式。它用于运行与我们项目相关的管理命令。我们将使用它来运行开发服务器，运行测试，创建迁移等等。</li>
+<li><strong>__init.py</strong>：这个空文件告诉python这个文件夹是一个python包。</li>
+<li><strong>settings.py</strong>：这个文件包含了所有的项目配置。将来我们会一直提到这个文件！</li>
+<li><strong>urls.py</strong>：这个文件负责映射我们项目中的路由和路径。例如，如果你想在访问URL <code>/ about/</code> 时显示某些内容，则必须先在这里做映射关系。</li>
+<li><strong>wsgi.py</strong>：该文件是用于部署的简单网关接口。你可以暂且先不用关心她的内容，就先让他在那里就好了。</li>
+</ul>
+<p>django自带了一个简单的网络服务器。在开发过程中非常方便，所以我们无需安装任何其他软件即可在本地运行项目。我们可以通过执行命令来测试一下它：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python manage.py runserver </span><br></pre></td></tr></table></figure>
+
+<p>访问web, <a href="http://localhost:8000即可看到。">http://localhost:8000即可看到。</a></p>
+<p>在Django的哲学中，我们有两个重要的概念：</p>
+<ul>
+<li><strong>app</strong>：是一个可以做完成某件事情的Web应用程序。一个应用程序通常由一组<strong>models(数据库表)<strong>，</strong>views(视图)<strong>，</strong>templates(模板)<strong>，</strong>tests(测试)</strong> 组成。</li>
+<li><strong>project</strong>：是配置和应用程序的集合。一个项目可以由多个应用程序或一个应用程序组成。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 在项目中新建一个应用</span><br><span class="line">django-admin startapp boards</span><br></pre></td></tr></table></figure>
+
+<p>如何新建一个视图？</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 在views中新建一个header page+response </span><br><span class="line">def home(request):</span><br><span class="line">    return HttpResponse(&quot;hello world&quot;)</span><br><span class="line"># 在urls中新建一个路由匹配规则， 正则</span><br><span class="line">from boards import views </span><br><span class="line">urlpatterns = [</span><br><span class="line">    url(r&#x27;^$&#x27;, views.home, name=&#x27;home&#x27;),</span><br><span class="line">]</span><br><span class="line"># ^$开始到结束，匹配空路径 </span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>编程笔记</category>
+      </categories>
+  </entry>
 </search>

@@ -157,7 +157,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">77</span>
+          <span class="site-state-item-count">78</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -193,6 +193,94 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2021/11/10/2021-11-10-%E9%9D%9E%E6%AD%A3%E5%B8%B8%E5%85%B3%E9%97%ADvi%E7%BC%96%E8%BE%91%E5%99%A8%E6%97%B6%E4%BC%9A%E7%94%9F%E6%88%90%E4%B8%80%E4%B8%AA.swp%E6%96%87%E4%BB%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuanwanli">
+      <meta itemprop="description" content="等不是办法，干才有出路">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="brisk">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/11/10/2021-11-10-%E9%9D%9E%E6%AD%A3%E5%B8%B8%E5%85%B3%E9%97%ADvi%E7%BC%96%E8%BE%91%E5%99%A8%E6%97%B6%E4%BC%9A%E7%94%9F%E6%88%90%E4%B8%80%E4%B8%AA.swp%E6%96%87%E4%BB%B6/" class="post-title-link" itemprop="url">非正常关闭vi编辑器时会生成一个.swp文件</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-11-10 00:00:00" itemprop="dateCreated datePublished" datetime="2021-11-10T00:00:00+08:00">2021-11-10</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-02-21 14:54:31" itemprop="dateModified" datetime="2022-02-21T14:54:31+08:00">2022-02-21</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="非正常关闭vi编辑器时会生成一个-swp文件"><a href="#非正常关闭vi编辑器时会生成一个-swp文件" class="headerlink" title="非正常关闭vi编辑器时会生成一个.swp文件"></a>非正常关闭vi编辑器时会生成一个.swp文件</h3><p>使用vim，有时看到swp这个文件,这个文件是怎么产生的呢， 当你打开一个文件，vi就会生成这么一个.(filename)swp文件, 以备不测， 如果你正常退出，那么这个这个swp文件将会自动删除 。</p>
+<p>不测分为：</p>
+<ol>
+<li>当你用多个程序编辑同一个文件时, 此时为了避免同一个文件产生两个不同的版本（vim中的原话），还是选择readonly为好。</li>
+<li>非常规退出时， 可以用vim -r filename恢复，然后再把swp文件删除, 但要确保swp文件没有用了。 </li>
+</ol>
+<p>你可以使用来恢复文件</p>
+<blockquote>
+<p>vi -r {your file name}</p>
+</blockquote>
+<p>也可以删除swp文件，不然每一次编辑时总是有这个提示。</p>
+<blockquote>
+<p>rm .{your file name}.swp</p>
+</blockquote>
+<p>也可以再提示的时候选择<code>R</code>恢复， 恢复后swp文件还是存在，需要删除</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">“.es-server.yaml.swp” already exists!</span><br><span class="line">[O]pen Read-Only, (E)dit anyway, (R)ecover, (Q)uit:</span><br></pre></td></tr></table></figure>
+
+<p>选择<code>Edit anyway</code>，不能解决问题，下次打开文件的时候还是会提示。 </p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1742,152 +1830,6 @@
 <li>荒唐吗？是的。平行线相交也是荒唐的，但它只是在欧几里得的经典几何才是荒唐的。在非欧几何里，它是一则定理，你需要做的就是不再局限于平面，超越平面。</li>
 <li>刺痛自己是很困难的，甚至是危险的。但对于那些活着的人来说，在今天像昨天一样生活是更加困难的事情。 </li>
 </ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2021/09/20/2021-09-20-%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yuanwanli">
-      <meta itemprop="description" content="等不是办法，干才有出路">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="brisk">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/09/20/2021-09-20-%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A6/" class="post-title-link" itemprop="url">行为经济学</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-09-20 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-20T00:00:00+08:00">2021-09-20</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-02-21 14:54:31" itemprop="dateModified" datetime="2022-02-21T14:54:31+08:00">2022-02-21</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">读书笔记</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="导论"><a href="#导论" class="headerlink" title="导论"></a>导论</h2><h2 id="第十二讲-损失厌恶：-赢与输总是绝对的吗？"><a href="#第十二讲-损失厌恶：-赢与输总是绝对的吗？" class="headerlink" title="第十二讲 损失厌恶： 赢与输总是绝对的吗？"></a>第十二讲 损失厌恶： 赢与输总是绝对的吗？</h2><p>损失厌恶：人们讨厌损失</p>
-<p>但真的是一种非理性的行为吗? </p>
-<p>实验： 训练猴子使用硬币。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A61.png"></p>
-<p>从进化论，错配的角度来说，损失厌恶让我更有动力， 有更大的冒险欲望。大脑对盈利和损失是不对称的。 </p>
-<p>例子：为什么经营不好的时候， 公司不减低工资而去裁员。降低工资会给员工带来损失厌恶。</p>
-<p>框架效应： 同样一个东西， 可以在一个框架下，是盈利的。另一个框架下，是损失的。</p>
-<p>处置效应： 卖掉挣钱的，保留亏钱的。 </p>
-<p>应用： </p>
-<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A62.png"></p>
-<p>改进：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A63.png"></p>
-<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A65.png"></p>
-<p>沉没成本： </p>
-<p>已经失去的损失，我们不应该再留恋他。</p>
-<h2 id="第十三讲：-突出事件放大：-为什么有人买彩票"><a href="#第十三讲：-突出事件放大：-为什么有人买彩票" class="headerlink" title="第十三讲： 突出事件放大： 为什么有人买彩票"></a>第十三讲： 突出事件放大： 为什么有人买彩票</h2><p>小概率事件高估： 预期中的偏差 </p>
-<p>突出事件较大的权重： 偏好的偏差</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A66.png"></p>
-<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A67.png"></p>
-<h2 id="第十四讲：心智账户：我们把钱存在哪-？"><a href="#第十四讲：心智账户：我们把钱存在哪-？" class="headerlink" title="第十四讲：心智账户：我们把钱存在哪 ？"></a>第十四讲：心智账户：我们把钱存在哪 ？</h2><p>心智账户，人常把钱分到不同的想象的账户里</p>
-<p>由于CEO和部门经理的心智账户不同，导致不同投资策略。 </p>
-<p>每个人的心智账户都不同。 </p>
-<p>一块100元巧克力自己吃，你可能会觉得贵，但是买送给女朋友，你觉得不贵。</p>
-<p>因为自己消费的账户和社交不是一个账户</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A68.png"></p>
-<p><strong>禀赋效应</strong>是指当个人一旦拥有某项物品，那么他对该物品价值的评价要比未拥有之前大大提高。它是由Richard Thaler(1980)提出的。这一<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E7%8E%B0%E8%B1%A1/2808631">现象</a>可以用<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E8%A1%8C%E4%B8%BA%E9%87%91%E8%9E%8D%E5%AD%A6/58795">行为金融学</a>中的“<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%8D%9F%E5%A4%B1%E5%8E%8C%E6%81%B6/2921704">损失厌恶</a>”理论来解释，该理论认为一定量的损失给人们带来的效用降低要多过相同的收益给人们带来的效用增加。因此人们在决策过程中对利害的权衡是不均衡的，对“避害”的考虑远大于对“趋利”的考虑。出于对损失的畏惧，人们在出卖商品时往往索要过高的价格。</p>
-<h2 id="第十五章：-羊群效应：人为什么喜欢模仿"><a href="#第十五章：-羊群效应：人为什么喜欢模仿" class="headerlink" title="第十五章： 羊群效应：人为什么喜欢模仿"></a>第十五章： 羊群效应：人为什么喜欢模仿</h2><p>羊群效应：人类的群体模仿行为</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A69.png"></p>
-<p>人有盲目跟从的冲动 。</p>
-<p>镜像神经元：来体会别人的感受</p>
-<h2 id="第十六章：-当前偏差-拖延症是怎么来的？"><a href="#第十六章：-当前偏差-拖延症是怎么来的？" class="headerlink" title="第十六章： 当前偏差 拖延症是怎么来的？"></a>第十六章： 当前偏差 拖延症是怎么来的？</h2><p>当前偏差：当前的折现率会高于未来的折现率。会导致我们更看重当前的快乐。</p>
-<p>原因：错配</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A610.png"></p>
-<p>当前偏差和讲话语言有没有未来时态有关</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A611.png"></p>
-<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A612.png"></p>
-<p>自控是需要消耗能量的，累的时候更难自控</p>
-<p>冥想有助于增加前额皮层的灰质 </p>
-<p>呼吸变慢有助于让你冷静</p>
-<h2 id="第17讲-市场情绪：怎么衡量非理性？"><a href="#第17讲-市场情绪：怎么衡量非理性？" class="headerlink" title="第17讲 市场情绪：怎么衡量非理性？"></a>第17讲 市场情绪：怎么衡量非理性？</h2><p>投资者情绪高：投资者对它有过分的需求，过高的预期，并非基本面的原因</p>
-<p>各种偏差的总结。</p>
-<p>投资者心情影响股票市场。 </p>
-<p>投资者心情可能受到月亮的影响。</p>
-<p>罪恶股票和社会价值股票的差异</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A613.png"></p>
-<p>如何测量市场情绪？</p>
-<p>ipo数量， 新开账户等。</p>
-<p>百度指数 </p>
-<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A613.png"></p>
-<h2 id="第18讲-低风险策略：低风险可以有高收益么？"><a href="#第18讲-低风险策略：低风险可以有高收益么？" class="headerlink" title="第18讲 低风险策略：低风险可以有高收益么？"></a>第18讲 低风险策略：低风险可以有高收益么？</h2><h2 id="第19讲-高品质策略：巴菲特真的喜欢价值投资么？"><a href="#第19讲-高品质策略：巴菲特真的喜欢价值投资么？" class="headerlink" title="第19讲 高品质策略：巴菲特真的喜欢价值投资么？"></a>第19讲 高品质策略：巴菲特真的喜欢价值投资么？</h2><p>大佬的投资策略</p>
-<p>索罗斯和沃森 ：低风险高收益</p>
-<p>巴菲特： 高品质投资， 价值投资</p>
-<h2 id="第20讲-量化投资的风险有哪些？"><a href="#第20讲-量化投资的风险有哪些？" class="headerlink" title="第20讲 量化投资的风险有哪些？"></a>第20讲 量化投资的风险有哪些？</h2><p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A615.png"></p>
-<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A616.png"></p>
-<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A617.png"></p>
-<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A618.png"></p>
-<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A619.png"></p>
-<p>量化投资策略三个风险： </p>
-<p>失效风险</p>
-<p>流通性风险 </p>
-<p>模型风险</p>
-<h2 id="第二十一讲：-量化投资误区有哪些？"><a href="#第二十一讲：-量化投资误区有哪些？" class="headerlink" title="第二十一讲： 量化投资误区有哪些？"></a>第二十一讲： 量化投资误区有哪些？</h2><p>1 基本面好就会收益率高，不一定。 国家GDP增速好不一定股票表现好， 新新行业不一定比老行业收益率高。 </p>
-<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A620.png"></p>
-<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A621.png"></p>
-<p>2 AI 投资不一定比人好。 </p>
-<p>3 智能投顾效果有限</p>
-<p>4 在国外市场得出的经验不一定在中国有效</p>
 
       
     </div>
