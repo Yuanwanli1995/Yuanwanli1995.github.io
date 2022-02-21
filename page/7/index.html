@@ -157,7 +157,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">75</span>
+          <span class="site-state-item-count">76</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -193,6 +193,248 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2021/11/03/2021-11-03-%E5%9B%9B%E6%88%90%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1HA%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuanwanli">
+      <meta itemprop="description" content="等不是办法，干才有出路">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="brisk">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/11/03/2021-11-03-%E5%9B%9B%E6%88%90%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1HA%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA/" class="post-title-link" itemprop="url">四成负载均衡HA集群搭建</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-11-03 00:00:00" itemprop="dateCreated datePublished" datetime="2021-11-03T00:00:00+08:00">2021-11-03</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-02-21 14:54:31" itemprop="dateModified" datetime="2022-02-21T14:54:31+08:00">2022-02-21</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/k8s/" itemprop="url" rel="index"><span itemprop="name">k8s</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="一-集群介绍"><a href="#一-集群介绍" class="headerlink" title="一 集群介绍"></a>一 集群介绍</h3><p>使用高可用配置的方式在生产环境安装 Rancher，用户可以一直访问 Rancher 服务。在 Kubernetes 集群中安装 Rancher 时，Rancher 会与集群的 etcd 数据库集成，并利用 Kubernetes 调度来实现高可用。下面将使用 RKE 来部署三个节点的集群，并使用 Helm 安装 Rancher。</p>
+<p>我们还需要设置一个负载均衡器，以将流量定向到两个节点上的 Rancher 副本。这样可以在单个节点不可用时，继续保障与 Rancher 管理面的连接。</p>
+<p>在安装 Rancher 时，Rancher 系统将创建一个 Ingress 资源。该 Ingress 通知 Traefik Ingress 控制器侦听发往 Rancher 主机名的流量。Traefik Ingress 控制器在收到发往 Rancher 主机名的流量时，会将其转发到集群中正在运行的 Rancher Server Pod。</p>
+<ul>
+<li><strong>4 层负载均衡器</strong> 将 TCP 流量转发到节点。我们建议使用 4 层负载均衡器，将流量从 TCP / 80 端口和 TCP / 443 端口转发到 Rancher 管理面的集群节点上。集群上的 Ingress 控制器会将 HTTP 流量重定向到 HTTPS，并在 TCP / 443 端口上终止 SSL / TLS。Ingress 控制器会将流量转发到 Rancher Server Pod 的 TCP / 443 端口。</li>
+</ul>
+<h3 id="二-集群部署"><a href="#二-集群部署" class="headerlink" title="二  集群部署"></a>二  集群部署</h3><p>使用RKE部署集群包括四个部分</p>
+<ol>
+<li>准备工作，包括云主机或虚拟机硬件、软件和网络配置。部署的集群的要求，可以查看<a target="_blank" rel="noopener" href="https://docs.rancher.cn/">rancher官方文档</a></li>
+<li>rke部署集群, 包括安装rke，新建操作的普通用户，主节点免密登陆，集群的配置文件，启动集群。</li>
+<li>部署rancher web，这里通过helm3部署，需要安装helm3, 生成自签名证书，启动rancher web服务。  </li>
+<li>通过rancher server调试集群</li>
+</ol>
+<blockquote>
+<p>什么是RKE? </p>
+<p>Rancher Kubernetes Engine，简称 RKE，是一个经过 CNCF 认证的 Kubernetes 安装程序。RKE 支持多种操作系统，包括 MacOS、Linux 和 Windows，可以在裸金属服务器（BMS）和虚拟服务器（Virtualized Server）上运行。市面上的其他 Kubernetes 部署工具存在一个共性问题：在使用工具之前需要满足的先决条件比较多，例如，在使用工具前需要完成安装 kubelet、配置网络等一系列的繁琐操作。而 RKE 简化了部署 Kubernetes 集群的过程，只有一个先决条件：只要您使用的 Docker 是 RKE 支持的版本，就可以通过 RKE 安装 Kubernetes，部署和运行 Kubernetes 集群。RKE 既可以单独使用，作为创建 Kubernetes 集群的工具，也可以配合 Rancher2.x 使用，作为 Rancher2.x 的组件，在 Rancher 中部署和运行 Kubernetes 集群。</p>
+</blockquote>
+<h4 id="1-准备工作"><a href="#1-准备工作" class="headerlink" title="1 准备工作"></a>1 准备工作</h4><p><code>1.1 设置节点hostname</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">nginx 192.168.2.40</span><br><span class="line">node1 192.168.2.51</span><br><span class="line">node2 192.168.2.52</span><br><span class="line">node3 192.168.2.53</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@nginx ~]# hostnamectl set-hostname nginx</span><br><span class="line">[root@node1 ~]# hostnamectl set-hostname node1</span><br><span class="line">[root@node2 ~]# hostnamectl set-hostname node2</span><br><span class="line">[root@node3 ~]# hostnamectl set-hostname node3</span><br></pre></td></tr></table></figure>
+
+<p><code>1.2 主机名DNS解析</code><br>主机名DNS解析</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cat &gt;&gt; /etc/hosts &lt;&lt; EOF</span><br><span class="line">192.168.2.40 nginx</span><br><span class="line">192.168.2.51 node1</span><br><span class="line">192.168.2.52 node2</span><br><span class="line">192.168.2.53 node3</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+<p><code>1.3 关闭防火墙</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop firewalld</span><br><span class="line">systemctl disable firewalld</span><br></pre></td></tr></table></figure>
+
+<p><code>1.4 关闭swap</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">swapoff -a # 临时关闭；关闭swap主要是为了性能考虑</span><br><span class="line">sed -ri &#x27;s/.*swap.*/#&amp;/&#x27; /etc/fstab # 永久关闭</span><br></pre></td></tr></table></figure>
+
+<p><code>1.6 关闭selinux </code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">setenforce 0 # 临时关闭</span><br><span class="line">sed -i &#x27;s/SELINUX=enforcing/SELINUX=disabled/g&#x27; /etc/selinux/config # 永久关闭</span><br></pre></td></tr></table></figure>
+
+<p><code>1.6 同步时间</code></p>
+<p>这样可以防止在客户端和服务器之间因为时钟不同步而发生证书验证错误。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum install ntpdate -y</span><br><span class="line">ntpdate time.windows.com</span><br></pre></td></tr></table></figure>
+
+<p><code>1.7 kernel性能调优</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">cat &gt;&gt; /etc/sysctl.conf&lt;&lt;EOF</span><br><span class="line">net.ipv4.ip_forward=1</span><br><span class="line">net.bridge.bridge-nf-call-iptables=1</span><br><span class="line">net.ipv4.neigh.default.gc_thresh1=4096</span><br><span class="line">net.ipv4.neigh.default.gc_thresh2=6144</span><br><span class="line">net.ipv4.neigh.default.gc_thresh3=8192</span><br><span class="line">EOF</span><br><span class="line"># 加载配置文件</span><br><span class="line">sysctl -p</span><br></pre></td></tr></table></figure>
+
+
+
+<p><code>1.8 安装基础软件包</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install lrzsz vim gcc glibc openssl openssl-devel net-tools wget curl</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-部署集群"><a href="#2-部署集群" class="headerlink" title="2 部署集群"></a>2 部署集群</h4><p><code>2.1 安装docker</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum install -y yum-utils device-mapper-persistent-data lvm2</span><br><span class="line">yum-config-manager --add-repo https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo</span><br></pre></td></tr></table></figure>
+
+<p>安装18.09.9稳定版本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install docker-ce-18.09.9-3.el7 docker-ce-cli-18.09.9-3.el7</span><br></pre></td></tr></table></figure>
+
+<p>启动docker </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start docker</span><br></pre></td></tr></table></figure>
+
+<p>配置镜像</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">cat &gt; /etc/docker/daemon.json &lt;&lt; EOF</span><br><span class="line">&#123;</span><br><span class="line">  &quot;oom-score-adjust&quot;: -1000,</span><br><span class="line">  &quot;registry-mirrors&quot;: [&quot;https://7bezldxe.mirror.aliyuncs.com/&quot;,&quot;https://kw88y6eh.mirror.aliyuncs.com&quot;],</span><br><span class="line">    &quot;storage-driver&quot;: &quot;overlay2&quot;,</span><br><span class="line">    &quot;storage-opts&quot;: [</span><br><span class="line">    &quot;overlay2.override_kernel_check=true&quot;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+
+<p>重启并设置自启动</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl restart docker</span><br><span class="line"># systemctl  status docker 查看docker状态</span><br></pre></td></tr></table></figure>
+
+
+
+<p><code>2.2  安装ctl工具</code> </p>
+<p>下载安装工具rke,kubectl </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># rke下载地址：https://github.com/rancher/rke/tags，下载v1.0.4</span><br><span class="line">chmod +x rke_linux-amd64 </span><br><span class="line">mv rke_linux-amd64 /usr/bin/rke</span><br><span class="line"></span><br><span class="line"># kubectl </span><br><span class="line">wget http://storage.googleapis.com/kubernetes-release/release/v1.17.2/bin/linux/amd64/kubectl</span><br><span class="line">chmod +x kubectl </span><br><span class="line">mv kubectl /usr/bin/kubectl</span><br></pre></td></tr></table></figure>
+<p><code>2.3 设置节点免密登陆</code></p>
+<p>rke不支持root用户，所以新建普通用户操作</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">useradd rancher -G docker</span><br><span class="line">echo &quot;123456&quot; | passwd --stdin rancher</span><br></pre></td></tr></table></figure>
+
+<p>授权免密登陆</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">su - rancher</span><br><span class="line">cd /home/rancher</span><br><span class="line">ssh-keygen</span><br><span class="line">ssh-copy-id rancher@192.168.2.51</span><br><span class="line">ssh-copy-id rancher@192.168.2.52</span><br><span class="line">ssh-copy-id rancher@192.168.2.53</span><br></pre></td></tr></table></figure>
+<p>集群配置yml文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">cat &gt; cluster.yml &lt;&lt; EOF</span><br><span class="line">nodes:</span><br><span class="line">  - address: 192.168.2.51</span><br><span class="line">    internal_address: 192.168.2.51</span><br><span class="line">    user: rancher</span><br><span class="line">    role: [controlplane,worker,etcd]</span><br><span class="line">  - address: 192.168.2.52</span><br><span class="line">    internal_address: 192.168.2.52</span><br><span class="line">    user: rancher</span><br><span class="line">    role: [controlplane,worker,etcd]</span><br><span class="line">  - address: 192.168.2.53</span><br><span class="line">    internal_address: 192.168.2.53</span><br><span class="line">    user: rancher</span><br><span class="line">    role: [controlplane,worker,etcd]</span><br><span class="line">services:</span><br><span class="line">    etcd:</span><br><span class="line">      snapshot: true</span><br><span class="line">      creation: 6h</span><br><span class="line">      retention: 24h</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+
+<p>创建Kubernetes集群</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 运行RKE命令创建Kubernetes集群</span><br><span class="line">rke up --config ./cluster.yml</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>保存kube_config_rancher-cluster.yml和rancher-cluster.yml文件的副本，后期将需要这些文件来维护和升级Rancher实例。</p>
+</blockquote>
+<p>配置环境变量</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">### 切换到root用户</span><br><span class="line">su - root</span><br><span class="line">vim /etc/profile</span><br><span class="line">export KUBECONFIG=/home/rancher/kube_config_cluster.yml</span><br><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure>
+
+<p>查看集群状态</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/rke1.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/rke2.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/rke3.png"></p>
+<p><code>2.4  配置nginx代理</code> </p>
+<p>安装nginx，这里最新版本的可能出现模块错误，安装稳定版的。</p>
+<p>添加nginx repo</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/yum.repos.d/nginx.repo </span><br><span class="line">[nginx-stable]</span><br><span class="line">name=nginx stable repo</span><br><span class="line">baseurl=http://nginx.org/packages/centos/$releasever/$basearch/</span><br><span class="line">gpgcheck=1</span><br><span class="line">enabled=1</span><br><span class="line">gpgkey=https://nginx.org/keys/nginx_signing.key</span><br><span class="line">module_hotfixes=true</span><br><span class="line">[nginx-mainline]</span><br><span class="line">name=nginx mainline repo</span><br><span class="line">baseurl=http://nginx.org/packages/mainline/centos/$releasever/$basearch/</span><br><span class="line">gpgcheck=1</span><br><span class="line">enabled=0</span><br><span class="line">gpgkey=https://nginx.org/keys/nginx_signing.key</span><br><span class="line">module_hotfixes=true</span><br></pre></td></tr></table></figure>
+
+<p>yum直接安装</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 卸载旧版 nginx #yum -y remove nginx</span><br><span class="line">yum -y install nginx-1.18.0 </span><br></pre></td></tr></table></figure>
+
+<p>配置nginx.conf</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">cat &gt; /etc/nginx/nginx.conf &lt;&lt; EOF </span><br><span class="line">worker_processes 4;</span><br><span class="line">worker_rlimit_nofile 40000;</span><br><span class="line">events &#123;</span><br><span class="line">    worker_connections 8192;</span><br><span class="line">&#125;</span><br><span class="line">stream &#123;</span><br><span class="line">    upstream rancher_servers_http &#123;</span><br><span class="line">        least_conn;</span><br><span class="line">        server 192.168.2.51:80 max_fails=3 fail_timeout=5s;</span><br><span class="line">        server 192.168.2.52:80 max_fails=3 fail_timeout=5s;</span><br><span class="line">        server 192.168.2.53:80 max_fails=3 fail_timeout=5s;</span><br><span class="line">&#125;</span><br><span class="line">    server &#123;</span><br><span class="line">        listen 80;</span><br><span class="line">        proxy_pass rancher_servers_http;</span><br><span class="line">&#125;</span><br><span class="line">    upstream rancher_servers_https &#123;</span><br><span class="line">        least_conn;</span><br><span class="line">        server 192.168.2.51:443 max_fails=3 fail_timeout=5s;</span><br><span class="line">        server 192.168.2.52:443 max_fails=3 fail_timeout=5s;</span><br><span class="line">        server 192.168.2.53:443 max_fails=3 fail_timeout=5s;</span><br><span class="line">&#125;</span><br><span class="line">    server &#123;</span><br><span class="line">        listen     443;</span><br><span class="line">        proxy_pass rancher_servers_https;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">EOF </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"># 测试 </span><br><span class="line">cat &gt; /etc/nginx/nginx.conf &lt;&lt; EOF </span><br><span class="line">worker_processes 4;</span><br><span class="line">worker_rlimit_nofile 40000;</span><br><span class="line">include /usr/share/nginx/modules/*.conf;</span><br><span class="line">events &#123;</span><br><span class="line">    worker_connections 8192;</span><br><span class="line">&#125;</span><br><span class="line">stream &#123;</span><br><span class="line">	upstream rancher &#123;</span><br><span class="line">        server 192.168.30.110:80;</span><br><span class="line">        server 192.168.30.129:80;</span><br><span class="line">        server 192.168.30.133:80;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    map $http_upgrade $connection_upgrade &#123;</span><br><span class="line">        default Upgrade;</span><br><span class="line">        &#x27;&#x27;      close;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    server &#123;</span><br><span class="line">        listen 443 ssl http2;</span><br><span class="line">        server_name cf.rancher.com;</span><br><span class="line">        ssl_certificate /home/admin/certs/tls.crt;</span><br><span class="line">        ssl_certificate_key /home/admin/certs/tls.key;</span><br><span class="line"></span><br><span class="line">        location / &#123;</span><br><span class="line">            proxy_set_header Host $host;</span><br><span class="line">            proxy_set_header X-Forwarded-Proto $scheme;</span><br><span class="line">            proxy_set_header X-Forwarded-Port $server_port;</span><br><span class="line">            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">            proxy_pass http://rancher;</span><br><span class="line">            proxy_http_version 1.1;</span><br><span class="line">            proxy_set_header Upgrade $http_upgrade;</span><br><span class="line">            proxy_set_header Connection $connection_upgrade;</span><br><span class="line">            # 这里将允许您在 Rancher UI 中打开命令行窗口时，窗口可以保留最多15分钟。没有这个参数时，默认值为1分钟，一分钟后在Rancher&gt;中的shell会自动关闭。</span><br><span class="line">            proxy_read_timeout 900s;</span><br><span class="line">            proxy_buffering off;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    server &#123;</span><br><span class="line">        listen 80;</span><br><span class="line">        server_name cf.rancher.com;</span><br><span class="line">        return 301 https://$server_name$request_uri;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">nginx -t  # 测试语法是否有误</span><br><span class="line">nginx -c /etc/nginx/nginx.conf # 设置配置文件</span><br><span class="line">nginx -s reload # 加载更改的配置文件</span><br></pre></td></tr></table></figure>
+
+<p>启动服务，设定nginx自启动服务</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart nginx.service</span><br><span class="line">systemctl enable nginx.service</span><br></pre></td></tr></table></figure>
+
+<p><code>2.5  故障处理</code> </p>
+<p>这里可能会出现几个问题： </p>
+<p><code>问题1  </code> unknown directive “stream”</p>
+<p>先检查nginx的配置有没有错误，或者有没有tab空格，nginx是不支持tab空格的，可以使用下面命令检查格式，对齐或者空格 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat -A  /etc/nginx/nginx.conf</span><br></pre></td></tr></table></figure>
+
+<p>如果配置确实没有问题，也有可能是nginx版本问题, 换稳定版的nginx。 </p>
+<p><code>问题2</code> 缺少 “/var/run/nginx.pid”文件</p>
+<p>解决方法， 没有就新建一个</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /var/run/</span><br><span class="line">touch nginx.pid</span><br></pre></td></tr></table></figure>
+
+<p><code>问题3</code> nginx: [error] invalid PID number “” in “/var/run/nginx.pid”</p>
+<p>解决，先执行ngingx -c， 再加载配置文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nginx -c /etc/nginx/nginx.conf</span><br><span class="line">nginx -s reload</span><br></pre></td></tr></table></figure>
+
+<p><code>问题4</code> 80/443端口被占用, 如下: </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Job for nginx.service failed because the control process exited with error code. See &quot;systemctl status nginx.service&quot; and &quot;journalctl -xe&quot; for details.</span><br><span class="line">[root@nginx ~]systemctl status nginx.service</span><br><span class="line">bind() to 0.0.0.0:80 failed (98: Address already in use)</span><br><span class="line">bind() to 0.0.0.0:443 failed (98: Address already in use)</span><br></pre></td></tr></table></figure>
+
+<p>要先关闭服务</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nginx -s quit</span><br></pre></td></tr></table></figure>
+
+<p>如果还是不行，可能是端口被其应用占用，就查看一下占用的进程，这里直接清理占用的进程</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fuser -k 80/tcp</span><br><span class="line">fuser -k 443/tcp</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-部署rancher-server"><a href="#3-部署rancher-server" class="headerlink" title="3 部署rancher server"></a>3 部署rancher server</h4><p><code>3.1 安装helm  </code> </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#helm下载地址：https://github.com/helm/helm/tags </span><br><span class="line">tar -zxf helm-v3.2.4-linux-amd64.tar.gz </span><br><span class="line">mv linux-amd64/helm /usr/bin/helm</span><br><span class="line">rm -rf helm-v3.2.4-linux-amd64.tar.gz linux-amd64</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>helm3与helm2不同，是不需要安装tiller的</p>
+</blockquote>
+<p><code>3.2 部署rancher web服务</code></p>
+<p>添加Chart仓库地址</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 使用helm repo add命令添加Rancher chart仓库地址，访问Rancher tag和Chart版本</span><br><span class="line"># 替换&lt;CHART_REPO&gt;为您要使用的Helm仓库分支(即latest或stable）。</span><br><span class="line"># helm repo add rancher-stable https://releases.rancher.com/server-charts/stable</span><br><span class="line"># 国内可用镜像</span><br><span class="line"># helm repo add rancher-stable http://rancher-mirror.oss-cn-beijing.aliyuncs.com/server-charts/stable</span><br><span class="line">helm repo update</span><br></pre></td></tr></table></figure>
+
+<p>Rancher Server 默认需要 SSL/TLS 配置来保证访问的安全性，这里我们选择自签名的证书</p>
+<p>这里使用官方文档给的生成证书的脚本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mkdir ssl</span><br><span class="line">cd ssl/</span><br><span class="line">chmod +x create_self-signed-cert.sh  # 执行权限</span><br><span class="line">#然后再用这个脚本生成ssl证书</span><br><span class="line">./create_self-signed-cert.sh --ssl-domain=my.rancher.com --ssl-trusted-ip=192.168.0.41 --ssl-size=2048 --ssl-date=3650</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#查看证书</span><br><span class="line">[root@node1 ssl]# ls</span><br><span class="line">cacerts.pem  cacerts.srl  cakey.pem  create_self-signed-cert.sh  my.rancher.com.crt  my.rancher.com.csr  my.rancher.com.key  openssl.cnf  tls.crt  tls.key</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># 为rancher创建命名空间</span><br><span class="line">kubectl create namespace cattle-system</span><br><span class="line"></span><br><span class="line"># 服务证书和私钥密文</span><br><span class="line">kubectl -n cattle-system create \</span><br><span class="line">    secret tls tls-rancher-ingress \</span><br><span class="line">    --cert=/home/rancher/ssl/tls.crt \</span><br><span class="line">    --key=/home/rancher/ssl/tls.key</span><br><span class="line"></span><br><span class="line"># ca证书密文</span><br><span class="line">kubectl -n cattle-system create secret \</span><br><span class="line">    generic tls-ca \</span><br><span class="line">    --from-file=/home/rancher/ssl/cacerts.pem</span><br></pre></td></tr></table></figure>
+
+<p>安装rancher server </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">helm install rancher rancher-stable/rancher \</span><br><span class="line">    --namespace cattle-system \</span><br><span class="line">    --set hostname=my.rancher.com \</span><br><span class="line">    --set ingress.tls.source=secret \</span><br><span class="line">    --set privateCA=true</span><br><span class="line"># hostname需要与证书对应的域名匹配，否则ingress将无法代理访问Rancher。</span><br></pre></td></tr></table></figure>
+
+<p>my.rancher.com是后面访问rancher的域名，需要在/etc/hosts文件中添加关联（所有主机）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@node1 ~]$ echo &quot;192.168.0.41 my.rancher.com&quot; &gt;&gt; /etc/hosts</span><br><span class="line">[root@node2 ~]$ echo &quot;192.168.0.41 my.rancher.com&quot; &gt;&gt; /etc/hosts</span><br><span class="line">[root@node3 ~]$ echo &quot;192.168.0.41 my.rancher.com&quot; &gt;&gt; /etc/hosts</span><br><span class="line">[root@nginx ~]$ echo &quot;192.168.0.41 my.rancher.com&quot; &gt;&gt; /etc/hosts</span><br></pre></td></tr></table></figure>
+
+<p><code>3.4 容器配置hosts:</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">kubectl -n cattle-system patch deployments rancher --patch &#x27;&#123;</span><br><span class="line">    &quot;spec&quot;: &#123;</span><br><span class="line">        &quot;template&quot;: &#123;</span><br><span class="line">            &quot;spec&quot;: &#123;</span><br><span class="line">                &quot;hostAliases&quot;: [</span><br><span class="line">                    &#123;</span><br><span class="line">                        &quot;hostnames&quot;:</span><br><span class="line">                        [</span><br><span class="line">                            &quot;my.rancher.com&quot;</span><br><span class="line">                        ],</span><br><span class="line">                            &quot;ip&quot;: &quot;192.168.2.40&quot;</span><br><span class="line">                    &#125;</span><br><span class="line">                ]</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;&#x27;</span><br></pre></td></tr></table></figure>
+
+<p><code>3.5 添加本机hosts</code><br>将刚刚的域名映射关系写入到Windows主机的hosts文件中。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">192.168.0.100 my.rancher.com</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-访问rancher-server"><a href="#4-访问rancher-server" class="headerlink" title="4 访问rancher server"></a>4 访问rancher server</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Happy Containering!</span><br><span class="line">[root@node1 ssl]# echo https://my.rancher.com/dashboard/?setup=$(kubectl get secret --namespace cattle-system bootstrap-secret -o go-template=&#x27;&#123;&#123;.data.bootstrapPassword|base64decode&#125;&#125;&#x27;)</span><br><span class="line">https://my.rancher.com/dashboard/?setup=</span><br><span class="line">[root@node1 ssl]# kubectl get secret --namespace cattle-system bootstrap-secret -o go-template=&#x27;&#123;&#123;.data.bootstrapPassword|base64decode&#125;&#125;&#123;&#123; &quot;\n&quot; &#125;&#125;&#x27;</span><br><span class="line">b9bwmrwrs7ndzrpvn6lnqc22hmtf7wbdpkpxh652jbrcbkhtlgxsd2</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1599,147 +1841,6 @@
 </ol>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost /]# ping 192.168.2.101</span><br><span class="line">PING 192.168.2.101 (192.168.2.101) 56(84) bytes of data.</span><br><span class="line">From 192.168.2.11 icmp_seq=1 Destination Host Unreachable</span><br><span class="line">From 192.168.2.11 icmp_seq=2 Destination Host Unreachable</span><br><span class="line">From 192.168.2.11 icmp_seq=3 Destination Host Unreachable</span><br><span class="line">^C</span><br></pre></td></tr></table></figure>
 
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2021/09/08/2021-09-09-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E8%B7%AF%E8%AF%BE%E7%A8%8B%E7%9B%AE%E6%A0%87/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yuanwanli">
-      <meta itemprop="description" content="等不是办法，干才有出路">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="brisk">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/09/08/2021-09-09-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E8%B7%AF%E8%AF%BE%E7%A8%8B%E7%9B%AE%E6%A0%87/" class="post-title-link" itemprop="url">计算机网路</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-09-08 18:24:00" itemprop="dateCreated datePublished" datetime="2021-09-08T18:24:00+08:00">2021-09-08</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-02-21 14:54:31" itemprop="dateModified" datetime="2022-02-21T14:54:31+08:00">2022-02-21</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="计算机网路课程目标"><a href="#计算机网路课程目标" class="headerlink" title="计算机网路课程目标"></a>计算机网路课程目标</h2><p>笔记中科大 郑烇老师计算网络课程</p>
-<p>掌握计算机网路</p>
-<ol>
-<li> 基本概念</li>
-<li>常用原理</li>
-<li>常用技术</li>
-</ol>
-<p>如何学好这门课 </p>
-<ul>
-<li>注重基础概念的理解， 大量基础概念</li>
-<li>注重逻辑推理  </li>
-<li>下功夫</li>
-</ul>
-<h2 id="课程内容"><a href="#课程内容" class="headerlink" title="课程内容"></a>课程内容</h2><ul>
-<li>计算机网络和互联网</li>
-<li>应用层</li>
-<li>传输层</li>
-<li>网络层： 数据平面</li>
-<li>网络层： 控制平面</li>
-<li>数据链路层和局域网</li>
-<li>网络安全</li>
-<li>无线和移动网路</li>
-<li>多媒体网路</li>
-<li>网路管理</li>
-</ul>
-<h2 id="第一章-概论"><a href="#第一章-概论" class="headerlink" title="第一章 概论"></a>第一章 概论</h2><h3 id="1-1-什么是internet"><a href="#1-1-什么是internet" class="headerlink" title="1.1 什么是internet"></a>1.1 什么是internet</h3><p>概念定义 ： </p>
-<ul>
-<li>网络， 节点和边组成的结构</li>
-<li>计算机网络， 有计算机为点组成的网络结构</li>
-<li>节点， 主机节点，(host, end system)主机及其上运行的应用程序。交换节点，路由器交换机等网络交换设备</li>
-<li>边，通信道路。接入网链路，主机连接到互联网的链路。主干链路，路由器间的链路。</li>
-<li>协议，对等层的实体（或多个实体）进行通信的规则的集合。规定pdu的格式，次序，动作。</li>
-</ul>
-<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E7%BD%91%E8%B7%AF1.jpg"></p>
-<ol>
-<li>物理层：简单地说，物理层协议对与基本物理信号传输有关的机械、电气等功能进行描述。若生产相互连接的两个设备的两个厂商都遵循相同物理层规范，则二者必定能被连接在一起，并能接收对方发来的电、光或其他的物理信号，而且能正确地将这些物理信号理解为二进制的0和1序列。物理层只负责正确地接收和发送比特，并不关心这些比特的具体含义。</li>
-<li>数据链路层<strong>：</strong>数据链路层简称链路层，它依赖物理层提供的比特传输能力把数据组织成为有边界的传输单位，称为“帧”。链路层把来自网络层的数据组织成“帧”，然后再通过物理层向外发送。当然，链路层也要负责从来自物理层的比特序列（或者字节序列）中区分出一个个的帧，并将帧中的数据传递给网络层。为了将各个帧区分开来，需要在帧的头部和尾部附加一些特点的信息，这个过程称为“封装”，其相反的过程称为“解封装”。“封装”的概念不只在链路层中存在，在更高的各层协议中同样存在。所有层上的“封装”问题的共同特征是把来自高层的封装单位根据本层的需要附加上特定信息形成本层的封装单位，然后向低层传递，同时把来自低层的数据解封装后向高层传递。另外，链路层还可以有其他的诸如差错校验、流量控制等功能，但要理解整个协议体系，则首先应记住它和帧之间的密切关系，因为帧使无头无尾的比特序列变成容易控制的有界单位。</li>
-<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E7%BD%91%E7%BB%9C%E5%B1%82">网络层</a>：网络层解决如何标识通信各方和数据如何从源到达目的这个问题。网络层用特定的网络层地址来标识整个网络中的一个节点，并负责使来自传输层的应该到达某个网络层地址的数据能够被送达这个网络层地址所对应的网络节点。网络层的封装单位称为“包”，“包”需要被进一步封装成链路层的帧然后才能通过物理层发送出去，而在接收方，包在链路层的帧中被解封装出来。最典型的的网络层协议就是在Internet中使用的IP协议，它使用IP地址唯一地标识Internet中的一台主机，路由设备根据IP包中的目的IP地址将IP包一步步转发至目的主机。</li>
-<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E4%BC%A0%E8%BE%93%E5%B1%82">传输层</a>：依赖物理层、数据链路层和网络层，任意一个网络节点都能把任何信息传递到其他任意节点，而传输层在物理层、数据链路层和网络层提供的节点间的通信能力基础上进一步提供了面向应用的服务。传输层向上层提供屏蔽了传输细节的数据传输服务，将来自高层的数据进行分段并将来自低层的数据重组，对数据传输进行差错恢复和流量控制。通过对每个网络节点的多个进程进行标识，传输层可以实现对网络层的多路复用。</li>
-<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E4%BC%9A%E8%AF%9D%E5%B1%82/4329656">会话层</a>：会话层用于建立和管理不同主机的两个进程之间的对话。会话层可以管理对话，可允许对话在两个方向上同时进行，也可以强制对话同时只在一个方向上进行。在后一种情况下，会话层可以提供会话令牌来控制某时刻哪一方可以发生数据。会话层还可以提供同步服务，它可以在数据流中插入同步点，每当因网络出现故障而造成大量数据传输中断时，通过同步点机制可以使两个进程之间的数据传输不需要从头开始，而是从最后一个同步点开始继续传输。</li>
-<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E8%A1%A8%E7%A4%BA%E5%B1%82/4329716">表示层</a>：表示层协议规定对来自应用层的数据如何进行表达，例如采用什么样的文字编码、是否及如何进行压缩、是否及如何加密等。</li>
-<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%BA%94%E7%94%A8%E5%B1%82/16412033">应用层</a>：应用层是ISO/OSI模型中最靠近用户的一层，<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%BA%94%E7%94%A8%E5%B1%82%E5%8D%8F%E8%AE%AE/3668945">应用层协议</a>直接面对用户的需求，例如与发送邮件相关的应用层协议可以规定诸如邮件地址的格式、邮件内容的段落表示、客户与服务器进行交互的命令串等。</li>
-</ol>
-<h3 id=""><a href="#" class="headerlink" title=""></a></h3><p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E7%BD%91%E8%B7%AF2.png"></p>
-<ul>
-<li> PDU,协议数据单元</li>
-</ul>
-<blockquote>
-<p>从服务角度，internet分为分布式应用和提供服务的基础设施。</p>
-</blockquote>
-<h3 id="1-2-网路边缘"><a href="#1-2-网路边缘" class="headerlink" title="1.2 网路边缘"></a>1.2 网路边缘</h3><p>网路结构分为三种：</p>
-<ol>
-<li>网路边缘，主机，应用程序</li>
-<li>网路核心，互联着的路由器，网路的网路</li>
-<li>接入网、物理媒体， 有线或者无限通信链路</li>
-</ol>
-<p>网路边缘的两种模式</p>
-<ol>
-<li> 客户/服务器模式，客户端向服务器请求，接收服务。如web客户端/服务器；email客户端/服务器。</li>
-<li>对等(peer-peer)模式</li>
-</ol>
-<p>面向连接的服务TCP </p>
-<ul>
-<li>可靠的，有序的，确认重传</li>
-<li>浏流量控制，发送方不好淹没接收方</li>
-<li>拥塞控制，当网络拥塞时，发送方降低发送频率</li>
-</ul>
-<p>无连接的服务UDP</p>
-<ul>
-<li>不打招呼，不可靠</li>
-</ul>
 
       
     </div>

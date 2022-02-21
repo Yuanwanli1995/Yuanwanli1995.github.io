@@ -157,7 +157,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">75</span>
+          <span class="site-state-item-count">76</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -193,6 +193,147 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2021/09/08/2021-09-09-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E8%B7%AF%E8%AF%BE%E7%A8%8B%E7%9B%AE%E6%A0%87/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuanwanli">
+      <meta itemprop="description" content="等不是办法，干才有出路">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="brisk">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/09/08/2021-09-09-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E8%B7%AF%E8%AF%BE%E7%A8%8B%E7%9B%AE%E6%A0%87/" class="post-title-link" itemprop="url">计算机网路</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-09-08 18:24:00" itemprop="dateCreated datePublished" datetime="2021-09-08T18:24:00+08:00">2021-09-08</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-02-21 14:54:31" itemprop="dateModified" datetime="2022-02-21T14:54:31+08:00">2022-02-21</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="计算机网路课程目标"><a href="#计算机网路课程目标" class="headerlink" title="计算机网路课程目标"></a>计算机网路课程目标</h2><p>笔记中科大 郑烇老师计算网络课程</p>
+<p>掌握计算机网路</p>
+<ol>
+<li> 基本概念</li>
+<li>常用原理</li>
+<li>常用技术</li>
+</ol>
+<p>如何学好这门课 </p>
+<ul>
+<li>注重基础概念的理解， 大量基础概念</li>
+<li>注重逻辑推理  </li>
+<li>下功夫</li>
+</ul>
+<h2 id="课程内容"><a href="#课程内容" class="headerlink" title="课程内容"></a>课程内容</h2><ul>
+<li>计算机网络和互联网</li>
+<li>应用层</li>
+<li>传输层</li>
+<li>网络层： 数据平面</li>
+<li>网络层： 控制平面</li>
+<li>数据链路层和局域网</li>
+<li>网络安全</li>
+<li>无线和移动网路</li>
+<li>多媒体网路</li>
+<li>网路管理</li>
+</ul>
+<h2 id="第一章-概论"><a href="#第一章-概论" class="headerlink" title="第一章 概论"></a>第一章 概论</h2><h3 id="1-1-什么是internet"><a href="#1-1-什么是internet" class="headerlink" title="1.1 什么是internet"></a>1.1 什么是internet</h3><p>概念定义 ： </p>
+<ul>
+<li>网络， 节点和边组成的结构</li>
+<li>计算机网络， 有计算机为点组成的网络结构</li>
+<li>节点， 主机节点，(host, end system)主机及其上运行的应用程序。交换节点，路由器交换机等网络交换设备</li>
+<li>边，通信道路。接入网链路，主机连接到互联网的链路。主干链路，路由器间的链路。</li>
+<li>协议，对等层的实体（或多个实体）进行通信的规则的集合。规定pdu的格式，次序，动作。</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E7%BD%91%E8%B7%AF1.jpg"></p>
+<ol>
+<li>物理层：简单地说，物理层协议对与基本物理信号传输有关的机械、电气等功能进行描述。若生产相互连接的两个设备的两个厂商都遵循相同物理层规范，则二者必定能被连接在一起，并能接收对方发来的电、光或其他的物理信号，而且能正确地将这些物理信号理解为二进制的0和1序列。物理层只负责正确地接收和发送比特，并不关心这些比特的具体含义。</li>
+<li>数据链路层<strong>：</strong>数据链路层简称链路层，它依赖物理层提供的比特传输能力把数据组织成为有边界的传输单位，称为“帧”。链路层把来自网络层的数据组织成“帧”，然后再通过物理层向外发送。当然，链路层也要负责从来自物理层的比特序列（或者字节序列）中区分出一个个的帧，并将帧中的数据传递给网络层。为了将各个帧区分开来，需要在帧的头部和尾部附加一些特点的信息，这个过程称为“封装”，其相反的过程称为“解封装”。“封装”的概念不只在链路层中存在，在更高的各层协议中同样存在。所有层上的“封装”问题的共同特征是把来自高层的封装单位根据本层的需要附加上特定信息形成本层的封装单位，然后向低层传递，同时把来自低层的数据解封装后向高层传递。另外，链路层还可以有其他的诸如差错校验、流量控制等功能，但要理解整个协议体系，则首先应记住它和帧之间的密切关系，因为帧使无头无尾的比特序列变成容易控制的有界单位。</li>
+<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E7%BD%91%E7%BB%9C%E5%B1%82">网络层</a>：网络层解决如何标识通信各方和数据如何从源到达目的这个问题。网络层用特定的网络层地址来标识整个网络中的一个节点，并负责使来自传输层的应该到达某个网络层地址的数据能够被送达这个网络层地址所对应的网络节点。网络层的封装单位称为“包”，“包”需要被进一步封装成链路层的帧然后才能通过物理层发送出去，而在接收方，包在链路层的帧中被解封装出来。最典型的的网络层协议就是在Internet中使用的IP协议，它使用IP地址唯一地标识Internet中的一台主机，路由设备根据IP包中的目的IP地址将IP包一步步转发至目的主机。</li>
+<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E4%BC%A0%E8%BE%93%E5%B1%82">传输层</a>：依赖物理层、数据链路层和网络层，任意一个网络节点都能把任何信息传递到其他任意节点，而传输层在物理层、数据链路层和网络层提供的节点间的通信能力基础上进一步提供了面向应用的服务。传输层向上层提供屏蔽了传输细节的数据传输服务，将来自高层的数据进行分段并将来自低层的数据重组，对数据传输进行差错恢复和流量控制。通过对每个网络节点的多个进程进行标识，传输层可以实现对网络层的多路复用。</li>
+<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E4%BC%9A%E8%AF%9D%E5%B1%82/4329656">会话层</a>：会话层用于建立和管理不同主机的两个进程之间的对话。会话层可以管理对话，可允许对话在两个方向上同时进行，也可以强制对话同时只在一个方向上进行。在后一种情况下，会话层可以提供会话令牌来控制某时刻哪一方可以发生数据。会话层还可以提供同步服务，它可以在数据流中插入同步点，每当因网络出现故障而造成大量数据传输中断时，通过同步点机制可以使两个进程之间的数据传输不需要从头开始，而是从最后一个同步点开始继续传输。</li>
+<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E8%A1%A8%E7%A4%BA%E5%B1%82/4329716">表示层</a>：表示层协议规定对来自应用层的数据如何进行表达，例如采用什么样的文字编码、是否及如何进行压缩、是否及如何加密等。</li>
+<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%BA%94%E7%94%A8%E5%B1%82/16412033">应用层</a>：应用层是ISO/OSI模型中最靠近用户的一层，<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%BA%94%E7%94%A8%E5%B1%82%E5%8D%8F%E8%AE%AE/3668945">应用层协议</a>直接面对用户的需求，例如与发送邮件相关的应用层协议可以规定诸如邮件地址的格式、邮件内容的段落表示、客户与服务器进行交互的命令串等。</li>
+</ol>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E7%BD%91%E8%B7%AF2.png"></p>
+<ul>
+<li> PDU,协议数据单元</li>
+</ul>
+<blockquote>
+<p>从服务角度，internet分为分布式应用和提供服务的基础设施。</p>
+</blockquote>
+<h3 id="1-2-网路边缘"><a href="#1-2-网路边缘" class="headerlink" title="1.2 网路边缘"></a>1.2 网路边缘</h3><p>网路结构分为三种：</p>
+<ol>
+<li>网路边缘，主机，应用程序</li>
+<li>网路核心，互联着的路由器，网路的网路</li>
+<li>接入网、物理媒体， 有线或者无限通信链路</li>
+</ol>
+<p>网路边缘的两种模式</p>
+<ol>
+<li> 客户/服务器模式，客户端向服务器请求，接收服务。如web客户端/服务器；email客户端/服务器。</li>
+<li>对等(peer-peer)模式</li>
+</ol>
+<p>面向连接的服务TCP </p>
+<ul>
+<li>可靠的，有序的，确认重传</li>
+<li>浏流量控制，发送方不好淹没接收方</li>
+<li>拥塞控制，当网络拥塞时，发送方降低发送频率</li>
+</ul>
+<p>无连接的服务UDP</p>
+<ul>
+<li>不打招呼，不可靠</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 

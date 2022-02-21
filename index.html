@@ -157,7 +157,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">75</span>
+          <span class="site-state-item-count">76</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -560,6 +560,92 @@
 
 
 
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2022/02/21/2022-02-21-windows%E6%96%87%E6%A1%A3%E7%BC%96%E7%A0%81/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuanwanli">
+      <meta itemprop="description" content="等不是办法，干才有出路">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="brisk">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/02/21/2022-02-21-windows%E6%96%87%E6%A1%A3%E7%BC%96%E7%A0%81/" class="post-title-link" itemprop="url">windows文档编码</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-02-21 00:00:00 / 修改时间：14:55:28" itemprop="dateCreated datePublished" datetime="2022-02-21T00:00:00+08:00">2022-02-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>win上面的文档上传到linux, 编码不对，结尾为^M. </p>
+<p>(^M是ctrl+v,ctrl+m)</p>
+<ol>
+<li><p>如果是<strong>单个文档的话，可以用vi打开，执行 :%s/^M//g　来去掉^M,</strong></p>
+</li>
+<li><p>set ff=unix </p>
+</li>
+<li><pre><code>unix2dos  filename  
+dos2unix  filename
+
+</code></pre>
+</li>
+</ol>
 
       
     </div>
@@ -1059,114 +1145,6 @@
           <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">导入</span><br><span class="line">pip install gitpython </span><br><span class="line">from git import Repo </span><br><span class="line"># 初始化</span><br><span class="line">repopath=&#x27;test&#x27;</span><br><span class="line">repo = Repo.init(path=&#x27;&#x27;) # 初始一个更新仓库， 若存在.git, 不会覆盖</span><br><span class="line"># clone # 克隆地址不要包含.git</span><br><span class="line">new_repo = git.Repo.clone_from(url=&#x27;git@github.com:USER/REPO.git&#x27;, to_path=repopath)</span><br><span class="line"># add # commit 	 </span><br><span class="line">repo.index.add(items=[&#x27;test.file&#x27;]) # 次路径是相对于repo路径，不是python cwd</span><br><span class="line">repo.index.commit(&#x27;write a line into test.file&#x27;)</span><br><span class="line"># 远端</span><br><span class="line">remote = repo.create_remote(name=&#x27;gitlab&#x27;, url=&#x27;git@gitlab.com:USER/REPO.git&#x27;) # 远端只要添加一次 </span><br><span class="line">remote = repo.remote()</span><br><span class="line">remote.fetch()</span><br><span class="line">remote.pull()</span><br><span class="line">remote.push()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2022/02/08/2022-02-08-seccomp%E5%AE%9E%E9%AA%8C%E8%AE%B0%E5%BD%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yuanwanli">
-      <meta itemprop="description" content="等不是办法，干才有出路">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="brisk">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/02/08/2022-02-08-seccomp%E5%AE%9E%E9%AA%8C%E8%AE%B0%E5%BD%95/" class="post-title-link" itemprop="url">seccomp实验记录</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-02-08 00:00:00" itemprop="dateCreated datePublished" datetime="2022-02-08T00:00:00+08:00">2022-02-08</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-02-21 14:54:31" itemprop="dateModified" datetime="2022-02-21T14:54:31+08:00">2022-02-21</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%BC%96%E7%A8%8B%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">编程笔记</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>seccomp json模板</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mkdir profiles</span><br><span class="line"></span><br><span class="line">cat &gt; audit.json &lt;&lt; EOF </span><br><span class="line">&#123;</span><br><span class="line">    &quot;defaultAction&quot;: &quot;SCMP_ACT_LOG&quot;</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cat &gt; violation.json &lt;&lt; EOF</span><br><span class="line">&#123;</span><br><span class="line">    &quot;defaultAction&quot;: &quot;SCMP_ACT_ERRNO&quot;</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line">cat &gt; fine-grained.json &lt;&lt; EOF</span><br><span class="line">&#123;</span><br><span class="line">    &quot;defaultAction&quot;: &quot;SCMP_ACT_ERRNO&quot;,</span><br><span class="line">    &quot;architectures&quot;: [</span><br><span class="line">        &quot;SCMP_ARCH_X86_64&quot;,</span><br><span class="line">        &quot;SCMP_ARCH_X86&quot;,</span><br><span class="line">        &quot;SCMP_ARCH_X32&quot;</span><br><span class="line">    ],</span><br><span class="line">    &quot;syscalls&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;names&quot;: [</span><br><span class="line">                &quot;accept4&quot;,</span><br><span class="line">                &quot;epoll_wait&quot;,</span><br><span class="line">                &quot;pselect6&quot;,</span><br><span class="line">                &quot;futex&quot;,</span><br><span class="line">                &quot;madvise&quot;,</span><br><span class="line">                &quot;epoll_ctl&quot;,</span><br><span class="line">                &quot;getsockname&quot;,</span><br><span class="line">                &quot;setsockopt&quot;,</span><br><span class="line">                &quot;vfork&quot;,</span><br><span class="line">                &quot;mmap&quot;,</span><br><span class="line">                &quot;read&quot;,</span><br><span class="line">                &quot;write&quot;,</span><br><span class="line">                &quot;close&quot;,</span><br><span class="line">                &quot;arch_prctl&quot;,</span><br><span class="line">                &quot;sched_getaffinity&quot;,</span><br><span class="line">                &quot;munmap&quot;,</span><br><span class="line">                &quot;brk&quot;,</span><br><span class="line">                &quot;rt_sigaction&quot;,</span><br><span class="line">                &quot;rt_sigprocmask&quot;,</span><br><span class="line">                &quot;sigaltstack&quot;,</span><br><span class="line">                &quot;gettid&quot;,</span><br><span class="line">                &quot;clone&quot;,</span><br><span class="line">                &quot;bind&quot;,</span><br><span class="line">                &quot;socket&quot;,</span><br><span class="line">                &quot;openat&quot;,</span><br><span class="line">                &quot;readlinkat&quot;,</span><br><span class="line">                &quot;exit_group&quot;,</span><br><span class="line">                &quot;epoll_create1&quot;,</span><br><span class="line">                &quot;listen&quot;,</span><br><span class="line">                &quot;rt_sigreturn&quot;,</span><br><span class="line">                &quot;sched_yield&quot;,</span><br><span class="line">                &quot;clock_gettime&quot;,</span><br><span class="line">                &quot;connect&quot;,</span><br><span class="line">                &quot;dup2&quot;,</span><br><span class="line">                &quot;epoll_pwait&quot;,</span><br><span class="line">                &quot;execve&quot;,</span><br><span class="line">                &quot;exit&quot;,</span><br><span class="line">                &quot;fcntl&quot;,</span><br><span class="line">                &quot;getpid&quot;,</span><br><span class="line">                &quot;getuid&quot;,</span><br><span class="line">                &quot;ioctl&quot;,</span><br><span class="line">                &quot;mprotect&quot;,</span><br><span class="line">                &quot;nanosleep&quot;,</span><br><span class="line">                &quot;open&quot;,</span><br><span class="line">                &quot;poll&quot;,</span><br><span class="line">                &quot;recvfrom&quot;,</span><br><span class="line">                &quot;sendto&quot;,</span><br><span class="line">                &quot;set_tid_address&quot;,</span><br><span class="line">                &quot;setitimer&quot;,</span><br><span class="line">                &quot;writev&quot;</span><br><span class="line">            ],</span><br><span class="line">            &quot;action&quot;: &quot;SCMP_ACT_ALLOW&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br><span class="line">mkdir /var/lib/kubelet/seccomp/ </span><br><span class="line">cp -r profiles/ /var/lib/kubelet/seccomp/</span><br></pre></td></tr></table></figure>
-
-<p>POD </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">cat &gt;  pod-audit.yaml &lt;&lt; EOF </span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Pod</span><br><span class="line">metadata:</span><br><span class="line">  name: pod-audit</span><br><span class="line">  annotations:</span><br><span class="line">    seccomp.security.alpha.kubernetes.io/pod: localhost/profiles/audit.json</span><br><span class="line">spec:</span><br><span class="line">  containers:</span><br><span class="line">  - name: test-container</span><br><span class="line">    image: hashicorp/http-echo:0.2.3</span><br><span class="line">    args:</span><br><span class="line">    - &quot;-text=just made some syscalls!&quot;</span><br><span class="line">    securityContext:</span><br><span class="line">      allowPrivilegeEscalation: false</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">cat &gt;  pod-violation.yaml &lt;&lt; EOF </span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Pod</span><br><span class="line">metadata:</span><br><span class="line">  name: pod-violation</span><br><span class="line">  annotations:</span><br><span class="line">    seccomp.security.alpha.kubernetes.io/pod: localhost/profiles/violation.json</span><br><span class="line">spec:</span><br><span class="line">  containers:</span><br><span class="line">  - name: test-container</span><br><span class="line">    image: hashicorp/http-echo:0.2.3</span><br><span class="line">    args:</span><br><span class="line">    - &quot;-text=just made some syscalls!&quot;</span><br><span class="line">    securityContext:</span><br><span class="line">      allowPrivilegeEscalation: false</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">cat &gt;  pod-fine-grained.yaml &lt;&lt; EOF </span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Pod</span><br><span class="line">metadata:</span><br><span class="line">  name: pod-fine-grained</span><br><span class="line">  labels:</span><br><span class="line">    app: fine-pod</span><br><span class="line">  annotations:</span><br><span class="line">    seccomp.security.alpha.kubernetes.io/pod: localhost/profiles/fine-grained.json</span><br><span class="line">spec:</span><br><span class="line">  containers:</span><br><span class="line">  - name: test-container</span><br><span class="line">    image: hashicorp/http-echo:0.2.3</span><br><span class="line">    args:</span><br><span class="line">    - &quot;-text=just made some syscalls!&quot;</span><br><span class="line">    securityContext:</span><br><span class="line">      allowPrivilegeEscalation: false</span><br><span class="line">EOF</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">cat  &gt; pod-default-seccomp.yaml &lt;&lt; EOF</span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Pod</span><br><span class="line">metadata:</span><br><span class="line">  name: pod-default-seccomp</span><br><span class="line">  annotations:</span><br><span class="line">    seccomp.security.alpha.kubernetes.io/pod: runtime/default</span><br><span class="line">spec:</span><br><span class="line">  containers:</span><br><span class="line">  - name: test-container</span><br><span class="line">    image: hashicorp/http-echo:0.2.3</span><br><span class="line">    args:</span><br><span class="line">    - &quot;-text=just made some syscalls!&quot;</span><br><span class="line">    securityContext:</span><br><span class="line">      allowPrivilegeEscalation: false</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
-
-<p>默认配置方法</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">[root@node101 ~]# kubectl get psp default-psp -o yaml </span><br><span class="line">apiVersion: policy/v1beta1</span><br><span class="line">kind: PodSecurityPolicy</span><br><span class="line">metadata:</span><br><span class="line">  annotations:</span><br><span class="line">    seccomp.security.alpha.kubernetes.io/allowedProfileNames: &#x27;*&#x27;</span><br><span class="line">  creationTimestamp: &quot;2022-01-26T08:29:11Z&quot;</span><br><span class="line">  name: default-psp</span><br><span class="line">  resourceVersion: &quot;29900&quot;</span><br><span class="line">  selfLink: /apis/policy/v1beta1/podsecuritypolicies/default-psp</span><br><span class="line">  uid: 09f4fef4-74a7-43a9-9b8c-49dabbbb249e</span><br><span class="line">spec:</span><br><span class="line">  allowPrivilegeEscalation: true</span><br><span class="line">  allowedCapabilities:</span><br><span class="line">  - &#x27;*&#x27;</span><br><span class="line">  fsGroup:</span><br><span class="line">    rule: RunAsAny</span><br><span class="line">  hostIPC: true</span><br><span class="line">  hostNetwork: true</span><br><span class="line">  hostPID: true</span><br><span class="line">  hostPorts:</span><br><span class="line">  - max: 65535</span><br><span class="line">    min: 0</span><br><span class="line">  privileged: true</span><br><span class="line">  runAsUser:</span><br><span class="line">    rule: RunAsAny</span><br><span class="line">  seLinux:</span><br><span class="line">    rule: RunAsAny</span><br><span class="line">  supplementalGroups:</span><br><span class="line">    rule: RunAsAny</span><br><span class="line">  volumes:</span><br><span class="line">  - &#x27;*&#x27;</span><br></pre></td></tr></table></figure>
       
     </div>
 

@@ -157,7 +157,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">75</span>
+          <span class="site-state-item-count">76</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -193,6 +193,86 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2021/12/30/2021-12-30-harbor-api/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuanwanli">
+      <meta itemprop="description" content="等不是办法，干才有出路">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="brisk">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/12/30/2021-12-30-harbor-api/" class="post-title-link" itemprop="url">harbor api</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-12-30 00:00:00" itemprop="dateCreated datePublished" datetime="2021-12-30T00:00:00+08:00">2021-12-30</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-02-21 14:54:31" itemprop="dateModified" datetime="2022-02-21T14:54:31+08:00">2022-02-21</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/k8s/" itemprop="url" rel="index"><span itemprop="name">k8s</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>curl -k -u “admin:Harbor12345”  -X  ‘GET’   ‘<a target="_blank" rel="noopener" href="https://81.68.101.212/api/v2.0/systeminfo/volumes&#39;">https://81.68.101.212/api/v2.0/systeminfo/volumes&#39;</a> </p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1927,116 +2007,6 @@
 <p>可以使用git pull同步。</p>
 <p>简易git</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">简易的命令行入门教程:</span><br><span class="line">Git 全局设置:</span><br><span class="line"></span><br><span class="line">git config --global user.name &quot;yuanwanli&quot;</span><br><span class="line">git config --global user.email &quot;yuan.wanli@qq.com&quot;</span><br><span class="line">创建 git 仓库:</span><br><span class="line"></span><br><span class="line">mkdir autoblog</span><br><span class="line">cd autoblog</span><br><span class="line">git init </span><br><span class="line">touch README.md</span><br><span class="line">git add README.md</span><br><span class="line">git commit -m &quot;first commit&quot;</span><br><span class="line">git remote add origin https://gitee.com/yuanwl/autoblog.git</span><br><span class="line">git push -u origin &quot;master&quot;</span><br><span class="line">已有仓库?</span><br><span class="line"></span><br><span class="line">cd existing_git_repo</span><br><span class="line">git remote add origin https://gitee.com/yuanwl/autoblog.git</span><br><span class="line">git push -u origin &quot;master&quot;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2021/12/13/2021-12-13-promethus%E8%81%94%E9%82%A6+-%E8%BF%9C%E7%A8%8B%E6%8C%81%E4%B9%85%E5%8C%96%E5%AD%98%E5%82%A8+-%E5%8F%AF%E8%A7%86%E5%8C%96/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yuanwanli">
-      <meta itemprop="description" content="等不是办法，干才有出路">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="brisk">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/12/13/2021-12-13-promethus%E8%81%94%E9%82%A6+-%E8%BF%9C%E7%A8%8B%E6%8C%81%E4%B9%85%E5%8C%96%E5%AD%98%E5%82%A8+-%E5%8F%AF%E8%A7%86%E5%8C%96/" class="post-title-link" itemprop="url">promethus联邦+ 远程持久化存储+ 可视化</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-12-13 00:00:00" itemprop="dateCreated datePublished" datetime="2021-12-13T00:00:00+08:00">2021-12-13</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-02-21 14:54:31" itemprop="dateModified" datetime="2022-02-21T14:54:31+08:00">2022-02-21</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%BC%96%E7%A8%8B%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">编程笔记</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="联邦集群"><a href="#联邦集群" class="headerlink" title="联邦集群"></a>联邦集群</h3><p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/%E8%81%94%E9%82%A6%E9%9B%86%E7%BE%A4.png">    </p>
-<h3 id="实验架构"><a href="#实验架构" class="headerlink" title="实验架构"></a>实验架构</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 两个集群</span><br><span class="line"># prometheus_cluster1</span><br><span class="line"># prometheus_cluster2 </span><br><span class="line"># 一个主机承担 </span><br><span class="line"># prometheus_master + influxdb + grafana</span><br></pre></td></tr></table></figure>
-
-<h3 id="实验操作"><a href="#实验操作" class="headerlink" title="实验操作"></a>实验操作</h3><h4 id="1-集群部署prometheus"><a href="#1-集群部署prometheus" class="headerlink" title="1 集群部署prometheus"></a>1 集群部署prometheus</h4><p>集群部署文件存在gitee/k8s仓库</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">git clone https://gitee.com/yuanwl/k8s.git</span><br><span class="line">cd  k8s/pig</span><br><span class="line"># 新建一个监控namespace</span><br><span class="line">kubectl apply -f monitor.ns.yml</span><br><span class="line">cd prometheus</span><br><span class="line"># 启动prometheus监控</span><br><span class="line">kubectl apply -f  </span><br><span class="line"># 测试可以访问</span><br><span class="line">http://&lt;node_ip&gt;/graph</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>多个k8s集群，这里两个集群，并且已经配置prometheus服务，接口分别是: </li>
-</ol>
- <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- &#x27;1.13.92.201:30003&#x27;</span><br><span class="line">- &#x27;1.13.102.83:30003&#x27;</span><br><span class="line"># 测试http://1.13.102.83:30003/graph 可查当前数据中心数据即可</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li><p>一个主机 main </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1.117.61.155 centOS 7.6 2C4G</span><br></pre></td></tr></table></figure></li>
-</ol>
-<h3 id="主机main配置"><a href="#主机main配置" class="headerlink" title="主机main配置"></a>主机main配置</h3><h4 id="1-配置influxdb"><a href="#1-配置influxdb" class="headerlink" title="1 配置influxdb"></a>1 配置influxdb</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 下载</span><br><span class="line">wget https://dl.influxdata.com/influxdb/releases/influxdb-1.8.1.x86_64.rpm </span><br><span class="line"># 安装</span><br><span class="line">yum -y localinstall influxdb-1.8.1.x86_64.rpm </span><br><span class="line"># 配置/etc/influxdb/influxdb.conf 开启http </span><br><span class="line"># 新建一个database </span><br><span class="line">curl -XPOST http://localhost:8086/query --data-urlencode &quot;q=CREATE DATABASE prometheus&quot;</span><br></pre></td></tr></table></figure>
-
-<p>也可以docker启动influxdb </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">#使用docker-compose定义并启动Influxdb数据库服务，docker-compose.yml定义如下：</span><br><span class="line"></span><br><span class="line">version: &#x27;2&#x27;</span><br><span class="line">services:</span><br><span class="line">  influxdb:</span><br><span class="line">    image: influxdb:1.3.5</span><br><span class="line">    command: -config /etc/influxdb/influxdb.conf</span><br><span class="line">    ports:</span><br><span class="line">      - &quot;8086:8086&quot;</span><br><span class="line">    environment:</span><br><span class="line">      - INFLUXDB_DB=prometheus</span><br><span class="line">      - INFLUXDB_ADMIN_ENABLED=true</span><br><span class="line">      - INFLUXDB_ADMIN_USER=admin</span><br><span class="line">      - INFLUXDB_ADMIN_PASSWORD=admin</span><br><span class="line">      - INFLUXDB_USER=prom</span><br><span class="line">      - INFLUXDB_USER_PASSWORD=prom</span><br><span class="line"># 启动influxdb服务</span><br><span class="line">docker-compose up -d</span><br><span class="line">docker ps</span><br><span class="line">CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                    NAMES</span><br><span class="line">795d0ead87a1        influxdb:1.3.5      &quot;/entrypoint.sh -c...&quot;   3 hours ago         Up 3 hours          0.0.0.0:8086-&gt;8086/tcp   localhost_influxdb_1</span><br><span class="line"># 获取并启动Prometheus提供的Remote Storage Adapter：</span><br><span class="line"># 先配置golang , 官方下载安装包，再添加路径</span><br><span class="line"># go get 下载并编译</span><br><span class="line">go get github.com/prometheus/prometheus/documentation/examples/remote_storage/remote_storage_adapter</span><br><span class="line"># 获取remote_storage_adapter源码后，go会自动把相关的源码编译成可执行文件，并且保存在$GOPATH/bin/目录下。</span><br><span class="line"></span><br><span class="line"># 启动remote_storage_adapter并且设置Influxdb相关的认证信息：</span><br><span class="line"></span><br><span class="line">INFLUXDB_PW=prom $GOPATH/bin/remote_storage_adapter -influxdb-url=http://localhost:8086 -influxdb.username=prom -influxdb.database=prometheus -influxdb.retention-policy=autogen</span><br></pre></td></tr></table></figure>
-
-
-
-<h4 id="2-配置prometheus"><a href="#2-配置prometheus" class="headerlink" title="2 配置prometheus"></a>2 配置prometheus</h4><p>使用docker或者安装包部署prometheus都可以，这里使用安装包</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"># 1 下载安装包prometheus-1.6.2.linux-amd64.tar.gz</span><br><span class="line">https://github.com/prometheus/prometheus/releases/tag/v1.6.2</span><br><span class="line"># 2 解压</span><br><span class="line">tar -xvf prometheus-1.6.2.linux-amd64.tar.gz</span><br><span class="line">cd prometheus-1.6.2.linux-amd64</span><br><span class="line"># 3 配置prometheus.yml， 配置prometheus联邦，拉取两个cluster的数据。</span><br><span class="line"></span><br><span class="line">cat &gt; prometheus.yml &lt;&lt; EOF</span><br><span class="line"># my global config</span><br><span class="line">global:</span><br><span class="line">  scrape_interval:     15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.</span><br><span class="line">  evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.</span><br><span class="line">  # scrape_timeout is set to the global default (10s).</span><br><span class="line"></span><br><span class="line">  # Attach these labels to any time series or alerts when communicating with</span><br><span class="line">  # external systems (federation, remote storage, Alertmanager).</span><br><span class="line">  external_labels:</span><br><span class="line">      monitor: &#x27;codelab-monitor&#x27;</span><br><span class="line"></span><br><span class="line"># Load rules once and periodically evaluate them according to the global &#x27;evaluation_interval&#x27;.</span><br><span class="line">rule_files:</span><br><span class="line">  # - &quot;first.rules&quot;</span><br><span class="line">  # - &quot;second.rules&quot;</span><br><span class="line"></span><br><span class="line"># A scrape configuration containing exactly one endpoint to scrape:</span><br><span class="line"># Here it&#x27;s Prometheus itself.</span><br><span class="line">scrape_configs:</span><br><span class="line">  - job_name: &#x27;federate&#x27;</span><br><span class="line">    scrape_interval: 15s</span><br><span class="line"></span><br><span class="line">    honor_labels: true</span><br><span class="line">    metrics_path: &#x27;/federate&#x27;</span><br><span class="line"># 联邦集群</span><br><span class="line">    params:</span><br><span class="line">      &#x27;match[]&#x27;:</span><br><span class="line">        - &#x27;&#123;job=&quot;prometheus&quot;&#125;&#x27;</span><br><span class="line">        - &#x27;&#123;job=&quot;kubernetes-apiservers&quot;&#125;&#x27;</span><br><span class="line">        - &#x27;&#123;job=&quot;kubernetes-nodes&quot;&#125;&#x27;</span><br><span class="line">        - &#x27;&#123;job=&quot;kubernetes-cadvisor&quot;&#125;&#x27;</span><br><span class="line">        - &#x27;&#123;job=&quot;kubernetes-service-endpoints&quot;&#125;&#x27;</span><br><span class="line">        - &#x27;&#123;job=&quot;kubernetes-services&quot;&#125;&#x27;</span><br><span class="line">        - &#x27;&#123;job=&quot;kubernetes-ingresses&quot;&#125;&#x27;</span><br><span class="line">        - &#x27;&#123;job=&quot;kubernetes-pods&quot;&#125;&#x27;</span><br><span class="line">        - &#x27;&#123;__name__=~&quot;job:.*&quot;&#125;&#x27;</span><br><span class="line"># 这里抓的matrics与集群prometheus服务中的job匹配</span><br><span class="line">#    static_configs:</span><br><span class="line">#      - targets:</span><br><span class="line">#        - &#x27;1.13.92.201:30003&#x27;</span><br><span class="line">#        - &#x27;1.13.102.83:30003&#x27;</span><br><span class="line"># 配置数据中心， 集群任意节点加nodeport端口 </span><br><span class="line"># 为了在展示中心展示数据中心的名称， 可在grafanaz主机添加host,然后通过名称导入</span><br><span class="line">    static_configs:</span><br><span class="line">      - targets:</span><br><span class="line">        - &#x27;cluster1:30003&#x27;</span><br><span class="line">        - &#x27;cluster2:30003&#x27;</span><br><span class="line"># 使用名称后需要加个数据中心的标签重写， 并加入正则匹配数据中心</span><br><span class="line">    relabel_configs:</span><br><span class="line">      - source_labels:  [&quot;__address__&quot;]</span><br><span class="line">        target_label: &quot;data_center&quot;</span><br><span class="line">        regex: (.+):\d*</span><br><span class="line"># 远程读写</span><br><span class="line">#remote_write:</span><br><span class="line"># - url: &quot;http://localhost:8086/api/v1/prom/write?db=prometheus&quot;       </span><br><span class="line">EOF</span><br><span class="line"># /etc/hosts配置</span><br><span class="line">cluster1 1.13.92.201</span><br><span class="line">cluster2 11.13.102.83</span><br><span class="line"># 4 启动</span><br><span class="line">nohup ./prometheus -config.file=prometheus.yml &gt; myout.file  2&gt;&amp;1 &amp;</span><br><span class="line"></span><br><span class="line"># 5 WEB页面访问http://1.117.61.155:9090/ ，可以看到两个数据中心</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/prom.png"></p>
-<h4 id="3-配置grafana"><a href="#3-配置grafana" class="headerlink" title="3 配置grafana"></a>3 配置grafana</h4><p>面配置grafana展示</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># 1 下载 </span><br><span class="line">wget https://dl.grafana.com/oss/release/grafana-6.7.1-1.x86_64.rpm</span><br><span class="line"># 2 安装</span><br><span class="line">yum -y install grafana-6.7.1-1.x86_64.rpm</span><br><span class="line"># 3 启动服务， 默认配置即可</span><br><span class="line">systemctl restart grafana-server.service</span><br><span class="line">systemctl enable grafana-server.service  </span><br><span class="line"># 4 默认端口3000 </span><br><span class="line">http://&lt;ip&gt;:3000 访问</span><br><span class="line"># 5 配置数据源为promethues, http://1.117.61.155:9090/ </span><br></pre></td></tr></table></figure>
-
-<p>数据源配置具体部分省略，也已经同步到influxdb仓库中。 </p>
-<p>grafana的面板配置在k8s/grafana中，可直接导入json生成面板。</p>
-
       
     </div>
 

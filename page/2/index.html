@@ -157,7 +157,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">75</span>
+          <span class="site-state-item-count">76</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -193,6 +193,114 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2022/02/08/2022-02-08-seccomp%E5%AE%9E%E9%AA%8C%E8%AE%B0%E5%BD%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuanwanli">
+      <meta itemprop="description" content="等不是办法，干才有出路">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="brisk">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/02/08/2022-02-08-seccomp%E5%AE%9E%E9%AA%8C%E8%AE%B0%E5%BD%95/" class="post-title-link" itemprop="url">seccomp实验记录</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-02-08 00:00:00" itemprop="dateCreated datePublished" datetime="2022-02-08T00:00:00+08:00">2022-02-08</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-02-21 14:54:31" itemprop="dateModified" datetime="2022-02-21T14:54:31+08:00">2022-02-21</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BC%96%E7%A8%8B%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">编程笔记</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>seccomp json模板</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mkdir profiles</span><br><span class="line"></span><br><span class="line">cat &gt; audit.json &lt;&lt; EOF </span><br><span class="line">&#123;</span><br><span class="line">    &quot;defaultAction&quot;: &quot;SCMP_ACT_LOG&quot;</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cat &gt; violation.json &lt;&lt; EOF</span><br><span class="line">&#123;</span><br><span class="line">    &quot;defaultAction&quot;: &quot;SCMP_ACT_ERRNO&quot;</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line">cat &gt; fine-grained.json &lt;&lt; EOF</span><br><span class="line">&#123;</span><br><span class="line">    &quot;defaultAction&quot;: &quot;SCMP_ACT_ERRNO&quot;,</span><br><span class="line">    &quot;architectures&quot;: [</span><br><span class="line">        &quot;SCMP_ARCH_X86_64&quot;,</span><br><span class="line">        &quot;SCMP_ARCH_X86&quot;,</span><br><span class="line">        &quot;SCMP_ARCH_X32&quot;</span><br><span class="line">    ],</span><br><span class="line">    &quot;syscalls&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;names&quot;: [</span><br><span class="line">                &quot;accept4&quot;,</span><br><span class="line">                &quot;epoll_wait&quot;,</span><br><span class="line">                &quot;pselect6&quot;,</span><br><span class="line">                &quot;futex&quot;,</span><br><span class="line">                &quot;madvise&quot;,</span><br><span class="line">                &quot;epoll_ctl&quot;,</span><br><span class="line">                &quot;getsockname&quot;,</span><br><span class="line">                &quot;setsockopt&quot;,</span><br><span class="line">                &quot;vfork&quot;,</span><br><span class="line">                &quot;mmap&quot;,</span><br><span class="line">                &quot;read&quot;,</span><br><span class="line">                &quot;write&quot;,</span><br><span class="line">                &quot;close&quot;,</span><br><span class="line">                &quot;arch_prctl&quot;,</span><br><span class="line">                &quot;sched_getaffinity&quot;,</span><br><span class="line">                &quot;munmap&quot;,</span><br><span class="line">                &quot;brk&quot;,</span><br><span class="line">                &quot;rt_sigaction&quot;,</span><br><span class="line">                &quot;rt_sigprocmask&quot;,</span><br><span class="line">                &quot;sigaltstack&quot;,</span><br><span class="line">                &quot;gettid&quot;,</span><br><span class="line">                &quot;clone&quot;,</span><br><span class="line">                &quot;bind&quot;,</span><br><span class="line">                &quot;socket&quot;,</span><br><span class="line">                &quot;openat&quot;,</span><br><span class="line">                &quot;readlinkat&quot;,</span><br><span class="line">                &quot;exit_group&quot;,</span><br><span class="line">                &quot;epoll_create1&quot;,</span><br><span class="line">                &quot;listen&quot;,</span><br><span class="line">                &quot;rt_sigreturn&quot;,</span><br><span class="line">                &quot;sched_yield&quot;,</span><br><span class="line">                &quot;clock_gettime&quot;,</span><br><span class="line">                &quot;connect&quot;,</span><br><span class="line">                &quot;dup2&quot;,</span><br><span class="line">                &quot;epoll_pwait&quot;,</span><br><span class="line">                &quot;execve&quot;,</span><br><span class="line">                &quot;exit&quot;,</span><br><span class="line">                &quot;fcntl&quot;,</span><br><span class="line">                &quot;getpid&quot;,</span><br><span class="line">                &quot;getuid&quot;,</span><br><span class="line">                &quot;ioctl&quot;,</span><br><span class="line">                &quot;mprotect&quot;,</span><br><span class="line">                &quot;nanosleep&quot;,</span><br><span class="line">                &quot;open&quot;,</span><br><span class="line">                &quot;poll&quot;,</span><br><span class="line">                &quot;recvfrom&quot;,</span><br><span class="line">                &quot;sendto&quot;,</span><br><span class="line">                &quot;set_tid_address&quot;,</span><br><span class="line">                &quot;setitimer&quot;,</span><br><span class="line">                &quot;writev&quot;</span><br><span class="line">            ],</span><br><span class="line">            &quot;action&quot;: &quot;SCMP_ACT_ALLOW&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br><span class="line">mkdir /var/lib/kubelet/seccomp/ </span><br><span class="line">cp -r profiles/ /var/lib/kubelet/seccomp/</span><br></pre></td></tr></table></figure>
+
+<p>POD </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">cat &gt;  pod-audit.yaml &lt;&lt; EOF </span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Pod</span><br><span class="line">metadata:</span><br><span class="line">  name: pod-audit</span><br><span class="line">  annotations:</span><br><span class="line">    seccomp.security.alpha.kubernetes.io/pod: localhost/profiles/audit.json</span><br><span class="line">spec:</span><br><span class="line">  containers:</span><br><span class="line">  - name: test-container</span><br><span class="line">    image: hashicorp/http-echo:0.2.3</span><br><span class="line">    args:</span><br><span class="line">    - &quot;-text=just made some syscalls!&quot;</span><br><span class="line">    securityContext:</span><br><span class="line">      allowPrivilegeEscalation: false</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">cat &gt;  pod-violation.yaml &lt;&lt; EOF </span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Pod</span><br><span class="line">metadata:</span><br><span class="line">  name: pod-violation</span><br><span class="line">  annotations:</span><br><span class="line">    seccomp.security.alpha.kubernetes.io/pod: localhost/profiles/violation.json</span><br><span class="line">spec:</span><br><span class="line">  containers:</span><br><span class="line">  - name: test-container</span><br><span class="line">    image: hashicorp/http-echo:0.2.3</span><br><span class="line">    args:</span><br><span class="line">    - &quot;-text=just made some syscalls!&quot;</span><br><span class="line">    securityContext:</span><br><span class="line">      allowPrivilegeEscalation: false</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">cat &gt;  pod-fine-grained.yaml &lt;&lt; EOF </span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Pod</span><br><span class="line">metadata:</span><br><span class="line">  name: pod-fine-grained</span><br><span class="line">  labels:</span><br><span class="line">    app: fine-pod</span><br><span class="line">  annotations:</span><br><span class="line">    seccomp.security.alpha.kubernetes.io/pod: localhost/profiles/fine-grained.json</span><br><span class="line">spec:</span><br><span class="line">  containers:</span><br><span class="line">  - name: test-container</span><br><span class="line">    image: hashicorp/http-echo:0.2.3</span><br><span class="line">    args:</span><br><span class="line">    - &quot;-text=just made some syscalls!&quot;</span><br><span class="line">    securityContext:</span><br><span class="line">      allowPrivilegeEscalation: false</span><br><span class="line">EOF</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">cat  &gt; pod-default-seccomp.yaml &lt;&lt; EOF</span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Pod</span><br><span class="line">metadata:</span><br><span class="line">  name: pod-default-seccomp</span><br><span class="line">  annotations:</span><br><span class="line">    seccomp.security.alpha.kubernetes.io/pod: runtime/default</span><br><span class="line">spec:</span><br><span class="line">  containers:</span><br><span class="line">  - name: test-container</span><br><span class="line">    image: hashicorp/http-echo:0.2.3</span><br><span class="line">    args:</span><br><span class="line">    - &quot;-text=just made some syscalls!&quot;</span><br><span class="line">    securityContext:</span><br><span class="line">      allowPrivilegeEscalation: false</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+
+<p>默认配置方法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">[root@node101 ~]# kubectl get psp default-psp -o yaml </span><br><span class="line">apiVersion: policy/v1beta1</span><br><span class="line">kind: PodSecurityPolicy</span><br><span class="line">metadata:</span><br><span class="line">  annotations:</span><br><span class="line">    seccomp.security.alpha.kubernetes.io/allowedProfileNames: &#x27;*&#x27;</span><br><span class="line">  creationTimestamp: &quot;2022-01-26T08:29:11Z&quot;</span><br><span class="line">  name: default-psp</span><br><span class="line">  resourceVersion: &quot;29900&quot;</span><br><span class="line">  selfLink: /apis/policy/v1beta1/podsecuritypolicies/default-psp</span><br><span class="line">  uid: 09f4fef4-74a7-43a9-9b8c-49dabbbb249e</span><br><span class="line">spec:</span><br><span class="line">  allowPrivilegeEscalation: true</span><br><span class="line">  allowedCapabilities:</span><br><span class="line">  - &#x27;*&#x27;</span><br><span class="line">  fsGroup:</span><br><span class="line">    rule: RunAsAny</span><br><span class="line">  hostIPC: true</span><br><span class="line">  hostNetwork: true</span><br><span class="line">  hostPID: true</span><br><span class="line">  hostPorts:</span><br><span class="line">  - max: 65535</span><br><span class="line">    min: 0</span><br><span class="line">  privileged: true</span><br><span class="line">  runAsUser:</span><br><span class="line">    rule: RunAsAny</span><br><span class="line">  seLinux:</span><br><span class="line">    rule: RunAsAny</span><br><span class="line">  supplementalGroups:</span><br><span class="line">    rule: RunAsAny</span><br><span class="line">  volumes:</span><br><span class="line">  - &#x27;*&#x27;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1379,141 +1487,6 @@
 <p>这里提供了基本所有的文件操作</p>
 <p>集成交互类示例：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line">class SSHConnection(object):</span><br><span class="line"> </span><br><span class="line">    def __init__(self, host_dict):</span><br><span class="line">        self.host = host_dict[&#x27;host&#x27;]</span><br><span class="line">        self.port = host_dict[&#x27;port&#x27;]</span><br><span class="line">        self.username = host_dict[&#x27;username&#x27;]</span><br><span class="line">        self.pwd = host_dict[&#x27;pwd&#x27;]</span><br><span class="line">        self.__k = None</span><br><span class="line"> </span><br><span class="line">    def connect(self):</span><br><span class="line">        transport = paramiko.Transport((self.host,self.port))</span><br><span class="line">        transport.connect(username=self.username,password=self.pwd)</span><br><span class="line">        self.__transport = transport</span><br><span class="line"> </span><br><span class="line">    def close(self):</span><br><span class="line">        self.__transport.close()</span><br><span class="line"> </span><br><span class="line">    def run_cmd(self, command):</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">         执行shell命令,返回字典</span><br><span class="line">         return &#123;&#x27;color&#x27;: &#x27;red&#x27;,&#x27;res&#x27;:error&#125;或</span><br><span class="line">         return &#123;&#x27;color&#x27;: &#x27;green&#x27;, &#x27;res&#x27;:res&#125;</span><br><span class="line">        :param command:</span><br><span class="line">        :return:</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        ssh = paramiko.SSHClient()</span><br><span class="line">        ssh._transport = self.__transport</span><br><span class="line">        # 执行命令</span><br><span class="line">        stdin, stdout, stderr = ssh.exec_command(command)</span><br><span class="line">        # 获取命令结果</span><br><span class="line">        res = unicode_utils.to_str(stdout.read())</span><br><span class="line">        # 获取错误信息</span><br><span class="line">        error = unicode_utils.to_str(stderr.read())</span><br><span class="line">        # 如果有错误信息，返回error</span><br><span class="line">        # 否则返回res</span><br><span class="line">        if error.strip():</span><br><span class="line">            return &#123;&#x27;color&#x27;:&#x27;red&#x27;,&#x27;res&#x27;:error&#125;</span><br><span class="line">        else:</span><br><span class="line">            return &#123;&#x27;color&#x27;: &#x27;green&#x27;, &#x27;res&#x27;:res&#125;</span><br><span class="line"> </span><br><span class="line">    def upload(self,local_path, target_path):</span><br><span class="line">        # 连接，上传</span><br><span class="line">        sftp = paramiko.SFTPClient.from_transport(self.__transport)</span><br><span class="line">        # 将location.py 上传至服务器 /tmp/test.py</span><br><span class="line">        sftp.put(local_path, target_path, confirm=True)</span><br><span class="line">        # print(os.stat(local_path).st_mode)</span><br><span class="line">        # 增加权限</span><br><span class="line">        # sftp.chmod(target_path, os.stat(local_path).st_mode)</span><br><span class="line">        sftp.chmod(target_path, 0o755)  # 注意这里的权限是八进制的，八进制需要使用0o作为前缀</span><br><span class="line"> </span><br><span class="line">    def download(self,target_path, local_path):</span><br><span class="line">        # 连接，下载</span><br><span class="line">        sftp = paramiko.SFTPClient.from_transport(self.__transport)</span><br><span class="line">        # 将location.py 下载至服务器 /tmp/test.py</span><br><span class="line">        sftp.get(target_path, local_path)</span><br><span class="line"> </span><br><span class="line">    # 销毁</span><br><span class="line">    def __del__(self):</span><br><span class="line">        self.close()</span><br><span class="line"> </span><br><span class="line">　　</span><br><span class="line">#unicode_utils.py</span><br><span class="line">def to_str(bytes_or_str):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    把byte类型转换为str</span><br><span class="line">    :param bytes_or_str:</span><br><span class="line">    :return:</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    if isinstance(bytes_or_str, bytes):</span><br><span class="line">        value = bytes_or_str.decode(&#x27;utf-8&#x27;)</span><br><span class="line">    else:</span><br><span class="line">        value = bytes_or_str</span><br><span class="line">    return value</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2022/01/24/2022-01-24-k8s-pod-%E7%BD%91%E7%BB%9C%E7%AD%96%E7%95%A5network-policy/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yuanwanli">
-      <meta itemprop="description" content="等不是办法，干才有出路">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="brisk">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/01/24/2022-01-24-k8s-pod-%E7%BD%91%E7%BB%9C%E7%AD%96%E7%95%A5network-policy/" class="post-title-link" itemprop="url">k8s pod 网络策略network policy</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-01-24 00:00:00" itemprop="dateCreated datePublished" datetime="2022-01-24T00:00:00+08:00">2022-01-24</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-02-21 14:54:31" itemprop="dateModified" datetime="2022-02-21T14:54:31+08:00">2022-02-21</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/k8s/" itemprop="url" rel="index"><span itemprop="name">k8s</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="1-什么是Network-Policy-？"><a href="#1-什么是Network-Policy-？" class="headerlink" title="1 什么是Network Policy ？"></a>1 什么是Network Policy ？</h3><p>Network Policy是k8s中的一种资源类型，它从属于namespace，用来配置pod<strong>网络隔离</strong>。 缩写为netpol。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@node1 ~]# kubectl api-resources | grep NetworkPolicy</span><br><span class="line">globalnetworkpolicies     crd.projectcalico.org/v1   false   GlobalNetworkPolicy</span><br><span class="line">networkpolicies           crd.projectcalico.org/v1   true        NetworkPolicy</span><br><span class="line">networkpolicies   netpol  networking.k8s.io/v1       true        NetworkPolicy</span><br></pre></td></tr></table></figure>
-
-<p>默认情况下，k8s集群中pod无论是节点内还是节点外都可以通信，或者说所有pod工作在同一跨节点网络，此网络一般是二层虚拟网络，称为pod网络。 </p>
-<p>网络主要主要有两个方面： </p>
-<ol>
-<li>连通性， 实体之间能通过网络互通。 </li>
-<li>隔离性， 由于安全、限流等问题，限制实体之间的互通。 </li>
-</ol>
-<p>Network Policy用于实现pod之间的隔离性。可用network plugin及是否支持Network Policy参考<a target="_blank" rel="noopener" href="https://kubernetes.io/docs/concepts/cluster-administration/addons/#networking-and-network-policy">这里</a>。</p>
-<h3 id="2-Network-Policy-内容"><a href="#2-Network-Policy-内容" class="headerlink" title="2 Network Policy 内容"></a>2 Network Policy 内容</h3><p>Network Policy既然k8s中的一种资源， 其Type Meta与object Meta与其他资源相同，Spec内容主要有两个部分：</p>
-<ol>
-<li> 标签选择器， 用于匹配需要添加规则的pod。 </li>
-<li> 隔离策略， 就是网络流量进出pod的规则，采用的是白名单模式，符合规则的通过，不符合规则的拒绝。</li>
-</ol>
-<h3 id="3-spec如何配置"><a href="#3-spec如何配置" class="headerlink" title="3 spec如何配置?"></a>3 spec如何配置?</h3><h4 id="3-1-spec-podSelector"><a href="#3-1-spec-podSelector" class="headerlink" title="3.1 spec.podSelector"></a>3.1 spec.podSelector</h4><p>podSelector使用标签选择器来匹配需要限制出入的pod</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">spec:</span><br><span class="line">  podSelector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      app: nginx</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>若matchLabels值为空，则匹配所在namespaces中所有pod. </li>
-</ul>
-<h4 id="3-2-spec-policyTypes"><a href="#3-2-spec-policyTypes" class="headerlink" title="3.2 spec.policyTypes"></a>3.2 spec.policyTypes</h4><p>网络限制规则有出入两种，policyType字段有两个字段可选：</p>
-<ol>
-<li>流量入pod规则， ingress</li>
-<li>流量出pod规则， egress</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">spec:</span><br><span class="line">  policyTypes：</span><br><span class="line">    -ingress </span><br><span class="line">    -egress </span><br></pre></td></tr></table></figure>
-
-<ul>
-<li> 选择即开启限制，如果没有配置字段spec.ingress与spec.egres，则<strong>默认禁止出或入</strong>。</li>
-</ul>
-<h4 id="3-3-spec-ingress"><a href="#3-3-spec-ingress" class="headerlink" title="3.3 spec.ingress"></a>3.3 spec.ingress</h4><p>ingress定义入pod流量规则，白名单模式，有四种：</p>
-<ol>
-<li> namespaces</li>
-<li> pod</li>
-<li> port</li>
-<li> CIDR</li>
-</ol>
-<h5 id="3-3-1-namespaceSelector即开启哪些命名空间下的pod的访问白名单"><a href="#3-3-1-namespaceSelector即开启哪些命名空间下的pod的访问白名单" class="headerlink" title="3.3.1 namespaceSelector即开启哪些命名空间下的pod的访问白名单"></a>3.3.1 namespaceSelector即开启哪些命名空间下的pod的访问白名单</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">spec: </span><br><span class="line">  ingress : </span><br><span class="line">  - from: </span><br><span class="line">    namespaceSelector: </span><br><span class="line">    	matchLables: </span><br><span class="line">          testingress: true</span><br><span class="line"> # 带有标签 testingress=true 的ns可以访问</span><br></pre></td></tr></table></figure>
-
-<p>测试： </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"># 在default空间下创建一个pod nginx </span><br><span class="line">[root@node ~]# kubectl run --image=nginx nginx-one </span><br><span class="line">pod/nginx-one created</span><br><span class="line"></span><br><span class="line"># 新建一个测试的namespace</span><br><span class="line">[root@node ~]# kubectl create ns test1 </span><br><span class="line">namespace/test1 created</span><br><span class="line"></span><br><span class="line"># 在测试ns中新建pod nginx-test1</span><br><span class="line">[root@node ~]# kubectl run --image=nginx nginx-test1 --namespace=test1 </span><br><span class="line">pod/nginx-test1 created</span><br><span class="line"></span><br><span class="line"># 查看</span><br><span class="line">[root@node ~]# kubectl  get po --all-namespaces -o wide  | grep nginx</span><br><span class="line">default         nginx-one                                 1/1     Running     0          7m38s   10.42.0.11     10.206.16.17   &lt;none&gt;           &lt;none&gt;</span><br><span class="line"></span><br><span class="line">test1           nginx-test1                               1/1     Running     0          3m27s   10.42.0.12     10.206.16.17   &lt;none&gt;           &lt;none&gt;</span><br><span class="line"></span><br><span class="line"># 未限制之前， nginx-test1与nginx-one网络通</span><br><span class="line">[root@node ~]#  kubectl exec nginx-test1 -n test1 -- curl -I 10.42.0.11 | grep HTTP </span><br><span class="line">HTTP/1.1 200 OK</span><br><span class="line"></span><br><span class="line"># 新建netpolicy限制</span><br><span class="line">cat &gt;&gt; netpol_ingress_ns.yml &lt;&lt; EOF </span><br><span class="line">apiVersion: networking.k8s.io/v1</span><br><span class="line">kind: NetworkPolicy</span><br><span class="line">metadata:</span><br><span class="line">  name: ingress-ns</span><br><span class="line">spec:</span><br><span class="line">  podSelector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      run: nginx-one</span><br><span class="line">  policyTypes: </span><br><span class="line">    - Ingress</span><br><span class="line">  ingress:</span><br><span class="line">  - from:</span><br><span class="line">    - namespaceSelector:</span><br><span class="line">        matchLabels:</span><br><span class="line">          testingress: &quot;true&quot;</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">[root@node ~]# kubectl create -f netpol_ingress_ns.yml </span><br><span class="line">networkpolicy.networking.k8s.io/ingress-ns created</span><br><span class="line"></span><br><span class="line">[root@node ~]# kubectl get netpol </span><br><span class="line">NAME         POD-SELECTOR    AGE</span><br><span class="line">ingress-ns   run=nginx-one   4m4s</span><br><span class="line"></span><br><span class="line"># 再测试网络,不通</span><br><span class="line">[root@node ~]# kubectl exec nginx-test1 -n test1 -- curl -I --connect-time 2 10.42.0.11 | grep HTTP </span><br><span class="line">curl: (28) Connection timed out after 2001 milliseconds</span><br><span class="line"></span><br><span class="line"># netpol通过标签匹配ns放开限制, 给test1加个标签</span><br><span class="line">[root@node ~]# kubectl label ns test1 testingress=true</span><br><span class="line">namespace/test1 labeled</span><br><span class="line"></span><br><span class="line"># 网络通了</span><br><span class="line">[root@node ~]#  kubectl exec nginx-test1 -n test1 -- curl -I --connect-time 2 10.42.0.11 | grep HTTP </span><br><span class="line">HTTP/1.1 200 OK</span><br></pre></td></tr></table></figure>
-
-<h5 id="3-3-2-podSelector维度的限制测试"><a href="#3-3-2-podSelector维度的限制测试" class="headerlink" title="3.3.2 podSelector维度的限制测试"></a>3.3.2 podSelector维度的限制测试</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"># 删除ingress-ns， 新建另一个deploy </span><br><span class="line">[root@node ~]# kubectl create deploy nginx-two --image=nginx --replicas=2 </span><br><span class="line">deployment.apps/nginx-two create</span><br><span class="line"></span><br><span class="line">[root@node ~]# kubectl get po </span><br><span class="line">NAME                         READY   STATUS    RESTARTS   AGE</span><br><span class="line">nginx-one                    1/1     Running   0          15h</span><br><span class="line">nginx-two-6786cc87b4-7l9hh   1/1     Running   0          14h</span><br><span class="line">nginx-two-6786cc87b4-v96bx   1/1     Running   0          14h</span><br><span class="line"></span><br><span class="line"># 新建netpolicy限制</span><br><span class="line">cat &gt;&gt; netpol_ingress_pod.yml &lt;&lt; EOF </span><br><span class="line">apiVersion: networking.k8s.io/v1</span><br><span class="line">kind: NetworkPolicy</span><br><span class="line">metadata:</span><br><span class="line">  name: ingress-pod</span><br><span class="line">spec:</span><br><span class="line">  podSelector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      run: nginx-one</span><br><span class="line">  policyTypes: </span><br><span class="line">    - Ingress</span><br><span class="line">  ingress:</span><br><span class="line">  - from:</span><br><span class="line">    - podSelector:</span><br><span class="line">        matchLabels:</span><br><span class="line">           testingress: &quot;true&quot;</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"># 给其中一个pod添加标签</span><br><span class="line">[root@node ~]# kubectl label po nginx-two-6786cc87b4-7l9hh testingress=true </span><br><span class="line">pod/nginx-two-6786cc87b4-7l9hh labeled</span><br><span class="line"></span><br><span class="line"># 加入白名单的可以访问，另一个pod不通</span><br><span class="line">[root@node ~]#  kubectl exec    nginx-two-6786cc87b4-7l9hh  -- curl -I --connect-time 2 10.42.0.11 | grep HTTP </span><br><span class="line">HTTP/1.1 200 OK</span><br><span class="line"></span><br><span class="line">[root@node ~]#  kubectl exec  nginx-two-6786cc87b4-v96bx  -- curl -I --connect-time 2 10.42.0.11 | grep HTTP</span><br><span class="line">curl: (28) Connection timed out after 2001 milliseconds</span><br></pre></td></tr></table></figure>
-
-<h5 id="3-3-3-端口维度的限制测试"><a href="#3-3-3-端口维度的限制测试" class="headerlink" title="3.3.3 端口维度的限制测试"></a>3.3.3 端口维度的限制测试</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"># 新建netpolicy限制, 放开80端口</span><br><span class="line">cat &gt; netpol_ingress_port.yml &lt;&lt; EOF </span><br><span class="line">apiVersion: networking.k8s.io/v1</span><br><span class="line">kind: NetworkPolicy</span><br><span class="line">metadata:</span><br><span class="line">  name: ingress-port</span><br><span class="line">spec:</span><br><span class="line">  podSelector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      run: nginx-one</span><br><span class="line">  policyTypes: </span><br><span class="line">    - Ingress</span><br><span class="line">  ingress:</span><br><span class="line">  - from:</span><br><span class="line">    - podSelector:</span><br><span class="line">        matchLabels:</span><br><span class="line">           run: &quot;busybox&quot;</span><br><span class="line">    ports: </span><br><span class="line">    - protocol: TCP </span><br><span class="line">      port: 80</span><br><span class="line">EOF </span><br><span class="line"></span><br><span class="line">[root@node ~]# kubectl run busybox --rm -ti --image=busybox /bin/sh </span><br><span class="line">/ # telnet 10.42.0.11 80</span><br><span class="line">Connected to 10.42.0.11 </span><br></pre></td></tr></table></figure>
-
-<h5 id="3-3-4-CIDR维度的限制测试"><a href="#3-3-4-CIDR维度的限制测试" class="headerlink" title="3.3.4  CIDR维度的限制测试"></a>3.3.4  CIDR维度的限制测试</h5><p>无类别域间路由（Classless Inter-Domain Routing、CIDR）是一个用于给用户分配IP地址以及在互联网上有效地路由IP数据包的对IP地址进行归类的方法。可以用CIDR指定一个ip段。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"># 查看</span><br><span class="line">[root@node ~]# kubectl get po -o wide </span><br><span class="line">NAME                         READY   STATUS    RESTARTS   AGE     IP           NODE           NOMINATED NODE   READINESS GATES</span><br><span class="line">busybox                      1/1     Running   0          59m     10.42.1.13   10.206.16.15   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">nginx-one                    1/1     Running   0          17h     10.42.0.11   10.206.16.17   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">nginx-two-6786cc87b4-sl5jd   1/1     Running   0          9m12s   10.42.1.14   10.206.16.15   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">nginx-two-6786cc87b4-z66n5   1/1     Running   0          9m12s   10.42.0.15   10.206.16.17   &lt;none&gt;           &lt;none&gt;</span><br><span class="line"></span><br><span class="line"># 让10.42.0.0/23段都能访问，除了10.42.0.15</span><br><span class="line"></span><br><span class="line"># 新建策略</span><br><span class="line">cat &gt;&gt; netpol_ingress_cidr.yml &lt;&lt; EOF </span><br><span class="line">apiVersion: networking.k8s.io/v1</span><br><span class="line">kind: NetworkPolicy</span><br><span class="line">metadata:</span><br><span class="line">  name: ingress-cidr</span><br><span class="line">spec:</span><br><span class="line">  podSelector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      run: nginx-one</span><br><span class="line">  policyTypes: </span><br><span class="line">    - Ingress</span><br><span class="line">  ingress:</span><br><span class="line">  - from:</span><br><span class="line">    - ipBlock:</span><br><span class="line">        cidr: 10.42.0.0/23</span><br><span class="line">        except:</span><br><span class="line">        - 10.42.0.15/32</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">[root@node ~]# kubectl apply -f netpol_ingress_cidr.yml </span><br><span class="line">networkpolicy.networking.k8s.io/ingress-cidr created</span><br><span class="line"></span><br><span class="line">[root@node ~]# kubectl exec   nginx-two-6786cc87b4-sl5jd    -- curl -I --connect-time 2 10.42.0.11 | grep HTTP </span><br><span class="line">HTTP/1.1 200 OK</span><br><span class="line"></span><br><span class="line">[root@node ~]# kubectl exec    nginx-two-6786cc87b4-z66n5   -- curl -I --connect-time 2 10.42.0.11 | grep HTTP </span><br><span class="line">curl: (28) Connection timed out after 2001 milliseconds</span><br><span class="line">command terminated with exit code 28</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>egress配置策略与ingress类似</p>
-</blockquote>
-<p>附录： 一个完整的networkpolicy.yml</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: networking.k8s.io/v1</span><br><span class="line">kind: NetworkPolicy</span><br><span class="line">metadata:</span><br><span class="line">  name: network-policy</span><br><span class="line">  namespace: default</span><br><span class="line">spec:</span><br><span class="line">  podSelector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      run: nginx-one</span><br><span class="line">  policyTypes:</span><br><span class="line">  - Ingress</span><br><span class="line">  - Egress</span><br><span class="line">  ingress:</span><br><span class="line">  - from:</span><br><span class="line">    - ipBlock:</span><br><span class="line">        cidr: 10.42.0.0/23</span><br><span class="line">        except:</span><br><span class="line">        - 10.42.0.15/32</span><br><span class="line">    - namespaceSelector:</span><br><span class="line">        matchLabels:</span><br><span class="line">          testingress: true</span><br><span class="line">    - podSelector:</span><br><span class="line">        matchLabels:</span><br><span class="line">          role: frontend</span><br><span class="line">    ports:</span><br><span class="line">    - protocol: TCP</span><br><span class="line">      port: 80</span><br><span class="line">  egress:</span><br><span class="line">  - to:</span><br><span class="line">    - ipBlock:</span><br><span class="line">        cidr: 10.0.0.0/24</span><br><span class="line">    ports:</span><br><span class="line">    - protocol: TCP</span><br><span class="line">      port: 80</span><br></pre></td></tr></table></figure>
 
 
       
