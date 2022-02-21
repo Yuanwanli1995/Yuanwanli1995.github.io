@@ -157,7 +157,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">76</span>
+          <span class="site-state-item-count">77</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -193,6 +193,93 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2021/11/22/2021-11-23-%E4%BD%BF%E7%94%A8cat-EOF%E6%97%B6%E5%86%85%E5%AE%B9%E5%90%AB%E6%9C%89$%E9%9C%80%E8%A6%81%E5%A4%84%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuanwanli">
+      <meta itemprop="description" content="等不是办法，干才有出路">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="brisk">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/11/22/2021-11-23-%E4%BD%BF%E7%94%A8cat-EOF%E6%97%B6%E5%86%85%E5%AE%B9%E5%90%AB%E6%9C%89$%E9%9C%80%E8%A6%81%E5%A4%84%E7%90%86/" class="post-title-link" itemprop="url">使用cat EOF时内容含有$需要处理</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-11-22 00:00:00" itemprop="dateCreated datePublished" datetime="2021-11-22T00:00:00+08:00">2021-11-22</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-02-21 14:54:31" itemprop="dateModified" datetime="2022-02-21T14:54:31+08:00">2022-02-21</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>在使用cat EOF内容中若出现$变量通常会直接被执行，则与想要输入的内容不一致。若想保持$变量不变需要使用 \ 符进行注释 。比如下面：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">cat &gt; /etc/yum.repos.d/nginx.repo &lt;&lt; EOF</span><br><span class="line">vim /etc/yum.repos.d/nginx.repo </span><br><span class="line">[nginx-stable]</span><br><span class="line">name=nginx stable repo</span><br><span class="line">baseurl=http://nginx.org/packages/centos/$releasever/$basearch/</span><br><span class="line">gpgcheck=1</span><br><span class="line">enabled=1</span><br><span class="line">gpgkey=https://nginx.org/keys/nginx_signing.key</span><br><span class="line">module_hotfixes=true</span><br><span class="line">[nginx-mainline]</span><br><span class="line">name=nginx mainline repo</span><br><span class="line">baseurl=http://nginx.org/packages/mainline/centos/$releasever/$basearch/</span><br><span class="line">gpgcheck=1</span><br><span class="line">enabled=0</span><br><span class="line">gpgkey=https://nginx.org/keys/nginx_signing.key</span><br><span class="line">module_hotfixes=true</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+
+<p>执行时发现，输入的内容不正确， 因为输入的内容中含有$, 会当成命令执行， 要使用转义符\换成普通字符$ .</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/xshell5.png"><br> 在linux shell脚本中我们经常见到类似于cat &lt;&lt; EOF的语句，问题是EOF好像是文件的结束符，用在这里起到什么作用？<br>首先必要说明的是EOF在这里没有特殊的含义，你可以使用FOE或OOO等（当然也不限制在三个字符或大写字符)<br>下面是几种常见的使用方式及其作用：<br>1、cat&lt;&lt;EOF，以EOF输入字符为标准输入结束：<br>2、cat&gt;filename，创建文件，并把标准输入输出到filename文件中，以ctrl+d作为输入结束,输入时是没有’&gt;’的。<br>3、cat&gt;filename&lt;&lt;EOF，以EOF作为输入结束，和ctrl+d的作用一样</p>
+<blockquote>
+<p>注意，结束后必须和前面一样是EOF， 前面有空格都不可以。有时无法结束，检查有没有空格.<br>意，结束后必须和前面一样是EOF， 前面有空格都不可以。有时无法结束，检查有没有空格.</p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1423,176 +1510,6 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">“.es-server.yaml.swp” already exists!</span><br><span class="line">[O]pen Read-Only, (E)dit anyway, (R)ecover, (Q)uit:</span><br></pre></td></tr></table></figure>
 
 <p>选择<code>Edit anyway</code>，不能解决问题，下次打开文件的时候还是会提示。 </p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2021/11/08/2021-11-08-k8s%E5%A6%82%E4%BD%95%E4%B8%8Epod%E9%80%9A%E4%BF%A1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yuanwanli">
-      <meta itemprop="description" content="等不是办法，干才有出路">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="brisk">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/11/08/2021-11-08-k8s%E5%A6%82%E4%BD%95%E4%B8%8Epod%E9%80%9A%E4%BF%A1/" class="post-title-link" itemprop="url">k8s如何与pod通信</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-11-08 00:00:00" itemprop="dateCreated datePublished" datetime="2021-11-08T00:00:00+08:00">2021-11-08</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-02-21 14:54:31" itemprop="dateModified" datetime="2022-02-21T14:54:31+08:00">2022-02-21</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/k8s/" itemprop="url" rel="index"><span itemprop="name">k8s</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="pod通信和服务发现"><a href="#pod通信和服务发现" class="headerlink" title="pod通信和服务发现"></a>pod通信和服务发现</h3><p>在没有k8s的世界里，系统管理员要在用户端配置文件中明确服务的精确的ip地址或主机名来配置客户端的应用，但是在k8s中并不是需要。k8s中应用运行在pod中， 而pod的高可用设计使得无法保证准确的ip, 这里总结一下pod与服务的工作方式。</p>
-<h4 id="1-pod特点"><a href="#1-pod特点" class="headerlink" title="1 pod特点"></a>1 pod特点</h4><ol>
-<li>pod随时可能启动或关闭，是短暂的</li>
-<li>客户端不会提前知道pod的地址，</li>
-<li>水平伸缩以为着pod可能会提供相同的服务，每个pod ip不同，但客户端只需要服务，不需要知道pod的地址。 </li>
-</ol>
-<h4 id="2-服务"><a href="#2-服务" class="headerlink" title="2 服务"></a>2 服务</h4><p>为了解决上述需要，k8s为一组功能相同的pod提供单一不变的接入点，这就是服务。服务的ip和端口不会改变。客户端通过服务被路由pod上，而不需要直接连接pod,这样单个pod被移除或新的pod被创建就不影响。 </p>
-<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/servicepod.png"></p>
-<h4 id="3-pod与服务的匹配"><a href="#3-pod与服务的匹配" class="headerlink" title="3 pod与服务的匹配"></a>3 pod与服务的匹配</h4><p>上述的过程可以看出服务创建的一个基本问题，如何把服务和一组特定功能的pod匹配起来呢？ <strong>标签选择器</strong></p>
-<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/servicepod2.png"></p>
-<h4 id="4-创建服务"><a href="#4-创建服务" class="headerlink" title="4  创建服务"></a>4  创建服务</h4><ol>
-<li> 创建服务之前，先使用rc创建与之连接的pod </li>
-</ol>
-   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">cat &gt; kubia-rc.yaml &lt;&lt; EOF  </span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: ReplicationController</span><br><span class="line">metadata: </span><br><span class="line">  name: kubia</span><br><span class="line">spec: </span><br><span class="line">  replicas: 2</span><br><span class="line">  selector: </span><br><span class="line">    app: kubia </span><br><span class="line">  template: </span><br><span class="line">    metadata: </span><br><span class="line">      labels: </span><br><span class="line">        app: kubia</span><br><span class="line">    spec: </span><br><span class="line">      containers: </span><br><span class="line">      - name: kubia</span><br><span class="line">        image: luksa/kubia</span><br><span class="line">        ports: </span><br><span class="line">        - containerPort: 8080</span><br><span class="line">EOF</span><br><span class="line"># create </span><br><span class="line">kubectl create -f kubia-rc.yaml </span><br><span class="line"></span><br><span class="line"># 查看</span><br><span class="line">[root@nginx test]# kubectl get po </span><br><span class="line">NAME          READY   STATUS    RESTARTS   AGE</span><br><span class="line">kubia-66tvd   1/1     Running   0          2m31s</span><br><span class="line">kubia-v8dvv   1/1     Running   0          2m31s</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li> 创建服务 </li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">cat &gt; kubia-svc.yaml &lt;&lt; EOF </span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Service</span><br><span class="line">metadata: </span><br><span class="line">  name: kubia</span><br><span class="line">spec: </span><br><span class="line">  ports:</span><br><span class="line">  - port: 80 </span><br><span class="line">    targetPort: 8080</span><br><span class="line">  selector: </span><br><span class="line">    app: kubia </span><br><span class="line">EOF </span><br><span class="line"></span><br><span class="line"># create </span><br><span class="line">kubectl create -f kubia-svc.yaml</span><br><span class="line"></span><br><span class="line"># 查看</span><br><span class="line">[root@nginx test]# kubectl get svc </span><br><span class="line">NAME         TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE</span><br><span class="line">kubernetes   ClusterIP   10.43.0.1      &lt;none&gt;        443/TCP   16d</span><br><span class="line">kubia        ClusterIP   10.43.165.39   &lt;none&gt;        80/TCP    46s</span><br></pre></td></tr></table></figure>
-
-<h4 id="5-为什么服务ip无法ping通-？"><a href="#5-为什么服务ip无法ping通-？" class="headerlink" title="5 为什么服务ip无法ping通 ？"></a>5 为什么服务ip无法ping通 ？</h4><p>我们发现服务curl是可以，但是无法ping通。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-node01 ~]# curl  10.43.165.39 </span><br><span class="line">You&#x27;ve hit kubia-66tvd</span><br><span class="line">[root@k8s-node01 ~]# ping 10.43.165.39 </span><br><span class="line">PING 10.43.165.39 (10.43.165.39) 56(84) bytes of data.</span><br><span class="line">^C</span><br><span class="line">--- 10.43.165.39 ping statistics ---</span><br><span class="line">2 packets transmitted, 0 received, 100% packet loss, time 999ms</span><br></pre></td></tr></table></figure>
-
-<p>有的时候ping不通我们就认为出问题了，其实没有。这是因为集群ip是虚拟ip, 并且只有在与服务端口结合时才有意义。 所以ping不通是正常的。</p>
-<h4 id="6-测试与分析"><a href="#6-测试与分析" class="headerlink" title="6 测试与分析"></a>6 测试与分析</h4><p>分配给该服务的ip是10.43.165.39， 但这是cluster-ip，也就是集群ip, 只能在集群内部可以访问。 也就是集群节点上或其他的pod可以访问。 是不是这样呢? 测试一下</p>
-<ol>
-<li> ssh到集群的一个节点上</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-node01 ~]# curl  10.43.165.39 </span><br><span class="line">You&#x27;ve hit kubia-66tvd </span><br><span class="line"># 服务的cluster ip 在集群内部，节点可与其通信</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li> 在pod中执行命令， 执行成功则说明连接</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># 测试多次， 每次并不是同一个pod</span><br><span class="line">[root@nginx test]# kubectl exec kubia-vs2kl -- curl -s http://10.43.165.39</span><br><span class="line">You&#x27;ve hit kubia-vs2kl</span><br><span class="line"></span><br><span class="line">[root@nginx test]# kubectl exec kubia-vs2kl -- curl -s http://10.43.165.39</span><br><span class="line">You&#x27;ve hit kubia-l9w94</span><br><span class="line"></span><br><span class="line">[root@nginx test]# kubectl exec kubia-vs2kl -- curl -s http://10.43.165.39</span><br><span class="line">You&#x27;ve hit kubia-vs2kl</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p> – 表示kubectl 命令结束，之后为在pod中执行的命令</p>
-</blockquote>
-<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/servicepod3.png"></p>
-<p>上图展示了事件发生的顺序</p>
-<ol>
-<li>在一个pod中执行命令，这个命令是发送http请求</li>
-<li>pod向服务的ip发送请求 </li>
-<li>由于这个服务是代理pod的，转发请求到其中一个pod上  </li>
-<li>在pod2中处理请求，并返回带有pod名称的相应 </li>
-<li>请求结果在主机上打印</li>
-</ol>
-<p>上述某一个过程出问题，都会使得上述命令失败，所以可用来测试集群网络。</p>
-<h4 id="7-同一个服务暴露多个端口"><a href="#7-同一个服务暴露多个端口" class="headerlink" title="7 同一个服务暴露多个端口"></a>7 同一个服务暴露多个端口</h4><p>服务可以暴露一个端口，也可以多个端口。比如http监听8080端口，https监听8443端口。 多个端口需要指定名称, 没有设置名称的端口会在describe 时显示&lt;unset&gt; ， 如果pod中的端口也是命令的，svc中targetport可以使用其名称吗，这样在更换pod端口号的时候也不用修改服务了，因为其是根据名称匹配的。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">cat &gt; kubia-svc.yaml &lt;&lt; EOF </span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Service</span><br><span class="line">metadata:</span><br><span class="line">  name: kubia</span><br><span class="line">spec:</span><br><span class="line">  ports:</span><br><span class="line">  - name: http</span><br><span class="line">    port: 80</span><br><span class="line">    targetPort: 8080</span><br><span class="line">  - name: https</span><br><span class="line">    port: 443</span><br><span class="line">    targetPort: 8443</span><br><span class="line">selector:</span><br><span class="line">    app: kubia</span><br><span class="line">EOF </span><br></pre></td></tr></table></figure>
-
-<h4 id="8-发现服务"><a href="#8-发现服务" class="headerlink" title="8  发现服务"></a>8  发现服务</h4><p>创建服务后， 我们可以通过单一稳定的ip访问到pod， 不管pod如何变化都不影响。 但是在某个服务创建之后新建的pod如何知道服务的ip呢？ 难道手动查询吗? 不需要。</p>
-<p>k8s为客户端提供了发现服务的ip和端口的方式——环境变量， 在pod开始运行的时候，k8s会初始化一系列的环境变量指向现在存在的服务。如下： </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[root@nginx test]# kubectl exec kubia-vs2kl -- env</span><br><span class="line">PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin</span><br><span class="line">HOSTNAME=kubia-vs2kl</span><br><span class="line">KUBERNETES_PORT=tcp://10.43.0.1:443</span><br><span class="line">KUBIA_PORT_80_TCP_PORT=80</span><br><span class="line">KUBIA_PORT=tcp://10.43.165.39:80</span><br><span class="line">KUBIA_PORT_80_TCP=tcp://10.43.165.39:80</span><br><span class="line">KUBIA_PORT_80_TCP_PROTO=tcp</span><br><span class="line">KUBIA_PORT_80_TCP_ADDR=10.43.165.39</span><br><span class="line">KUBERNETES_SERVICE_PORT=443</span><br><span class="line">KUBERNETES_PORT_443_TCP_ADDR=10.43.0.1</span><br><span class="line">KUBIA_SERVICE_HOST=10.43.165.39</span><br><span class="line">KUBIA_SERVICE_PORT=80</span><br><span class="line">NPM_CONFIG_LOGLEVEL=info</span><br><span class="line">NODE_VERSION=7.9.0</span><br><span class="line">YARN_VERSION=0.22.0</span><br><span class="line">HOME=/root</span><br></pre></td></tr></table></figure>
-
-<h4 id="9-DNS"><a href="#9-DNS" class="headerlink" title="9 DNS"></a>9 DNS</h4><p>环境变量是获取ip和端口的一种方式，也可以通过DNS获取。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@nginx test]# kubectl get po -n kube-system </span><br><span class="line">NAME                                      READY   STATUS      RESTARTS   AGE</span><br><span class="line">canal-l58m7                               2/2     Running     2          16d</span><br><span class="line">canal-s92dx                               2/2     Running     3          16d</span><br><span class="line">coredns-7c5566588d-rhdtx                  1/1     Running     1          16d</span><br><span class="line">coredns-7c5566588d-tp55c                  1/1     Running     1          16d</span><br><span class="line">coredns-autoscaler-65bfc8d47d-4mdt5       1/1     Running     1          16d</span><br><span class="line">metrics-server-6b55c64f86-zlz4l           1/1     Running     2          16d</span><br></pre></td></tr></table></figure>
-
-<p>kube-system空间中pod有coredns，这表明在运行dns服务，在集群中的其他pod都被配置成使用作为为DNS ， 运行在pod上的进程DNS 查询都会被k8s自身的DNS服务器响应，该服务器知道系统中运行的所有服务。pod中的spec中的dnspolicy值决定是否使用DNS服务器。 </p>
-<h4 id="10-endpoints"><a href="#10-endpoints" class="headerlink" title="10 endpoints"></a>10 endpoints</h4><p>我们也希望k8s将服务暴露到外部，在此之前要先介绍一下endpoint, 它是介于pod和svc之间的资源。 就是暴露服务要转发的pod的ip地址和端口的列表。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"># 查看endpoints</span><br><span class="line">[root@nginx test]# kubectl get endpoints  kubia </span><br><span class="line">NAME    ENDPOINTS                                                    AGE</span><br><span class="line">kubia   10.42.0.10:8443,10.42.1.10:8443,10.42.1.9:8443 + 3 more...   79m</span><br><span class="line"></span><br><span class="line"># 查看pod IP</span><br><span class="line">NAME          READY   STATUS    RESTARTS   AGE    IP           NODE            NOMINATED NODE   READINESS GATES</span><br><span class="line">kubia-66tvd   1/1     Running   0          161m   10.42.0.10   81.68.101.212   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">kubia-l9w94   1/1     Running   0          128m   10.42.1.9    81.68.229.215   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">kubia-vs2kl   1/1     Running   0          125m   10.42.1.10   81.68.229.215   &lt;none&gt;           &lt;none&gt;</span><br><span class="line"></span><br><span class="line"># 从svc中也可以看到， endpoints就是待转发pod的IP与端口的集合</span><br><span class="line">[root@nginx test]# kubectl describe svc kubia </span><br><span class="line">Name:              kubia</span><br><span class="line">Namespace:         default</span><br><span class="line">Labels:            &lt;none&gt;</span><br><span class="line">Annotations:       &lt;none&gt;</span><br><span class="line">Selector:          app=kubia</span><br><span class="line">Type:              ClusterIP</span><br><span class="line">IP Families:       &lt;none&gt;</span><br><span class="line">IP:                10.43.7.83</span><br><span class="line">IPs:               &lt;none&gt;</span><br><span class="line">Port:              http  80/TCP</span><br><span class="line">TargetPort:        8080/TCP</span><br><span class="line">Endpoints:         10.42.0.10:8080,10.42.1.10:8080,10.42.1.9:8080</span><br><span class="line">Port:              https  443/TCP</span><br><span class="line">TargetPort:        8443/TCP</span><br><span class="line">Endpoints:         10.42.0.10:8443,10.42.1.10:8443,10.42.1.9:8443</span><br><span class="line">Session Affinity:  None</span><br><span class="line">Events:            &lt;none&gt;</span><br></pre></td></tr></table></figure>
-
-<p>这表明服务是利用标签匹配pod， 然后建立endpoints,  将请求转发的endpoints中的一个ip: port上。 所以有的时候服务连接失败，需要查看endpoints是否存在正确。</p>
-<p>了解到这一层之后，我们也可以不使用标签匹配pod，手动为服务建立endpoints，只要新建一个endpoints资源，使其与服务的名称相同即可。 </p>
-<blockquote>
-<p>endpoints本身就是一个资源，而不是service的一部分。</p>
-</blockquote>
-<h4 id="11-将服务暴露给外部"><a href="#11-将服务暴露给外部" class="headerlink" title="11 将服务暴露给外部"></a>11 将服务暴露给外部</h4><p>目前为止，讨论了集群内部pod的使用。有时我们需要将服务暴露给集群之外的网络，比如前端web服务器。有几种方式可以在外部访问服务。 </p>
-<ol>
-<li>nodeport型的服务，在集群的每个节点上打开一个端口，因此叫nodeport，将该端口山的流量重定向到服务上，使用集群ip:port既可以访问。 </li>
-<li>loadbalance型服务，是nodeport的一种扩展， 这使得服务可以通过一个专用的负载均衡器来访问。 </li>
-<li>ingress资源，这是一个完全不同的机制，通过一个ip地址公开多个服务——它运行在http层，因此可以比第四层的服务提供更多的资源。 </li>
-</ol>
-<p>第一种： 使用nodeport暴露服务到外部</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">cat &gt; kubia-svc-nodeport.yaml &lt;&lt; EOF</span><br><span class="line">apiVersion: v1 </span><br><span class="line">kind: Service </span><br><span class="line">metadata: </span><br><span class="line">  name: kubia-nodeport </span><br><span class="line">spec: </span><br><span class="line">  type: NodePort </span><br><span class="line">  ports: </span><br><span class="line">  - port: 80 </span><br><span class="line">    targetPort: 8080 </span><br><span class="line">    nodePort: 30123 </span><br><span class="line">  selector: </span><br><span class="line">    app: kubia </span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"># 创建</span><br><span class="line">kubectl create -f kubia-svc-nodeport.yaml</span><br><span class="line"></span><br><span class="line"># 查看</span><br><span class="line">[root@nginx test]# kubectl get svc kubia-nodeport -o wide </span><br><span class="line">NAME             TYPE       CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE   SELECTOR</span><br><span class="line">kubia-nodeport   NodePort   10.43.254.206   &lt;none&gt;        80:30123/TCP   38m   app=kubia</span><br><span class="line"></span><br><span class="line"># 测试， 本地shell连接 </span><br><span class="line">[C:\~]$ curl http://81.68.229.215:30123</span><br><span class="line">  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current</span><br><span class="line">                                 Dload  Upload   Total   Spent    Left  Speed</span><br><span class="line">100    23    0    23    0     0     23      0 --:--:-- --:--:-- --:--:--  1533</span><br><span class="line">You&#x27;ve hit kubia-l9w94</span><br><span class="line"># 这表明外部网络可以连接到集群内部的服务，用浏览器也可以打开。</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/servicepod4.png"></p>
-<p>第二种： 使用loadbalance暴露服务到外部</p>
-<p>对于提供负载均衡器的云构架才可以使用loadbalancer, 如果不支持则nodebanlancer型svc将退化为nodeport。 </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">cat &gt; kubia-svc-loadbalancer.yaml &lt;&lt; EOF</span><br><span class="line">apiVersion: v1 </span><br><span class="line">kind: Service</span><br><span class="line">metadata: </span><br><span class="line">  name: kubia-loadbalancer</span><br><span class="line">spec: </span><br><span class="line">  type: LoadBalancer</span><br><span class="line">  ports: </span><br><span class="line">  - port: 80 </span><br><span class="line">    targetPort: 8080</span><br><span class="line">  selector: </span><br><span class="line">    app: kubia</span><br><span class="line">EOF</span><br><span class="line"># 创建</span><br><span class="line">kubectl create -f kubia-svc-loadbalancer.yaml</span><br><span class="line"></span><br><span class="line"># 查看</span><br><span class="line">[root@nginx ~]# kubectl get svc </span><br><span class="line">NAME                 TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE</span><br><span class="line">kubernetes           ClusterIP      10.43.0.1       &lt;none&gt;        443/TCP          17d</span><br><span class="line">kubia                ClusterIP      10.43.7.83      &lt;none&gt;        80/TCP,443/TCP   18h</span><br><span class="line">kubia-loadbalancer   LoadBalancer   10.43.20.104    &lt;pending&gt;     80:31342/TCP     14m</span><br><span class="line">kubia-nodeport       NodePort       10.43.254.206   &lt;none&gt;        80:30123/TCP     16h</span><br><span class="line">nginx-service        NodePort       10.43.66.77     &lt;none&gt;        80:30080/TCP     16h</span><br><span class="line"></span><br><span class="line"># 测试， 本集群不支持loadbalancer, 所以external-ip状态为pending, 此时loadbalancer就是一个nodeport</span><br><span class="line"># 本地shell测试 node-ip:port ， 连接正常</span><br><span class="line">[C:\~]$ curl http://81.68.229.215:31342</span><br><span class="line">  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current</span><br><span class="line">                                 Dload  Upload   Total   Spent    Left  Speed</span><br><span class="line">100    23    0    23    0     0     23      0 --:--:-- --:--:-- --:--:--   741</span><br><span class="line">You&#x27;ve hit kubia-vs2kl</span><br><span class="line"></span><br><span class="line"># 换一个腾讯云的弹性集群测试，支持负载均衡器</span><br><span class="line"># 部署同样的deployment, 然后部署loadlancer, 过程相同，省略 </span><br><span class="line"># 查看 </span><br><span class="line">[root@k8s-node02 ~]# kubectl get svc </span><br><span class="line">NAME                 TYPE           CLUSTER-IP      EXTERNAL-IP      PORT(S)        AGE</span><br><span class="line">kubernetes           ClusterIP      192.168.0.1     &lt;none&gt;           443/TCP        3d23h</span><br><span class="line">kubia-loadbalancer   LoadBalancer   192.168.0.201   175.27.192.232   80:30493/TCP   67s</span><br><span class="line"># 本地主机测试 </span><br><span class="line">[C:\~]$ curl http://175.27.192.232</span><br><span class="line">  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current</span><br><span class="line">                                 Dload  Upload   Total   Spent    Left  Speed</span><br><span class="line">100    33    0    33    0     0     33      0 --:--:-- --:--:-- --:--:--   702</span><br><span class="line">You&#x27;ve hit kubia-778d98d9c-2zpl5</span><br><span class="line"></span><br><span class="line"># 成功了， 直接访问loadbalancer IP即可</span><br></pre></td></tr></table></figure>
-
-<p>第三种: ingress </p>
-<p>为什么需要ingress呢， loadbalancer服务需要独立的共有IP地址，二ingress只需要一个公网IP就可以为许多服务提供访问。 当客户向ingress发送请求时，ingress会根据请求的主机名和路径决定请求转发的服务。也就是一个ingress可以暴露多个服务。如下:</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/servicepod7.png"></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">cat &gt; kubia-ingress.yaml &lt;&lt; EOF </span><br><span class="line">apiVersion: extensions/v1beta1 </span><br><span class="line">kind: Ingress </span><br><span class="line">metadata: </span><br><span class="line">  name: kubia</span><br><span class="line">spec: </span><br><span class="line">  rules: </span><br><span class="line">  - host: kubia.example.com </span><br><span class="line">    http: </span><br><span class="line">      paths: </span><br><span class="line">      - path: / </span><br><span class="line">        backend: </span><br><span class="line">          serviceName: kubia-nodeport </span><br><span class="line">          servicePort: 80</span><br><span class="line">EOF</span><br><span class="line"># 创建</span><br><span class="line">kubectl create -f kubia-ingress.yaml </span><br><span class="line"></span><br><span class="line"># 查看</span><br><span class="line">[root@k8s-node02 ~]# kubectl get ing </span><br><span class="line">NAME    CLASS    HOSTS               ADDRESS        PORTS   AGE</span><br><span class="line">kubia   &lt;none&gt;   kubia.example.com   119.45.3.217   80      34m</span><br><span class="line"></span><br><span class="line"># 访问， 本地要添加dns </span><br><span class="line"># windows在‪C:\Windows\System32\drivers\etc\hosts </span><br><span class="line"># 添加 </span><br><span class="line">119.45.3.217  kubia.example.com</span><br><span class="line"># 访问 </span><br><span class="line">[C:\~]$ curl http://1.13.12.141</span><br><span class="line">  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current</span><br><span class="line">                                 Dload  Upload   Total   Spent    Left  Speed</span><br><span class="line">100    33    0    33    0     0     33      0 --:--:-- --:--:-- --:--:--   532</span><br><span class="line">You&#x27;ve hit kubia-778d98d9c-2zpl5</span><br><span class="line"></span><br><span class="line">[C:\~]$ curl http://kubia.example.com</span><br><span class="line">  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current</span><br><span class="line">                                 Dload  Upload   Total   Spent    Left  Speed</span><br><span class="line">  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0</span><br><span class="line">You&#x27;ve hit kubia-778d98d9c-2zpl5</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p> ingress意为进入或进入的行为，进入的手段和地点</p>
-<p>使用ingress，访问链路为客户端——ingress——service——工作负载， 所以ingress配置的时候一定要保证service正常工作，而且serviceName为转发service的名称。</p>
-</blockquote>
-<p>参考资料： kubernets in action –服务：客户端发现pod并与之通信</p>
 
       
     </div>

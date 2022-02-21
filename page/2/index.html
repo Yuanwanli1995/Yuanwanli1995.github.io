@@ -157,7 +157,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">76</span>
+          <span class="site-state-item-count">77</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -193,6 +193,87 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2022/02/09/2022-02-09-gitpython%E5%9F%BA%E7%A1%80%E7%94%A8%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuanwanli">
+      <meta itemprop="description" content="等不是办法，干才有出路">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="brisk">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/02/09/2022-02-09-gitpython%E5%9F%BA%E7%A1%80%E7%94%A8%E6%B3%95/" class="post-title-link" itemprop="url">gitpython基础用法</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-02-09 00:00:00" itemprop="dateCreated datePublished" datetime="2022-02-09T00:00:00+08:00">2022-02-09</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-02-21 14:54:31" itemprop="dateModified" datetime="2022-02-21T14:54:31+08:00">2022-02-21</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">导入</span><br><span class="line">pip install gitpython </span><br><span class="line">from git import Repo </span><br><span class="line"># 初始化</span><br><span class="line">repopath=&#x27;test&#x27;</span><br><span class="line">repo = Repo.init(path=&#x27;&#x27;) # 初始一个更新仓库， 若存在.git, 不会覆盖</span><br><span class="line"># clone # 克隆地址不要包含.git</span><br><span class="line">new_repo = git.Repo.clone_from(url=&#x27;git@github.com:USER/REPO.git&#x27;, to_path=repopath)</span><br><span class="line"># add # commit 	 </span><br><span class="line">repo.index.add(items=[&#x27;test.file&#x27;]) # 次路径是相对于repo路径，不是python cwd</span><br><span class="line">repo.index.commit(&#x27;write a line into test.file&#x27;)</span><br><span class="line"># 远端</span><br><span class="line">remote = repo.create_remote(name=&#x27;gitlab&#x27;, url=&#x27;git@gitlab.com:USER/REPO.git&#x27;) # 远端只要添加一次 </span><br><span class="line">remote = repo.remote()</span><br><span class="line">remote.fetch()</span><br><span class="line">remote.pull()</span><br><span class="line">remote.push()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1308,186 +1389,6 @@
 
 <h4 id="3-3-psp-资源权限限制"><a href="#3-3-psp-资源权限限制" class="headerlink" title="3.3 psp 资源权限限制"></a>3.3 psp 资源权限限制</h4><p>假如我们现在的需求是有一个pod需要hostPID, 另一个不需要则根据最小权限原则禁止使用。 那么设计思路如下图。</p>
 <p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/psp-sa2.drawio.png"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2022/01/25/2022-01-25-python-paramiko/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yuanwanli">
-      <meta itemprop="description" content="等不是办法，干才有出路">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="brisk">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/01/25/2022-01-25-python-paramiko/" class="post-title-link" itemprop="url">python-paramiko</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-01-25 00:00:00" itemprop="dateCreated datePublished" datetime="2022-01-25T00:00:00+08:00">2022-01-25</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-02-21 14:54:31" itemprop="dateModified" datetime="2022-02-21T14:54:31+08:00">2022-02-21</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="1-paramiko"><a href="#1-paramiko" class="headerlink" title="1 paramiko"></a>1 paramiko</h3><p>ssh是一个协议，OpenSSH是其中一个开源实现，paramiko是Python的一个库，实现了SSHv2协议(底层使用cryptography)。</p>
-<p><a target="_blank" rel="noopener" href="https://docs.paramiko.org/en/stable/#welcome-to-paramiko-s-documentation">官网</a></p>
-<p>有了Paramiko以后，我们就可以在Python代码中直接使用SSH协议对远程服务器执行操作，而不是通过ssh命令对远程服务器进行操作。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 install paramiko </span><br></pre></td></tr></table></figure>
-
-<h3 id="2-介绍"><a href="#2-介绍" class="headerlink" title="2 介绍"></a>2 介绍</h3><p>paramiko包含两个核心组件：SSHClient和SFTPClient。</p>
-<ul>
-<li>SSHClient的作用类似于Linux的ssh命令，是对SSH会话的封装，该类封装了传输(Transport)，通道(Channel)及SFTPClient建立的方法(open_sftp)，通常用于执行远程命令。</li>
-<li>SFTPClient的作用类似与Linux的sftp命令，是对SFTP客户端的封装，用以实现远程文件操作，如文件上传、下载、修改文件权限等操作。</li>
-</ul>
-<p> <strong>Paramiko中的几个基础名词：</strong></p>
-<blockquote>
-<p>1 Channel：是一种类Socket，一种安全的SSH传输通道；<br>2 Transport：是一种加密的会话，使用时会同步创建了一个加密的Tunnels(通道)，这个Tunnels叫做Channel；<br>3 Session：是client与Server保持连接的对象，用connect()<code>/</code>start_client()<code>/</code>start_server()开始会话</p>
-</blockquote>
-<h3 id="3-使用"><a href="#3-使用" class="headerlink" title="3 使用"></a>3 使用</h3><h4 id="3-1-sshclient"><a href="#3-1-sshclient" class="headerlink" title="3.1 sshclient"></a>3.1 sshclient</h4><p>**connect()**：实现远程服务器的连接与认证，对于该方法只有hostname是必传参数。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">常用参数</span><br><span class="line">hostname 连接的目标主机</span><br><span class="line">port=SSH_PORT 指定端口</span><br><span class="line">username=None 验证的用户名</span><br><span class="line">password=None 验证的用户密码</span><br><span class="line">pkey=None 私钥方式用于身份验证</span><br><span class="line">key_filename=None 一个文件名或文件列表，指定私钥文件</span><br><span class="line">timeout=None 可选的tcp连接超时时间</span><br><span class="line">allow_agent=True, 是否允许连接到ssh代理，默认为True 允许</span><br><span class="line">look_for_keys=True 是否在~/.ssh中搜索私钥文件，默认为True 允许</span><br><span class="line">compress=False, 是否打开压缩</span><br></pre></td></tr></table></figure>
-
-<p>**set_missing_host_key_policy()**：设置远程服务器没有在know_hosts文件中记录时的应对策略。目前支持三种策略：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">设置连接的远程主机没有本地主机密钥或HostKeys对象时的策略，目前支持三种：</span><br><span class="line"></span><br><span class="line">1 AutoAddPolicy 自动添加主机名及主机密钥到本地HostKeys对象，不依赖load_system_host_key的配置。即新建立ssh连接时不需要再输入yes或no进行确认</span><br><span class="line">2 WarningPolicy 用于记录一个未知的主机密钥的python警告。并接受，功能上和AutoAddPolicy类似，但是会提示是新连接</span><br><span class="line">4 RejectPolicy 自动拒绝未知的主机名和密钥，依赖load_system_host_key的配置。此为默认选项</span><br></pre></td></tr></table></figure>
-
-<p>**exec_command()**：在远程服务器执行Linux命令的方法。</p>
-<p>**open_sftp()**：在当前ssh会话的基础上创建一个sftp会话。该方法会返回一个SFTPClient对象。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 利用SSHClient对象的open_sftp()方法，可以直接返回一个基于当前连接的sftp对象，可以进行文件的上传等操作.</span><br><span class="line"></span><br><span class="line">sftp = client.open_sftp()</span><br><span class="line">sftp.put(&#x27;test.txt&#x27;,&#x27;text.txt&#x27;)</span><br></pre></td></tr></table></figure>
-
-
-
-<p>用法示例</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">import paramiko</span><br><span class="line"> </span><br><span class="line"># 实例化SSHClient</span><br><span class="line">client = paramiko.SSHClient()</span><br><span class="line"></span><br><span class="line"># 自动添加策略，保存服务器的主机名和密钥信息，如果不添加，那么不再本地know_hosts文件中记录的主机将无法连接</span><br><span class="line">client.set_missing_host_key_policy(paramiko.AutoAddPolicy())</span><br><span class="line"></span><br><span class="line"># 连接SSH服务端，以用户名和密码进行认证</span><br><span class="line">client.connect(hostname=&#x27;192.168.1.105&#x27;, port=22, username=&#x27;root&#x27;, password=&#x27;123456&#x27;)</span><br><span class="line"></span><br><span class="line"># 打开一个Channel并执行命令</span><br><span class="line">stdin, stdout, stderr = client.exec_command(&#x27;ls -h &#x27;)  # stdout 为正确输出，stderr为错误输出，同时是有1个变量有值</span><br><span class="line"></span><br><span class="line"># 打印执行结果</span><br><span class="line">print(stdout.read().decode(&#x27;utf-8&#x27;))</span><br><span class="line"></span><br><span class="line"># 关闭SSHClient</span><br><span class="line">client.close()</span><br></pre></td></tr></table></figure>
-
-<h4 id="3-2-如果用密钥连接"><a href="#3-2-如果用密钥连接" class="headerlink" title="3.2 如果用密钥连接"></a>3.2 如果用密钥连接</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># 配置私人密钥文件位置</span><br><span class="line">private = paramiko.RSAKey.from_private_key_file(&#x27;/Users/ch/.ssh/id_rsa&#x27;)</span><br><span class="line"># 在与主机中公钥要添加 cat id_rsa.pub &gt;&gt; authorized_keys</span><br><span class="line">#实例化SSHClient</span><br><span class="line">client = paramiko.SSHClient()</span><br><span class="line"> </span><br><span class="line">#自动添加策略，保存服务器的主机名和密钥信息，如果不添加，那么不再本地know_hosts文件中记录的主机将无法连接</span><br><span class="line">client.set_missing_host_key_policy(paramiko.AutoAddPolicy())</span><br><span class="line"> </span><br><span class="line">#连接SSH服务端，以用户名和密码进行认证</span><br><span class="line">client.connect(hostname=&#x27;10.0.0.1&#x27;,port=22,username=&#x27;root&#x27;,pkey=private)</span><br></pre></td></tr></table></figure>
-
-<h4 id="3-3-sftpclient"><a href="#3-3-sftpclient" class="headerlink" title="3.3  sftpclient"></a>3.3  sftpclient</h4><p>SFTPCLient作为一个sftp的客户端对象，根据ssh传输协议的sftp会话，实现远程文件操作，如上传、下载、权限、状态</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">from_transport(cls,t) 创建一个已连通的SFTP客户端通道</span><br><span class="line">put(localpath, remotepath, callback=None, confirm=True) 将本地文件上传到服务器 参数confirm：是否调用stat()方法检查文件状态，返回ls -l的结果</span><br><span class="line">get(remotepath, localpath, callback=None) 从服务器下载文件到本地</span><br><span class="line">mkdir() 在服务器上创建目录</span><br><span class="line">remove() 在服务器上删除目录</span><br><span class="line">rename() 在服务器上重命名目录</span><br><span class="line">stat() 查看服务器文件状态</span><br><span class="line">listdir() 列出服务器目录下的文件</span><br></pre></td></tr></table></figure>
-
-<p>用法：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">import paramiko</span><br><span class="line"> </span><br><span class="line"># 获取Transport实例</span><br><span class="line">tran = paramiko.Transport((&#x27;1.117.61.155&#x27;, 22))</span><br><span class="line"> </span><br><span class="line"># 连接SSH服务端，使用password</span><br><span class="line">#tran.connect(username=&quot;root&quot;, password=&#x27;1ddgbyhddcB&#x27;)</span><br><span class="line"># 或使用</span><br><span class="line"># 配置私人密钥文件位置</span><br><span class="line">private = paramiko.RSAKey.from_private_key_file(&#x27;id_rsa&#x27;)</span><br><span class="line"># 连接SSH服务端，使用pkey指定私钥</span><br><span class="line">tran.connect(username=&quot;root&quot;, pkey=private)</span><br><span class="line"> </span><br><span class="line"># 获取SFTP实例</span><br><span class="line">sftp = paramiko.SFTPClient.from_transport(tran)</span><br><span class="line"> </span><br><span class="line"># 设置上传的本地/远程文件路径</span><br><span class="line">localpath = &quot;test.py&quot;</span><br><span class="line">remotepath = &quot;/root/test.py&quot;</span><br><span class="line"> </span><br><span class="line"># 执行上传动作</span><br><span class="line">sftp.put(localpath, remotepath)</span><br><span class="line"></span><br><span class="line"># 执行下载动作#</span><br><span class="line"># sftp.get(&quot;/root/requirements.txt&quot;, &#x27;requirements.txt&#x27;)</span><br><span class="line"># sftp.mkdir(&quot;paramikotest1&quot;)</span><br><span class="line">sftp.remove(&quot;requirements.txt&quot;)</span><br><span class="line">tran.close()</span><br></pre></td></tr></table></figure>
-
-<p><a target="_blank" rel="noopener" href="https://docs.paramiko.org/en/stable/api/sftp.html">SFTP 详细用法</a></p>
-<p>这里提供了基本所有的文件操作</p>
-<p>集成交互类示例：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line">class SSHConnection(object):</span><br><span class="line"> </span><br><span class="line">    def __init__(self, host_dict):</span><br><span class="line">        self.host = host_dict[&#x27;host&#x27;]</span><br><span class="line">        self.port = host_dict[&#x27;port&#x27;]</span><br><span class="line">        self.username = host_dict[&#x27;username&#x27;]</span><br><span class="line">        self.pwd = host_dict[&#x27;pwd&#x27;]</span><br><span class="line">        self.__k = None</span><br><span class="line"> </span><br><span class="line">    def connect(self):</span><br><span class="line">        transport = paramiko.Transport((self.host,self.port))</span><br><span class="line">        transport.connect(username=self.username,password=self.pwd)</span><br><span class="line">        self.__transport = transport</span><br><span class="line"> </span><br><span class="line">    def close(self):</span><br><span class="line">        self.__transport.close()</span><br><span class="line"> </span><br><span class="line">    def run_cmd(self, command):</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">         执行shell命令,返回字典</span><br><span class="line">         return &#123;&#x27;color&#x27;: &#x27;red&#x27;,&#x27;res&#x27;:error&#125;或</span><br><span class="line">         return &#123;&#x27;color&#x27;: &#x27;green&#x27;, &#x27;res&#x27;:res&#125;</span><br><span class="line">        :param command:</span><br><span class="line">        :return:</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        ssh = paramiko.SSHClient()</span><br><span class="line">        ssh._transport = self.__transport</span><br><span class="line">        # 执行命令</span><br><span class="line">        stdin, stdout, stderr = ssh.exec_command(command)</span><br><span class="line">        # 获取命令结果</span><br><span class="line">        res = unicode_utils.to_str(stdout.read())</span><br><span class="line">        # 获取错误信息</span><br><span class="line">        error = unicode_utils.to_str(stderr.read())</span><br><span class="line">        # 如果有错误信息，返回error</span><br><span class="line">        # 否则返回res</span><br><span class="line">        if error.strip():</span><br><span class="line">            return &#123;&#x27;color&#x27;:&#x27;red&#x27;,&#x27;res&#x27;:error&#125;</span><br><span class="line">        else:</span><br><span class="line">            return &#123;&#x27;color&#x27;: &#x27;green&#x27;, &#x27;res&#x27;:res&#125;</span><br><span class="line"> </span><br><span class="line">    def upload(self,local_path, target_path):</span><br><span class="line">        # 连接，上传</span><br><span class="line">        sftp = paramiko.SFTPClient.from_transport(self.__transport)</span><br><span class="line">        # 将location.py 上传至服务器 /tmp/test.py</span><br><span class="line">        sftp.put(local_path, target_path, confirm=True)</span><br><span class="line">        # print(os.stat(local_path).st_mode)</span><br><span class="line">        # 增加权限</span><br><span class="line">        # sftp.chmod(target_path, os.stat(local_path).st_mode)</span><br><span class="line">        sftp.chmod(target_path, 0o755)  # 注意这里的权限是八进制的，八进制需要使用0o作为前缀</span><br><span class="line"> </span><br><span class="line">    def download(self,target_path, local_path):</span><br><span class="line">        # 连接，下载</span><br><span class="line">        sftp = paramiko.SFTPClient.from_transport(self.__transport)</span><br><span class="line">        # 将location.py 下载至服务器 /tmp/test.py</span><br><span class="line">        sftp.get(target_path, local_path)</span><br><span class="line"> </span><br><span class="line">    # 销毁</span><br><span class="line">    def __del__(self):</span><br><span class="line">        self.close()</span><br><span class="line"> </span><br><span class="line">　　</span><br><span class="line">#unicode_utils.py</span><br><span class="line">def to_str(bytes_or_str):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    把byte类型转换为str</span><br><span class="line">    :param bytes_or_str:</span><br><span class="line">    :return:</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    if isinstance(bytes_or_str, bytes):</span><br><span class="line">        value = bytes_or_str.decode(&#x27;utf-8&#x27;)</span><br><span class="line">    else:</span><br><span class="line">        value = bytes_or_str</span><br><span class="line">    return value</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<h1 id="224a31b93706e3592cb8961318638e3dca071f41"><a href="#224a31b93706e3592cb8961318638e3dca071f41" class="headerlink" title="224a31b93706e3592cb8961318638e3dca071f41"></a>224a31b93706e3592cb8961318638e3dca071f41</h1></blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-<hr>
-<p>title: python-paramiko<br>date: 2022-01-25<br>categories: 编程笔记</p>
-<hr>
-<h3 id="1-paramiko-1"><a href="#1-paramiko-1" class="headerlink" title="1 paramiko"></a>1 paramiko</h3><p>ssh是一个协议，OpenSSH是其中一个开源实现，paramiko是Python的一个库，实现了SSHv2协议(底层使用cryptography)。</p>
-<p><a target="_blank" rel="noopener" href="https://docs.paramiko.org/en/stable/#welcome-to-paramiko-s-documentation">官网</a></p>
-<p>有了Paramiko以后，我们就可以在Python代码中直接使用SSH协议对远程服务器执行操作，而不是通过ssh命令对远程服务器进行操作。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 install paramiko </span><br></pre></td></tr></table></figure>
-
-<h3 id="2-介绍-1"><a href="#2-介绍-1" class="headerlink" title="2 介绍"></a>2 介绍</h3><p>paramiko包含两个核心组件：SSHClient和SFTPClient。</p>
-<ul>
-<li>SSHClient的作用类似于Linux的ssh命令，是对SSH会话的封装，该类封装了传输(Transport)，通道(Channel)及SFTPClient建立的方法(open_sftp)，通常用于执行远程命令。</li>
-<li>SFTPClient的作用类似与Linux的sftp命令，是对SFTP客户端的封装，用以实现远程文件操作，如文件上传、下载、修改文件权限等操作。</li>
-</ul>
-<p> <strong>Paramiko中的几个基础名词：</strong></p>
-<blockquote>
-<p>1 Channel：是一种类Socket，一种安全的SSH传输通道；<br>2 Transport：是一种加密的会话，使用时会同步创建了一个加密的Tunnels(通道)，这个Tunnels叫做Channel；<br>3 Session：是client与Server保持连接的对象，用connect()<code>/</code>start_client()<code>/</code>start_server()开始会话</p>
-</blockquote>
-<h3 id="3-使用-1"><a href="#3-使用-1" class="headerlink" title="3 使用"></a>3 使用</h3><h4 id="3-1-sshclient-1"><a href="#3-1-sshclient-1" class="headerlink" title="3.1 sshclient"></a>3.1 sshclient</h4><p>**connect()**：实现远程服务器的连接与认证，对于该方法只有hostname是必传参数。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">常用参数</span><br><span class="line">hostname 连接的目标主机</span><br><span class="line">port=SSH_PORT 指定端口</span><br><span class="line">username=None 验证的用户名</span><br><span class="line">password=None 验证的用户密码</span><br><span class="line">pkey=None 私钥方式用于身份验证</span><br><span class="line">key_filename=None 一个文件名或文件列表，指定私钥文件</span><br><span class="line">timeout=None 可选的tcp连接超时时间</span><br><span class="line">allow_agent=True, 是否允许连接到ssh代理，默认为True 允许</span><br><span class="line">look_for_keys=True 是否在~/.ssh中搜索私钥文件，默认为True 允许</span><br><span class="line">compress=False, 是否打开压缩</span><br></pre></td></tr></table></figure>
-
-<p>**set_missing_host_key_policy()**：设置远程服务器没有在know_hosts文件中记录时的应对策略。目前支持三种策略：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">设置连接的远程主机没有本地主机密钥或HostKeys对象时的策略，目前支持三种：</span><br><span class="line"></span><br><span class="line">1 AutoAddPolicy 自动添加主机名及主机密钥到本地HostKeys对象，不依赖load_system_host_key的配置。即新建立ssh连接时不需要再输入yes或no进行确认</span><br><span class="line">2 WarningPolicy 用于记录一个未知的主机密钥的python警告。并接受，功能上和AutoAddPolicy类似，但是会提示是新连接</span><br><span class="line">4 RejectPolicy 自动拒绝未知的主机名和密钥，依赖load_system_host_key的配置。此为默认选项</span><br></pre></td></tr></table></figure>
-
-<p>**exec_command()**：在远程服务器执行Linux命令的方法。</p>
-<p>**open_sftp()**：在当前ssh会话的基础上创建一个sftp会话。该方法会返回一个SFTPClient对象。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 利用SSHClient对象的open_sftp()方法，可以直接返回一个基于当前连接的sftp对象，可以进行文件的上传等操作.</span><br><span class="line"></span><br><span class="line">sftp = client.open_sftp()</span><br><span class="line">sftp.put(&#x27;test.txt&#x27;,&#x27;text.txt&#x27;)</span><br></pre></td></tr></table></figure>
-
-
-
-<p>用法示例</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">import paramiko</span><br><span class="line"> </span><br><span class="line"># 实例化SSHClient</span><br><span class="line">client = paramiko.SSHClient()</span><br><span class="line"></span><br><span class="line"># 自动添加策略，保存服务器的主机名和密钥信息，如果不添加，那么不再本地know_hosts文件中记录的主机将无法连接</span><br><span class="line">client.set_missing_host_key_policy(paramiko.AutoAddPolicy())</span><br><span class="line"></span><br><span class="line"># 连接SSH服务端，以用户名和密码进行认证</span><br><span class="line">client.connect(hostname=&#x27;192.168.1.105&#x27;, port=22, username=&#x27;root&#x27;, password=&#x27;123456&#x27;)</span><br><span class="line"></span><br><span class="line"># 打开一个Channel并执行命令</span><br><span class="line">stdin, stdout, stderr = client.exec_command(&#x27;ls -h &#x27;)  # stdout 为正确输出，stderr为错误输出，同时是有1个变量有值</span><br><span class="line"></span><br><span class="line"># 打印执行结果</span><br><span class="line">print(stdout.read().decode(&#x27;utf-8&#x27;))</span><br><span class="line"></span><br><span class="line"># 关闭SSHClient</span><br><span class="line">client.close()</span><br></pre></td></tr></table></figure>
-
-<h4 id="3-2-如果用密钥连接-1"><a href="#3-2-如果用密钥连接-1" class="headerlink" title="3.2 如果用密钥连接"></a>3.2 如果用密钥连接</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># 配置私人密钥文件位置</span><br><span class="line">private = paramiko.RSAKey.from_private_key_file(&#x27;/Users/ch/.ssh/id_rsa&#x27;)</span><br><span class="line"># 在与主机中公钥要添加 cat id_rsa.pub &gt;&gt; authorized_keys</span><br><span class="line">#实例化SSHClient</span><br><span class="line">client = paramiko.SSHClient()</span><br><span class="line"> </span><br><span class="line">#自动添加策略，保存服务器的主机名和密钥信息，如果不添加，那么不再本地know_hosts文件中记录的主机将无法连接</span><br><span class="line">client.set_missing_host_key_policy(paramiko.AutoAddPolicy())</span><br><span class="line"> </span><br><span class="line">#连接SSH服务端，以用户名和密码进行认证</span><br><span class="line">client.connect(hostname=&#x27;10.0.0.1&#x27;,port=22,username=&#x27;root&#x27;,pkey=private)</span><br></pre></td></tr></table></figure>
-
-<h4 id="3-3-sftpclient-1"><a href="#3-3-sftpclient-1" class="headerlink" title="3.3  sftpclient"></a>3.3  sftpclient</h4><p>SFTPCLient作为一个sftp的客户端对象，根据ssh传输协议的sftp会话，实现远程文件操作，如上传、下载、权限、状态</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">from_transport(cls,t) 创建一个已连通的SFTP客户端通道</span><br><span class="line">put(localpath, remotepath, callback=None, confirm=True) 将本地文件上传到服务器 参数confirm：是否调用stat()方法检查文件状态，返回ls -l的结果</span><br><span class="line">get(remotepath, localpath, callback=None) 从服务器下载文件到本地</span><br><span class="line">mkdir() 在服务器上创建目录</span><br><span class="line">remove() 在服务器上删除目录</span><br><span class="line">rename() 在服务器上重命名目录</span><br><span class="line">stat() 查看服务器文件状态</span><br><span class="line">listdir() 列出服务器目录下的文件</span><br></pre></td></tr></table></figure>
-
-<p>用法：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">import paramiko</span><br><span class="line"> </span><br><span class="line"># 获取Transport实例</span><br><span class="line">tran = paramiko.Transport((&#x27;1.117.61.155&#x27;, 22))</span><br><span class="line"> </span><br><span class="line"># 连接SSH服务端，使用password</span><br><span class="line">#tran.connect(username=&quot;root&quot;, password=&#x27;1ddgbyhddcB&#x27;)</span><br><span class="line"># 或使用</span><br><span class="line"># 配置私人密钥文件位置</span><br><span class="line">private = paramiko.RSAKey.from_private_key_file(&#x27;id_rsa&#x27;)</span><br><span class="line"># 连接SSH服务端，使用pkey指定私钥</span><br><span class="line">tran.connect(username=&quot;root&quot;, pkey=private)</span><br><span class="line"> </span><br><span class="line"># 获取SFTP实例</span><br><span class="line">sftp = paramiko.SFTPClient.from_transport(tran)</span><br><span class="line"> </span><br><span class="line"># 设置上传的本地/远程文件路径</span><br><span class="line">localpath = &quot;test.py&quot;</span><br><span class="line">remotepath = &quot;/root/test.py&quot;</span><br><span class="line"> </span><br><span class="line"># 执行上传动作</span><br><span class="line">sftp.put(localpath, remotepath)</span><br><span class="line"></span><br><span class="line"># 执行下载动作#</span><br><span class="line"># sftp.get(&quot;/root/requirements.txt&quot;, &#x27;requirements.txt&#x27;)</span><br><span class="line"># sftp.mkdir(&quot;paramikotest1&quot;)</span><br><span class="line">sftp.remove(&quot;requirements.txt&quot;)</span><br><span class="line">tran.close()</span><br></pre></td></tr></table></figure>
-
-<p><a target="_blank" rel="noopener" href="https://docs.paramiko.org/en/stable/api/sftp.html">SFTP 详细用法</a></p>
-<p>这里提供了基本所有的文件操作</p>
-<p>集成交互类示例：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line">class SSHConnection(object):</span><br><span class="line"> </span><br><span class="line">    def __init__(self, host_dict):</span><br><span class="line">        self.host = host_dict[&#x27;host&#x27;]</span><br><span class="line">        self.port = host_dict[&#x27;port&#x27;]</span><br><span class="line">        self.username = host_dict[&#x27;username&#x27;]</span><br><span class="line">        self.pwd = host_dict[&#x27;pwd&#x27;]</span><br><span class="line">        self.__k = None</span><br><span class="line"> </span><br><span class="line">    def connect(self):</span><br><span class="line">        transport = paramiko.Transport((self.host,self.port))</span><br><span class="line">        transport.connect(username=self.username,password=self.pwd)</span><br><span class="line">        self.__transport = transport</span><br><span class="line"> </span><br><span class="line">    def close(self):</span><br><span class="line">        self.__transport.close()</span><br><span class="line"> </span><br><span class="line">    def run_cmd(self, command):</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">         执行shell命令,返回字典</span><br><span class="line">         return &#123;&#x27;color&#x27;: &#x27;red&#x27;,&#x27;res&#x27;:error&#125;或</span><br><span class="line">         return &#123;&#x27;color&#x27;: &#x27;green&#x27;, &#x27;res&#x27;:res&#125;</span><br><span class="line">        :param command:</span><br><span class="line">        :return:</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        ssh = paramiko.SSHClient()</span><br><span class="line">        ssh._transport = self.__transport</span><br><span class="line">        # 执行命令</span><br><span class="line">        stdin, stdout, stderr = ssh.exec_command(command)</span><br><span class="line">        # 获取命令结果</span><br><span class="line">        res = unicode_utils.to_str(stdout.read())</span><br><span class="line">        # 获取错误信息</span><br><span class="line">        error = unicode_utils.to_str(stderr.read())</span><br><span class="line">        # 如果有错误信息，返回error</span><br><span class="line">        # 否则返回res</span><br><span class="line">        if error.strip():</span><br><span class="line">            return &#123;&#x27;color&#x27;:&#x27;red&#x27;,&#x27;res&#x27;:error&#125;</span><br><span class="line">        else:</span><br><span class="line">            return &#123;&#x27;color&#x27;: &#x27;green&#x27;, &#x27;res&#x27;:res&#125;</span><br><span class="line"> </span><br><span class="line">    def upload(self,local_path, target_path):</span><br><span class="line">        # 连接，上传</span><br><span class="line">        sftp = paramiko.SFTPClient.from_transport(self.__transport)</span><br><span class="line">        # 将location.py 上传至服务器 /tmp/test.py</span><br><span class="line">        sftp.put(local_path, target_path, confirm=True)</span><br><span class="line">        # print(os.stat(local_path).st_mode)</span><br><span class="line">        # 增加权限</span><br><span class="line">        # sftp.chmod(target_path, os.stat(local_path).st_mode)</span><br><span class="line">        sftp.chmod(target_path, 0o755)  # 注意这里的权限是八进制的，八进制需要使用0o作为前缀</span><br><span class="line"> </span><br><span class="line">    def download(self,target_path, local_path):</span><br><span class="line">        # 连接，下载</span><br><span class="line">        sftp = paramiko.SFTPClient.from_transport(self.__transport)</span><br><span class="line">        # 将location.py 下载至服务器 /tmp/test.py</span><br><span class="line">        sftp.get(target_path, local_path)</span><br><span class="line"> </span><br><span class="line">    # 销毁</span><br><span class="line">    def __del__(self):</span><br><span class="line">        self.close()</span><br><span class="line"> </span><br><span class="line">　　</span><br><span class="line">#unicode_utils.py</span><br><span class="line">def to_str(bytes_or_str):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    把byte类型转换为str</span><br><span class="line">    :param bytes_or_str:</span><br><span class="line">    :return:</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    if isinstance(bytes_or_str, bytes):</span><br><span class="line">        value = bytes_or_str.decode(&#x27;utf-8&#x27;)</span><br><span class="line">    else:</span><br><span class="line">        value = bytes_or_str</span><br><span class="line">    return value</span><br></pre></td></tr></table></figure>
-
 
       
     </div>

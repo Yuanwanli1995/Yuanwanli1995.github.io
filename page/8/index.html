@@ -157,7 +157,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">76</span>
+          <span class="site-state-item-count">77</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -193,6 +193,129 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2021/09/09/2021-09-17-VM%E5%A4%9A%E5%8F%B0%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%BD%91%E8%B7%AF%E8%AE%BE%E7%BD%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuanwanli">
+      <meta itemprop="description" content="等不是办法，干才有出路">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="brisk">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/09/09/2021-09-17-VM%E5%A4%9A%E5%8F%B0%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%BD%91%E8%B7%AF%E8%AE%BE%E7%BD%AE/" class="post-title-link" itemprop="url">VM多台虚拟机网路设置</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-09-09 22:40:00" itemprop="dateCreated datePublished" datetime="2021-09-09T22:40:00+08:00">2021-09-09</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-02-21 14:54:31" itemprop="dateModified" datetime="2022-02-21T14:54:31+08:00">2022-02-21</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="VM多台虚拟机网路设置"><a href="#VM多台虚拟机网路设置" class="headerlink" title="VM多台虚拟机网路设置"></a>VM多台虚拟机网路设置</h2><p>背景：我需要多台联网的虚拟机搭建集群，使用vmmare构建，设置网路使得：</p>
+<ul>
+<li> 虚拟机1，虚拟机2 能联通外网</li>
+<li>虚拟机1，虚拟机2能相互ping</li>
+<li>虚拟机1，虚拟机2ping通主机 </li>
+</ul>
+<h3 id="第一步-查看当前主机网路的ip、子网掩码、网关"><a href="#第一步-查看当前主机网路的ip、子网掩码、网关" class="headerlink" title="第一步  查看当前主机网路的ip、子网掩码、网关"></a><strong><code>第一步</code></strong>  查看当前主机网路的ip、子网掩码、网关</h3><p>在cmd中使用 <code>ipconfig</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\brisk&gt;ipconfig</span><br><span class="line">Windows IP 配置</span><br><span class="line">...</span><br><span class="line">无线局域网适配器 WLAN:</span><br><span class="line"></span><br><span class="line">   连接特定的 DNS 后缀 . . . . . . . :</span><br><span class="line">   IPv6 地址 . . . . . . . . . . . . : 2001:db8:1:0:e9a5:d9a2:231d:a421</span><br><span class="line">   临时 IPv6 地址. . . . . . . . . . : 2001:db8:1:0:157c:d1b:73f2:2c43</span><br><span class="line">   本地链接 IPv6 地址. . . . . . . . : fe80::e9a5:d9a2:231d:a421%8</span><br><span class="line">   IPv4 地址 . . . . . . . . . . . . : 192.168.2.101</span><br><span class="line">   子网掩码  . . . . . . . . . . . . : 255.255.255.0</span><br><span class="line">   默认网关. . . . . . . . . . . . . : fe80::2eb2:1aff:fe5f:5699%8</span><br><span class="line">                                       192.168.2.1</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li> ip: 192.168.2.10</li>
+<li>子网掩码：255.255.255.0</li>
+<li>网关：192.168.2.1 </li>
+</ul>
+<h3 id="第二步-设置虚拟网卡"><a href="#第二步-设置虚拟网卡" class="headerlink" title="第二步 设置虚拟网卡"></a><strong><code>第二步</code></strong> 设置虚拟网卡</h3><p>网络设配器—&gt;VMnet8—&gt;属性，按照下图所示设置</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/k8s2.png"></p>
+<p>将VMnet8的ip设为192.168.1.1，即为win10网络的网关。这里其实就是把vmnet8这个当成一个虚拟的网关了。</p>
+<h3 id="第三步-设置NAT"><a href="#第三步-设置NAT" class="headerlink" title="第三步 设置NAT"></a><strong><code>第三步</code></strong> 设置NAT</h3><p>打开vmware中的 编辑—&gt;编辑虚拟网络编辑器 </p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/k8s3.png"></p>
+<h3 id="第四步-编辑每个虚拟机的网络配置"><a href="#第四步-编辑每个虚拟机的网络配置" class="headerlink" title="第四步 编辑每个虚拟机的网络配置"></a><strong><code>第四步</code></strong> 编辑每个虚拟机的网络配置</h3><p>   配置文件在/etc/sysconfig/network-scripts路径下，一个ip配置为192.168.1.10，另一个192.168.1.11.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost /]# vi /etc/sysconfig/network-scripts/ifcfg-ens33 </span><br><span class="line">TYPE=Ethernet</span><br><span class="line">PROXY_METHOD=none</span><br><span class="line">BROWSER_ONLY=no</span><br><span class="line">BOOTPROTO=static</span><br><span class="line">DEFROUTE=yes</span><br><span class="line">IPV4_FAILURE_FATAL=no</span><br><span class="line">IPV6INIT=yes</span><br><span class="line">IPV6_AUTOCONF=yes</span><br><span class="line">IPV6_DEFROUTE=yes</span><br><span class="line">IPV6_FAILURE_FATAL=no</span><br><span class="line">IPV6_ADDR_GEN_MODE=stable-privacy</span><br><span class="line">NAME=ens33</span><br><span class="line">UUID=150fb0ae-7bba-4aa1-b6dd-a335f9f116ca</span><br><span class="line">DEVICE=ens33</span><br><span class="line">ONBOOT=yes</span><br><span class="line">IPADDR=192.168.2.10</span><br><span class="line">NETMASK=255.255.255.0</span><br><span class="line">GATEWAY=192.168.2.2</span><br><span class="line">DNS1=114.114.114.114</span><br></pre></td></tr></table></figure>
+
+<p>注意修改的如下： </p>
+<ul>
+<li>BOOTPROTO=static</li>
+<li>ONBOOT=yes</li>
+<li>IPADDR=192.168.2.10<br>NETMASK=255.255.255.0<br>GATEWAY=192.168.2.2<br>DNS1=114.114.114.114</li>
+</ul>
+<p>另一台虚拟机相同设置，只是IPADDR不同， IPADDR=192.168.2.11</p>
+<h3 id="测试："><a href="#测试：" class="headerlink" title="测试："></a>测试：</h3><ol>
+<li> 虚拟机ping 百度 </li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">root@localhost /]# ping www.baidu.com</span><br><span class="line">PING www.a.shifen.com (36.152.44.95) 56(84) bytes of data.</span><br><span class="line">64 bytes from 36.152.44.95 (36.152.44.95): icmp_seq=1 ttl=128 time=18.7 ms</span><br><span class="line">64 bytes from 36.152.44.95 (36.152.44.95): icmp_seq=2 ttl=128 time=19.1 ms</span><br><span class="line">64 bytes from 36.152.44.95 (36.152.44.95): icmp_seq=3 ttl=128 time=18.9 ms</span><br><span class="line">^C</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li> 虚拟机1 ping 虚拟机2 </li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost /]# ping 192.168.2.10</span><br><span class="line">PING 192.168.2.10 (192.168.2.10) 56(84) bytes of data.</span><br><span class="line">64 bytes from 192.168.2.10: icmp_seq=1 ttl=64 time=2.88 ms</span><br><span class="line">64 bytes from 192.168.2.10: icmp_seq=2 ttl=64 time=3.05 ms</span><br><span class="line">64 bytes from 192.168.2.10: icmp_seq=3 ttl=64 time=2.22 ms</span><br><span class="line">^C</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li> 虚拟机1ping 主机</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost /]# ping 192.168.2.101</span><br><span class="line">PING 192.168.2.101 (192.168.2.101) 56(84) bytes of data.</span><br><span class="line">From 192.168.2.11 icmp_seq=1 Destination Host Unreachable</span><br><span class="line">From 192.168.2.11 icmp_seq=2 Destination Host Unreachable</span><br><span class="line">From 192.168.2.11 icmp_seq=3 Destination Host Unreachable</span><br><span class="line">^C</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
