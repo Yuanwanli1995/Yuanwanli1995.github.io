@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yuanwanli1995.github.io","root":"/","images":"/images","scheme":"Pisces","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/./public/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="kubeconfig是与集群交互的身份认证，有集群的kubeconfig文件即可与其交互。  安装kubectl交互的工具就是kubectl 123wget http:&#x2F;&#x2F;rancher-mirror.cnrancher.com&#x2F;kubectl&#x2F;v1.21.4&#x2F;linux-amd64-v1.21.4-kubectlmv linux-amd64-v1.21.4-kubectl &#x2F;usr&#x2F;local&#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="通过kubeconfig文件管理集群">
+<meta property="og:url" content="http://yuanwanli1995.github.io/2021/12/06/2021-12-06-%E9%80%9A%E8%BF%87kubeconfig%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E9%9B%86%E7%BE%A4/index.html">
+<meta property="og:site_name" content="brisk">
+<meta property="og:description" content="kubeconfig是与集群交互的身份认证，有集群的kubeconfig文件即可与其交互。  安装kubectl交互的工具就是kubectl 123wget http:&#x2F;&#x2F;rancher-mirror.cnrancher.com&#x2F;kubectl&#x2F;v1.21.4&#x2F;linux-amd64-v1.21.4-kubectlmv linux-amd64-v1.21.4-kubectl &#x2F;usr&#x2F;local&#x2F;">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-12-05T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-02-21T06:54:31.992Z">
+<meta property="article:author" content="yuanwanli">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://yuanwanli1995.github.io/2021/12/06/2021-12-06-%E9%80%9A%E8%BF%87kubeconfig%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E9%9B%86%E7%BE%A4/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://yuanwanli1995.github.io/2021/12/06/2021-12-06-%E9%80%9A%E8%BF%87kubeconfig%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E9%9B%86%E7%BE%A4/","path":"2021/12/06/2021-12-06-通过kubeconfig文件管理集群/","title":"通过kubeconfig文件管理集群"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>通过kubeconfig文件管理集群 | brisk</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">brisk</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">welcome</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85kubectl"><span class="nav-number">1.</span> <span class="nav-text">安装kubectl</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E6%88%96%E8%80%85%E5%86%99%E5%85%A5kubeconfig%E6%96%87%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">下载或者写入kubeconfig文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE-kube-config"><span class="nav-number">3.</span> <span class="nav-text">配置~&#x2F;.kube&#x2F;config</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BF%E9%97%AE-Kubernetes-%E9%9B%86%E7%BE%A4"><span class="nav-number">4.</span> <span class="nav-text">访问 Kubernetes 集群</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yuanwanli</p>
+  <div class="site-description" itemprop="description">等不是办法，干才有出路</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">75</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2021/12/06/2021-12-06-%E9%80%9A%E8%BF%87kubeconfig%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E9%9B%86%E7%BE%A4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuanwanli">
+      <meta itemprop="description" content="等不是办法，干才有出路">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="brisk">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          通过kubeconfig文件管理集群
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-12-06 00:00:00" itemprop="dateCreated datePublished" datetime="2021-12-06T00:00:00+08:00">2021-12-06</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-02-21 14:54:31" itemprop="dateModified" datetime="2022-02-21T14:54:31+08:00">2022-02-21</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BC%96%E7%A8%8B%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">编程笔记</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>kubeconfig是与集群交互的身份认证，有集群的kubeconfig文件即可与其交互。 </p>
+<h3 id="安装kubectl"><a href="#安装kubectl" class="headerlink" title="安装kubectl"></a>安装kubectl</h3><p>交互的工具就是kubectl</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget http://rancher-mirror.cnrancher.com/kubectl/v1.21.4/linux-amd64-v1.21.4-kubectl</span><br><span class="line">mv linux-amd64-v1.21.4-kubectl /usr/local/bin/kubectl</span><br><span class="line">chmod +x /usr/local/bin/kubectl</span><br></pre></td></tr></table></figure>
+
+<h3 id="下载或者写入kubeconfig文件"><a href="#下载或者写入kubeconfig文件" class="headerlink" title="下载或者写入kubeconfig文件"></a>下载或者写入kubeconfig文件</h3><p>这里我是从腾讯云TKE起的集群，直接下载集群的kubeconfig文件。 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@monitor01 ~]# ll</span><br><span class="line">-rw-r--r-- 1 root root    4675 Dec  6 17:09 mytest_kubeconfig</span><br></pre></td></tr></table></figure>
+
+<h3 id="配置-kube-config"><a href="#配置-kube-config" class="headerlink" title="配置~/.kube/config"></a>配置~/.kube/config</h3><p>如果当前kubectl没有管理的集群，那么没有~/.kube/config文件，则新建一个，如果有，省略这一步。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch ~/.kube/config</span><br></pre></td></tr></table></figure>
+
+<p>若当前访问客户端已配置了其他集群的访问凭证，可并执行以下指令以合并多个集群的 config</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">KUBECONFIG=~/.kube/config:~/mytest_kubeconfig kubectl config view --merge --flatten &gt; ~/.kube/config</span><br><span class="line">export KUBECONFIG=~/.kube/config</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>其中，~/mytest_kubeconfig为集群的 kubeconfig 的文件路径，请替换为下载至本地后的实际路径。</p>
+</blockquote>
+<h3 id="访问-Kubernetes-集群"><a href="#访问-Kubernetes-集群" class="headerlink" title="访问 Kubernetes 集群"></a>访问 Kubernetes 集群</h3><p>完成 kubeconfig 配置后，执行以下指令查看并切换 context 以访问本集群：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@monitor root]# kubectl config get-contexts</span><br><span class="line">CURRENT   NAME                   CLUSTER                AUTHINFO   NAMESPACE</span><br><span class="line">*         test1                  test1                  test1  </span><br><span class="line">[root@monitor root]# kubectl config use-context &quot;test1&quot;</span><br><span class="line">Switched to context &quot;test1&quot;.</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>test1 为集群名称</p>
+</blockquote>
+<p>而后可执行 kubectl get node 测试是否可正常访问集群。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@monitor01 root]# kubectl get node</span><br><span class="line">NAME             STATUS   ROLES                      AGE   VERSION</span><br><span class="line">k8s-node01       Ready    controlplane,etcd,worker   81m   v1.19.15</span><br><span class="line">k8s-node02       Ready    controlplane,etcd,worker   85m   v1.19.15</span><br><span class="line">k8s-node03       Ready    controlplane,etcd,worker   81m   v1.19.15</span><br><span class="line">k8s-node04       Ready    controlplane,etcd,worker   85m   v1.19.15</span><br></pre></td></tr></table></figure>
+
+<p>可以访问了。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/11/29/2021-11-29-%E4%B8%80%E9%94%AE%E9%83%A8%E7%BD%B2%E9%9B%86%E7%BE%A4-%E9%80%9A%E8%BF%87RKE/" rel="prev" title="脚本一键部署k8s集群">
+                  <i class="fa fa-chevron-left"></i> 脚本一键部署k8s集群
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/12/06/2021-12-06-grafana%E9%83%A8%E7%BD%B2%E4%B8%8E%E7%A6%BB%E7%BA%BF%E6%8F%92%E4%BB%B6%E4%B8%8B%E8%BD%BD/" rel="next" title="grafana部署与离线插件下载">
+                  grafana部署与离线插件下载 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuanwanli</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

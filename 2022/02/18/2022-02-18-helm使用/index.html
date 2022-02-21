@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yuanwanli1995.github.io","root":"/","images":"/images","scheme":"Pisces","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/./public/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="1.1 为什么需要helm在没使用helm之前，向kubernetes部署应用，我们要依次部署deployment,service,configMap等,步骤较繁琐。况且随着很多项目微服务化，复杂的应用在容器中部署以及管理显得较为复杂. helm通过打包的方式，支持发布的版本管理和控制,很大程度上简化了Kubernetes应用的部署和管理 1.2 helm中几个概念Helm可以理解为Kuberne">
+<meta property="og:type" content="article">
+<meta property="og:title" content="helm使用">
+<meta property="og:url" content="http://yuanwanli1995.github.io/2022/02/18/2022-02-18-helm%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:site_name" content="brisk">
+<meta property="og:description" content="1.1 为什么需要helm在没使用helm之前，向kubernetes部署应用，我们要依次部署deployment,service,configMap等,步骤较繁琐。况且随着很多项目微服务化，复杂的应用在容器中部署以及管理显得较为复杂. helm通过打包的方式，支持发布的版本管理和控制,很大程度上简化了Kubernetes应用的部署和管理 1.2 helm中几个概念Helm可以理解为Kuberne">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-02-17T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-02-21T06:54:31.995Z">
+<meta property="article:author" content="yuanwanli">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://yuanwanli1995.github.io/2022/02/18/2022-02-18-helm%E4%BD%BF%E7%94%A8/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://yuanwanli1995.github.io/2022/02/18/2022-02-18-helm%E4%BD%BF%E7%94%A8/","path":"2022/02/18/2022-02-18-helm使用/","title":"helm使用"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>helm使用 | brisk</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">brisk</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">welcome</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81helm"><span class="nav-number">1.</span> <span class="nav-text">1.1 为什么需要helm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-helm%E4%B8%AD%E5%87%A0%E4%B8%AA%E6%A6%82%E5%BF%B5"><span class="nav-number">2.</span> <span class="nav-text">1.2 helm中几个概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-helm%E7%94%A8%E9%80%94"><span class="nav-number">3.</span> <span class="nav-text">1.3 helm用途</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-helm%E5%AE%89%E8%A3%85"><span class="nav-number">4.</span> <span class="nav-text">1.4 helm安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%AE%89%E8%A3%85"><span class="nav-number">5.</span> <span class="nav-text">2 安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-chart"><span class="nav-number">6.</span> <span class="nav-text">3.1 chart</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E8%87%AA%E5%AE%9A%E4%B9%89chart"><span class="nav-number">7.</span> <span class="nav-text">3.2 自定义chart</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-helm%E4%BD%BF%E7%94%A8"><span class="nav-number">8.</span> <span class="nav-text">3.3 helm使用</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yuanwanli</p>
+  <div class="site-description" itemprop="description">等不是办法，干才有出路</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">75</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2022/02/18/2022-02-18-helm%E4%BD%BF%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuanwanli">
+      <meta itemprop="description" content="等不是办法，干才有出路">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="brisk">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          helm使用
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-02-18 00:00:00" itemprop="dateCreated datePublished" datetime="2022-02-18T00:00:00+08:00">2022-02-18</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-02-21 14:54:31" itemprop="dateModified" datetime="2022-02-21T14:54:31+08:00">2022-02-21</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/k8s/" itemprop="url" rel="index"><span itemprop="name">k8s</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="1-1-为什么需要helm"><a href="#1-1-为什么需要helm" class="headerlink" title="1.1 为什么需要helm"></a>1.1 为什么需要helm</h3><p>在没使用helm之前，向<code>kubernetes</code>部署应用，我们要依次部署<code>deployment</code>,<code>service</code>,<code>configMap</code>等,步骤较繁琐。况且随着很多项目微服务化，复杂的应用在容器中部署以及管理显得较为复杂.</p>
+<p><code>helm</code>通过打包的方式，支持发布的版本管理和控制,很大程度上简化了<code>Kubernetes</code>应用的部署和管理</p>
+<h3 id="1-2-helm中几个概念"><a href="#1-2-helm中几个概念" class="headerlink" title="1.2 helm中几个概念"></a>1.2 helm中几个概念</h3><p><code>Helm</code>可以理解为<code>Kubernetes</code>的包管理工具，可以方便地发现、共享和使用为<code>Kubernetes</code>构建的应用，它包含几个基本概念</p>
+<ul>
+<li><strong>Chart</strong>: 一个Helm包，其中包含了运行一个应用所需要的镜像、依赖和资源定义等，还可能包含Kubernetes集群中的服务定义</li>
+</ul>
+<blockquote>
+<p>可以理解为docker的image</p>
+</blockquote>
+<ul>
+<li><strong>Release</strong>: 在<code>Kubernetes</code>集群上运行的 <code>Chart</code>的一个实例。在同一个集群上，一个 <code>Chart</code>可以安装很多次。每次安装都会创建一个新的<code>release</code></li>
+</ul>
+<blockquote>
+<p>可以理解为docker的container实例</p>
+</blockquote>
+<ul>
+<li><strong>Repository</strong>: 用于发布和存储 Chart 的仓库。</li>
+</ul>
+<h3 id="1-3-helm用途"><a href="#1-3-helm用途" class="headerlink" title="1.3 helm用途"></a>1.3 helm用途</h3><p>做为<code>Kubernetes</code>的一个包管理工具，Helm具有如下功能：</p>
+<ul>
+<li><p>创建新的<code>chart</code></p>
+</li>
+<li><p><code>chart</code>打包成<code>tgz</code>格式</p>
+</li>
+<li><p>上传chart到chart仓库或从仓库中下载 chart</p>
+<ul>
+<li>官方<code>chart</code>仓库是: <a target="_blank" rel="noopener" href="https://hub.helm.sh/">https://hub.helm.sh</a></li>
+</ul>
+</li>
+<li><p>在<code>Kubernetes</code>集群中安装或卸载<code>chart</code></p>
+</li>
+<li><p>用<code>Helm</code>管理安装的<code>chart</code>的发布周期</p>
+</li>
+</ul>
+<h3 id="1-4-helm安装"><a href="#1-4-helm安装" class="headerlink" title="1.4 helm安装"></a>1.4 helm安装</h3><ul>
+<li>注意：这里安装的是<code>helm v3.2.4</code>，如需下载更新的版本，可以至github官方repo选择</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/helm/helm/tags</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-安装"><a href="#2-安装" class="headerlink" title="2 安装"></a>2 安装</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># 如无需更换版本，直接执行下载</span><br><span class="line">wget https://get.helm.sh/helm-v3.2.4-linux-amd64.tar.gz</span><br><span class="line"></span><br><span class="line"># 解压</span><br><span class="line">tar -zxvf helm-v3.2.4-linux-amd64.tar.gz</span><br><span class="line"></span><br><span class="line"># 进入到解压后的目录</span><br><span class="line">cd linux-amd64/</span><br><span class="line"></span><br><span class="line"># 赋予权限</span><br><span class="line">chmod a+x /usr/local/bin/helm</span><br><span class="line"></span><br><span class="line"># 查看版本</span><br><span class="line">helm version</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-1-chart"><a href="#3-1-chart" class="headerlink" title="3.1 chart"></a>3.1 chart</h3><p>可以直接使用官方的chart仓库或者其他仓库来安装一些<code>chart</code></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://hub.helm.sh/">https://hub.helm.sh</a></p>
+</blockquote>
+<ul>
+<li>下面以官方仓库的一个redis为例</li>
+</ul>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://hub.helm.sh/charts/choerodon/redis">https://hub.helm.sh/charts/choerodon/redis</a></p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 添加仓库</span><br><span class="line">helm repo add choerodon https://openchart.choerodon.com.cn/choerodon/c7n</span><br><span class="line"></span><br><span class="line"># 安装</span><br><span class="line">helm install choerodon/redis --version 0.2.5</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-自定义chart"><a href="#3-2-自定义chart" class="headerlink" title="3.2 自定义chart"></a>3.2 自定义chart</h3><p>文件目录</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── Chart.yaml</span><br><span class="line">├── templates</span><br><span class="line">|   ├── deployment.yaml</span><br><span class="line">|   └── service.yaml</span><br><span class="line">├── values.yaml</span><br></pre></td></tr></table></figure>
+
+<p>一个基本的自定义chart的文件目录结构大概是如上：</p>
+<ul>
+<li><p><strong>Chart.yaml</strong>: 定义当前<code>chart</code>的基本metadata, 比如name，tag啥的</p>
+</li>
+<li><p>templates</p>
+<p>: 这个文件夹下放当前chart需要的一些yaml资源清单</p>
+<ul>
+<li>资源清单支持<code>变量模版语法</code></li>
+</ul>
+</li>
+<li><p><strong>values.yaml</strong>: 定义变量，可被<code>template</code>下的yaml资源清单使用</p>
+</li>
+</ul>
+<h3 id="3-3-helm使用"><a href="#3-3-helm使用" class="headerlink" title="3.3 helm使用"></a>3.3 helm使用</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line">[root@node229 linux-amd64]# helm --help</span><br><span class="line">The Kubernetes package manager</span><br><span class="line"></span><br><span class="line">Common actions for Helm:</span><br><span class="line"></span><br><span class="line">- helm search:    search for charts # 搜索公开仓库的charts </span><br><span class="line">- helm pull:      download a chart to your local directory to view # 下载charts</span><br><span class="line">- helm install:   upload the chart to Kubernetes # 安装charts </span><br><span class="line">- helm list:      list releases of charts # 查看Charts 下面对于的releases </span><br><span class="line"></span><br><span class="line">Environment variables: # 环境变量</span><br><span class="line"></span><br><span class="line">| Name                               | Description                                                                       |</span><br><span class="line">|------------------------------------|-----------------------------------------------------------------------------------|</span><br><span class="line">| $XDG_CACHE_HOME                    | set an alternative location for storing cached files.                             |</span><br><span class="line">| $XDG_CONFIG_HOME                   | set an alternative location for storing Helm configuration.                       |</span><br><span class="line">| $XDG_DATA_HOME                     | set an alternative location for storing Helm data.                                |</span><br><span class="line">| $HELM_DRIVER                       | set the backend storage driver. Values are: configmap, secret, memory, postgres   |</span><br><span class="line">| $HELM_DRIVER_SQL_CONNECTION_STRING | set the connection string the SQL storage driver should use.                      |</span><br><span class="line">| $HELM_NO_PLUGINS                   | disable plugins. Set HELM_NO_PLUGINS=1 to disable plugins.                        |</span><br><span class="line">| $KUBECONFIG                        | set an alternative Kubernetes configuration file (default &quot;~/.kube/config&quot;)       |</span><br><span class="line"></span><br><span class="line">Helm stores configuration based on the XDG base directory specification, so</span><br><span class="line"></span><br><span class="line">- cached files are stored in $XDG_CACHE_HOME/helm</span><br><span class="line">- configuration is stored in $XDG_CONFIG_HOME/helm</span><br><span class="line">- data is stored in $XDG_DATA_HOME/helm</span><br><span class="line"></span><br><span class="line">By default, the default directories depend on the Operating System. The defaults are listed below:</span><br><span class="line"></span><br><span class="line">| Operating System | Cache Path                | Configuration Path             | Data Path               |</span><br><span class="line">|------------------|---------------------------|--------------------------------|-------------------------|</span><br><span class="line">| Linux            | $HOME/.cache/helm         | $HOME/.config/helm             | $HOME/.local/share/helm |</span><br><span class="line">| macOS            | $HOME/Library/Caches/helm | $HOME/Library/Preferences/helm | $HOME/Library/helm      |</span><br><span class="line">| Windows          | %TEMP%\helm               | %APPDATA%\helm                 | %APPDATA%\helm          |</span><br><span class="line"></span><br><span class="line">Usage:</span><br><span class="line">  helm [command]</span><br><span class="line"></span><br><span class="line">Available Commands:</span><br><span class="line">  completion  generate autocompletions script for the specified shell (bash or zsh)#为指定的shell生成自动完成脚本</span><br><span class="line">  create      create a new chart with the given name # 用给定的名称创建一个新的chart </span><br><span class="line">  dependency  manage a chart&#x27;s dependencies # 管理chart的依赖关系</span><br><span class="line">  env         helm client environment information # 掌握client环境</span><br><span class="line">  get         download extended information of a named release # 下载指定版本的扩展信息</span><br><span class="line">  help        Help about any command # </span><br><span class="line">  history     fetch release history # 获取版本历史</span><br><span class="line">  install     install a chart # 装一个chart</span><br><span class="line">  lint        examine a chart for possible issues # ：检查chart中可能出现的问题</span><br><span class="line">  list        list releases # list</span><br><span class="line">  package     package a chart directory into a chart archive # 将chart目录打包到chart存档文件中</span><br><span class="line">  plugin      install, list, or uninstall Helm plugins # 安装，列表，或卸载Helm插件</span><br><span class="line">  pull        download a chart from a repository and (optionally) unpack it in local directory # 从存储库下载chart，并(可选地)将其解压缩到本地目录中</span><br><span class="line">  repo        add, list, remove, update, and index chart repositories # 添加、列出、删除、更新和索引chart存储库</span><br><span class="line">  rollback    roll back a release to a previous revision # 将一个版本回滚到以前的版本</span><br><span class="line">  search      search for a keyword in charts # 在chart中搜索关键字</span><br><span class="line">  show        show information of a chart # 显示chart的信息</span><br><span class="line">  status      display the status of the named release # 显示指定版本的状态</span><br><span class="line">  template    locally render templates # 本地呈现模板</span><br><span class="line">  test        run tests for a release # 为发行版运行测试</span><br><span class="line">  uninstall   uninstall a release # 卸载一个release</span><br><span class="line">  upgrade     upgrade a release # 升级一个release</span><br><span class="line">  verify      verify that a chart at the given path has been signed and is valid # 验证给定路径上的chart已签名并有效</span><br><span class="line">  version     print the client version information # 打印client版本信息</span><br><span class="line"></span><br><span class="line">Flags:</span><br><span class="line">      --add-dir-header                   If true, adds the file directory to the header # 如果为true，则将文件目录添加到头文件中</span><br><span class="line">      --alsologtostderr                  log to standard error as well as files # 记录标准错误和文件</span><br><span class="line">      --debug                            enable verbose output # 启用详细输出</span><br><span class="line">  -h, --help                             help for helm</span><br><span class="line">      --kube-apiserver string            the address and the port for the Kubernetes API server# Kubernetes API服务器的地址和端口</span><br><span class="line">      --kube-context string              name of the kubeconfig context to use#要使用的kubecconfig上下文的名称</span><br><span class="line">      --kube-token string                bearer token used for authentication #用于认证的承载令牌</span><br><span class="line">      --kubeconfig string                path to the kubeconfig file#kubecconfig文件的路径</span><br><span class="line">      --log-backtrace-at traceLocation   when logging hits line file:N, emit a stack trace (default :0)#当日志命中行文件:N时，发出一个堆栈跟踪(默认值:0)</span><br><span class="line">      --log-dir string                   If non-empty, write log files in this directory#如果不为空，则将日志文件写入该目录</span><br><span class="line">      --log-file string                  If non-empty, use this log file#如果非空，使用此日志文件</span><br><span class="line">      --log-file-max-size uint           Defines the maximum size a log file can grow to. Unit is megabytes. If the value is 0, the maximum file size is unlimited. (default 1800)#定义日志文件可以增长到的最大大小。单位是字节。当取值为0时，表示不限制文件的最大大小。1800(默认)</span><br><span class="line">      --logtostderr                      log to standard error instead of files (default true)#将日志记录到标准错误而不是文件(默认为true)</span><br><span class="line">  -n, --namespace string                 namespace scope for this request#此请求的名称空间范围</span><br><span class="line">      --registry-config string           path to the registry config file (default &quot;/root/.config/helm/registry.json&quot;)#注册表配置文件的路径(默认&quot;/root/.config/helm/registry.json&quot;)</span><br><span class="line">      --repository-cache string          path to the file containing cached repository indexes (default &quot;/root/.cache/helm/repository&quot;)#包含缓存存储库索引的文件路径(默认为&quot;/root/.cache/helm/repository&quot;)</span><br><span class="line">      --repository-config string         path to the file containing repository names and URLs (default &quot;/root/.config/helm/repositories.yaml&quot;)#包含存储库名称和url的文件路径(默认为&quot;/root/.config/helm/repositories.yaml&quot;)</span><br><span class="line">      --skip-headers                     If true, avoid header prefixes in the log messages#如果为true，则避免在日志消息中使用头前缀</span><br><span class="line">      --skip-log-headers                 If true, avoid headers when opening log files#如果为true，则在打开日志文件时避免使用头文件</span><br><span class="line">      --stderrthreshold severity         logs at or above this threshold go to stderr (default 2)</span><br><span class="line">  -v, --v Level                          number for the log level verbosity#超过这个阈值的日志将转到stderr(默认2)</span><br><span class="line">      --vmodule moduleSpec               comma-separated list of pattern=N settings for file-filtered logging#以逗号分隔的模式列表=N个文件过滤日志设置</span><br><span class="line"></span><br><span class="line">Use &quot;helm [command] --help&quot; for more information about a command.</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/02/16/2022-02-16-psp-seccomp%E5%AE%9E%E9%AA%8C%E8%AE%B0%E5%BD%95/" rel="prev" title="psp-seccomp实验记录">
+                  <i class="fa fa-chevron-left"></i> psp-seccomp实验记录
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/02/18/2022-02-18-ansible%E4%BD%BF%E7%94%A8/" rel="next" title="ansible使用">
+                  ansible使用 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuanwanli</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

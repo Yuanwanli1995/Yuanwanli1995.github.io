@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yuanwanli1995.github.io","root":"/","images":"/images","scheme":"Pisces","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/./public/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="Prometheus的自定义查询语言PromQL(promtheus query language) 。通过PromQL用户可以非常方便地对监控样本数据进行统计分析，PromQL支持常见的运算操作符，同时PromQL中还提供了大量的内置函数可以实现对数据的高级处理。PromQL作为Prometheus的核心能力除了实现数据的对外查询和展现，同时告警监控也是依赖PromQL实现的。 promql本质">
+<meta property="og:type" content="article">
+<meta property="og:title" content="promQL">
+<meta property="og:url" content="http://yuanwanli1995.github.io/2021/12/09/2021-12-09-promQL/index.html">
+<meta property="og:site_name" content="brisk">
+<meta property="og:description" content="Prometheus的自定义查询语言PromQL(promtheus query language) 。通过PromQL用户可以非常方便地对监控样本数据进行统计分析，PromQL支持常见的运算操作符，同时PromQL中还提供了大量的内置函数可以实现对数据的高级处理。PromQL作为Prometheus的核心能力除了实现数据的对外查询和展现，同时告警监控也是依赖PromQL实现的。 promql本质">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-12-08T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-02-21T06:54:31.992Z">
+<meta property="article:author" content="yuanwanli">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://yuanwanli1995.github.io/2021/12/09/2021-12-09-promQL/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://yuanwanli1995.github.io/2021/12/09/2021-12-09-promQL/","path":"2021/12/09/2021-12-09-promQL/","title":"promQL"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>promQL | brisk</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">brisk</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">welcome</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-prometheus%E6%A0%B7%E6%9C%AC%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">1 prometheus样本数据模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%8C%87%E6%A0%87-metric"><span class="nav-number">2.</span> <span class="nav-text">2 指标(metric)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Counter%EF%BC%9A%E5%8F%AA%E5%A2%9E%E4%B8%8D%E5%87%8F%E7%9A%84%E8%AE%A1%E6%95%B0%E5%99%A8"><span class="nav-number">2.1.</span> <span class="nav-text">Counter：只增不减的计数器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Gauge%EF%BC%9A%E5%8F%AF%E5%A2%9E%E5%8F%AF%E5%87%8F%E7%9A%84%E4%BB%AA%E8%A1%A8%E7%9B%98"><span class="nav-number">2.2.</span> <span class="nav-text">Gauge：可增可减的仪表盘</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E6%83%85%E5%86%B5%E2%80%94%E2%80%94Histogram%E5%92%8CSummary"><span class="nav-number">2.3.</span> <span class="nav-text">分布情况——Histogram和Summary</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-promQL"><span class="nav-number">3.</span> <span class="nav-text">3 promQL</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97"><span class="nav-number">3.1.</span> <span class="nav-text">查询时间序列</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8C%83%E5%9B%B4%E6%9F%A5%E8%AF%A2"><span class="nav-number"></span> <span class="nav-text">范围查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%B6%E9%97%B4%E4%BD%8D%E7%A7%BB%E6%93%8D%E4%BD%9C"><span class="nav-number"></span> <span class="nav-text">时间位移操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E8%81%9A%E5%90%88%E6%93%8D%E4%BD%9C"><span class="nav-number"></span> <span class="nav-text">使用聚合操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%87%E9%87%8F%E5%92%8C%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number"></span> <span class="nav-text">标量和字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%87%E9%87%8F%EF%BC%88Scalar%EF%BC%89%EF%BC%9A%E4%B8%80%E4%B8%AA%E6%B5%AE%E7%82%B9%E5%9E%8B%E7%9A%84%E6%95%B0%E5%AD%97%E5%80%BC"><span class="nav-number">1.</span> <span class="nav-text">标量（Scalar）：一个浮点型的数字值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BC%88String%EF%BC%89%EF%BC%9A%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%80%BC"><span class="nav-number">2.</span> <span class="nav-text">字符串（String）：一个简单的字符串值</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%88%E6%B3%95%E7%9A%84PromQL%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number"></span> <span class="nav-text">合法的PromQL表达式</span></a></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yuanwanli</p>
+  <div class="site-description" itemprop="description">等不是办法，干才有出路</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">75</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2021/12/09/2021-12-09-promQL/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuanwanli">
+      <meta itemprop="description" content="等不是办法，干才有出路">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="brisk">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          promQL
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-12-09 00:00:00" itemprop="dateCreated datePublished" datetime="2021-12-09T00:00:00+08:00">2021-12-09</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-02-21 14:54:31" itemprop="dateModified" datetime="2022-02-21T14:54:31+08:00">2022-02-21</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BC%96%E7%A8%8B%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">编程笔记</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Prometheus的自定义查询语言PromQL(promtheus query language) 。通过PromQL用户可以非常方便地对监控样本数据进行统计分析，PromQL支持常见的运算操作符，同时PromQL中还提供了大量的内置函数可以实现对数据的高级处理。PromQL作为Prometheus的核心能力除了实现数据的对外查询和展现，同时告警监控也是依赖PromQL实现的。</p>
+<p>promql本质上和sql没什么不同，根据不同的标签查询数据麻。只是promtheus是时序性数据库，使其和关系性数据库有区别。所系我们需要先了解Prometheus的样本数据模型。</p>
+<h3 id="1-prometheus样本数据模型"><a href="#1-prometheus样本数据模型" class="headerlink" title="1 prometheus样本数据模型"></a>1 prometheus样本数据模型</h3><p>Prometheus会将所有采集到的样本数据以时间序列（time-series）的方式保存在内存数据库中，并且定时保存到硬盘上。</p>
+<p>在time-series中的每一个点称为一个样本（sample），样本由以下三部分组成：</p>
+<ul>
+<li>指标(metric)：metric name和描述当前样本特征的labelsets;</li>
+<li>时间戳(timestamp)：一个精确到毫秒的时间戳;</li>
+<li>样本值(value)： 一个float64的浮点型数据表示当前样本的值。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;--------------- metric ---------------------&gt;&lt;-timestamp -&gt;&lt;-value-&gt;</span><br><span class="line">http_request_total&#123;status=&quot;200&quot;, method=&quot;GET&quot;&#125;@1434417560938 =&gt; 94355</span><br><span class="line">http_request_total&#123;status=&quot;200&quot;, method=&quot;GET&quot;&#125;@1434417561287 =&gt; 94334</span><br><span class="line"></span><br><span class="line">http_request_total&#123;status=&quot;404&quot;, method=&quot;GET&quot;&#125;@1434417560938 =&gt; 38473</span><br><span class="line">http_request_total&#123;status=&quot;404&quot;, method=&quot;GET&quot;&#125;@1434417561287 =&gt; 38544</span><br><span class="line"></span><br><span class="line">http_request_total&#123;status=&quot;200&quot;, method=&quot;POST&quot;&#125;@1434417560938 =&gt; 4748</span><br><span class="line">http_request_total&#123;status=&quot;200&quot;, method=&quot;POST&quot;&#125;@1434417561287 =&gt; 4785</span><br></pre></td></tr></table></figure>
+
+<p>样本点的集合成为集合(vector)</p>
+<h3 id="2-指标-metric"><a href="#2-指标-metric" class="headerlink" title="2 指标(metric)"></a>2 指标(metric)</h3><p>在形式上，所有的指标(Metric)都通过如下格式标示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;metric name&gt;&#123;&lt;label name&gt;=&lt;label value&gt;, ...&#125;</span><br></pre></td></tr></table></figure>
+
+<p>指标的名称(metric name)可以反映被监控样本的含义（比如，<code>http_request_total</code> - 表示当前系统接收到的HTTP请求总量）。</p>
+<p>标签(label)反映了当前样本的特征维度，通过这些维度Prometheus可以对样本数据进行过滤，聚合等。</p>
+<p>在Prometheus的存储实现上所有的监控样本都是以time-series的形式保存在Prometheus内存的TSDB（时序数据库）中，而time-series所对应的监控指标(metric)也是通过labelset进行唯一命名的。</p>
+<p>从存储上来讲所有的监控指标metric都是相同的，但是根据不同的展示需求，可以讲metric分为不同的类型。</p>
+<p>Prometheus定义了4中不同的指标类型(metric type)：Counter（计数器）、Gauge（仪表盘）、Histogram（直方图）、Summary（摘要）。如果要看累计的值，比如访问总量就是Counter。看瞬时的值比如当前内存剩余就是gauge。而histogram</p>
+<p>在Exporter返回的样本数据中，其注释中也包含了该样本的类型。例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># HELP node_cpu Seconds the cpus spent in each mode.</span><br><span class="line"># TYPE node_cpu counter</span><br><span class="line">node_cpu&#123;cpu=&quot;cpu0&quot;,mode=&quot;idle&quot;&#125; 362812.7890625</span><br></pre></td></tr></table></figure>
+
+<h4 id="Counter：只增不减的计数器"><a href="#Counter：只增不减的计数器" class="headerlink" title="Counter：只增不减的计数器"></a>Counter：只增不减的计数器</h4><p>Counter类型的指标其工作方式和计数器一样，只增不减（除非系统发生重置）。常见的监控指标，如http_requests_total，node_cpu都是Counter类型的监控指标。 一般在定义Counter类型指标的名称时推荐使用_total作为后缀。</p>
+<p>Counter是一个简单但有强大的工具，例如我们可以在应用程序中记录某些事件发生的次数，通过以时序的形式存储这些数据，我们可以轻松的了解该事件产生速率的变化。 PromQL内置的聚合操作和函数可以让用户对这些数据进行进一步的分析：</p>
+<p>例如，通过rate()函数获取HTTP请求量的增长率：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rate(http_requests_total[5m])</span><br></pre></td></tr></table></figure>
+
+<p>查询当前系统中，访问量前10的HTTP地址：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">topk(10, http_requests_total)</span><br></pre></td></tr></table></figure>
+
+<h4 id="Gauge：可增可减的仪表盘"><a href="#Gauge：可增可减的仪表盘" class="headerlink" title="Gauge：可增可减的仪表盘"></a>Gauge：可增可减的仪表盘</h4><p>与Counter不同，Gauge类型的指标侧重于反应系统的当前状态。因此这类指标的样本数据可增可减。常见指标如：node_memory_MemFree（主机当前空闲的内容大小）、node_memory_MemAvailable（可用内存大小）都是Gauge类型的监控指标。</p>
+<p>通过Gauge指标，用户可以直接查看系统的当前状态：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node_memory_MemFree</span><br></pre></td></tr></table></figure>
+
+<p>对于Gauge类型的监控指标，通过PromQL内置函数delta()可以获取样本在一段时间返回内的变化情况。例如，计算CPU温度在两个小时内的差异：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">delta(cpu_temp_celsius&#123;host=&quot;zeus&quot;&#125;[2h])</span><br></pre></td></tr></table></figure>
+
+<p>还可以使用deriv()计算样本的线性回归模型，甚至是直接使用predict_linear()对数据的变化趋势进行预测。例如，预测系统磁盘空间在4个小时之后的剩余情况：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">predict_linear(node_filesystem_free&#123;job=&quot;node&quot;&#125;[1h], 4 * 3600)</span><br></pre></td></tr></table></figure>
+
+<h4 id="分布情况——Histogram和Summary"><a href="#分布情况——Histogram和Summary" class="headerlink" title="分布情况——Histogram和Summary"></a>分布情况——Histogram和Summary</h4><p>除了Counter和Gauge类型的监控指标以外，Prometheus还定义了Histogram和Summary的指标类型。Histogram和Summary主用用于统计和分析样本的分布情况。</p>
+<p>在大多数情况下人们都倾向于使用某些量化指标的平均值，例如CPU的平均使用率、页面的平均响应时间。这种方式的问题很明显，以系统API调用的平均响应时间为例：如果大多数API请求都维持在100ms的响应时间范围内，而个别请求的响应时间需要5s，那么就会导致某些WEB页面的响应时间落到中位数的情况，而这种现象被称为长尾问题。</p>
+<p>为了区分是平均的慢还是长尾的慢，最简单的方式就是按照请求延迟的范围进行分组。例如，统计延迟在0<del>10ms之间的请求数有多少而10</del>20ms之间的请求数又有多少。通过这种方式可以快速分析系统慢的原因。Histogram和Summary都是为了能够解决这样问题的存在，通过Histogram和Summary类型的监控指标，我们可以快速了解监控样本的分布情况。</p>
+<p>例如，指标prometheus_tsdb_wal_fsync_duration_seconds的指标类型为Summary。 它记录了Prometheus Server中wal_fsync处理的处理时间，通过访问Prometheus Server的/metrics地址，可以获取到以下监控样本数据：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># HELP prometheus_tsdb_wal_fsync_duration_seconds Duration of WAL fsync.</span><br><span class="line"># TYPE prometheus_tsdb_wal_fsync_duration_seconds summary</span><br><span class="line">prometheus_tsdb_wal_fsync_duration_seconds&#123;quantile=&quot;0.5&quot;&#125; 0.012352463</span><br><span class="line">prometheus_tsdb_wal_fsync_duration_seconds&#123;quantile=&quot;0.9&quot;&#125; 0.014458005</span><br><span class="line">prometheus_tsdb_wal_fsync_duration_seconds&#123;quantile=&quot;0.99&quot;&#125; 0.017316173</span><br><span class="line">prometheus_tsdb_wal_fsync_duration_seconds_sum 2.888716127000002</span><br><span class="line">prometheus_tsdb_wal_fsync_duration_seconds_count 216</span><br></pre></td></tr></table></figure>
+
+<p>从上面的样本中可以得知当前Prometheus Server进行wal_fsync操作的总次数为216次，耗时2.888716127000002s。其中中位数（quantile=0.5）的耗时为0.012352463，9分位数（quantile=0.9）的耗时为0.014458005s。</p>
+<p>在Prometheus Server自身返回的样本数据中，我们还能找到类型为Histogram的监控指标prometheus_tsdb_compaction_chunk_range_bucket。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># HELP prometheus_tsdb_compaction_chunk_range Final time range of chunks on their first compaction</span><br><span class="line"># TYPE prometheus_tsdb_compaction_chunk_range histogram</span><br><span class="line">prometheus_tsdb_compaction_chunk_range_bucket&#123;le=&quot;100&quot;&#125; 0</span><br><span class="line">prometheus_tsdb_compaction_chunk_range_bucket&#123;le=&quot;400&quot;&#125; 0</span><br><span class="line">prometheus_tsdb_compaction_chunk_range_bucket&#123;le=&quot;1600&quot;&#125; 0</span><br><span class="line">prometheus_tsdb_compaction_chunk_range_bucket&#123;le=&quot;6400&quot;&#125; 0</span><br><span class="line">prometheus_tsdb_compaction_chunk_range_bucket&#123;le=&quot;25600&quot;&#125; 0</span><br><span class="line">prometheus_tsdb_compaction_chunk_range_bucket&#123;le=&quot;102400&quot;&#125; 0</span><br><span class="line">prometheus_tsdb_compaction_chunk_range_bucket&#123;le=&quot;409600&quot;&#125; 0</span><br><span class="line">prometheus_tsdb_compaction_chunk_range_bucket&#123;le=&quot;1.6384e+06&quot;&#125; 260</span><br><span class="line">prometheus_tsdb_compaction_chunk_range_bucket&#123;le=&quot;6.5536e+06&quot;&#125; 780</span><br><span class="line">prometheus_tsdb_compaction_chunk_range_bucket&#123;le=&quot;2.62144e+07&quot;&#125; 780</span><br><span class="line">prometheus_tsdb_compaction_chunk_range_bucket&#123;le=&quot;+Inf&quot;&#125; 780</span><br><span class="line">prometheus_tsdb_compaction_chunk_range_sum 1.1540798e+09</span><br><span class="line">prometheus_tsdb_compaction_chunk_range_count 780</span><br></pre></td></tr></table></figure>
+
+<p>与Summary类型的指标相似之处在于Histogram类型的样本同样会反应当前指标的记录的总数(以_count作为后缀)以及其值的总量（以_sum作为后缀）。不同在于Histogram指标直接反应了在不同区间内样本的个数，区间通过标签len进行定义。</p>
+<p>同时对于Histogram的指标，我们还可以通过histogram_quantile()函数计算出其值的分位数。不同在于Histogram通过histogram_quantile函数是在服务器端计算的分位数。 而Sumamry的分位数则是直接在客户端计算完成。因此对于分位数的计算而言，Summary在通过PromQL进行查询时有更好的性能表现，而Histogram则会消耗更多的资源。反之对于客户端而言Histogram消耗的资源更少。在选择这两种方式时用户应该按照自己的实际场景进行选择。</p>
+<h3 id="3-promQL"><a href="#3-promQL" class="headerlink" title="3 promQL"></a>3 promQL</h3><p>Prometheus通过指标名称（metrics name）以及对应的一组标签（labelset）唯一定义一条时间序列。指标名称反映了监控样本的基本标识，而label则在这个基本特征上为采集到的数据提供了多种特征维度。用户可以基于这些特征维度过滤，聚合，统计从而产生新的计算后的一条时间序列。</p>
+<p>PromQL是Prometheus内置的数据查询语言，其提供对时间序列数据丰富的查询，聚合以及逻辑运算能力的支持。并且被广泛应用在Prometheus的日常应用当中，包括对数据查询、可视化、告警处理当中。</p>
+<h4 id="查询时间序列"><a href="#查询时间序列" class="headerlink" title="查询时间序列"></a>查询时间序列</h4><p>当Prometheus通过Exporter采集到相应的监控指标样本数据后，我们就可以通过PromQL对监控样本数据进行查询。</p>
+<p>当我们直接使用监控指标名称查询时，可以查询该指标下的所有时间序列。如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http_requests_total</span><br></pre></td></tr></table></figure>
+
+<p>等同于：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http_requests_total&#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>该表达式会返回指标名称为http_requests_total的所有时间序列：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">http_requests_total&#123;code=&quot;200&quot;,handler=&quot;alerts&quot;,instance=&quot;localhost:9090&quot;,job=&quot;prometheus&quot;,method=&quot;get&quot;&#125;=(20889@1518096812.326)</span><br><span class="line">http_requests_total&#123;code=&quot;200&quot;,handler=&quot;graph&quot;,instance=&quot;localhost:9090&quot;,job=&quot;prometheus&quot;,method=&quot;get&quot;&#125;=(21287@1518096812.326)</span><br></pre></td></tr></table></figure>
+
+<p>PromQL还支持用户根据时间序列的标签匹配模式来对时间序列进行过滤，目前主要支持两种匹配模式：完全匹配和正则匹配。</p>
+<p>PromQL支持使用<code>=</code>和<code>!=</code>两种完全匹配模式：</p>
+<ul>
+<li>通过使用<code>label=value</code>可以选择那些标签满足表达式定义的时间序列；</li>
+<li>反之使用<code>label!=value</code>则可以根据标签匹配排除时间序列；</li>
+</ul>
+<p>例如，如果我们只需要查询所有http_requests_total时间序列中满足标签instance为localhost:9090的时间序列，则可以使用如下表达式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http_requests_total&#123;instance=&quot;localhost:9090&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>反之使用<code>instance!=&quot;localhost:9090&quot;</code>则可以排除这些时间序列：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http_requests_total&#123;instance!=&quot;localhost:9090&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>除了使用完全匹配的方式对时间序列进行过滤以外，PromQL还可以支持使用正则表达式作为匹配条件，多个表达式之间使用<code>|</code>进行分离：</p>
+<ul>
+<li>使用<code>label=~regx</code>表示选择那些标签符合正则表达式定义的时间序列；</li>
+<li>反之使用<code>label!~regx</code>进行排除；</li>
+</ul>
+<p>例如，如果想查询多个环节下的时间序列序列可以使用如下表达式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http_requests_total&#123;environment=~&quot;staging|testing|development&quot;,method!=&quot;GET&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="范围查询"><a href="#范围查询" class="headerlink" title="范围查询"></a>范围查询</h2><p>直接通过类似于PromQL表达式http*requests*total查询时间序列时，返回值中只会包含该时间序列中的最新的一个样本值，这样的返回结果我们称之为<strong>瞬时向量</strong>。而相应的这样的表达式称之为__瞬时向量表达式**。</p>
+<p>而如果我们想过去一段时间范围内的样本数据时，我们则需要使用<strong>区间向量表达式</strong>。区间向量表达式和瞬时向量表达式之间的差异在于在区间向量表达式中我们需要定义时间选择的范围，时间范围通过时间范围选择器<code>[]</code>进行定义。例如，通过以下表达式可以选择最近5分钟内的所有样本数据：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http_request_total&#123;&#125;[5m]</span><br></pre></td></tr></table></figure>
+
+<p>该表达式将会返回查询到的时间序列中最近5分钟的所有样本数据：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">http_requests_total&#123;code=&quot;200&quot;,handler=&quot;alerts&quot;,instance=&quot;localhost:9090&quot;,job=&quot;prometheus&quot;,method=&quot;get&quot;&#125;=[</span><br><span class="line">    1@1518096812.326</span><br><span class="line">    1@1518096817.326</span><br><span class="line">    1@1518096822.326</span><br><span class="line">    1@1518096827.326</span><br><span class="line">    1@1518096832.326</span><br><span class="line">    1@1518096837.325</span><br><span class="line">]</span><br><span class="line">http_requests_total&#123;code=&quot;200&quot;,handler=&quot;graph&quot;,instance=&quot;localhost:9090&quot;,job=&quot;prometheus&quot;,method=&quot;get&quot;&#125;=[</span><br><span class="line">    4 @1518096812.326</span><br><span class="line">    4@1518096817.326</span><br><span class="line">    4@1518096822.326</span><br><span class="line">    4@1518096827.326</span><br><span class="line">    4@1518096832.326</span><br><span class="line">    4@1518096837.325</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>通过区间向量表达式查询到的结果我们称为<strong>区间向量</strong>。</p>
+<p>除了使用m表示分钟以外，PromQL的时间范围选择器支持其它时间单位：</p>
+<ul>
+<li>s - 秒</li>
+<li>m - 分钟</li>
+<li>h - 小时</li>
+<li>d - 天</li>
+<li>w - 周</li>
+<li>y - 年</li>
+</ul>
+<h2 id="时间位移操作"><a href="#时间位移操作" class="headerlink" title="时间位移操作"></a>时间位移操作</h2><p>在瞬时向量表达式或者区间向量表达式中，都是以当前时间为基准：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">http_request_total&#123;&#125; # 瞬时向量表达式，选择当前最新的数据</span><br><span class="line">http_request_total&#123;&#125;[5m] # 区间向量表达式，选择以当前时间为基准，5分钟内的数据</span><br></pre></td></tr></table></figure>
+
+<p>而如果我们想查询，5分钟前的瞬时样本数据，或昨天一天的区间内的样本数据呢? 这个时候我们就可以使用位移操作，位移操作的关键字为<strong>offset</strong>。</p>
+<p>可以使用offset时间位移操作：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">http_request_total&#123;&#125; offset 5m</span><br><span class="line">http_request_total&#123;&#125;[1d] offset 1d</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用聚合操作"><a href="#使用聚合操作" class="headerlink" title="使用聚合操作"></a>使用聚合操作</h2><p>一般来说，如果描述样本特征的标签(label)在并非唯一的情况下，通过PromQL查询数据，会返回多条满足这些特征维度的时间序列。而PromQL提供的聚合操作可以用来对这些时间序列进行处理，形成一条新的时间序列：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 查询系统所有http请求的总量</span><br><span class="line">sum(http_request_total)</span><br><span class="line"></span><br><span class="line"># 按照mode计算主机CPU的平均使用时间</span><br><span class="line">avg(node_cpu) by (mode)</span><br><span class="line"></span><br><span class="line"># 按照主机查询各个主机的CPU使用率</span><br><span class="line">sum(sum(irate(node_cpu&#123;mode!=&#x27;idle&#x27;&#125;[5m]))  / sum(irate(node_cpu[5m]))) by (instance)</span><br></pre></td></tr></table></figure>
+
+<h2 id="标量和字符串"><a href="#标量和字符串" class="headerlink" title="标量和字符串"></a>标量和字符串</h2><p>除了使用瞬时向量表达式和区间向量表达式以外，PromQL还直接支持用户使用标量(Scalar)和字符串(String)。</p>
+<h3 id="标量（Scalar）：一个浮点型的数字值"><a href="#标量（Scalar）：一个浮点型的数字值" class="headerlink" title="标量（Scalar）：一个浮点型的数字值"></a>标量（Scalar）：一个浮点型的数字值</h3><p>标量只有一个数字，没有时序。</p>
+<p>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">10</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>需要注意的是，当使用表达式count(http_requests_total)，返回的数据类型，依然是瞬时向量。用户可以通过内置函数scalar()将单个瞬时向量转换为标量。</p>
+</blockquote>
+<h3 id="字符串（String）：一个简单的字符串值"><a href="#字符串（String）：一个简单的字符串值" class="headerlink" title="字符串（String）：一个简单的字符串值"></a>字符串（String）：一个简单的字符串值</h3><p>直接使用字符串，作为PromQL表达式，则会直接返回字符串。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&quot;this is a string&quot;</span><br><span class="line">&#x27;these are unescaped: \n \\ \t&#x27;</span><br><span class="line">`these are not unescaped: \n &#x27; &quot; \t`</span><br></pre></td></tr></table></figure>
+
+<h2 id="合法的PromQL表达式"><a href="#合法的PromQL表达式" class="headerlink" title="合法的PromQL表达式"></a>合法的PromQL表达式</h2><p>所有的PromQL表达式都必须至少包含一个指标名称(例如http_request_total)，或者一个不会匹配到空字符串的标签过滤器(例如{code=”200”})。</p>
+<p>因此以下两种方式，均为合法的表达式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">http_request_total # 合法</span><br><span class="line">http_request_total&#123;&#125; # 合法</span><br><span class="line">&#123;method=&quot;get&quot;&#125; # 合法</span><br></pre></td></tr></table></figure>
+
+<p>而如下表达式，则不合法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;job=~&quot;.*&quot;&#125; # 不合法</span><br></pre></td></tr></table></figure>
+
+<p>同时，除了使用<code>&lt;metric name&gt;&#123;label=value&#125;</code>的形式以外，我们还可以使用内置的<code>__name__</code>标签来指定监控指标名称：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;__name__=~&quot;http_request_total&quot;&#125; # 合法</span><br><span class="line">&#123;__name__=~&quot;node_disk_bytes_read|node_disk_bytes_written&quot;&#125; # 合法</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>224a31b93706e3592cb8961318638e3dca071f41</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/12/08/2021-12-08-curl-k8s%E9%83%A8%E7%BD%B2%E6%9C%8D%E5%8A%A1/" rel="prev" title="curl k8s部署服务">
+                  <i class="fa fa-chevron-left"></i> curl k8s部署服务
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/12/10/2021-12-10-linux%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE/" rel="next" title="linux常用快捷键">
+                  linux常用快捷键 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuanwanli</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

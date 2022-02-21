@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yuanwanli1995.github.io","root":"/","images":"/images","scheme":"Pisces","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/./public/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="一 集群介绍使用高可用配置的方式在生产环境安装 Rancher，用户可以一直访问 Rancher 服务。在 Kubernetes 集群中安装 Rancher 时，Rancher 会与集群的 etcd 数据库集成，并利用 Kubernetes 调度来实现高可用。下面将使用 RKE 来部署三个节点的集群，并使用 Helm 安装 Rancher。 我们还需要设置一个负载均衡器，以将流量定向到两个节点上的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="四成负载均衡HA集群搭建">
+<meta property="og:url" content="http://yuanwanli1995.github.io/2021/11/03/2021-11-03-%E5%9B%9B%E6%88%90%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1HA%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA/index.html">
+<meta property="og:site_name" content="brisk">
+<meta property="og:description" content="一 集群介绍使用高可用配置的方式在生产环境安装 Rancher，用户可以一直访问 Rancher 服务。在 Kubernetes 集群中安装 Rancher 时，Rancher 会与集群的 etcd 数据库集成，并利用 Kubernetes 调度来实现高可用。下面将使用 RKE 来部署三个节点的集群，并使用 Helm 安装 Rancher。 我们还需要设置一个负载均衡器，以将流量定向到两个节点上的">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/rke1.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/rke2.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/rke3.png">
+<meta property="article:published_time" content="2021-11-02T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-02-21T06:54:31.991Z">
+<meta property="article:author" content="yuanwanli">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/rke1.png">
+
+
+<link rel="canonical" href="http://yuanwanli1995.github.io/2021/11/03/2021-11-03-%E5%9B%9B%E6%88%90%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1HA%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://yuanwanli1995.github.io/2021/11/03/2021-11-03-%E5%9B%9B%E6%88%90%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1HA%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA/","path":"2021/11/03/2021-11-03-四成负载均衡HA集群搭建/","title":"四成负载均衡HA集群搭建"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>四成负载均衡HA集群搭建 | brisk</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">brisk</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">welcome</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80-%E9%9B%86%E7%BE%A4%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">一 集群介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C-%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2"><span class="nav-number">2.</span> <span class="nav-text">二  集群部署</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-number">2.1.</span> <span class="nav-text">1 准备工作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E9%83%A8%E7%BD%B2%E9%9B%86%E7%BE%A4"><span class="nav-number">2.2.</span> <span class="nav-text">2 部署集群</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E9%83%A8%E7%BD%B2rancher-server"><span class="nav-number">2.3.</span> <span class="nav-text">3 部署rancher server</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E8%AE%BF%E9%97%AErancher-server"><span class="nav-number">2.4.</span> <span class="nav-text">4 访问rancher server</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yuanwanli</p>
+  <div class="site-description" itemprop="description">等不是办法，干才有出路</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">75</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2021/11/03/2021-11-03-%E5%9B%9B%E6%88%90%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1HA%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuanwanli">
+      <meta itemprop="description" content="等不是办法，干才有出路">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="brisk">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          四成负载均衡HA集群搭建
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-11-03 00:00:00" itemprop="dateCreated datePublished" datetime="2021-11-03T00:00:00+08:00">2021-11-03</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-02-21 14:54:31" itemprop="dateModified" datetime="2022-02-21T14:54:31+08:00">2022-02-21</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/k8s/" itemprop="url" rel="index"><span itemprop="name">k8s</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="一-集群介绍"><a href="#一-集群介绍" class="headerlink" title="一 集群介绍"></a>一 集群介绍</h3><p>使用高可用配置的方式在生产环境安装 Rancher，用户可以一直访问 Rancher 服务。在 Kubernetes 集群中安装 Rancher 时，Rancher 会与集群的 etcd 数据库集成，并利用 Kubernetes 调度来实现高可用。下面将使用 RKE 来部署三个节点的集群，并使用 Helm 安装 Rancher。</p>
+<p>我们还需要设置一个负载均衡器，以将流量定向到两个节点上的 Rancher 副本。这样可以在单个节点不可用时，继续保障与 Rancher 管理面的连接。</p>
+<p>在安装 Rancher 时，Rancher 系统将创建一个 Ingress 资源。该 Ingress 通知 Traefik Ingress 控制器侦听发往 Rancher 主机名的流量。Traefik Ingress 控制器在收到发往 Rancher 主机名的流量时，会将其转发到集群中正在运行的 Rancher Server Pod。</p>
+<ul>
+<li><strong>4 层负载均衡器</strong> 将 TCP 流量转发到节点。我们建议使用 4 层负载均衡器，将流量从 TCP / 80 端口和 TCP / 443 端口转发到 Rancher 管理面的集群节点上。集群上的 Ingress 控制器会将 HTTP 流量重定向到 HTTPS，并在 TCP / 443 端口上终止 SSL / TLS。Ingress 控制器会将流量转发到 Rancher Server Pod 的 TCP / 443 端口。</li>
+</ul>
+<h3 id="二-集群部署"><a href="#二-集群部署" class="headerlink" title="二  集群部署"></a>二  集群部署</h3><p>使用RKE部署集群包括四个部分</p>
+<ol>
+<li>准备工作，包括云主机或虚拟机硬件、软件和网络配置。部署的集群的要求，可以查看<a target="_blank" rel="noopener" href="https://docs.rancher.cn/">rancher官方文档</a></li>
+<li>rke部署集群, 包括安装rke，新建操作的普通用户，主节点免密登陆，集群的配置文件，启动集群。</li>
+<li>部署rancher web，这里通过helm3部署，需要安装helm3, 生成自签名证书，启动rancher web服务。  </li>
+<li>通过rancher server调试集群</li>
+</ol>
+<blockquote>
+<p>什么是RKE? </p>
+<p>Rancher Kubernetes Engine，简称 RKE，是一个经过 CNCF 认证的 Kubernetes 安装程序。RKE 支持多种操作系统，包括 MacOS、Linux 和 Windows，可以在裸金属服务器（BMS）和虚拟服务器（Virtualized Server）上运行。市面上的其他 Kubernetes 部署工具存在一个共性问题：在使用工具之前需要满足的先决条件比较多，例如，在使用工具前需要完成安装 kubelet、配置网络等一系列的繁琐操作。而 RKE 简化了部署 Kubernetes 集群的过程，只有一个先决条件：只要您使用的 Docker 是 RKE 支持的版本，就可以通过 RKE 安装 Kubernetes，部署和运行 Kubernetes 集群。RKE 既可以单独使用，作为创建 Kubernetes 集群的工具，也可以配合 Rancher2.x 使用，作为 Rancher2.x 的组件，在 Rancher 中部署和运行 Kubernetes 集群。</p>
+</blockquote>
+<h4 id="1-准备工作"><a href="#1-准备工作" class="headerlink" title="1 准备工作"></a>1 准备工作</h4><p><code>1.1 设置节点hostname</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">nginx 192.168.2.40</span><br><span class="line">node1 192.168.2.51</span><br><span class="line">node2 192.168.2.52</span><br><span class="line">node3 192.168.2.53</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@nginx ~]# hostnamectl set-hostname nginx</span><br><span class="line">[root@node1 ~]# hostnamectl set-hostname node1</span><br><span class="line">[root@node2 ~]# hostnamectl set-hostname node2</span><br><span class="line">[root@node3 ~]# hostnamectl set-hostname node3</span><br></pre></td></tr></table></figure>
+
+<p><code>1.2 主机名DNS解析</code><br>主机名DNS解析</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cat &gt;&gt; /etc/hosts &lt;&lt; EOF</span><br><span class="line">192.168.2.40 nginx</span><br><span class="line">192.168.2.51 node1</span><br><span class="line">192.168.2.52 node2</span><br><span class="line">192.168.2.53 node3</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+<p><code>1.3 关闭防火墙</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop firewalld</span><br><span class="line">systemctl disable firewalld</span><br></pre></td></tr></table></figure>
+
+<p><code>1.4 关闭swap</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">swapoff -a # 临时关闭；关闭swap主要是为了性能考虑</span><br><span class="line">sed -ri &#x27;s/.*swap.*/#&amp;/&#x27; /etc/fstab # 永久关闭</span><br></pre></td></tr></table></figure>
+
+<p><code>1.6 关闭selinux </code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">setenforce 0 # 临时关闭</span><br><span class="line">sed -i &#x27;s/SELINUX=enforcing/SELINUX=disabled/g&#x27; /etc/selinux/config # 永久关闭</span><br></pre></td></tr></table></figure>
+
+<p><code>1.6 同步时间</code></p>
+<p>这样可以防止在客户端和服务器之间因为时钟不同步而发生证书验证错误。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum install ntpdate -y</span><br><span class="line">ntpdate time.windows.com</span><br></pre></td></tr></table></figure>
+
+<p><code>1.7 kernel性能调优</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">cat &gt;&gt; /etc/sysctl.conf&lt;&lt;EOF</span><br><span class="line">net.ipv4.ip_forward=1</span><br><span class="line">net.bridge.bridge-nf-call-iptables=1</span><br><span class="line">net.ipv4.neigh.default.gc_thresh1=4096</span><br><span class="line">net.ipv4.neigh.default.gc_thresh2=6144</span><br><span class="line">net.ipv4.neigh.default.gc_thresh3=8192</span><br><span class="line">EOF</span><br><span class="line"># 加载配置文件</span><br><span class="line">sysctl -p</span><br></pre></td></tr></table></figure>
+
+
+
+<p><code>1.8 安装基础软件包</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install lrzsz vim gcc glibc openssl openssl-devel net-tools wget curl</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-部署集群"><a href="#2-部署集群" class="headerlink" title="2 部署集群"></a>2 部署集群</h4><p><code>2.1 安装docker</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum install -y yum-utils device-mapper-persistent-data lvm2</span><br><span class="line">yum-config-manager --add-repo https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo</span><br></pre></td></tr></table></figure>
+
+<p>安装18.09.9稳定版本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install docker-ce-18.09.9-3.el7 docker-ce-cli-18.09.9-3.el7</span><br></pre></td></tr></table></figure>
+
+<p>启动docker </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start docker</span><br></pre></td></tr></table></figure>
+
+<p>配置镜像</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">cat &gt; /etc/docker/daemon.json &lt;&lt; EOF</span><br><span class="line">&#123;</span><br><span class="line">  &quot;oom-score-adjust&quot;: -1000,</span><br><span class="line">  &quot;registry-mirrors&quot;: [&quot;https://7bezldxe.mirror.aliyuncs.com/&quot;,&quot;https://kw88y6eh.mirror.aliyuncs.com&quot;],</span><br><span class="line">    &quot;storage-driver&quot;: &quot;overlay2&quot;,</span><br><span class="line">    &quot;storage-opts&quot;: [</span><br><span class="line">    &quot;overlay2.override_kernel_check=true&quot;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+
+<p>重启并设置自启动</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl restart docker</span><br><span class="line"># systemctl  status docker 查看docker状态</span><br></pre></td></tr></table></figure>
+
+
+
+<p><code>2.2  安装ctl工具</code> </p>
+<p>下载安装工具rke,kubectl </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># rke下载地址：https://github.com/rancher/rke/tags，下载v1.0.4</span><br><span class="line">chmod +x rke_linux-amd64 </span><br><span class="line">mv rke_linux-amd64 /usr/bin/rke</span><br><span class="line"></span><br><span class="line"># kubectl </span><br><span class="line">wget http://storage.googleapis.com/kubernetes-release/release/v1.17.2/bin/linux/amd64/kubectl</span><br><span class="line">chmod +x kubectl </span><br><span class="line">mv kubectl /usr/bin/kubectl</span><br></pre></td></tr></table></figure>
+<p><code>2.3 设置节点免密登陆</code></p>
+<p>rke不支持root用户，所以新建普通用户操作</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">useradd rancher -G docker</span><br><span class="line">echo &quot;123456&quot; | passwd --stdin rancher</span><br></pre></td></tr></table></figure>
+
+<p>授权免密登陆</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">su - rancher</span><br><span class="line">cd /home/rancher</span><br><span class="line">ssh-keygen</span><br><span class="line">ssh-copy-id rancher@192.168.2.51</span><br><span class="line">ssh-copy-id rancher@192.168.2.52</span><br><span class="line">ssh-copy-id rancher@192.168.2.53</span><br></pre></td></tr></table></figure>
+<p>集群配置yml文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">cat &gt; cluster.yml &lt;&lt; EOF</span><br><span class="line">nodes:</span><br><span class="line">  - address: 192.168.2.51</span><br><span class="line">    internal_address: 192.168.2.51</span><br><span class="line">    user: rancher</span><br><span class="line">    role: [controlplane,worker,etcd]</span><br><span class="line">  - address: 192.168.2.52</span><br><span class="line">    internal_address: 192.168.2.52</span><br><span class="line">    user: rancher</span><br><span class="line">    role: [controlplane,worker,etcd]</span><br><span class="line">  - address: 192.168.2.53</span><br><span class="line">    internal_address: 192.168.2.53</span><br><span class="line">    user: rancher</span><br><span class="line">    role: [controlplane,worker,etcd]</span><br><span class="line">services:</span><br><span class="line">    etcd:</span><br><span class="line">      snapshot: true</span><br><span class="line">      creation: 6h</span><br><span class="line">      retention: 24h</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+
+<p>创建Kubernetes集群</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 运行RKE命令创建Kubernetes集群</span><br><span class="line">rke up --config ./cluster.yml</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>保存kube_config_rancher-cluster.yml和rancher-cluster.yml文件的副本，后期将需要这些文件来维护和升级Rancher实例。</p>
+</blockquote>
+<p>配置环境变量</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">### 切换到root用户</span><br><span class="line">su - root</span><br><span class="line">vim /etc/profile</span><br><span class="line">export KUBECONFIG=/home/rancher/kube_config_cluster.yml</span><br><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure>
+
+<p>查看集群状态</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/rke1.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/rke2.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/rke3.png"></p>
+<p><code>2.4  配置nginx代理</code> </p>
+<p>安装nginx，这里最新版本的可能出现模块错误，安装稳定版的。</p>
+<p>添加nginx repo</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/yum.repos.d/nginx.repo </span><br><span class="line">[nginx-stable]</span><br><span class="line">name=nginx stable repo</span><br><span class="line">baseurl=http://nginx.org/packages/centos/$releasever/$basearch/</span><br><span class="line">gpgcheck=1</span><br><span class="line">enabled=1</span><br><span class="line">gpgkey=https://nginx.org/keys/nginx_signing.key</span><br><span class="line">module_hotfixes=true</span><br><span class="line">[nginx-mainline]</span><br><span class="line">name=nginx mainline repo</span><br><span class="line">baseurl=http://nginx.org/packages/mainline/centos/$releasever/$basearch/</span><br><span class="line">gpgcheck=1</span><br><span class="line">enabled=0</span><br><span class="line">gpgkey=https://nginx.org/keys/nginx_signing.key</span><br><span class="line">module_hotfixes=true</span><br></pre></td></tr></table></figure>
+
+<p>yum直接安装</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 卸载旧版 nginx #yum -y remove nginx</span><br><span class="line">yum -y install nginx-1.18.0 </span><br></pre></td></tr></table></figure>
+
+<p>配置nginx.conf</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">cat &gt; /etc/nginx/nginx.conf &lt;&lt; EOF </span><br><span class="line">worker_processes 4;</span><br><span class="line">worker_rlimit_nofile 40000;</span><br><span class="line">events &#123;</span><br><span class="line">    worker_connections 8192;</span><br><span class="line">&#125;</span><br><span class="line">stream &#123;</span><br><span class="line">    upstream rancher_servers_http &#123;</span><br><span class="line">        least_conn;</span><br><span class="line">        server 192.168.2.51:80 max_fails=3 fail_timeout=5s;</span><br><span class="line">        server 192.168.2.52:80 max_fails=3 fail_timeout=5s;</span><br><span class="line">        server 192.168.2.53:80 max_fails=3 fail_timeout=5s;</span><br><span class="line">&#125;</span><br><span class="line">    server &#123;</span><br><span class="line">        listen 80;</span><br><span class="line">        proxy_pass rancher_servers_http;</span><br><span class="line">&#125;</span><br><span class="line">    upstream rancher_servers_https &#123;</span><br><span class="line">        least_conn;</span><br><span class="line">        server 192.168.2.51:443 max_fails=3 fail_timeout=5s;</span><br><span class="line">        server 192.168.2.52:443 max_fails=3 fail_timeout=5s;</span><br><span class="line">        server 192.168.2.53:443 max_fails=3 fail_timeout=5s;</span><br><span class="line">&#125;</span><br><span class="line">    server &#123;</span><br><span class="line">        listen     443;</span><br><span class="line">        proxy_pass rancher_servers_https;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">EOF </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"># 测试 </span><br><span class="line">cat &gt; /etc/nginx/nginx.conf &lt;&lt; EOF </span><br><span class="line">worker_processes 4;</span><br><span class="line">worker_rlimit_nofile 40000;</span><br><span class="line">include /usr/share/nginx/modules/*.conf;</span><br><span class="line">events &#123;</span><br><span class="line">    worker_connections 8192;</span><br><span class="line">&#125;</span><br><span class="line">stream &#123;</span><br><span class="line">	upstream rancher &#123;</span><br><span class="line">        server 192.168.30.110:80;</span><br><span class="line">        server 192.168.30.129:80;</span><br><span class="line">        server 192.168.30.133:80;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    map $http_upgrade $connection_upgrade &#123;</span><br><span class="line">        default Upgrade;</span><br><span class="line">        &#x27;&#x27;      close;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    server &#123;</span><br><span class="line">        listen 443 ssl http2;</span><br><span class="line">        server_name cf.rancher.com;</span><br><span class="line">        ssl_certificate /home/admin/certs/tls.crt;</span><br><span class="line">        ssl_certificate_key /home/admin/certs/tls.key;</span><br><span class="line"></span><br><span class="line">        location / &#123;</span><br><span class="line">            proxy_set_header Host $host;</span><br><span class="line">            proxy_set_header X-Forwarded-Proto $scheme;</span><br><span class="line">            proxy_set_header X-Forwarded-Port $server_port;</span><br><span class="line">            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">            proxy_pass http://rancher;</span><br><span class="line">            proxy_http_version 1.1;</span><br><span class="line">            proxy_set_header Upgrade $http_upgrade;</span><br><span class="line">            proxy_set_header Connection $connection_upgrade;</span><br><span class="line">            # 这里将允许您在 Rancher UI 中打开命令行窗口时，窗口可以保留最多15分钟。没有这个参数时，默认值为1分钟，一分钟后在Rancher&gt;中的shell会自动关闭。</span><br><span class="line">            proxy_read_timeout 900s;</span><br><span class="line">            proxy_buffering off;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    server &#123;</span><br><span class="line">        listen 80;</span><br><span class="line">        server_name cf.rancher.com;</span><br><span class="line">        return 301 https://$server_name$request_uri;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">nginx -t  # 测试语法是否有误</span><br><span class="line">nginx -c /etc/nginx/nginx.conf # 设置配置文件</span><br><span class="line">nginx -s reload # 加载更改的配置文件</span><br></pre></td></tr></table></figure>
+
+<p>启动服务，设定nginx自启动服务</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart nginx.service</span><br><span class="line">systemctl enable nginx.service</span><br></pre></td></tr></table></figure>
+
+<p><code>2.5  故障处理</code> </p>
+<p>这里可能会出现几个问题： </p>
+<p><code>问题1  </code> unknown directive “stream”</p>
+<p>先检查nginx的配置有没有错误，或者有没有tab空格，nginx是不支持tab空格的，可以使用下面命令检查格式，对齐或者空格 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat -A  /etc/nginx/nginx.conf</span><br></pre></td></tr></table></figure>
+
+<p>如果配置确实没有问题，也有可能是nginx版本问题, 换稳定版的nginx。 </p>
+<p><code>问题2</code> 缺少 “/var/run/nginx.pid”文件</p>
+<p>解决方法， 没有就新建一个</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /var/run/</span><br><span class="line">touch nginx.pid</span><br></pre></td></tr></table></figure>
+
+<p><code>问题3</code> nginx: [error] invalid PID number “” in “/var/run/nginx.pid”</p>
+<p>解决，先执行ngingx -c， 再加载配置文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nginx -c /etc/nginx/nginx.conf</span><br><span class="line">nginx -s reload</span><br></pre></td></tr></table></figure>
+
+<p><code>问题4</code> 80/443端口被占用, 如下: </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Job for nginx.service failed because the control process exited with error code. See &quot;systemctl status nginx.service&quot; and &quot;journalctl -xe&quot; for details.</span><br><span class="line">[root@nginx ~]systemctl status nginx.service</span><br><span class="line">bind() to 0.0.0.0:80 failed (98: Address already in use)</span><br><span class="line">bind() to 0.0.0.0:443 failed (98: Address already in use)</span><br></pre></td></tr></table></figure>
+
+<p>要先关闭服务</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nginx -s quit</span><br></pre></td></tr></table></figure>
+
+<p>如果还是不行，可能是端口被其应用占用，就查看一下占用的进程，这里直接清理占用的进程</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fuser -k 80/tcp</span><br><span class="line">fuser -k 443/tcp</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-部署rancher-server"><a href="#3-部署rancher-server" class="headerlink" title="3 部署rancher server"></a>3 部署rancher server</h4><p><code>3.1 安装helm  </code> </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#helm下载地址：https://github.com/helm/helm/tags </span><br><span class="line">tar -zxf helm-v3.2.4-linux-amd64.tar.gz </span><br><span class="line">mv linux-amd64/helm /usr/bin/helm</span><br><span class="line">rm -rf helm-v3.2.4-linux-amd64.tar.gz linux-amd64</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>helm3与helm2不同，是不需要安装tiller的</p>
+</blockquote>
+<p><code>3.2 部署rancher web服务</code></p>
+<p>添加Chart仓库地址</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 使用helm repo add命令添加Rancher chart仓库地址，访问Rancher tag和Chart版本</span><br><span class="line"># 替换&lt;CHART_REPO&gt;为您要使用的Helm仓库分支(即latest或stable）。</span><br><span class="line"># helm repo add rancher-stable https://releases.rancher.com/server-charts/stable</span><br><span class="line"># 国内可用镜像</span><br><span class="line"># helm repo add rancher-stable http://rancher-mirror.oss-cn-beijing.aliyuncs.com/server-charts/stable</span><br><span class="line">helm repo update</span><br></pre></td></tr></table></figure>
+
+<p>Rancher Server 默认需要 SSL/TLS 配置来保证访问的安全性，这里我们选择自签名的证书</p>
+<p>这里使用官方文档给的生成证书的脚本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mkdir ssl</span><br><span class="line">cd ssl/</span><br><span class="line">chmod +x create_self-signed-cert.sh  # 执行权限</span><br><span class="line">#然后再用这个脚本生成ssl证书</span><br><span class="line">./create_self-signed-cert.sh --ssl-domain=my.rancher.com --ssl-trusted-ip=192.168.0.41 --ssl-size=2048 --ssl-date=3650</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#查看证书</span><br><span class="line">[root@node1 ssl]# ls</span><br><span class="line">cacerts.pem  cacerts.srl  cakey.pem  create_self-signed-cert.sh  my.rancher.com.crt  my.rancher.com.csr  my.rancher.com.key  openssl.cnf  tls.crt  tls.key</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># 为rancher创建命名空间</span><br><span class="line">kubectl create namespace cattle-system</span><br><span class="line"></span><br><span class="line"># 服务证书和私钥密文</span><br><span class="line">kubectl -n cattle-system create \</span><br><span class="line">    secret tls tls-rancher-ingress \</span><br><span class="line">    --cert=/home/rancher/ssl/tls.crt \</span><br><span class="line">    --key=/home/rancher/ssl/tls.key</span><br><span class="line"></span><br><span class="line"># ca证书密文</span><br><span class="line">kubectl -n cattle-system create secret \</span><br><span class="line">    generic tls-ca \</span><br><span class="line">    --from-file=/home/rancher/ssl/cacerts.pem</span><br></pre></td></tr></table></figure>
+
+<p>安装rancher server </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">helm install rancher rancher-stable/rancher \</span><br><span class="line">    --namespace cattle-system \</span><br><span class="line">    --set hostname=my.rancher.com \</span><br><span class="line">    --set ingress.tls.source=secret \</span><br><span class="line">    --set privateCA=true</span><br><span class="line"># hostname需要与证书对应的域名匹配，否则ingress将无法代理访问Rancher。</span><br></pre></td></tr></table></figure>
+
+<p>my.rancher.com是后面访问rancher的域名，需要在/etc/hosts文件中添加关联（所有主机）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@node1 ~]$ echo &quot;192.168.0.41 my.rancher.com&quot; &gt;&gt; /etc/hosts</span><br><span class="line">[root@node2 ~]$ echo &quot;192.168.0.41 my.rancher.com&quot; &gt;&gt; /etc/hosts</span><br><span class="line">[root@node3 ~]$ echo &quot;192.168.0.41 my.rancher.com&quot; &gt;&gt; /etc/hosts</span><br><span class="line">[root@nginx ~]$ echo &quot;192.168.0.41 my.rancher.com&quot; &gt;&gt; /etc/hosts</span><br></pre></td></tr></table></figure>
+
+<p><code>3.4 容器配置hosts:</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">kubectl -n cattle-system patch deployments rancher --patch &#x27;&#123;</span><br><span class="line">    &quot;spec&quot;: &#123;</span><br><span class="line">        &quot;template&quot;: &#123;</span><br><span class="line">            &quot;spec&quot;: &#123;</span><br><span class="line">                &quot;hostAliases&quot;: [</span><br><span class="line">                    &#123;</span><br><span class="line">                        &quot;hostnames&quot;:</span><br><span class="line">                        [</span><br><span class="line">                            &quot;my.rancher.com&quot;</span><br><span class="line">                        ],</span><br><span class="line">                            &quot;ip&quot;: &quot;192.168.2.40&quot;</span><br><span class="line">                    &#125;</span><br><span class="line">                ]</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;&#x27;</span><br></pre></td></tr></table></figure>
+
+<p><code>3.5 添加本机hosts</code><br>将刚刚的域名映射关系写入到Windows主机的hosts文件中。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">192.168.0.100 my.rancher.com</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-访问rancher-server"><a href="#4-访问rancher-server" class="headerlink" title="4 访问rancher server"></a>4 访问rancher server</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Happy Containering!</span><br><span class="line">[root@node1 ssl]# echo https://my.rancher.com/dashboard/?setup=$(kubectl get secret --namespace cattle-system bootstrap-secret -o go-template=&#x27;&#123;&#123;.data.bootstrapPassword|base64decode&#125;&#125;&#x27;)</span><br><span class="line">https://my.rancher.com/dashboard/?setup=</span><br><span class="line">[root@node1 ssl]# kubectl get secret --namespace cattle-system bootstrap-secret -o go-template=&#x27;&#123;&#123;.data.bootstrapPassword|base64decode&#125;&#125;&#123;&#123; &quot;\n&quot; &#125;&#125;&#x27;</span><br><span class="line">b9bwmrwrs7ndzrpvn6lnqc22hmtf7wbdpkpxh652jbrcbkhtlgxsd2</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/10/31/2021-10-31-%E3%80%8A%E5%91%A8%E6%81%A9%E6%9D%A5%E4%BC%A0%E3%80%8B/" rel="prev" title="《周恩来传》">
+                  <i class="fa fa-chevron-left"></i> 《周恩来传》
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/11/08/2021-11-08-k8s%E5%A6%82%E4%BD%95%E4%B8%8Epod%E9%80%9A%E4%BF%A1/" rel="next" title="k8s如何与pod通信">
+                  k8s如何与pod通信 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuanwanli</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

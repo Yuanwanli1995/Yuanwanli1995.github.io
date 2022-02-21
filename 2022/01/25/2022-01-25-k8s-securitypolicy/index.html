@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yuanwanli1995.github.io","root":"/","images":"/images","scheme":"Pisces","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/./public/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="1 podsecuritypolicypodsecurity policy是一种集群级别的资源， 它对用户能否在pod中使用各种安全相关的操作。缩写psp. 维护资源中配置策略的工作由集成在API服务器中podsecurity准入控制插件完成。  PodSecurityPolicy对象定义一组条件，以限制pod权限，管理员可以控制以下内容： 12345678910111213141516# 运行特">
+<meta property="og:type" content="article">
+<meta property="og:title" content="k8s-securitypolicy">
+<meta property="og:url" content="http://yuanwanli1995.github.io/2022/01/25/2022-01-25-k8s-securitypolicy/index.html">
+<meta property="og:site_name" content="brisk">
+<meta property="og:description" content="1 podsecuritypolicypodsecurity policy是一种集群级别的资源， 它对用户能否在pod中使用各种安全相关的操作。缩写psp. 维护资源中配置策略的工作由集成在API服务器中podsecurity准入控制插件完成。  PodSecurityPolicy对象定义一组条件，以限制pod权限，管理员可以控制以下内容： 12345678910111213141516# 运行特">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/psp-ua2drawio.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/psp-sa2.drawio.png">
+<meta property="article:published_time" content="2022-01-24T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-02-21T06:54:31.994Z">
+<meta property="article:author" content="yuanwanli">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/psp-ua2drawio.png">
+
+
+<link rel="canonical" href="http://yuanwanli1995.github.io/2022/01/25/2022-01-25-k8s-securitypolicy/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://yuanwanli1995.github.io/2022/01/25/2022-01-25-k8s-securitypolicy/","path":"2022/01/25/2022-01-25-k8s-securitypolicy/","title":"k8s-securitypolicy"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>k8s-securitypolicy | brisk</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">brisk</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">welcome</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-podsecuritypolicy"><span class="nav-number">1.</span> <span class="nav-text">1 podsecuritypolicy</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E9%85%8D%E7%BD%AEpsp%E7%9A%84%E9%A2%84%E5%A4%87%E6%9D%A1%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">2 配置psp的预备条件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-rabc%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 rabc是什么？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0rbac"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 如何实现rbac?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-rbac%E6%B5%8B%E8%AF%95"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 rbac测试</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-3-1-role%E4%B8%8Erolebinding"><span class="nav-number">2.3.1.</span> <span class="nav-text">2.3.1 role与rolebinding</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-3-2-clusterrole%E4%B8%8Eclusterrolebinding"><span class="nav-number">2.3.2.</span> <span class="nav-text">2.3.2 clusterrole与clusterrolebinding</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8psp"><span class="nav-number">3.</span> <span class="nav-text">3  如何使用psp</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-psp%E8%83%BD%E5%81%9A%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 psp能做什么？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-psp%E7%94%A8%E6%88%B7%E9%99%90%E6%9D%83"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 psp用户限权</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-psp-%E8%B5%84%E6%BA%90%E6%9D%83%E9%99%90%E9%99%90%E5%88%B6"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 psp 资源权限限制</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yuanwanli</p>
+  <div class="site-description" itemprop="description">等不是办法，干才有出路</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">75</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2022/01/25/2022-01-25-k8s-securitypolicy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuanwanli">
+      <meta itemprop="description" content="等不是办法，干才有出路">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="brisk">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          k8s-securitypolicy
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-01-25 00:00:00" itemprop="dateCreated datePublished" datetime="2022-01-25T00:00:00+08:00">2022-01-25</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-02-21 14:54:31" itemprop="dateModified" datetime="2022-02-21T14:54:31+08:00">2022-02-21</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/k8s/" itemprop="url" rel="index"><span itemprop="name">k8s</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="1-podsecuritypolicy"><a href="#1-podsecuritypolicy" class="headerlink" title="1 podsecuritypolicy"></a>1 podsecuritypolicy</h3><p>podsecurity policy是一种集群级别的资源， 它对用户能否在pod中使用各种安全相关的操作。缩写psp. 维护资源中配置策略的工作由集成在API服务器中podsecurity准入控制插件完成。 </p>
+<p>PodSecurityPolicy对象定义一组条件，以限制pod权限，管理员可以控制以下内容：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"># 运行特权容器  privileged</span><br><span class="line"># 主机命名空间的使用	hostPID, hostIPC</span><br><span class="line"># 主机网络和端口的使用	hostNetwork, hostPorts</span><br><span class="line"># 卷类型的使用	volumes</span><br><span class="line"># 主机文件系统的使用	allowedHostPaths</span><br><span class="line"># 允许特定的 FlexVolume 驱动程序	allowedFlexVolumes</span><br><span class="line"># 分配一个拥有 Pod 卷的 FSGroup	fsGroup</span><br><span class="line"># 需要使用只读根文件系统	readOnlyRootFilesystem</span><br><span class="line"># 容器的用户和组 ID	runAsUser, runAsGroup,supplementalGroups</span><br><span class="line"># 限制升级到 root 权限	allowPrivilegeEscalation, defaultAllowPrivilegeEscalation</span><br><span class="line"># Linux 功能	defaultAddCapabilities, requiredDropCapabilities,allowedCapabilities</span><br><span class="line"># 容器的 SELinux 上下文	seLinux</span><br><span class="line"># 容器的 Allowed Proc Mount 类型	allowedProcMountTypes</span><br><span class="line"># 容器使用的 AppArmor 配置文件	注释</span><br><span class="line">###  容器使用的 seccomp 配置文件	注释</span><br><span class="line"># 容器使用的 sysctl 配置文件	forbiddenSysctls,allowedUnsafeSysctls</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-配置psp的预备条件"><a href="#2-配置psp的预备条件" class="headerlink" title="2 配置psp的预备条件"></a>2 配置psp的预备条件</h3><p>PodSecurityPolicy 资源被创建时，并不执行任何操作。为了使用该资源，需要对发出请求的<strong>useraccount</strong>或者需要被限制的Pod 的<strong>service accout</strong>授权, <a target="_blank" rel="noopener" href="https://kubernetes.io/zh/docs/reference/access-authn-authz/rbac/">RBAC</a> 是一种标准的 Kubernetes 鉴权模式，可以很容易地用来授权策略访问。</p>
+<h4 id="2-1-rabc是什么？"><a href="#2-1-rabc是什么？" class="headerlink" title="2.1 rabc是什么？"></a>2.1 rabc是什么？</h4><p>K8s api 服务器可以配置使用一个授权插件来检查用户或sa是否有权限执行动作。</p>
+<p>什么是<strong>动作</strong>？ </p>
+<p>REST客户端发送get, post, put, delete和其他资源的HTTP请求到特定的url路径上，这些路径表示特定的REST资源，如pod, svs,secret等。  动作包含如下： </p>
+<table>
+<thead>
+<tr>
+<th>HTTP</th>
+<th>单一资源动词</th>
+<th>集合动词</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>get, head</td>
+<td>get、watch</td>
+<td>list、watch</td>
+</tr>
+<tr>
+<td>post</td>
+<td>create</td>
+<td>n/a</td>
+</tr>
+<tr>
+<td>put</td>
+<td>update</td>
+<td>n/a</td>
+</tr>
+<tr>
+<td>patch</td>
+<td>patch</td>
+<td>n/a</td>
+</tr>
+<tr>
+<td>delete</td>
+<td>patch</td>
+<td>n/a</td>
+</tr>
+<tr>
+<td>delete</td>
+<td>delete</td>
+<td>deletecollection</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>额外的动词use用于podsecurity policy资源</p>
+</blockquote>
+<p>资源可以通过<code>kubectl api-resources</code>查看, 当前 k8s 支持两类 API Groups：</p>
+<ol>
+<li>Core Groups（核心组）， 该分组也可以称之为 Legacy Groups，作为 k8s 最核心的 API ，其特点是没有组的概念，例如 “v1”，在资源对象的定义中表示为 “apiVersion: v1”，属于核心组的资源主要有pod， svc等等。</li>
+</ol>
+<blockquote>
+<p>注意核心组没有组名，只有版本，所以apiGroups的值为空。</p>
+</blockquote>
+<ol start="2">
+<li>具有分组信息的 API， 这种 API 接口以/apis/GROUP_NAME/VERSION URL 路径进行标识，在api-resources定义中表示为 “apiVersion: groupname/version”， 例如 “apiVersion: batch/v1”.</li>
+</ol>
+<blockquote>
+<p>如果通过rke部署集群，cluster.yaml需要开启psp与rbac, 经测试1.4版本可用。</p>
+<p> kube-api:<br>       pod_security_policy: true<br>authorization:<br>      mode: rbac</p>
+</blockquote>
+<h4 id="2-2-如何实现rbac"><a href="#2-2-如何实现rbac" class="headerlink" title="2.2 如何实现rbac?"></a>2.2 如何实现rbac?</h4><p>rbac授权通过两组四种资源来配置的： </p>
+<ol>
+<li> namespace级别的资源， role和rolebinding</li>
+<li> 集群级别的资源， clusterrole和clusterrolebinding</li>
+</ol>
+<p>前一种是ns级别的限制，另一种是全局的、cluster级别的限制。 </p>
+<p>role和clusterrole声明一个角色，表明哪些<strong>动作</strong>可以在哪些<strong>资源</strong>上执行。</p>
+<p>rolebindings/clusterrolebindings分别用来将role/clusterrole绑定到sa或ua上</p>
+<p><code>serviceaccout</code></p>
+<p>在k8s中，service account是给集群中的资源使用，用户是不会去使用，是ns级别的资源，缩写为sa。 创建任何pod都需要指定sa，没有指定就使用默认的sa。当集群中的pod需要跟apiserver申请调用资源时， 该pod指定的sa通过一个rolebinding绑定一个role（或者是通过clusterrolebiding绑定clusterole ）, 这个role/clusterrole里的权限就该pod的权限。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[root@node scprittest]# kubectl get sa -o yaml </span><br><span class="line">apiVersion: v1</span><br><span class="line">items:</span><br><span class="line">- apiVersion: v1</span><br><span class="line">  kind: ServiceAccount</span><br><span class="line">  metadata:</span><br><span class="line">    creationTimestamp: &quot;2022-01-29T08:51:33Z&quot;</span><br><span class="line">    name: default</span><br><span class="line">    namespace: default</span><br><span class="line">    resourceVersion: &quot;271&quot;</span><br><span class="line">    selfLink: /api/v1/namespaces/default/serviceaccounts/default</span><br><span class="line">    uid: abc3bd19-dc94-4228-a190-badfc0749e3b</span><br><span class="line">  secrets:</span><br><span class="line">  - name: default-token-qvqbk</span><br><span class="line">kind: List</span><br><span class="line">metadata:</span><br><span class="line">  resourceVersion: &quot;&quot;</span><br><span class="line">  selfLink: &quot;&quot;</span><br></pre></td></tr></table></figure>
+
+<p>每个ns被创建后会自动创建默认sa, 可以看到默认的sa本身啥也没有，一个sa创建后需要授权绑定role/cluserrole才有权限。</p>
+<p><code>useraccount</code></p>
+<p>k8s中控制集群的用户, 下面是如何创建用户</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"># 创建用户证书key</span><br><span class="line">umask 077; openssl genrsa -out user-a.key 2048     </span><br><span class="line"># 创建用户证书请求，-subj指定组和用户，其中O是组名，CN是用户名</span><br><span class="line">openssl req -new -key user-a.key -out user-a.csr -subj &quot;/O=user-a/CN=user-a&quot;   </span><br><span class="line"># 使用k8s的ca签发用户证书</span><br><span class="line">openssl x509 -req -in user-a.csr -CA /etc/kubernetes/ssl/kube-ca.pem -CAkey /etc/kubernetes/ssl/kube-ca-key.pem -CAcreateserial -out user-a.crt -days 3650      </span><br><span class="line"># 用户配置</span><br><span class="line">kubectl config set-credentials user-a --client-certificate=user-a.crt --client-key=user-a.key --embed-certs=true</span><br><span class="line"># context设置 # context上下文，包括用户和集群，即选择哪个用户控制哪个集群。</span><br><span class="line">kubectl config set-context user-a@kubernetes --cluster=kubernetes --user=user-a    </span><br><span class="line"></span><br><span class="line">[root@node psp]# kubectl config get-users</span><br><span class="line">NAME</span><br><span class="line">bob</span><br><span class="line">kube-admin-cluster_10.206.16.3</span><br><span class="line"># 新建的用户没有权限</span><br><span class="line">kubectl config use-context bob@kubernetes</span><br><span class="line"># 用户需要通过rbac授权才能操作</span><br></pre></td></tr></table></figure>
+
+<p>binding和clusterbinding声明哪些用户或者SA被授权这些角色。 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@node psptest]# kubectl api-resources | grep role</span><br><span class="line">clusterrolebindings                            rbac.authorization.k8s.io/v1      false        ClusterRoleBinding</span><br><span class="line">clusterroles                                   rbac.authorization.k8s.io/v1      false        ClusterRole</span><br><span class="line">rolebindings                                   rbac.authorization.k8s.io/v1      true         RoleBinding</span><br><span class="line">roles                                          rbac.authorization.k8s.io/v1      true         Role</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-3-rbac测试"><a href="#2-3-rbac测试" class="headerlink" title="2.3 rbac测试"></a>2.3 rbac测试</h4><h5 id="2-3-1-role与rolebinding"><a href="#2-3-1-role与rolebinding" class="headerlink" title="2.3.1 role与rolebinding"></a>2.3.1 role与rolebinding</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"># 新建一个测试ns ns-test01</span><br><span class="line">[root@node psptest]# kubectl create ns ns-test01</span><br><span class="line">namespace/ns-test01 created</span><br><span class="line"></span><br><span class="line"># 新建一个测试pod </span><br><span class="line">[root@node psptest]# kubectl run test --image=luksa/kubectl-proxy -n ns-test01</span><br><span class="line">pod/test created</span><br><span class="line"></span><br><span class="line"># 集群启用rbac后，默认pod没有访问集群内资源的权限</span><br><span class="line">[root@node psptest]# kubectl exec test -n ns-test01 curl localhost:8001/api/v1/namespaces/ns-test01/services</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  &quot;kind&quot;: &quot;Status&quot;,</span><br><span class="line">  &quot;apiVersion&quot;: &quot;v1&quot;,</span><br><span class="line">  &quot;metadata&quot;: &#123;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;status&quot;: &quot;Failure&quot;,</span><br><span class="line">  &quot;message&quot;: &quot;service is forbidden: User \&quot;system:serviceaccount:ns-test01:default\&quot; cannot list resource \&quot;service\&quot; in API group \&quot;\&quot; in the namespace \&quot;ns-test01\&quot;&quot;,</span><br><span class="line">  &quot;reason&quot;: &quot;Forbidden&quot;,</span><br><span class="line">  &quot;details&quot;: &#123;</span><br><span class="line">    &quot;kind&quot;: &quot;service&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;code&quot;: 403</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># &quot;Forbidden&quot; 确实不能访问，说明rbac生效了</span><br><span class="line"></span><br><span class="line"># 给定一个可访问pod的role,并绑定到该ns的sa</span><br><span class="line">cat &gt;&gt; role-read-services.yml  &lt;&lt; EOF</span><br><span class="line">apiVersion: rbac.authorization.k8s.io/v1</span><br><span class="line">kind: Role</span><br><span class="line">metadata:</span><br><span class="line">  name: role-read-ns-services</span><br><span class="line">  namespace: ns-test01</span><br><span class="line">rules:</span><br><span class="line">- apiGroups: [&#x27;&#x27;]</span><br><span class="line">  verbs: [&#x27;get&#x27;, &#x27;list&#x27;]</span><br><span class="line">  resources: [&#x27;services&#x27;]</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"># 因为资源是多个， services必须是复数，否则不能访问</span><br><span class="line"># 可以通过resourceNames限定具体的资源，做进一步的限制</span><br><span class="line"></span><br><span class="line">[root@node psptest]# kubectl create -f role-read-services.yml </span><br><span class="line">role.rbac.authorization.k8s.io/role-read-ns-services created</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[root@node psptest]# kubectl create rolebinding rbd-read-pod-sa --role=role-read-ns-services --serviceaccount=ns-test01:default -n ns-test01</span><br><span class="line">rolebinding.rbac.authorization.k8s.io/rbd-read-pod-sa created</span><br><span class="line"></span><br><span class="line"># 查看rolebinding rbd-read-pod-sa</span><br><span class="line">[root@node scprittest]# kubectl get rolebinding rbd-read-pod-sa -o yaml -n ns-test01</span><br><span class="line">apiVersion: rbac.authorization.k8s.io/v1</span><br><span class="line">kind: RoleBinding</span><br><span class="line">metadata:</span><br><span class="line">  name: rbd-read-pod-sa</span><br><span class="line">  namespace: ns-test01</span><br><span class="line">  selfLink: /apis/rbac.authorization.k8s.io/v1/namespaces/ns-test01/rolebindings/rbd-read-pod-sa</span><br><span class="line">roleRef:</span><br><span class="line">  apiGroup: rbac.authorization.k8s.io</span><br><span class="line">  kind: Role</span><br><span class="line">  name: role-read-ns-services</span><br><span class="line">subjects:</span><br><span class="line">- kind: ServiceAccount</span><br><span class="line">  name: default</span><br><span class="line">  namespace: ns-test01</span><br><span class="line"></span><br><span class="line"># roleref字段为被绑定的role </span><br><span class="line"># subjects字段为绑定的sa或用户 </span><br><span class="line"># subjects.Kind有三种：  ServiceAccount/ User(用户) /Group(一组sa或一组用户)</span><br><span class="line"># subject.name为sa名称</span><br><span class="line"></span><br><span class="line"># 再pod中再次访问</span><br><span class="line">[root@node psptest]# kubectl exec test -n ns-test01 curl localhost:8001/api/v1/namespaces/ns-test01/services</span><br><span class="line">&#123;</span><br><span class="line">  &quot;kind&quot;: &quot;ServiceList&quot;,</span><br><span class="line">  &quot;apiVersion&quot;: &quot;v1&quot;,</span><br><span class="line">  &quot;metadata&quot;: &#123;</span><br><span class="line">    &quot;selfLink&quot;: &quot;/api/v1/namespaces/ns-test01/services&quot;,</span><br><span class="line">    &quot;resourceVersion&quot;: &quot;129667&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;items&quot;: []</span><br><span class="line"># 说明rbac授权成功</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-3-2-clusterrole与clusterrolebinding"><a href="#2-3-2-clusterrole与clusterrolebinding" class="headerlink" title="2.3.2 clusterrole与clusterrolebinding"></a>2.3.2 clusterrole与clusterrolebinding</h5><p>clusterrole是集群级别资源， 它允许访问没有命名空间级别的资源或者非资源型的URL。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"># 新建clusterrole可以访问集群级别资源node</span><br><span class="line">[root@node psptest]# cat &gt;&gt; clusterrole-node-reader.yaml &lt;&lt; EOF</span><br><span class="line">apiVersion: rbac.authorization.k8s.io/v1 </span><br><span class="line">kind: ClusterRole </span><br><span class="line">metadata: </span><br><span class="line">  name: node-reader</span><br><span class="line">rules: </span><br><span class="line">- apiGroups: [&#x27;&#x27;]</span><br><span class="line">  verbs: [&#x27;get&#x27;,&#x27;list&#x27;]</span><br><span class="line">  resources: [&#x27;nodes&#x27;]</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">[root@node psptest]# kubectl create -f clusterrole-node-reader.yaml </span><br><span class="line">clusterrole.rbac.authorization.k8s.io/node-reader created</span><br><span class="line"></span><br><span class="line"># 新建clusterrolebinding  </span><br><span class="line">[root@node psptest]# kubectl create clusterrolebinding crb-node-read --clusterrole=node-reader --serviceaccount=ns-test01:default</span><br><span class="line">clusterrolebinding.rbac.authorization.k8s.io/crb-node-read created</span><br><span class="line"></span><br><span class="line"># 未绑定之前无法访问，绑定之后可以访问</span><br><span class="line">[root@node psptest]# kubectl exec test -n ns-test01 curl localhost:8001/api/v1/nodes</span><br><span class="line">&#123;</span><br><span class="line">  &quot;kind&quot;: &quot;NodeList&quot;,</span><br><span class="line">  &quot;apiVersion&quot;: &quot;v1&quot;,</span><br><span class="line">  &quot;metadata&quot;: &#123;</span><br><span class="line">    &quot;selfLink&quot;: &quot;/api/v1/nodes&quot;,</span><br><span class="line">    &quot;resourceVersion&quot;: &quot;144316&quot;</span><br><span class="line">    ---</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-如何使用psp"><a href="#3-如何使用psp" class="headerlink" title="3  如何使用psp"></a>3  如何使用psp</h3><h4 id="3-1-psp能做什么？"><a href="#3-1-psp能做什么？" class="headerlink" title="3.1 psp能做什么？"></a>3.1 psp能做什么？</h4><p>通过psp配合rbac授权，我们可以做以下策略：</p>
+<ul>
+<li>通过psp做两个方面的限权。 </li>
+</ul>
+<ol>
+<li> 给用户绑定特定psp, 限制用户权限</li>
+<li> 给资源指定特定的psp，限制pod权限</li>
+</ol>
+<ul>
+<li><p>给sa或UA分组，统一分级管理。</p>
+</li>
+<li><p>通过区别使用role和clusterrole可以做的命名空间级别和集群级别的限制。</p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br></pre></td><td class="code"><pre><span class="line"># 首先我们看超级管理员admin用户是如何授权的</span><br><span class="line"># 为了方便查看某类资源的所有实例，写个脚本 get-resourecs-yaml.sh</span><br><span class="line">#!/bin/bash</span><br><span class="line">resourceName=$1</span><br><span class="line">echo $resourceName</span><br><span class="line">tempfile=&quot;$resourceName.txt&quot;</span><br><span class="line">resfile=&quot;all-yaml-$tempfile&quot;</span><br><span class="line">echo &quot;&quot; &gt; $resfile</span><br><span class="line">linecount=0</span><br><span class="line">echo $resfile</span><br><span class="line">echo $tempfile</span><br><span class="line"># 判断是否为Namespaced</span><br><span class="line">whetherNamespaced=`kubectl api-resources | grep $resourceName  | grep true | cut -d &quot; &quot; -f 1` </span><br><span class="line">kubectl get $resourceName --all-namespaces  &gt; $tempfile</span><br><span class="line">echo $whetherNamespaced</span><br><span class="line">sed -i &#x27;1d&#x27; $tempfile</span><br><span class="line">if [ $whetherNamespaced ]</span><br><span class="line">then </span><br><span class="line">  echo &quot;this is  Namespaced resource&quot;</span><br><span class="line">  cat $tempfile | while read line</span><br><span class="line">  do</span><br><span class="line">    let linecount++ </span><br><span class="line">    namespace=`echo $line | cut -d &quot; &quot; -f 1`</span><br><span class="line">    lineresourceName=`echo $line | cut -d &quot; &quot; -f 2`</span><br><span class="line">    echo &quot;here get $resourceName $lineresourceName&quot;</span><br><span class="line">    echo &quot;------------------------------$resourceName $linecount-------------------------&quot; &gt;&gt; $resfile</span><br><span class="line">    echo &quot;------------------------------$namespace-------------------------&quot; &gt;&gt; $resfile</span><br><span class="line">    echo &quot;------------------------------$lineresourceName-------------------------&quot; &gt;&gt; $resfile</span><br><span class="line">    kubectl get   $resourceName $lineresourceName -n $namespace -o yaml &gt;&gt; $resfile</span><br><span class="line">    echo &gt;&gt; $resfile</span><br><span class="line">    echo &gt;&gt; $resfile</span><br><span class="line">  done</span><br><span class="line">else </span><br><span class="line">  echo &quot;this is NOT  Namespaced resource&quot;</span><br><span class="line">  cat $tempfile | while read line</span><br><span class="line">  do</span><br><span class="line">    let linecount++ </span><br><span class="line">    lineresourceName=`echo $line | cut -d &quot; &quot; -f 1`</span><br><span class="line">    echo &quot;here get  $lineresourceName&quot;</span><br><span class="line">    echo &quot;------------------------------$resourceName $linecount-------------------------&quot; &gt;&gt; $resfile</span><br><span class="line">    echo &quot;------------------------------$lineresourceName-------------------------&quot; &gt;&gt;$resfile</span><br><span class="line">    kubectl get   $resourceName $lineresourceName  -o yaml &gt;&gt; $resfile</span><br><span class="line">    echo &gt;&gt; $resfile</span><br><span class="line">    echo &gt;&gt; $resfile</span><br><span class="line">  done</span><br><span class="line">fi </span><br><span class="line">rm -f $tempfile</span><br><span class="line"></span><br><span class="line">[root@node scprittest]# ./get-resourecs-yaml.sh  clusterroles</span><br><span class="line"></span><br><span class="line"># clusterrole </span><br><span class="line">------------------------------cluster-admin-------------------------</span><br><span class="line">apiVersion: rbac.authorization.k8s.io/v1</span><br><span class="line">kind: ClusterRole</span><br><span class="line">metadata:</span><br><span class="line">  annotations:</span><br><span class="line">    rbac.authorization.kubernetes.io/autoupdate: &quot;true&quot;</span><br><span class="line">  creationTimestamp: &quot;2022-01-29T07:28:07Z&quot;</span><br><span class="line">  labels:</span><br><span class="line">    kubernetes.io/bootstrapping: rbac-defaults</span><br><span class="line">  name: cluster-admin</span><br><span class="line">  resourceVersion: &quot;40&quot;</span><br><span class="line">  selfLink: /apis/rbac.authorization.k8s.io/v1/clusterroles/cluster-admin</span><br><span class="line">  uid: c65bce3d-8503-4d9a-b9d9-dd2f99753eae</span><br><span class="line">rules:</span><br><span class="line">- apiGroups:</span><br><span class="line">  - &#x27;*&#x27;</span><br><span class="line">  resources:</span><br><span class="line">  - &#x27;*&#x27;</span><br><span class="line">  verbs:</span><br><span class="line">  - &#x27;*&#x27;</span><br><span class="line">- nonResourceURLs:</span><br><span class="line">  - &#x27;*&#x27;</span><br><span class="line">  verbs:</span><br><span class="line">  - &#x27;*&#x27; </span><br><span class="line"></span><br><span class="line"># 所有动作所有资源皆开放</span><br><span class="line"></span><br><span class="line"># clusterrolebinding </span><br><span class="line">------------------------------cluster-admin-------------------------</span><br><span class="line">apiVersion: rbac.authorization.k8s.io/v1</span><br><span class="line">kind: ClusterRoleBinding</span><br><span class="line">metadata:</span><br><span class="line">  annotations:</span><br><span class="line">    rbac.authorization.kubernetes.io/autoupdate: &quot;true&quot;</span><br><span class="line">  creationTimestamp: &quot;2022-01-29T07:28:07Z&quot;</span><br><span class="line">  labels:</span><br><span class="line">    kubernetes.io/bootstrapping: rbac-defaults</span><br><span class="line">  name: cluster-admin</span><br><span class="line">  resourceVersion: &quot;93&quot;</span><br><span class="line">  selfLink: /apis/rbac.authorization.k8s.io/v1/clusterrolebindings/cluster-admin</span><br><span class="line">  uid: b27ae5b3-e59e-4301-8873-f8987db9bb65</span><br><span class="line">roleRef:</span><br><span class="line">  apiGroup: rbac.authorization.k8s.io</span><br><span class="line">  kind: ClusterRole</span><br><span class="line">  name: cluster-admin</span><br><span class="line">subjects:</span><br><span class="line">- apiGroup: rbac.authorization.k8s.io</span><br><span class="line">  kind: Group</span><br><span class="line">  name: system:masters</span><br><span class="line"># 绑定到masters组</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-2-psp用户限权"><a href="#3-2-psp用户限权" class="headerlink" title="3.2 psp用户限权"></a>3.2 psp用户限权</h4><p>假如现在的需求是给user-a用户启动privileged pod的权利， 而user-b用户没有该权限。<br><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/psp-ua2drawio.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br></pre></td><td class="code"><pre><span class="line"># 先创建两个用户user-a， user-b， 过程省略</span><br><span class="line"># 创建两个psp: psp-priv, psp-nopriv </span><br><span class="line">cat  &gt; psp-priv.yml &lt;&lt; EOF</span><br><span class="line">apiVersion: policy/v1beta1</span><br><span class="line">kind: PodSecurityPolicy</span><br><span class="line">metadata: </span><br><span class="line">  name: psp-priv</span><br><span class="line">spec: </span><br><span class="line">  hostIPC: false</span><br><span class="line">  hostPID: false</span><br><span class="line">  hostNetwork: false</span><br><span class="line">  hostPorts: </span><br><span class="line">  - min: 10000</span><br><span class="line">    max: 11000</span><br><span class="line">  privileged: true</span><br><span class="line">  readOnlyRootFilesystem: true</span><br><span class="line">  runAsUser: </span><br><span class="line">    rule: RunAsAny</span><br><span class="line">  fsGroup: </span><br><span class="line">    rule: RunAsAny</span><br><span class="line">  supplementalGroups: </span><br><span class="line">    rule: RunAsAny</span><br><span class="line">  seLinux: </span><br><span class="line">    rule: RunAsAny </span><br><span class="line">  volumes: </span><br><span class="line">  - &#x27;*&#x27; </span><br><span class="line">EOF</span><br><span class="line">cat  &gt; psp-nopriv.yml &lt;&lt; EOF</span><br><span class="line">apiVersion: policy/v1beta1</span><br><span class="line">kind: PodSecurityPolicy</span><br><span class="line">metadata: </span><br><span class="line">  name: psp-nopriv</span><br><span class="line">spec: </span><br><span class="line">  hostIPC: false</span><br><span class="line">  hostPID: false</span><br><span class="line">  hostNetwork: false</span><br><span class="line">  hostPorts: </span><br><span class="line">  - min: 10000</span><br><span class="line">    max: 11000</span><br><span class="line">  privileged: false</span><br><span class="line">  readOnlyRootFilesystem: true</span><br><span class="line">  runAsUser: </span><br><span class="line">    rule: RunAsAny</span><br><span class="line">  fsGroup: </span><br><span class="line">    rule: RunAsAny</span><br><span class="line">  supplementalGroups: </span><br><span class="line">    rule: RunAsAny</span><br><span class="line">  seLinux: </span><br><span class="line">    rule: RunAsAny </span><br><span class="line">  volumes: </span><br><span class="line">  - &#x27;*&#x27; </span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"># 创建两个clusterrole, cr-psp-priv, cr-psp-nopriv</span><br><span class="line">cat &gt; cr-psp-priv.yml &lt;&lt; EOF</span><br><span class="line">apiVersion: rbac.authorization.k8s.io/v1</span><br><span class="line">kind: ClusterRole</span><br><span class="line">metadata:</span><br><span class="line">  name: cr-psp-priv</span><br><span class="line">rules:</span><br><span class="line">- apiGroups: [&#x27;policy&#x27;]</span><br><span class="line">  resources: [&#x27;podsecuritypolicies&#x27;]</span><br><span class="line">  verbs:     [&#x27;use&#x27;]</span><br><span class="line">  resourceNames:</span><br><span class="line">  - psp-priv</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">cat &gt; cr-psp-nopriv.yml &lt;&lt; EOF</span><br><span class="line">apiVersion: rbac.authorization.k8s.io/v1</span><br><span class="line">kind: ClusterRole</span><br><span class="line">metadata:</span><br><span class="line">  name: cr-psp-nopriv</span><br><span class="line">rules:</span><br><span class="line">- apiGroups: [&#x27;policy&#x27;]</span><br><span class="line">  resources: [&#x27;podsecuritypolicies&#x27;]</span><br><span class="line">  verbs:     [&#x27;use&#x27;]</span><br><span class="line">  resourceNames:</span><br><span class="line">  - psp-nopriv</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"># 创建两个clusterrolebinding: crb-psp-priv-user-a, crb-psp-nopriv-user-b</span><br><span class="line"></span><br><span class="line">cat &gt; crb-psp-priv-user-a.yml &lt;&lt; EOF </span><br><span class="line">apiVersion: rbac.authorization.k8s.io/v1</span><br><span class="line">kind: ClusterRoleBinding</span><br><span class="line">metadata:</span><br><span class="line">  name: crb-psp-priv-user-a</span><br><span class="line">roleRef:</span><br><span class="line">  kind: ClusterRole</span><br><span class="line">  name: cr-psp-priv</span><br><span class="line">  apiGroup: rbac.authorization.k8s.io</span><br><span class="line">subjects:</span><br><span class="line">- apiGroup: rbac.authorization.k8s.io</span><br><span class="line">  kind: User</span><br><span class="line">  name: user-a:user-a</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">cat &gt; crb-psp-nopriv-user-b.yml &lt;&lt; EOF </span><br><span class="line">apiVersion: rbac.authorization.k8s.io/v1</span><br><span class="line">kind: ClusterRoleBinding</span><br><span class="line">metadata:</span><br><span class="line">  name: crb-psp-nopriv-user-b</span><br><span class="line">roleRef:</span><br><span class="line">  kind: ClusterRole</span><br><span class="line">  name: cr-psp-nopriv</span><br><span class="line">  apiGroup: rbac.authorization.k8s.io</span><br><span class="line">subjects:</span><br><span class="line">- apiGroup: rbac.authorization.k8s.io</span><br><span class="line">  kind: User</span><br><span class="line">  name: user-b</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">[root@node uapriv]# kubectl create   -f .</span><br><span class="line">clusterrole.rbac.authorization.k8s.io/cr-psp-nopriv created</span><br><span class="line">clusterrole.rbac.authorization.k8s.io/cr-psp-priv created</span><br><span class="line">clusterrolebinding.rbac.authorization.k8s.io/crb-psp-priv-user-a created</span><br><span class="line">clusterrolebinding.rbac.authorization.k8s.io/crb-psp-nopriv-user-a created</span><br><span class="line"></span><br><span class="line">[root@node uapriv]# kubectl --user user-b create -f pod-privileged1.yml </span><br><span class="line">Error from server (Forbidden): error when creating &quot;pod-privileged1.yml&quot;: pods is forbidden: User &quot;user-b&quot; cannot create resource &quot;pods&quot; in API group &quot;&quot; in the namespace &quot;default&quot;</span><br><span class="line"></span><br><span class="line">[root@node uapriv]# kubectl --user user-a  create -f pod-privileged1.yml </span><br><span class="line">pod/pod-privileged created</span><br><span class="line"># 可以看到权限生效了</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-3-psp-资源权限限制"><a href="#3-3-psp-资源权限限制" class="headerlink" title="3.3 psp 资源权限限制"></a>3.3 psp 资源权限限制</h4><p>假如我们现在的需求是有一个pod需要hostPID, 另一个不需要则根据最小权限原则禁止使用。 那么设计思路如下图。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/psp-sa2.drawio.png"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/01/25/2022-01-25-python-paramiko/" rel="prev" title="python-paramiko">
+                  <i class="fa fa-chevron-left"></i> python-paramiko
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/01/25/2022-01-25-python-shutil/" rel="next" title="python shutil">
+                  python shutil <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuanwanli</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

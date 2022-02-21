@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yuanwanli1995.github.io","root":"/","images":"/images","scheme":"Pisces","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/./public/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="1 docker 部署12345678docker pull mongo # 本地数据文件mkdir &#x2F;data&#x2F;mongodb0 docker run --name mongodb -v &#x2F;data&#x2F;mongodb0:&#x2F;data&#x2F;db -p 27017:27017 -d mongo --auth#  挂载 # 端口映射 # 授权   2  控制1234567# 进入容器 docker exec">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mongodb">
+<meta property="og:url" content="http://yuanwanli1995.github.io/2022/01/17/2022-01-17-mongodb/index.html">
+<meta property="og:site_name" content="brisk">
+<meta property="og:description" content="1 docker 部署12345678docker pull mongo # 本地数据文件mkdir &#x2F;data&#x2F;mongodb0 docker run --name mongodb -v &#x2F;data&#x2F;mongodb0:&#x2F;data&#x2F;db -p 27017:27017 -d mongo --auth#  挂载 # 端口映射 # 授权   2  控制1234567# 进入容器 docker exec">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-01-16T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-02-21T06:54:31.993Z">
+<meta property="article:author" content="yuanwanli">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://yuanwanli1995.github.io/2022/01/17/2022-01-17-mongodb/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://yuanwanli1995.github.io/2022/01/17/2022-01-17-mongodb/","path":"2022/01/17/2022-01-17-mongodb/","title":"mongodb"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>mongodb | brisk</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">brisk</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">welcome</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-docker-%E9%83%A8%E7%BD%B2"><span class="nav-number">1.</span> <span class="nav-text">1 docker 部署</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%8E%A7%E5%88%B6"><span class="nav-number">2.</span> <span class="nav-text">2  控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-mongodb%E5%91%BD%E4%BB%A4"><span class="nav-number">3.</span> <span class="nav-text">3 mongodb命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-python-%E4%BA%A4%E4%BA%92-pymongo"><span class="nav-number">4.</span> <span class="nav-text">4 python 交互  pymongo</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yuanwanli</p>
+  <div class="site-description" itemprop="description">等不是办法，干才有出路</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">75</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2022/01/17/2022-01-17-mongodb/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuanwanli">
+      <meta itemprop="description" content="等不是办法，干才有出路">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="brisk">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          mongodb
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-01-17 00:00:00" itemprop="dateCreated datePublished" datetime="2022-01-17T00:00:00+08:00">2022-01-17</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-02-21 14:54:31" itemprop="dateModified" datetime="2022-02-21T14:54:31+08:00">2022-02-21</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BC%96%E7%A8%8B%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">编程笔记</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="1-docker-部署"><a href="#1-docker-部署" class="headerlink" title="1 docker 部署"></a>1 docker 部署</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">docker pull mongo </span><br><span class="line"># 本地数据文件</span><br><span class="line">mkdir /data/mongodb0 </span><br><span class="line">docker run --name mongodb -v /data/mongodb0:/data/db -p 27017:27017 -d mongo --auth</span><br><span class="line"></span><br><span class="line">#  挂载 </span><br><span class="line"># 端口映射 </span><br><span class="line"># 授权 </span><br></pre></td></tr></table></figure>
+
+<h3 id="2-控制"><a href="#2-控制" class="headerlink" title="2  控制"></a>2  控制</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 进入容器 </span><br><span class="line">docker exec -it  mongodb bash </span><br><span class="line"># 进入mongodb </span><br><span class="line">mongo </span><br><span class="line"># 添加用户</span><br><span class="line">db.createUser(&#123; user: &#x27;root&#x27;, pwd: &#x27;root123&#x27;, roles: [ &#123; role: &quot;userAdminAnyDatabase&quot;, db: &quot;test&quot; &#125; ] &#125;); </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>mongodb 用户权限</p>
+<p>数据库用户角色：read、readWrite;<br>数据库管理角色：dbAdmin、dbOwner、userAdmin；<br>集群管理角色：clusterAdmin、clusterManager、clusterMonitor、hostManager；<br>备份恢复角色：backup、restore；<br>所有数据库角色：readAnyDatabase、readWriteAnyDatabase、userAdminAnyDatabase、dbAdminAnyDatabase<br>超级用户角色：root // 这里还有几个角色间接或直接提供了系统超级用户的访问（dbOwner 、userAdmin、userAdminAnyDatabase）<br>内部角色：__system</p>
+</blockquote>
+<blockquote>
+<p>角色说明</p>
+<p>Read：允许用户读取指定数据库<br>readWrite：允许用户读写指定数据库<br>dbAdmin：允许用户在指定数据库中执行管理函数，如索引创建、删除，查看统计或访问system.profile<br>userAdmin：允许用户向system.users集合写入，可以找指定数据库里创建、删除和管理用户<br>clusterAdmin：只在admin数据库中可用，赋予用户所有分片和复制集相关函数的管理权限。<br>readAnyDatabase：只在admin数据库中可用，赋予用户所有数据库的读权限<br>readWriteAnyDatabase：只在admin数据库中可用，赋予用户所有数据库的读写权限<br>userAdminAnyDatabase：只在admin数据库中可用，赋予用户所有数据库的userAdmin权限<br>dbAdminAnyDatabase：只在admin数据库中可用，赋予用户所有数据库的dbAdmin权限。<br>root：只在admin数据库中可用。超级账号，超级权限</p>
+</blockquote>
+<h3 id="3-mongodb命令"><a href="#3-mongodb命令" class="headerlink" title="3 mongodb命令"></a>3 mongodb命令</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br></pre></td><td class="code"><pre><span class="line"># 数据库列表 </span><br><span class="line">&gt; show dbs </span><br><span class="line">admin   0.000GB</span><br><span class="line">config  0.000GB</span><br><span class="line">local   0.000GB</span><br><span class="line">test    0.000GB</span><br><span class="line"></span><br><span class="line"># 删除数据库</span><br><span class="line">db.dropDatabase()</span><br><span class="line"></span><br><span class="line"># 选择数据库, 没有则创建</span><br><span class="line">&gt; use test01 </span><br><span class="line">switched to db test01</span><br><span class="line"></span><br><span class="line"># 查看当前数据库</span><br><span class="line">&gt; db</span><br><span class="line">test01</span><br><span class="line"></span><br><span class="line"># 创建表</span><br><span class="line">&gt; db.createCollection(&quot;websites&quot;)</span><br><span class="line">&#123; &quot;ok&quot; : 1 &#125;</span><br><span class="line">&gt; db.createCollection(&quot;website&quot;)</span><br><span class="line">&#123; &quot;ok&quot; : 1 &#125;</span><br><span class="line"># 查看表 </span><br><span class="line">&gt; show tables </span><br><span class="line">website</span><br><span class="line">websites</span><br><span class="line"># 删除表</span><br><span class="line">&gt; db.websites.drop()</span><br><span class="line">true</span><br><span class="line"># 查看表 = show tables</span><br><span class="line">&gt;  show collections</span><br><span class="line">website</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 插入数据</span><br><span class="line">&gt; db.website.insert(&#123;&quot;web01&quot;:&quot;www.baidu.com&quot;&#125;)</span><br><span class="line">WriteResult(&#123; &quot;nInserted&quot; : 1 &#125;)</span><br><span class="line"># 或者</span><br><span class="line">&gt; db.website.save(&#123;&quot;web02&quot;:&quot;www.bing.com&quot;&#125;)</span><br><span class="line">WriteResult(&#123; &quot;nInserted&quot; : 1 &#125;)</span><br><span class="line"></span><br><span class="line"># 3.2 版本之后新增了 db.collection.insertOne() 和 db.collection.insertMany()。</span><br><span class="line">db.collection.insertOne() 用于向集合插入一个新文档，语法格式如下：</span><br><span class="line">db.collection.insertOne(</span><br><span class="line">   &lt;document&gt;,</span><br><span class="line">   &#123;</span><br><span class="line">      writeConcern: &lt;document&gt;</span><br><span class="line">   &#125;</span><br><span class="line">)</span><br><span class="line">db.collection.insertMany() 用于向集合插入一个多个文档，语法格式如下：</span><br><span class="line">db.collection.insertMany(</span><br><span class="line">   [ &lt;document 1&gt; , &lt;document 2&gt;, ... ],</span><br><span class="line">   &#123;</span><br><span class="line">      writeConcern: &lt;document&gt;,</span><br><span class="line">      ordered: &lt;boolean&gt;</span><br><span class="line">   &#125;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"># document：要写入的文档。</span><br><span class="line"># writeConcern：写入策略，默认为 1，即要求确认写操作，0 是不要求。</span><br><span class="line"># ordered：指定是否按顺序写入，默认 true，按顺序写入。</span><br><span class="line"></span><br><span class="line"># 查看表</span><br><span class="line">&gt; db.website.find()</span><br><span class="line">&#123; &quot;_id&quot; : ObjectId(&quot;61e553bd1f4969ef76c0dad4&quot;), &quot;web01&quot; : &quot;www.baidu.com&quot; &#125;</span><br><span class="line">&#123; &quot;_id&quot; : ObjectId(&quot;61e553ee1f4969ef76c0dad5&quot;), &quot;web02&quot; : &quot;www.bing.com&quot; &#125;</span><br><span class="line"></span><br><span class="line"># 我们也可以将数据定义为一个变量，如下所示：</span><br><span class="line"></span><br><span class="line">&gt; document=(&#123;title: &#x27;MongoDB 教程&#x27;, </span><br><span class="line">    description: &#x27;MongoDB 是一个 Nosql 数据库&#x27;,</span><br><span class="line">    by: &#x27;菜鸟教程&#x27;,</span><br><span class="line">    url: &#x27;http://www.runoob.com&#x27;,</span><br><span class="line">    tags: [&#x27;mongodb&#x27;, &#x27;database&#x27;, &#x27;NoSQL&#x27;],</span><br><span class="line">    likes: 100</span><br><span class="line">&#125;);</span><br><span class="line">执行后显示结果如下：</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">        &quot;title&quot; : &quot;MongoDB 教程&quot;,</span><br><span class="line">        &quot;description&quot; : &quot;MongoDB 是一个 Nosql 数据库&quot;,</span><br><span class="line">        &quot;by&quot; : &quot;菜鸟教程&quot;,</span><br><span class="line">        &quot;url&quot; : &quot;http://www.runoob.com&quot;,</span><br><span class="line">        &quot;tags&quot; : [</span><br><span class="line">                &quot;mongodb&quot;,</span><br><span class="line">                &quot;database&quot;,</span><br><span class="line">                &quot;NoSQL&quot;</span><br><span class="line">        ],</span><br><span class="line">        &quot;likes&quot; : 100</span><br><span class="line">&#125;</span><br><span class="line">执行插入操作：</span><br><span class="line"></span><br><span class="line">&gt; db.col.insert(document)</span><br><span class="line">WriteResult(&#123; &quot;nInserted&quot; : 1 &#125;)</span><br><span class="line"></span><br><span class="line"># 更新文档内容</span><br><span class="line"># update() 方法用于更新已存在的文档。语法格式如下：</span><br><span class="line">db.collection.update(</span><br><span class="line">   &lt;query&gt;,</span><br><span class="line">   &lt;update&gt;,</span><br><span class="line">   &#123;</span><br><span class="line">     upsert: &lt;boolean&gt;,</span><br><span class="line">     multi: &lt;boolean&gt;,</span><br><span class="line">     writeConcern: &lt;document&gt;</span><br><span class="line">   &#125;</span><br><span class="line">)</span><br><span class="line"># 参数说明：</span><br><span class="line"># query : update的查询条件，类似sql update查询内where后面的。</span><br><span class="line"># update : update的对象和一些更新的操作符（如$,$inc...）等，也可以理解为sql update查询内set后面的</span><br><span class="line"># upsert : 可选，这个参数的意思是，如果不存在update的记录，是否插入objNew,true为插入，默认是false，不插# 入。</span><br><span class="line"># multi : 可选，mongodb 默认是false,只更新找到的第一条记录，如果这个参数为true,就把按条件查出来多条记录# 全部更新。</span><br><span class="line"># writeConcern :可选，抛出异常的级别。</span><br><span class="line"></span><br><span class="line">&gt; db.website.update(&#123;&quot;web01&quot; : &quot;www.baidu.com&quot;&#125;,&#123;$set: &#123;&quot;web01&quot; : &quot;www.baiduya.com&quot;&#125;&#125; )</span><br><span class="line">WriteResult(&#123; &quot;nMatched&quot; : 1, &quot;nUpserted&quot; : 0, &quot;nModified&quot; : 1 &#125;)</span><br><span class="line">&gt; db.website.find()</span><br><span class="line">&#123; &quot;_id&quot; : ObjectId(&quot;61e553bd1f4969ef76c0dad4&quot;), &quot;web01&quot; : &quot;www.baiduya.com&quot; &#125;</span><br><span class="line">&#123; &quot;_id&quot; : ObjectId(&quot;61e553ee1f4969ef76c0dad5&quot;), &quot;web02&quot; : &quot;www.bing.com&quot; &#125;</span><br><span class="line"></span><br><span class="line">save() 方法</span><br><span class="line">save() 方法通过传入的文档来替换已有文档，_id 主键存在就更新，不存在就插入。语法格式如下：</span><br><span class="line"></span><br><span class="line">db.collection.save(</span><br><span class="line">   &lt;document&gt;,</span><br><span class="line">   &#123;</span><br><span class="line">     writeConcern: &lt;document&gt;</span><br><span class="line">   &#125;</span><br><span class="line">)</span><br><span class="line">参数说明：</span><br><span class="line"></span><br><span class="line">document : 文档数据。</span><br><span class="line">writeConcern :可选，抛出异常的级别。</span><br><span class="line">实例</span><br><span class="line">以下实例中我们替换了 _id 为 56064f89ade2f21f36b03136 的文档数据：</span><br><span class="line"></span><br><span class="line">&gt;db.col.save(&#123;</span><br><span class="line">    &quot;_id&quot; : ObjectId(&quot;56064f89ade2f21f36b03136&quot;),</span><br><span class="line">    &quot;title&quot; : &quot;MongoDB&quot;,</span><br><span class="line">    &quot;description&quot; : &quot;MongoDB 是一个 Nosql 数据库&quot;,</span><br><span class="line">    &quot;by&quot; : &quot;Runoob&quot;,</span><br><span class="line">    &quot;url&quot; : &quot;http://www.runoob.com&quot;,</span><br><span class="line">    &quot;tags&quot; : [</span><br><span class="line">            &quot;mongodb&quot;,</span><br><span class="line">            &quot;NoSQL&quot;</span><br><span class="line">    ],</span><br><span class="line">    &quot;likes&quot; : 110</span><br><span class="line">&#125;)</span><br><span class="line">替换成功后，我们可以通过 find() 命令来查看替换后的数据</span><br><span class="line"></span><br><span class="line">&gt;db.col.find().pretty()</span><br><span class="line">&#123;</span><br><span class="line">        &quot;_id&quot; : ObjectId(&quot;56064f89ade2f21f36b03136&quot;),</span><br><span class="line">        &quot;title&quot; : &quot;MongoDB&quot;,</span><br><span class="line">        &quot;description&quot; : &quot;MongoDB 是一个 Nosql 数据库&quot;,</span><br><span class="line">        &quot;by&quot; : &quot;Runoob&quot;,</span><br><span class="line">        &quot;url&quot; : &quot;http://www.runoob.com&quot;,</span><br><span class="line">        &quot;tags&quot; : [</span><br><span class="line">                &quot;mongodb&quot;,</span><br><span class="line">                &quot;NoSQL&quot;</span><br><span class="line">        ],</span><br><span class="line">        &quot;likes&quot; : 110</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-python-交互-pymongo"><a href="#4-python-交互-pymongo" class="headerlink" title="4 python 交互  pymongo"></a>4 python 交互  pymongo</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">from pymongo import MongoClient</span><br><span class="line"></span><br><span class="line">client = MongoClient(&quot;mongodb://1.117.61.155:27017&quot;)</span><br><span class="line"># client = MongoClient(host=&#x27;localhost&#x27;, port=27017)</span><br><span class="line"></span><br><span class="line">db = client[&quot;test01&quot;]</span><br><span class="line"></span><br><span class="line">col = db[&#x27;website&#x27;]</span><br><span class="line"></span><br><span class="line"># result = col.insert_one(&#123;&quot;web04&quot;:&quot;www.cnblogs.com&quot;&#125;)</span><br><span class="line"># print(result.inserted_id)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">cursor = col.find() </span><br><span class="line"># cursor = col.find(&#123;&quot;web04&quot;:&quot;www.cnblogs.com&quot;&#125;) # 过滤查询 </span><br><span class="line">for doc in cursor: </span><br><span class="line">    print(doc)</span><br><span class="line"></span><br><span class="line"># result = col.update_one(</span><br><span class="line">#     &#123;&quot;web04&quot;:&quot;www.cnblogs.com&quot;&#125;,</span><br><span class="line">#     &#123;</span><br><span class="line">#         &quot;$set&quot;:  &#123;&quot;web04&quot;:&quot;www.cnblogs.cn&quot;&#125;,</span><br><span class="line">#         # &quot;$currentDate&quot;: &#123;&quot;lastModified&quot;: True&#125;</span><br><span class="line">#     &#125;</span><br><span class="line"># )</span><br><span class="line"># # 这个操作返回了一个UpdateResult对象。这个对象报告了符合条件的文档数目以及被修改的文档数目。</span><br><span class="line"># print(result.modified_count)</span><br><span class="line"></span><br><span class="line"># 删除文档</span><br><span class="line">result = col.delete_many(&#123;&quot;borough&quot;: &quot;Manhattan&quot;&#125;)</span><br><span class="line"></span><br><span class="line"># 删除表</span><br><span class="line">col.drop()</span><br></pre></td></tr></table></figure>
+
+
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/01/17/2022-01-17-pika-rabbitmq/" rel="prev" title="pika-rabbitmq">
+                  <i class="fa fa-chevron-left"></i> pika-rabbitmq
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/01/18/2022-01-18-centos-%E9%85%8D%E7%BD%AEpython3/" rel="next" title="centos 配置python3">
+                  centos 配置python3 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuanwanli</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

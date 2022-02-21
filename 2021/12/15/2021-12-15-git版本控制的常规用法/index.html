@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yuanwanli1995.github.io","root":"/","images":"/images","scheme":"Pisces","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/./public/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="[TOC] 最近在改服务器上改代码的时候，每次都要在本地备份，有时在本地改完还要同步，搞多个版本把我自己都搞乱了，是时候使用git了。 我的需求之一就是在多台机器上操作，能够同步，在服务器上能下载最新的版本， 更改后再更新到仓库，git可以解决我的需求，github作为仓库，有的时候网络不稳定，gitee更快一点，所以就选择gitee作为远程仓库。 gitee首先要创建gitee账户，再新建仓库。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="git版本控制的常规用法">
+<meta property="og:url" content="http://yuanwanli1995.github.io/2021/12/15/2021-12-15-git%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E7%9A%84%E5%B8%B8%E8%A7%84%E7%94%A8%E6%B3%95/index.html">
+<meta property="og:site_name" content="brisk">
+<meta property="og:description" content="[TOC] 最近在改服务器上改代码的时候，每次都要在本地备份，有时在本地改完还要同步，搞多个版本把我自己都搞乱了，是时候使用git了。 我的需求之一就是在多台机器上操作，能够同步，在服务器上能下载最新的版本， 更改后再更新到仓库，git可以解决我的需求，github作为仓库，有的时候网络不稳定，gitee更快一点，所以就选择gitee作为远程仓库。 gitee首先要创建gitee账户，再新建仓库。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/git.drawio.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/gitbranch.drawio.png">
+<meta property="article:published_time" content="2021-12-14T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-02-21T06:54:31.993Z">
+<meta property="article:author" content="yuanwanli">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/git.drawio.png">
+
+
+<link rel="canonical" href="http://yuanwanli1995.github.io/2021/12/15/2021-12-15-git%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E7%9A%84%E5%B8%B8%E8%A7%84%E7%94%A8%E6%B3%95/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://yuanwanli1995.github.io/2021/12/15/2021-12-15-git%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E7%9A%84%E5%B8%B8%E8%A7%84%E7%94%A8%E6%B3%95/","path":"2021/12/15/2021-12-15-git版本控制的常规用法/","title":"git版本控制的常规用法"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>git版本控制的常规用法 | brisk</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">brisk</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">welcome</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#gitee"><span class="nav-number">1.</span> <span class="nav-text">gitee</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#linux%E7%B3%BB%E7%BB%9F"><span class="nav-number">2.</span> <span class="nav-text">linux系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#windows"><span class="nav-number">3.</span> <span class="nav-text">windows</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E4%B8%80%E6%AD%A5%E4%BD%BF%E7%94%A8"><span class="nav-number">4.</span> <span class="nav-text">进一步使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E6%94%AF%E5%90%88%E5%B9%B6"><span class="nav-number">5.</span> <span class="nav-text">分支合并</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%87%E7%AD%BE"><span class="nav-number">6.</span> <span class="nav-text">标签</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3"><span class="nav-number">7.</span> <span class="nav-text">问题解决</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yuanwanli</p>
+  <div class="site-description" itemprop="description">等不是办法，干才有出路</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">75</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2021/12/15/2021-12-15-git%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E7%9A%84%E5%B8%B8%E8%A7%84%E7%94%A8%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuanwanli">
+      <meta itemprop="description" content="等不是办法，干才有出路">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="brisk">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          git版本控制的常规用法
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-12-15 00:00:00" itemprop="dateCreated datePublished" datetime="2021-12-15T00:00:00+08:00">2021-12-15</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-02-21 14:54:31" itemprop="dateModified" datetime="2022-02-21T14:54:31+08:00">2022-02-21</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BC%96%E7%A8%8B%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">编程笔记</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>[TOC]</p>
+<p>最近在改服务器上改代码的时候，每次都要在本地备份，有时在本地改完还要同步，搞多个版本把我自己都搞乱了，是时候使用git了。 我的需求之一就是在多台机器上操作，能够同步，在服务器上能下载最新的版本， 更改后再更新到仓库，git可以解决我的需求，github作为仓库，有的时候网络不稳定，gitee更快一点，所以就选择gitee作为远程仓库。</p>
+<h3 id="gitee"><a href="#gitee" class="headerlink" title="gitee"></a>gitee</h3><p>首先要创建gitee账户，再新建仓库。 </p>
+<h3 id="linux系统"><a href="#linux系统" class="headerlink" title="linux系统"></a>linux系统</h3><p>安装git , 配置密钥，然后就可以拉取或者更新。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"># 源里有git，直接yum安装即可</span><br><span class="line">yum -y install git</span><br><span class="line"># 新建一个文件夹，作为gitee仓库交互的仓库</span><br><span class="line">mkdir gitee &amp;&amp; cd gitee </span><br><span class="line"># git 初始化</span><br><span class="line">git init </span><br><span class="line"># 初始化一个.git文件，是一个工作目录， 保存status, 克隆是不需要的.git的, 查找.git顺序， 同级目录，上级目录。</span><br><span class="line"># 配置用户</span><br><span class="line">git config --global user.name &quot;yuanwl&quot;</span><br><span class="line">git config --global user.email &quot;yuan.wanli@qq.com&quot;</span><br><span class="line"># 配置远端地址 - 目标远程仓库的下载链接 #origin 远端仓库本地名称</span><br><span class="line">git remote add origin https://gitee.com/yuanwl/k8s.git</span><br><span class="line"># 会生成一些配置文件，看一下</span><br><span class="line">[root@node61 gitee]# ll -a</span><br><span class="line">drwxr-xr-x   8 root root 4096 Dec 15 15:39 .git</span><br><span class="line">[root@node61 gitee]# ll -a .git/</span><br><span class="line">total 60</span><br><span class="line">drwxr-xr-x  2 root root 4096 Dec 15 10:39 branches </span><br><span class="line"># 分支</span><br><span class="line">-rw-r--r--  1 root root    5 Dec 15 15:31 COMMIT_EDITMSG</span><br><span class="line"># commit 信息  </span><br><span class="line">-rw-r--r--  1 root root  352 Dec 15 15:39 config  ---远端配置文件在这里</span><br><span class="line"># 配置文件</span><br><span class="line">-rw-r--r--  1 root root   73 Dec 15 10:39 description</span><br><span class="line">-rw-r--r--  1 root root   82 Dec 15 14:35 FETCH_HEAD</span><br><span class="line">-rw-r--r--  1 root root   23 Dec 15 10:39 HEAD</span><br><span class="line">drwxr-xr-x  2 root root 4096 Dec 15 10:39 hooks</span><br><span class="line"># 命令</span><br><span class="line">-rw-r--r--  1 root root 1241 Dec 15 15:30 index</span><br><span class="line">drwxr-xr-x  2 root root 4096 Dec 15 10:39 info </span><br><span class="line">drwxr-xr-x  3 root root 4096 Dec 15 10:45 logs</span><br><span class="line"># 日志</span><br><span class="line">drwxr-xr-x 55 root root 4096 Dec 15 14:56 objects </span><br><span class="line">-rw-r--r--  1 root root   41 Dec 15 14:35 ORIG_HEAD</span><br><span class="line">drwxr-xr-x  5 root root 4096 Dec 15 14:36 refs </span><br><span class="line"># 许多文件也不清楚作用， 但应该git配置和操作的信息都在这</span><br></pre></td></tr></table></figure>
+
+<p>git配置后之后，已经可以和gitee或其他线上仓库交互了，比如拉取一个仓库</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git clone origin https://gitee.com/yuanwl/k8s.git</span><br><span class="line"># 或者</span><br><span class="line">git pull origin https://gitee.com/yuanwl/k8s.git</span><br></pre></td></tr></table></figure>
+
+<p>可以在本地修改同步到远程仓库</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 例如刚修改了 README.md, 提交到暂存区</span><br><span class="line">git add README.md </span><br><span class="line"># 这就告诉了git, 做了哪些修改</span><br><span class="line">git commit -m &quot;test&quot;</span><br><span class="line"># commit就是确认提交到了本地仓库， -m 的参数是这次提交的注释，虽然写注释有点麻烦，但是写一下还是有用的，知道是提交了什么 </span><br><span class="line">git push  </span><br><span class="line"># 之后会提示输入用户和密码，然后就可以提交了</span><br></pre></td></tr></table></figure>
+
+<p>这是一个变更同步到仓库的过程，第一次接触可能会疑问，为什么不能一步到位，要三个命令才能同步呢？这是因为git的工作台机制，为了版本控制。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/git.drawio.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"># 测试</span><br><span class="line">[root@node61 k8s]#echo &quot;this is a test &quot;work stage&quot;&quot; &gt;&gt; test.md </span><br><span class="line"># 更改后查看状态， not staged </span><br><span class="line">[root@node61 k8s]# git status  </span><br><span class="line"># On branch master</span><br><span class="line"># Changes not staged for commit:</span><br><span class="line">#   (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)</span><br><span class="line">#   (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)</span><br><span class="line">#</span><br><span class="line">#	modified:   test.md</span><br><span class="line">#</span><br><span class="line">no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)</span><br><span class="line">[root@node61 k8s]# git add test.md</span><br><span class="line"># add后查看状态， not commited </span><br><span class="line">[root@node61 k8s]# git status </span><br><span class="line"># On branch master</span><br><span class="line"># Changes to be committed:</span><br><span class="line">#   (use &quot;git reset HEAD &lt;file&gt;...&quot; to unstage)</span><br><span class="line">#</span><br><span class="line">#	modified:   test.md</span><br><span class="line">#</span><br><span class="line">[root@node61 k8s]# git commit -m &quot;1&quot;</span><br><span class="line">[master 31f1e76] 1</span><br><span class="line"> 1 file changed, 1 insertion(+), 1 deletion(-)</span><br><span class="line"> # commit后查看状态， 没有push</span><br><span class="line">[root@node61 k8s]# git status</span><br><span class="line"># On branch master</span><br><span class="line"># Your branch is ahead of &#x27;origin/master&#x27; by 1 commit.</span><br><span class="line">#   (use &quot;git push&quot; to publish your local commits)</span><br><span class="line">#</span><br><span class="line">nothing to commit, working directory clean</span><br><span class="line">[root@node61 k8s]# git push </span><br><span class="line">Counting objects: 5, done.</span><br><span class="line">Compressing objects: 100% (2/2), done.</span><br><span class="line">Writing objects: 100% (3/3), 271 bytes | 0 bytes/s, done.</span><br><span class="line">Total 3 (delta 1), reused 0 (delta 0)</span><br><span class="line">remote: Powered by GITEE.COM [GNK-6.2]</span><br><span class="line">To https://gitee.com/yuanwl/k8s.git</span><br><span class="line">   d664e8f..31f1e76  master -&gt; master</span><br><span class="line"># push之后，工作台干净了</span><br><span class="line">[root@node61 k8s]# git status</span><br><span class="line"># On branch master</span><br><span class="line">nothing to commit, working directory clean</span><br></pre></td></tr></table></figure>
+
+<p>这样搞清了每一步要干啥，但麻烦的是每次都要输入账号密码。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># 可以配置记住密码</span><br><span class="line">git config --global credential.helper store</span><br><span class="line"># 产生一个文件 /root/.gitconfig</span><br><span class="line">[root@VM-4-15-centos ~]# cat .gitconfig </span><br><span class="line">[credential]</span><br><span class="line">	helper = store</span><br><span class="line">[user]</span><br><span class="line">	email = yuan.wanli@qq.com</span><br><span class="line">	name = yuanwl</span><br><span class="line"># 记录了账号与用户 </span><br><span class="line"># 然后执行git pull 之后， 就会记住密码，存在/root/.git-credentials以后就不用输入了</span><br><span class="line">[root@VM-4-15-centos ~]# cat .git-credentials </span><br><span class="line">https://yuanwl:123456789@gitee.com</span><br><span class="line"># 这问题明显了，密码明文可见，一点都不安全，平时自己用用测试是可以的</span><br></pre></td></tr></table></figure>
+
+<p>ssh免密登陆</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># 删除原有的通信方式 # 可选</span><br><span class="line">git remote rm origin </span><br><span class="line"># 生成密钥</span><br><span class="line">ssh-keygen </span><br><span class="line"># 将公钥~/.ssh/id_rsa.pub放在gitee公钥上，设置--ssh公钥--添加</span><br><span class="line"># 添加ssh路径，git开头，和http路径不同 </span><br><span class="line">git init git remote add origin </span><br><span class="line">git remote add origin git@gitee.com:uxpi/zsites.git</span><br><span class="line"># 测试 </span><br><span class="line">[root@node61 ~]# ssh -T git@gitee.com</span><br><span class="line">Hi yuanwanli! You&#x27;ve successfully authenticated, but GITEE.COM does not provide shell access. </span><br><span class="line"># 然后就可以免密提交了</span><br></pre></td></tr></table></figure>
+
+<h3 id="windows"><a href="#windows" class="headerlink" title="windows"></a>windows</h3><p>我很多时候是在window多台主机上做修改。windows中在官网<a target="_blank" rel="noopener" href="https://www.git-scm.com/download/win">Git - Downloading Package (git-scm.com)</a>下载git应用，安装一路next即可。 </p>
+<p>新建同步文件夹之后，右键选择 git bash here. 之后操作就和linux一样了。 </p>
+<h3 id="进一步使用"><a href="#进一步使用" class="headerlink" title="进一步使用"></a>进一步使用</h3><p><strong>删除文件</strong>， 如果删除了一个文件， 就不能git add filename ，可以使用 <code>git rm</code>确认删除了，然后commit.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">rm -f test.md </span><br><span class="line">git rm test.md </span><br><span class="line"># 这样可能比较麻烦，有时也会忘，也没有关系。 如果在add 的时候提示： </span><br><span class="line">warning: You ran &#x27;git add&#x27; with neither &#x27;-A (--all)&#x27; or &#x27;--ignore-removal&#x27;,</span><br><span class="line">whose behaviour will change in Git 2.0 with respect to paths you removed.</span><br><span class="line">Paths like &#x27;test.md&#x27; that are</span><br><span class="line">removed from your working tree are ignored with this version of Git.</span><br><span class="line"></span><br><span class="line">* &#x27;git add --ignore-removal &lt;pathspec&gt;&#x27;, which is the current default,</span><br><span class="line">  ignores paths you removed from your working tree.</span><br><span class="line"></span><br><span class="line">* &#x27;git add --all &lt;pathspec&gt;&#x27; will let you also record the removals.</span><br><span class="line"># 这时候再使用， git add -A 或者 git add --ignore-removal 也可以。</span><br><span class="line"># 也可以直接用git rm test.md</span><br></pre></td></tr></table></figure>
+
+<p>另一种情况是， 如果是<strong>误删</strong>呢？ 也可有恢复<code>checkout</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@node61 k8s]# git checkout -- test.md</span><br><span class="line">[root@node61 k8s]# ls </span><br><span class="line">-rw-r--r-- 1 root root  320 Dec 16 16:04  test.md</span><br><span class="line"># 文件回来了, 但只有commit之后才能恢复，没有commit的东西git根本不知道，也无法恢复。</span><br></pre></td></tr></table></figure>
+
+<p>如果我第二天不知道自己昨天改了什么呢？<code>git diff</code> </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@node61 k8s]# git diff test.md</span><br><span class="line">diff --git a/test.md b/test.md</span><br><span class="line">index 90bfcb5..2178a28 100644</span><br><span class="line">--- a/test.md</span><br><span class="line">+++ b/test.md</span><br><span class="line">@@ -1 +1,2 @@</span><br><span class="line"> this is a test</span><br><span class="line">+this is a test</span><br></pre></td></tr></table></figure>
+<p>如果我不知道现在改的文件有没有提交怎么办呢？<code>git status</code> </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@node61 k8s]# git status test.md</span><br><span class="line"># On branch master</span><br><span class="line"># Your branch is ahead of &#x27;origin/master&#x27; by 1 commit.</span><br><span class="line">#   (use &quot;git push&quot; to publish your local commits)</span><br><span class="line">#</span><br><span class="line"># Changes not staged for commit:</span><br><span class="line">#   (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)</span><br><span class="line">#   (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)</span><br><span class="line">#</span><br><span class="line">#	modified:   test.md</span><br><span class="line">#</span><br><span class="line">no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)</span><br></pre></td></tr></table></figure>
+
+<p>当然了，在实际工作中，我们脑子里怎么可能记得一个几千行的文件每次都改了什么内容，不然要版本控制系统干什么。版本控制系统肯定有某个命令可以告诉我们<strong>历史记录</strong>，在Git中，我们用<code>git log</code>可以查看：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@node61 k8s]# git log</span><br><span class="line">commit 088a4167f946247ced6766c58ffd0568369ce69d</span><br><span class="line">Author: yuanwl &lt;yuan.wanli@qq.com&gt;</span><br><span class="line">Date:   Thu Dec 16 11:41:56 2021 +0800</span><br><span class="line">    first commit </span><br><span class="line">commit ca0ffde7153d0f4eee8473cfa23797835ed74ae9</span><br><span class="line">Merge: e72ac3d 259e9bf</span><br><span class="line"># 可以看最近三次的提交日志 </span><br></pre></td></tr></table></figure>
+
+<p><strong>版本回退</strong>，如果我提交了错误的修改，可以回退到上个版本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@node61 k8s]# git reset --hard HEAD^</span><br><span class="line">HEAD is now at 818a7ff test</span><br><span class="line"># 也可以根据版本commit 版本号回退， git reflog</span><br><span class="line">[root@node61 k8s]# git reflog</span><br><span class="line">d664e8f HEAD@&#123;0&#125;: pull: Fast-forward</span><br><span class="line">818a7ff HEAD@&#123;1&#125;: reset: moving to HEAD^</span><br><span class="line">d664e8f HEAD@&#123;2&#125;: pull: Fast-forward</span><br><span class="line">818a7ff HEAD@&#123;3&#125;: commit: test</span><br><span class="line">088a416 HEAD@&#123;4&#125;: clone: from https://gitee.com/yuanwl/k8s.git</span><br><span class="line">[root@node61 k8s]# git reset HEAD 818a7ff</span><br></pre></td></tr></table></figure>
+
+<h3 id="分支合并"><a href="#分支合并" class="headerlink" title="分支合并"></a>分支合并</h3><p>分支合并是git中最核心的操作， 开始的时候只有一条分支master, 这样的问题是如果多人一起开发，那么可能出现每次push都会遇到别人修改的仓库。每个人一个分支, 在本地修改好再同步到master， 保证master是稳定的，其余分支是工作的。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/gitbranch.drawio.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"># 创建分支 </span><br><span class="line">git branch lenovo </span><br><span class="line"># 切换分支  </span><br><span class="line">git checkout lenovo </span><br><span class="line"># 切换到一个新的分支 git checkout -b levono </span><br><span class="line"># 查看分支 , 当前的分支前有星号 </span><br><span class="line">$ git branch</span><br><span class="line">* lenovo</span><br><span class="line">  master</span><br><span class="line"># 在levono分支修改后，切换回master分支是看不到修改内容的，需要同步一下。 </span><br><span class="line">git merge lenovo </span><br><span class="line"># 同步有两种情况： </span><br><span class="line"># 1 lenovo只是新增了内容， 没有冲突， 可以快速合并 </span><br><span class="line"># 2 lenovo上修改了内容，两条分支内容有冲突， 所以需要手动确认内容。 下面是冲突的情况</span><br><span class="line"># lenovo 中 tesk.md 如下： </span><br><span class="line">$ cat test.md</span><br><span class="line">which is the stable branch?</span><br><span class="line">lenovo</span><br><span class="line"></span><br><span class="line"># master 中tesk.md 如下：</span><br><span class="line">$ cat test.md</span><br><span class="line">which is the stable branch?</span><br><span class="line">master</span><br><span class="line"></span><br><span class="line"># 这是两个分支是有冲突的， git merge之后回提示需要手动解决冲突，冲突会在test.md文档中标记</span><br><span class="line">$ cat test.md</span><br><span class="line">which is the stable branch?</span><br><span class="line">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD   # 当前指向 </span><br><span class="line">master</span><br><span class="line">=======</span><br><span class="line">lenovo</span><br><span class="line">&gt;&gt;&gt;&gt;&gt;&gt;&gt; lenovo  # lenovo分支内容  </span><br><span class="line"></span><br><span class="line"># 需要手动修改文档成最终我们需要的内容,然后commit就同步了 </span><br><span class="line">$ cat test.md</span><br><span class="line">which is the stable branch?</span><br><span class="line">master</span><br><span class="line"></span><br><span class="line"># 删除分支 </span><br><span class="line">git checkout -d lenovo </span><br><span class="line"></span><br><span class="line"># 本地lenovo分支推送远程master分支 </span><br><span class="line">git push origin lenovo:master</span><br><span class="line"></span><br><span class="line"># 拉取远程master到本地lenovo分子</span><br><span class="line">git pull origin master:lenovo</span><br><span class="line"># 总结就是 git push/pull origin  &lt;源仓库名称&gt;:&lt;目标仓库名称&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="标签"><a href="#标签" class="headerlink" title="标签"></a>标签</h3><p>tag就是一个让人容易记住的有意义的名字，它跟某个commit绑在一起。 发布一个版本时，我们通常先在版本库中打一个标签（tag），这样，就唯一确定了打标签时刻的版本。将来无论什么时候，取某个标签的版本，就是把那个打标签的时刻的历史版本取出来。所以，标签也是版本库的一个快照。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"># 标签是commit的称呼，所以先看commit </span><br><span class="line">$ git log --abbrev-commit</span><br><span class="line">commit 0e8c272 (HEAD -&gt; master, tag: v3.0)</span><br><span class="line">Author: yuanwanli &lt;yuan.wanli@qq.com&gt;</span><br><span class="line">Date:   Sun Dec 19 10:52:18 2021 +0800</span><br><span class="line"></span><br><span class="line">    add C 10.53</span><br><span class="line"></span><br><span class="line">commit 98ea6fb</span><br><span class="line">Author: yuanwanli &lt;yuan.wanli@qq.com&gt;</span><br><span class="line">Date:   Sun Dec 19 10:51:54 2021 +0800</span><br><span class="line"></span><br><span class="line">    add b 10.52</span><br><span class="line"></span><br><span class="line">commit 8350365</span><br><span class="line">Author: yuanwanli &lt;yuan.wanli@qq.com&gt;</span><br><span class="line">Date:   Sun Dec 19 10:51:22 2021 +0800</span><br><span class="line"></span><br><span class="line">    add a 10.51</span><br><span class="line"># 给最近的修改加标签 </span><br><span class="line">$ git ag v3.0 0e8c272</span><br><span class="line">$ git tag v2.0 98ea6fb</span><br><span class="line"></span><br><span class="line"># 查看标签列表 </span><br><span class="line">$ git tag</span><br><span class="line">v2.0</span><br><span class="line">v3.0</span><br><span class="line"></span><br><span class="line"># 查看标签明细</span><br><span class="line">$ git show v3.0</span><br><span class="line">commit 0e8c272709f6ac07155849fd7d0d3727161bf1f6 (HEAD -&gt; master, tag: v3.0)</span><br><span class="line">Author: yuanwanli &lt;yuan.wanli@qq.com&gt;</span><br><span class="line">Date:   Sun Dec 19 10:52:18 2021 +0800</span><br><span class="line"></span><br><span class="line">    add C 10.53</span><br><span class="line"></span><br><span class="line">diff --git a/test.md b/test.md</span><br><span class="line">index 422c2b7..de98044 100644</span><br><span class="line">--- a/test.md</span><br><span class="line">+++ b/test.md</span><br><span class="line">@@ -1,2 +1,3 @@</span><br><span class="line"> a</span><br><span class="line"> b</span><br><span class="line">+c</span><br><span class="line"></span><br><span class="line"># 标签推送，讲v3.0推送到远端仓库</span><br><span class="line">$ git push origin v3.0</span><br><span class="line">Enumerating objects: 18, done.</span><br><span class="line">Counting objects: 100% (18/18), done.</span><br><span class="line">Delta compression using up to 8 threads</span><br><span class="line">Compressing objects: 100% (11/11), done.</span><br><span class="line">Writing objects: 100% (16/16), 1.20 KiB | 204.00 KiB/s, done.</span><br><span class="line">Total 16 (delta 7), reused 0 (delta 0), pack-reused 0</span><br><span class="line">remote: Powered by GITEE.COM [GNK-6.2]</span><br><span class="line">To https://gitee.com/yuanwl/k8s.git</span><br><span class="line"> * [new tag]         v3.0 -&gt; v3.0</span><br><span class="line"></span><br><span class="line"># 标签删除</span><br><span class="line">$ git tag -d v2.0</span><br><span class="line">Deleted tag &#x27;v2.0&#x27; (was 98ea6fb)</span><br></pre></td></tr></table></figure>
+
+<h3 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h3><p>在push的时候遇到这样一个错误</p>
+<p>error: failed to push some refs to ‘<a target="_blank" rel="noopener" href="https://gitee.com/yuanwl/k8s.git&#39;">https://gitee.com/yuanwl/k8s.git&#39;</a><br>Updates were rejected because the remote contains work that you do<br>not have locally. This is usually caused by another repository pushing<br>to the same ref. You may want to first merge the remote changes (e.g.,<br>hint: ‘git pull’) before pushing again.</p>
+<p>就是线上的仓库在上次我clone之后有了改动(是我删了一个文件)， 这样不能直接commit, </p>
+<p>git会记下上次pull的版本，如果pull之后远程又做了修改，无法直接push, 这也很好理解，git不知道如何处理远程仓库的改动。</p>
+<p>可以使用git pull同步。</p>
+<p>简易git</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">简易的命令行入门教程:</span><br><span class="line">Git 全局设置:</span><br><span class="line"></span><br><span class="line">git config --global user.name &quot;yuanwanli&quot;</span><br><span class="line">git config --global user.email &quot;yuan.wanli@qq.com&quot;</span><br><span class="line">创建 git 仓库:</span><br><span class="line"></span><br><span class="line">mkdir autoblog</span><br><span class="line">cd autoblog</span><br><span class="line">git init </span><br><span class="line">touch README.md</span><br><span class="line">git add README.md</span><br><span class="line">git commit -m &quot;first commit&quot;</span><br><span class="line">git remote add origin https://gitee.com/yuanwl/autoblog.git</span><br><span class="line">git push -u origin &quot;master&quot;</span><br><span class="line">已有仓库?</span><br><span class="line"></span><br><span class="line">cd existing_git_repo</span><br><span class="line">git remote add origin https://gitee.com/yuanwl/autoblog.git</span><br><span class="line">git push -u origin &quot;master&quot;</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/12/13/2021-12-13-promethus%E8%81%94%E9%82%A6+-%E8%BF%9C%E7%A8%8B%E6%8C%81%E4%B9%85%E5%8C%96%E5%AD%98%E5%82%A8+-%E5%8F%AF%E8%A7%86%E5%8C%96/" rel="prev" title="promethus联邦+ 远程持久化存储+ 可视化">
+                  <i class="fa fa-chevron-left"></i> promethus联邦+ 远程持久化存储+ 可视化
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/12/15/2021-12-14-influxdb/" rel="next" title="influxdb">
+                  influxdb <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuanwanli</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
