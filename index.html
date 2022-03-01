@@ -157,7 +157,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">78</span>
+          <span class="site-state-item-count">79</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -193,6 +193,128 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2022/02/22/2022-02-22-psp--seccomp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuanwanli">
+      <meta itemprop="description" content="等不是办法，干才有出路">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="brisk">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/02/22/2022-02-22-psp--seccomp/" class="post-title-link" itemprop="url">podsecuritypolicy--seccomp</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-02-22 00:00:00" itemprop="dateCreated datePublished" datetime="2022-02-22T00:00:00+08:00">2022-02-22</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-03-01 20:33:43" itemprop="dateModified" datetime="2022-03-01T20:33:43+08:00">2022-03-01</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/k8s/" itemprop="url" rel="index"><span itemprop="name">k8s</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="Seccomp-限制容器的系统调用"><a href="#Seccomp-限制容器的系统调用" class="headerlink" title="Seccomp 限制容器的系统调用"></a>Seccomp 限制容器的系统调用</h3><h3 id="1-seccomp是什么"><a href="#1-seccomp是什么" class="headerlink" title="1 seccomp是什么"></a>1 seccomp是什么</h3><p>seccomp（securecomputing mode）是linuxkernel从2.6.23版本开始所支持的一种安全机制。</p>
+<p>在Linux系统里，大量的系统调用（systemcall）直接暴露给用户态程序。但是，并不是所有的系统调用都被需要，而且不安全的代码滥用系统调用会对系统造成安全威胁。通过seccomp，我们限制程序使用某些系统调用，这样可以减少系统的暴露面，同时是程序进入一种“安全”的状态。   </p>
+<p>系统调用列表可查阅</p>
+<p><a target="_blank" rel="noopener" href="http://asm.sourceforge.net/syscall.html#p33">Linux/i386 system calls (sourceforge.net)</a> </p>
+<p><a target="_blank" rel="noopener" href="https://man7.org/linux/man-pages/man2/syscalls.2.html">syscalls(2) - Linux manual page (man7.org)</a></p>
+<h3 id="2-配置方法"><a href="#2-配置方法" class="headerlink" title="2 配置方法"></a>2 配置方法</h3><p>k8s中，可以通过podsecurity policy来限制pod的系统调用。1.16以后为psp稳定版本，经测试1.14以后版本均可用。</p>
+<h4 id="2-1-开启psp与rbac"><a href="#2-1-开启psp与rbac" class="headerlink" title="2.1 开启psp与rbac"></a>2.1 开启psp与rbac</h4><p>rke部署集群启用psp需要在cluster.yml中开启rbac与psp:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">kube-api:</span><br><span class="line">   pod_security_policy: true</span><br><span class="line">authorization:</span><br><span class="line">  mode: rbac</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-2-配置seccomp"><a href="#2-2-配置seccomp" class="headerlink" title="2.2 配置seccomp"></a>2.2 配置seccomp</h4><p>Pod 对 seccomp 模版的使用可以通过在 PodSecurityPolicy 上设置<code>annotations</code>配置。 </p>
+<p><strong>seccomp.security.alpha.kubernetes.io/allowedProfileNames</strong> - 指定defaultProfileName可用的模板类型。取值为一个可用值的列表。 表中每项可以以下字段的取值之一，还可以是 <code>*</code>，用来表示允许所有的模版。 如果没有设置此字段，意味着默认的 seccomp 模版是不可更改的。</p>
+<p><strong>seccomp.security.alpha.kubernetes.io/defaultProfileName</strong>字段用来指定为容器配置默认的 seccomp 模版。可选值为：</p>
+<ol>
+<li><p><code>unconfined</code> - 不开启seccomp, Seccomp 不会被应用到容器进程上 （Kubernets 中的默认设置）。</p>
+</li>
+<li><p><code>runtime/default</code> - 使用默认的容器运行时模版。默认的容器系统调用配置<a target="_blank" rel="noopener" href="https://docs.docker.com/engine/security/seccomp/">Seccomp security profiles for Docker | Docker Documentation</a> ，默认的配置为绝大多数容器提供了合理权限，限制了部分系统调用，增强了安全性。</p>
+<p>此时可修改psp为:</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: policy/v1beta1</span><br><span class="line">kind: PodSecurityPolicy</span><br><span class="line">metadata:</span><br><span class="line">  annotations:</span><br><span class="line">    seccomp.security.alpha.kubernetes.io/allowedProfileNames: &#x27;*&#x27;</span><br><span class="line">    seccomp.security.alpha.kubernetes.io/defaultProfileName: runtime/default</span><br><span class="line">  name: default-psp</span><br><span class="line">spec:</span><br><span class="line">  allowPrivilegeEscalation: true</span><br><span class="line">  allowedCapabilities:</span><br><span class="line">  - &#x27;*&#x27;</span><br><span class="line">  fsGroup:</span><br><span class="line">    rule: RunAsAny</span><br><span class="line">  hostIPC: true</span><br><span class="line">  hostNetwork: true</span><br><span class="line">  hostPID: true</span><br><span class="line">  hostPorts:</span><br><span class="line">  - max: 65535</span><br><span class="line">    min: 0</span><br><span class="line">  privileged: true</span><br><span class="line">  runAsUser:</span><br><span class="line">    rule: RunAsAny</span><br><span class="line">  seLinux:</span><br><span class="line">    rule: RunAsAny</span><br><span class="line">  supplementalGroups:</span><br><span class="line">    rule: RunAsAny</span><br><span class="line">  volumes:</span><br><span class="line">  - &#x27;*&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>修改部分为添加<code>seccomp.security.alpha.kubernetes.io/defaultProfileName: runtime/default</code></p>
+<p>若部分容器需要特殊权限，就需要自定义配置seccomp模板。</p>
+<p>3 .  <code>localhost/&lt;路径名&gt;</code> - 指定节点上路径 <code>&lt;seccomp_root&gt;/&lt;路径名&gt;</code> 下的一个 文件作为其模版。其中 <code>&lt;seccomp_root&gt;</code> 是通过 <code>kubelet</code> 的标志 <code>--seccomp-profile-root</code> 来指定的，默认的路径为<code> /var/lib/kubelet/seccomp/</code>，若没有改目录，需创建。</p>
+</li>
+</ol>
+<p>seccomp模板可配置黑白名单，配置文件为json格式。</p>
+<p>默认禁止全部系统调用，开启白名单为 white_list.json示例：  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;defaultAction&quot;: &quot;SCMP_ACT_ERRNO&quot;,</span><br><span class="line">    &quot;syscalls&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;names&quot;: [</span><br><span class="line">                &quot;read&quot;,</span><br><span class="line">                &quot;write&quot;,</span><br><span class="line">                &quot;_exit&quot;,</span><br><span class="line">                &quot;_sigreturn&quot;</span><br><span class="line">            ],</span><br><span class="line">            &quot;action&quot;: &quot;SCMP_ACT_ALLOW&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br><span class="line"># 仅开启四种系统调用示例。</span><br></pre></td></tr></table></figure>
+
+<p>默认开放全部系统调用，开启黑名单为black_list.json： </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;defaultAction&quot;: &quot;SCMP_ACT_ALLOW&quot;,</span><br><span class="line">    &quot;syscalls&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;names&quot;: [&quot;mkdir&quot;, &quot;rmdir&quot;],</span><br><span class="line">            &quot;action&quot;: &quot;SCMP_ACT_ERRNO&quot;,</span><br><span class="line">            &quot;args&quot;: []</span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果对全局修改配置可直接修改默认psp，如果对部分服务新建特殊需要可新建psp</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: policy/v1beta1</span><br><span class="line">kind: PodSecurityPolicy</span><br><span class="line">metadata:</span><br><span class="line">  annotations:</span><br><span class="line">    seccomp.security.alpha.kubernetes.io/allowedProfileNames: &#x27;*&#x27;</span><br><span class="line">    seccomp.security.alpha.kubernetes.io/defaultProfileName: localhost/black_list.json</span><br><span class="line">  name: psp-test</span><br><span class="line">spec:</span><br><span class="line">  allowPrivilegeEscalation: true</span><br><span class="line">  allowedCapabilities:</span><br><span class="line">  - &#x27;*&#x27;</span><br><span class="line">  fsGroup:</span><br><span class="line">    rule: RunAsAny</span><br><span class="line">  hostIPC: true</span><br><span class="line">  hostNetwork: true</span><br><span class="line">  hostPID: true</span><br><span class="line">  hostPorts:</span><br><span class="line">  - max: 65535</span><br><span class="line">    min: 0</span><br><span class="line">  privileged: true</span><br><span class="line">  runAsUser:</span><br><span class="line">    rule: RunAsAny</span><br><span class="line">  seLinux:</span><br><span class="line">    rule: RunAsAny</span><br><span class="line">  supplementalGroups:</span><br><span class="line">    rule: RunAsAny</span><br><span class="line">  volumes:</span><br><span class="line">  - &#x27;*&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>配置<code> seccomp.security.alpha.kubernetes.io/defaultProfileName: localhost/black_list.json</code>， 需要将配置文件存储在调度psp的节点/var/lib/kubelet/seccomp/下。</p>
+<h4 id="2-3-rbac授权"><a href="#2-3-rbac授权" class="headerlink" title="2.3 rbac授权"></a>2.3 rbac授权</h4><p>配置完成psp后，需要通过rbac授予用户或者sa权限。配置示例如下：<PSPNAME>待绑定psp资源名称。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"># clusterrole</span><br><span class="line">cat &gt; cr-&lt;PSPNAME&gt;.yml &lt;&lt; EOF</span><br><span class="line">apiVersion: rbac.authorization.k8s.io/v1</span><br><span class="line">kind: ClusterRole</span><br><span class="line">metadata:</span><br><span class="line">  name: cr-&lt;PSPNAME&gt;</span><br><span class="line">rules:</span><br><span class="line">- apiGroups: [&#x27;policy&#x27;]</span><br><span class="line">  resources: [&#x27;podsecuritypolicies&#x27;]</span><br><span class="line">  verbs:     [&#x27;use&#x27;]</span><br><span class="line">  resourceNames:</span><br><span class="line">  - &lt;PSPNAME&gt;</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">#  clusterrolebing</span><br><span class="line">cat &gt; crb-cr-&lt;PSPNAME&gt;-authorization.yml &lt;&lt; EOF</span><br><span class="line">apiVersion: rbac.authorization.k8s.io/v1</span><br><span class="line">kind: ClusterRoleBinding</span><br><span class="line">metadata:</span><br><span class="line">  name: crb-cr-&lt;PSPNAME&gt;-authorization</span><br><span class="line">roleRef:</span><br><span class="line">  kind: ClusterRole</span><br><span class="line">  name: cr-&lt;PSPNAME&gt;</span><br><span class="line">  apiGroup: rbac.authorization.k8s.io</span><br><span class="line">subjects:</span><br><span class="line"># Authorize all service accounts in a namespace (recommended):# 授权命名空间下的所有服务账号（推荐）：</span><br><span class="line">- kind: Group</span><br><span class="line">  apiGroup: rbac.authorization.k8s.io</span><br><span class="line">  name: system:serviceaccounts:&lt;authorized namespace&gt;</span><br><span class="line"># Authorize specific service accounts (not recommended):# 授权特定的服务账号（不建议这样操作）：</span><br><span class="line">- kind: ServiceAccount</span><br><span class="line">  name: &lt;authorized service account name&gt;</span><br><span class="line">  namespace: &lt;authorized pod namespace&gt;</span><br><span class="line"># Authorize specific users (not recommended):# 授权特定的用户（不建议这样操作）</span><br><span class="line">- kind: User</span><br><span class="line">  apiGroup: rbac.authorization.k8s.io</span><br><span class="line">  name: &lt;authorized user name&gt;</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+
+
+
+<p>替换</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"># clusterrole</span><br><span class="line">cat &gt; cr-default-psp.yml &lt;&lt; EOF</span><br><span class="line">apiVersion: rbac.authorization.k8s.io/v1</span><br><span class="line">kind: ClusterRole</span><br><span class="line">metadata:</span><br><span class="line">  name: cr-default-psp</span><br><span class="line">rules:</span><br><span class="line">- apiGroups: [&#x27;policy&#x27;]</span><br><span class="line">  resources: [&#x27;podsecuritypolicies&#x27;]</span><br><span class="line">  verbs:     [&#x27;use&#x27;]</span><br><span class="line">  resourceNames:</span><br><span class="line">  - default-psp</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">cat &gt; crb-cr-default-psp-authorization.yml &lt;&lt; EOF</span><br><span class="line">apiVersion: rbac.authorization.k8s.io/v1</span><br><span class="line">kind: ClusterRoleBinding</span><br><span class="line">metadata:</span><br><span class="line">  name: crb-cr-default-psp-authorization</span><br><span class="line">roleRef:</span><br><span class="line">  kind: ClusterRole</span><br><span class="line">  name: cr-default-psp</span><br><span class="line">  apiGroup: rbac.authorization.k8s.io</span><br><span class="line">subjects:</span><br><span class="line">- kind: Group</span><br><span class="line">  apiGroup: rbac.authorization.k8s.io</span><br><span class="line">  name: system:serviceaccounts</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1346,90 +1468,6 @@ dos2unix  filename
 
 
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">ansible </span><br><span class="line">#修改cluster.yml 修改 psp: true </span><br><span class="line">rke up 失败， --&gt; 版本不对</span><br><span class="line"></span><br><span class="line">使用rke032， 失败， 部分节点公钥被改，不能免密</span><br><span class="line">172.21.42.221</span><br><span class="line">172.21.42.230,</span><br><span class="line">172.21.42.179,</span><br><span class="line">172.21.42.165,</span><br><span class="line">172.21.42.125,</span><br><span class="line">172.21.42.217,</span><br><span class="line">172.21.42.20,</span><br><span class="line">172.21.42.13</span><br><span class="line">--&gt;添加公钥</span><br><span class="line">按照172.21.42.59的公钥拷贝，主机登录密码Cmcc!234 </span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2022/02/10/2022-02-10-python-module-json/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yuanwanli">
-      <meta itemprop="description" content="等不是办法，干才有出路">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="brisk">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/02/10/2022-02-10-python-module-json/" class="post-title-link" itemprop="url">python  module json</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-02-10 00:00:00" itemprop="dateCreated datePublished" datetime="2022-02-10T00:00:00+08:00">2022-02-10</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-02-21 14:54:31" itemprop="dateModified" datetime="2022-02-21T14:54:31+08:00">2022-02-21</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import json </span><br><span class="line"># dic-&gt; json </span><br><span class="line">json.dumps()</span><br><span class="line"># json-&gt; dic </span><br><span class="line">json.loads()</span><br></pre></td></tr></table></figure>
-
-<p>函数原型</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">json.dumps(obj, skipkeys=False, ensure_ascii=True, check_circular=True, allow_nan=True, cls=None, indent=None, separators=None, encoding=&quot;utf-8&quot;, default=None, sort_keys=False, **kw)</span><br></pre></td></tr></table></figure>
 
 
       

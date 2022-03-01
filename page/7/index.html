@@ -157,7 +157,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">78</span>
+          <span class="site-state-item-count">79</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -193,6 +193,236 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2021/11/11/2021-11-12-openfaas-v0.2%E6%96%87%E6%A1%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuanwanli">
+      <meta itemprop="description" content="等不是办法，干才有出路">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="brisk">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/11/11/2021-11-12-openfaas-v0.2%E6%96%87%E6%A1%A3/" class="post-title-link" itemprop="url">openfaas v0.2文档</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-11-11 00:00:00" itemprop="dateCreated datePublished" datetime="2021-11-11T00:00:00+08:00">2021-11-11</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-02-21 14:54:31" itemprop="dateModified" datetime="2022-02-21T14:54:31+08:00">2022-02-21</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="综述"><a href="#综述" class="headerlink" title="综述"></a>综述</h1><h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><h3 id="openfass-让无服务变得简单"><a href="#openfass-让无服务变得简单" class="headerlink" title="openfass  让无服务变得简单"></a>openfass  让无服务变得简单</h3><p>OpenFaaS®使开发人员可以轻松地将事件驱动函数和微服务部署到Kubernetes，而无需重复的模板代码。将您的代码或现有二进制文件打包到Docker镜像中，以获得具有自动伸缩和度量的高度可伸缩端点。</p>
+<h3 id="亮点"><a href="#亮点" class="headerlink" title="亮点"></a>亮点</h3><ul>
+<li>开源函数框架-在任何云上运行它，无需担心锁定</li>
+<li>编写任何语言的函数，并将它们打包到Docker/ oci格式的容器中</li>
+<li>易于使用的内置UI，强大的CLI和一键式安装</li>
+<li>处理流量峰值，并在空闲时进行伸缩</li>
+<li>活跃的社区-贡献和归属</li>
+</ul>
+<h3 id="在线学习"><a href="#在线学习" class="headerlink" title="在线学习"></a>在线学习</h3><p>pass</p>
+<h2 id="社群"><a href="#社群" class="headerlink" title="社群"></a>社群</h2><p>pass</p>
+<h1 id="开始使用"><a href="#开始使用" class="headerlink" title="开始使用"></a>开始使用</h1><h2 id="deployment"><a href="#deployment" class="headerlink" title="deployment"></a>deployment</h2><p>OpenFaaS可以部署到Kubernetes、OpenShift、Docker Swarm等多种容器管理工具上，也可以部署到使用faasd的单个主机上。</p>
+<p>Kubernetes还是faasd ?</p>
+<p>我们建议在工作中使用OpenFaaS时使用Kubernetes或OpenShift，因为它可以很好地扩展，如果您需要，OpenFaaS Ltd可以提供商业支持。一些公司已经在生产中使用了Faasd，但您应该了解其中的权衡。用户以后可以在这两种部署选项之间切换。</p>
+<h2 id="PLONK-Stack"><a href="#PLONK-Stack" class="headerlink" title="PLONK Stack"></a>PLONK Stack</h2><p>PLONK是一个用于构建应用程序的云本地堆栈，它代表:</p>
+<ul>
+<li><p><a target="_blank" rel="noopener" href="https://www.bookstack.cn/read/openfaas-0.20-en/d41d8cd98f00b204.md">Prometheus</a>-度量和时间序列</p>
+</li>
+<li><p>Linux/Linkerd* - OS或service mesh (Linkerd是可选的)</p>
+</li>
+<li><p>OpenFaaS——计算的管理和自动扩展——PaaS/FaaS, Kubernetes之上的一个开发人员友好的抽象。每个函数或微服务都构建为不可变的Docker容器或oci格式的镜像。</p>
+</li>
+<li><p>异步消息总线/队列</p>
+</li>
+<li><p>Kubernetes -声明式的、可扩展的、伸缩的、自修复的集群</p>
+</li>
+</ul>
+<p>Kubernetes上的OpenFaaS包了NATS和Prometheus。您可以在OpenFaaS架构文档中阅读有关堆栈的内容。</p>
+<h2 id="Kubernetes-推荐用于生产和工作"><a href="#Kubernetes-推荐用于生产和工作" class="headerlink" title="Kubernetes(推荐用于生产和工作)"></a>Kubernetes(推荐用于生产和工作)</h2><p>关于安全的前言</p>
+<p>默认情况下，使用OpenFaaS启用身份验证，但是如果您在公共Internet上使用OpenFaaS，您还需要为您的集群获取TLS证书。免费证书可从LetsEncrypt.org获得。</p>
+<p>在Kubernetes集群中安装OpenFaaS有三种推荐方法:</p>
+<ul>
+<li>使用我们的CLI安装程序arkade -(推荐)</li>
+<li>使用Helm chart, Flux或ArgoCD (GitOps工作流)</li>
+<li>或者使用静态生成的YAML文件(不推荐)</li>
+</ul>
+<p>了解关于每个选项以及如何将OpenFaaS部署到Kubernetes的更多信息:<a target="_blank" rel="noopener" href="https://www.bookstack.cn/read/openfaas-0.20-en/34026a917156630f.md">Deploy to Kubernetes</a></p>
+<h2 id="faasd-每个人的无服务"><a href="#faasd-每个人的无服务" class="headerlink" title="faasd - 每个人的无服务"></a>faasd - 每个人的无服务</h2><p>faasd是OpenFaaS，没有Kubernetes的复杂性和成本。它在要求非常低的单个主机上运行良好，可以在几分钟内部署。在内部，它使用容器和容器网络接口(CNI)以及来自主项目的相同核心OpenFaaS组件。</p>
+<p>什么时候应该在Kubernetes上使用faasd over OpenFaaS ?</p>
+<ul>
+<li>你有一个成本敏感的项目-运行faasd在5-10美元的VPS或在你的Raspberry Pi上</li>
+<li>当您只需要一些功能或微服务，而不需要集群的成本时</li>
+<li>当你没有时间学习或管理Kubernetes的时候</li>
+<li>在物联网和边缘用例中部署嵌入式应用</li>
+<li>将应用程序压缩包装以供客户或客户使用</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://github.com/openfaas/faasd/">Deploy faasd</a></p>
+<h2 id="OpenShift"><a href="#OpenShift" class="headerlink" title="OpenShift"></a>OpenShift</h2><p>OpenShift是由RedHat生产的Kubernetes的一个变体。</p>
+<p>您可以使用我们的CLI安装程序<a target="_blank" rel="noopener" href="https://www.bookstack.cn/read/openfaas-0.20-en/d41d8cd98f00b204.md">arkade</a> 或标准helm chart部署到OpenShift。</p>
+<p><a target="_blank" rel="noopener" href="https://www.bookstack.cn/read/openfaas-0.20-en/f81fd004e195cc7a.md">Deploy to OpenShift</a></p>
+<h2 id="Docker-Swarm-弃用"><a href="#Docker-Swarm-弃用" class="headerlink" title="Docker Swarm (弃用)"></a>Docker Swarm (弃用)</h2><p>取消免费社区支持，Docker Swarm的免费社区支持已经停止。如果您在业务中运行Docker Swarm和OpenFaaS，并且需要持续的支持，那么请尽快联系支持人员。</p>
+<p>为什么做出这个决定?Docker Swarm被广泛认为是“生命终结”产品。像Kubernetes这样的项目拥有更广泛的生态系统，并不断从各自的社区获得投资。</p>
+<p>如果你被Docker Swarm所吸引是因为你认为它比Kubernetes更容易管理，我们建议你看看托管的Kubernetes服务，或 <a target="_blank" rel="noopener" href="https://www.bookstack.cn/read/openfaas-0.20-en/d41d8cd98f00b204.md">k3s.io</a>.</p>
+<p>如果你几乎不需要任何操作，那么faasd(上面)应该是你的首选。</p>
+<h1 id="CLI"><a href="#CLI" class="headerlink" title="CLI"></a>CLI</h1><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>您可以使用curl实用程序脚本、brew或从发布页面下载二进制文件来安装CLI。安装完成后，您将获得faas-cli命令和faas别名。</p>
+<h3 id="Linux-or-macOS"><a href="#Linux-or-macOS" class="headerlink" title="Linux or macOS"></a>Linux or macOS</h3><p>使用curl脚本:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl -sSL https://cli.openfaas.com | sudo -E sh</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>标志-E允许将任何http_proxy环境变量传递给安装bash脚本。</p>
+</blockquote>
+<p>使用curl将二进制文件下载到当前目录，然后打印安装说明:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl -sSL https://cli.openfaas.com | sh</span><br></pre></td></tr></table></figure>
+
+<p>通过 brew</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ brew install faas-cli</span><br></pre></td></tr></table></figure>
+
+<p>注意, brew版本可能不会运行最新的小版本，但会定期更新。</p>
+<h3 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h3><p>在powershell中</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$version = (Invoke-WebRequest &quot;https://api.github.com/repos/openfaas/faas-cli/releases/latest&quot; | ConvertFrom-Json)[0].tag_name</span><br><span class="line">(New-Object System.Net.WebClient).DownloadFile(&quot;https://github.com/openfaas/faas-cli/releases/download/$version/faas-cli.exe&quot;, &quot;faas-cli.exe&quot;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="覆盖环境变量"><a href="#覆盖环境变量" class="headerlink" title="覆盖环境变量"></a>覆盖环境变量</h3><p>如果set和没有设置其他命令行标志，将默认使用几个覆盖。</p>
+<ul>
+<li><code>OPENFAAS_TEMPLATE_URL</code> -设置获取模板的默认URL</li>
+<li><code>OPENFAAS_PREFIX</code> - 当使用 <code>faas-cli new</code> - 这可以替代 <code>--prefix</code></li>
+<li><code>OPENFAAS_URL</code> -来覆盖默认网关URL</li>
+</ul>
+<h3 id="使用sudo运行-faas-cli"><a href="#使用sudo运行-faas-cli" class="headerlink" title="使用sudo运行 faas-cli"></a>使用sudo运行 <code>faas-cli</code></h3><p>如果您使用sudo运行faas-cli，我们建议使用sudo -E来传递您可能配置的任何环境变量，如http_proxy、https_proxy或no_proxy。</p>
+<h3 id="Docker-镜像"><a href="#Docker-镜像" class="headerlink" title="Docker 镜像"></a>Docker 镜像</h3><p>faas-cli还可以作为Docker镜像使用，这使得它可以方便地用于CI作业，如使用Jenkins管道或cron中的任务。</p>
+<p><a target="_blank" rel="noopener" href="https://hub.docker.com/r/openfaas/faas-cli/tags/">https://hub.docker.com/r/openfaas/faas-cli/tags/</a></p>
+<p>它没有“latest”标签，请在Docker Hub的标签页中找到您想要使用的CLI版本。这些对应于GitHub的发布。</p>
+<blockquote>
+<p>注意:Docker映像不能用于直接执行构建，但你可以使用它来生成一个构建上下文，可以与容器构建器(如Docker, buildkit或Kaniko)在构建管道的另一部分一起使用。</p>
+</blockquote>
+<p>Docker映像的用例:</p>
+<ul>
+<li>不运行docker build - faas-cli——shrinkwrap来生成构建上下文</li>
+<li>将现有映像部署到远程服务器faas-cli Deploy</li>
+<li>使用faas-cli secret管理秘密</li>
+<li>通过使用faas-cli调用cron调用函数</li>
+<li>使用faas-cli信息检查远程网关的运行状况</li>
+</ul>
+<h3 id="从源代码安装"><a href="#从源代码安装" class="headerlink" title="从源代码安装"></a>从源代码安装</h3><p>该<a target="_blank" rel="noopener" href="https://www.bookstack.cn/read/openfaas-0.20-en/742c32d44c647dc9.md#contribute">指南</a>提供了从源代码构建和配置Golang开发环境的说明。</p>
+<ul>
+<li>GitHub上的star /fork: <a target="_blank" rel="noopener" href="https://github.com/openfaas/faas-cli">faas-cli</a></li>
+</ul>
+<h3 id="教程-学习如何使用CLI"><a href="#教程-学习如何使用CLI" class="headerlink" title="教程: 学习如何使用CLI"></a>教程: 学习如何使用CLI</h3><p><a target="_blank" rel="noopener" href="https://blog.alexellis.io/quickstart-openfaas-cli/">Morning coffee with the OpenFaaS CLI</a></p>
+<h2 id="创建新的函数"><a href="#创建新的函数" class="headerlink" title="创建新的函数"></a>创建新的函数</h2><h3 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h3><p>一旦你安装了<code>faas-cli</code>，你可以开始通过<code>faas-cli up</code>命令或使用单独的命令来创建和部署函数:</p>
+<ul>
+<li><code>faas-cli build</code>  构建映像到本地Docker库中</li>
+<li><code>faas-cli push</code>  将该映像推到远程容器注册表</li>
+<li><code>faas-cli deploy</code> 将函数部署到集群中</li>
+</ul>
+<p><code>faas-cli up</code>命令在一个命令中自动执行上述所有操作。</p>
+<p>对于Raspberry Pi和ARM，你必须使用publish命令而不是build和push，或者up。</p>
+<p>请看这里的注释:<a target="_blank" rel="noopener" href="https://www.bookstack.cn/read/openfaas-0.20-en/094921046add2521.md">Building multi-arch images for ARM and Raspberry Pi</a></p>
+<h3 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h3><p>OpenFaaS CLI有一个内置的模板引擎，可以用给定的编程语言创建新的函数。它的工作方式是从当前工作文件夹中的<code>./template</code>位置读取模板列表。</p>
+<p>在创建一个新函数之前，请确保您从GitHub通过 <a target="_blank" rel="noopener" href="https://github.com/openfaas/templates">templates repository</a>.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ faas-cli template pull</span><br></pre></td></tr></table></figure>
+
+<p>本页面展示了如何在最流行的语言中生成函数，并解释了如何管理它们的依赖关系。</p>
+<h3 id="Classic-vs-of-watchdog模板"><a href="#Classic-vs-of-watchdog模板" class="headerlink" title="Classic vs. of-watchdog模板"></a>Classic vs. of-watchdog模板</h3><p>经典模板保存在 <a target="_blank" rel="noopener" href="https://github.com/openfaas/templates">openfaas/templates</a>存储库中，并且基于使用STDIO与函数通信的<em>Classic Watchdog</em>。watchdog使用HTTP与函数进行通信，它的大多数模板都可以在GitHub上的<a target="_blank" rel="noopener" href="https://github.com/openfaas-incubator/">openfaas-incubator</a> 组织和商店中获得。</p>
+<p>如何选择： </p>
+<ul>
+<li>如果你正在开始或遵循教程或指南，请使用<em>Classic Watchdog</em></li>
+<li>如果您需要更高的性能或需要完全控制HTTP响应，请使用of-watchdog</li>
+</ul>
+<p>参考：  <a target="_blank" rel="noopener" href="https://www.bookstack.cn/read/openfaas-0.20-en/e9ae346d3d971482.md">watchdog design</a></p>
+<h3 id="存储过程注册模板"><a href="#存储过程注册模板" class="headerlink" title="存储过程注册模板"></a>存储过程注册模板</h3><p>您可以从官方商店浏览模板，或者创建自己的商店并在那里添加自己的模板。要查看哪些模板是可用的类型<code>faas-cli template store list</code>，你应该在终端中看到以下内容:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ faas-cli template store list</span><br><span class="line">NAME                    SOURCE             DESCRIPTION</span><br><span class="line">csharp                  openfaas           Official C# template</span><br><span class="line">dockerfile              openfaas           Official Dockerfile template</span><br><span class="line">...</span><br><span class="line">node10-express          openfaas-incubator NodeJS 10 Express template</span><br><span class="line">ruby-http               openfaas-incubator Ruby 2.4 HTTP template</span><br><span class="line">golang-middleware       openfaas-incubator Golang Middleware template</span><br><span class="line">csharp-httprequest      distantcam         C# HTTP template</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>选择一个模板并使用命令在本地检索它:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ faas-cli template store pull node10-express</span><br></pre></td></tr></table></figure>
+
+<p>下载后，您选择的模板和存储在同一存储库中的其他模板将可用:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ faas-cli new --list</span><br><span class="line">Languages available as templates:</span><br><span class="line">- node10-express</span><br></pre></td></tr></table></figure>
+
+<p>您可以通过为这两个命令指定<code>——url</code>标志来拉出并列出自定义模板存储，从而添加自己的存储。</p>
+<p>经典模板保存在 <a target="_blank" rel="noopener" href="https://github.com/openfaas/templates">openfaas/templates</a> 存储库中。</p>
+<h3 id="获取模板"><a href="#获取模板" class="headerlink" title="获取模板"></a>获取模板</h3><p>下面列出了几个可用的Golang模板。</p>
+<table>
+<thead>
+<tr>
+<th align="left">Name</th>
+<th align="left">Style</th>
+<th align="left">Watchdog</th>
+<th align="left">Dependencies</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>go</code></td>
+<td align="left">Function</td>
+<td align="left">classic</td>
+<td align="left"><code>dep</code></td>
+</tr>
+<tr>
+<td align="left"><code>golang-middleware</code></td>
+<td align="left">Microservice</td>
+<td align="left">of-watchdog</td>
+<td align="left"><code>dep</code> or Go modules</td>
+</tr>
+<tr>
+<td align="left"><code>golang-http</code></td>
+<td align="left">Function</td>
+<td align="left">of-watchdog</td>
+<td align="left"><code>dep</code> or Go modules</td>
+</tr>
+</tbody></table>
+<p>所有的模板都可以通过<code>faas-cli template store list/pull</code></p>
+<h3 id="Go-golang-http-（of-watchdog-template）"><a href="#Go-golang-http-（of-watchdog-template）" class="headerlink" title="Go golang-http （of-watchdog template）"></a>Go <code>golang-http</code> （of-watchdog template）</h3><p><a target="_blank" rel="noopener" href="https://github.com/openfaas-incubator/golang-http-template">Read the README for golang-http</a>此模板具有与AWS Lambda类似的API。</p>
+<p>Golang模块通过 <code>--build-arg</code> 使用 <code> GO111MODULE=1</code> 或者<code>GO111MODULE=auto</code></p>
+<h4 id="Go-golang-middleware-of-watchdog-template"><a href="#Go-golang-middleware-of-watchdog-template" class="headerlink" title="Go golang-middleware - (of-watchdog template)"></a>Go <code>golang-middleware</code> - (of-watchdog template)</h4>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1732,103 +1962,6 @@
 <li>他们为人类准备好了床，如果人类不适应这张床，那就只能自认倒霉，只能把人拉长或截短。</li>
 <li>例如，我们去一个热带岛屿，在DDT杀虫剂的帮助下，我们消灭了疟疾，在两三年的时间里，拯救了成千上万的生命。这显然是件好事。但是这些被拯救的成千上万人生育了数百万的孩子，这个岛屿上的可利用资源无法满足这些孩子衣食住行和教育的需要。疟疾带来的快速死亡已经不存在了，但是由于营养不良和拥挤，这里的生活痛苦不堪，饥饿造成的慢性死亡威胁着更多人的生命。</li>
 <li>在一个大规模生产和营销的世界里，资金不足的小人物常常处于劣势，在和大人物的竞争中，他失去自己的资本，最后被大人物吞食，失去作为独立生产者存在的权利。</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2021/09/22/2021-09-22-%E3%80%8A%E6%88%91%E4%BB%AC%E3%80%8B%20%E6%91%98%E5%BD%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yuanwanli">
-      <meta itemprop="description" content="等不是办法，干才有出路">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="brisk">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/09/22/2021-09-22-%E3%80%8A%E6%88%91%E4%BB%AC%E3%80%8B%20%E6%91%98%E5%BD%95/" class="post-title-link" itemprop="url">《我们》</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-09-22 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-22T00:00:00+08:00">2021-09-22</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-02-21 14:54:31" itemprop="dateModified" datetime="2022-02-21T14:54:31+08:00">2022-02-21</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">读书笔记</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="《我们》-摘录"><a href="#《我们》-摘录" class="headerlink" title="《我们》 摘录"></a>《我们》 摘录</h2><p>叶甫盖尼·扎米亚京  陈超译 </p>
-<ul>
-<li>上帝曾经让天堂里那两位作出自己的选择：或者选择没有自由的幸福，或者选择没有幸福的自由，第三种选择是没有的。</li>
-<li>“这表明，你喜欢。你怕它，是因为它的力量大于你。你讨厌它，是因为你怕它。你喜欢它，是因为你无法使它顺从你。人只喜欢他无法占有的东西。”</li>
-<li>自由与犯罪是密不可分的，就像…嗯，就像飞机的运动与它的速度，当它速度为零时，它就是静止的，当人没有自由时，他就不会犯罪。这是很清楚的道理。不让人犯罪的唯一途径就是剥夺他的自由。</li>
-<li>“告诉我们什么是最后的数字，最终的数字，最大的数字。” “但这太荒唐了！数字的数目是无限的，怎么会有最后的数字呢？” “那怎么会有最后的革命呢？最后的革命是不存在的：革命是无休止的。” </li>
-</ul>
-<p><strong>附录部分：</strong></p>
-<ul>
-<li>革命无处不在， 革命蕴涵在万物之中。他是无限的，没有最后的革命，也没有最终的数字。 社会革命只是无限的数字革命中的一个：革命的法则不是社会法则，而是无法估量的更伟大的法则。它是普世的宇宙法则——就像能亮守恒法则和能量耗散法则。终有一天，一道确切的革命法则公式将会确立，在这道公司里，国家、阶级、星星——还有书籍，都会作为数字变量加以描述。</li>
-<li>有害的文学作品要比有用的文学作品更有意义，因为它在与熵对抗，它是对抗僵化、硬化、结痂、苔藓、静止的手段。 </li>
-<li>异端对于健康是必须的，如果没有异端，就应该催生异端。 </li>
-<li>孩子们是最勇敢的哲学家，他们赤裸裸的来到世上，不为最细微的教条、绝对真理、信条所蒙蔽。这就是为什么他们问的每一个问题都很荒唐、天真而又复杂的惊人。</li>
-<li>生机勃勃的人总在犯错，总是在追寻、提问、受折磨。</li>
-<li>答案可能是错的，哲学可能是谬误——错误比真理更有价值：真理就像机器， 而错误是鲜活的。</li>
-<li>荒唐吗？是的。平行线相交也是荒唐的，但它只是在欧几里得的经典几何才是荒唐的。在非欧几何里，它是一则定理，你需要做的就是不再局限于平面，超越平面。</li>
-<li>刺痛自己是很困难的，甚至是危险的。但对于那些活着的人来说，在今天像昨天一样生活是更加困难的事情。 </li>
 </ul>
 
       

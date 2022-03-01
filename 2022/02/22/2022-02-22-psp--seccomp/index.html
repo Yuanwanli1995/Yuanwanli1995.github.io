@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yuanwanli1995.github.io","root":"/","images":"/images","scheme":"Pisces","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/./public/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="Seccomp 限制容器的系统调用1 seccomp是什么seccomp（securecomputing mode）是linuxkernel从2.6.23版本开始所支持的一种安全机制。 在Linux系统里，大量的系统调用（systemcall）直接暴露给用户态程序。但是，并不是所有的系统调用都被需要，而且不安全的代码滥用系统调用会对系统造成安全威胁。通过seccomp，我们限制程序使用某些系统调用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="podsecuritypolicy--seccomp">
+<meta property="og:url" content="http://yuanwanli1995.github.io/2022/02/22/2022-02-22-psp--seccomp/index.html">
+<meta property="og:site_name" content="brisk">
+<meta property="og:description" content="Seccomp 限制容器的系统调用1 seccomp是什么seccomp（securecomputing mode）是linuxkernel从2.6.23版本开始所支持的一种安全机制。 在Linux系统里，大量的系统调用（systemcall）直接暴露给用户态程序。但是，并不是所有的系统调用都被需要，而且不安全的代码滥用系统调用会对系统造成安全威胁。通过seccomp，我们限制程序使用某些系统调用">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-02-21T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-03-01T12:33:43.327Z">
+<meta property="article:author" content="yuanwanli">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://yuanwanli1995.github.io/2022/02/22/2022-02-22-psp--seccomp/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://yuanwanli1995.github.io/2022/02/22/2022-02-22-psp--seccomp/","path":"2022/02/22/2022-02-22-psp--seccomp/","title":"podsecuritypolicy--seccomp"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>podsecuritypolicy--seccomp | brisk</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">brisk</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">welcome</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Seccomp-%E9%99%90%E5%88%B6%E5%AE%B9%E5%99%A8%E7%9A%84%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">Seccomp 限制容器的系统调用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-seccomp%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">2.</span> <span class="nav-text">1 seccomp是什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E9%85%8D%E7%BD%AE%E6%96%B9%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">2 配置方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-%E5%BC%80%E5%90%AFpsp%E4%B8%8Erbac"><span class="nav-number">3.1.</span> <span class="nav-text">2.1 开启psp与rbac</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-%E9%85%8D%E7%BD%AEseccomp"><span class="nav-number">3.2.</span> <span class="nav-text">2.2 配置seccomp</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-rbac%E6%8E%88%E6%9D%83"><span class="nav-number">3.3.</span> <span class="nav-text">2.3 rbac授权</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yuanwanli</p>
+  <div class="site-description" itemprop="description">等不是办法，干才有出路</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">79</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2022/02/22/2022-02-22-psp--seccomp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuanwanli">
+      <meta itemprop="description" content="等不是办法，干才有出路">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="brisk">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          podsecuritypolicy--seccomp
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-02-22 00:00:00" itemprop="dateCreated datePublished" datetime="2022-02-22T00:00:00+08:00">2022-02-22</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-03-01 20:33:43" itemprop="dateModified" datetime="2022-03-01T20:33:43+08:00">2022-03-01</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/k8s/" itemprop="url" rel="index"><span itemprop="name">k8s</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="Seccomp-限制容器的系统调用"><a href="#Seccomp-限制容器的系统调用" class="headerlink" title="Seccomp 限制容器的系统调用"></a>Seccomp 限制容器的系统调用</h3><h3 id="1-seccomp是什么"><a href="#1-seccomp是什么" class="headerlink" title="1 seccomp是什么"></a>1 seccomp是什么</h3><p>seccomp（securecomputing mode）是linuxkernel从2.6.23版本开始所支持的一种安全机制。</p>
+<p>在Linux系统里，大量的系统调用（systemcall）直接暴露给用户态程序。但是，并不是所有的系统调用都被需要，而且不安全的代码滥用系统调用会对系统造成安全威胁。通过seccomp，我们限制程序使用某些系统调用，这样可以减少系统的暴露面，同时是程序进入一种“安全”的状态。   </p>
+<p>系统调用列表可查阅</p>
+<p><a target="_blank" rel="noopener" href="http://asm.sourceforge.net/syscall.html#p33">Linux/i386 system calls (sourceforge.net)</a> </p>
+<p><a target="_blank" rel="noopener" href="https://man7.org/linux/man-pages/man2/syscalls.2.html">syscalls(2) - Linux manual page (man7.org)</a></p>
+<h3 id="2-配置方法"><a href="#2-配置方法" class="headerlink" title="2 配置方法"></a>2 配置方法</h3><p>k8s中，可以通过podsecurity policy来限制pod的系统调用。1.16以后为psp稳定版本，经测试1.14以后版本均可用。</p>
+<h4 id="2-1-开启psp与rbac"><a href="#2-1-开启psp与rbac" class="headerlink" title="2.1 开启psp与rbac"></a>2.1 开启psp与rbac</h4><p>rke部署集群启用psp需要在cluster.yml中开启rbac与psp:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">kube-api:</span><br><span class="line">   pod_security_policy: true</span><br><span class="line">authorization:</span><br><span class="line">  mode: rbac</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-2-配置seccomp"><a href="#2-2-配置seccomp" class="headerlink" title="2.2 配置seccomp"></a>2.2 配置seccomp</h4><p>Pod 对 seccomp 模版的使用可以通过在 PodSecurityPolicy 上设置<code>annotations</code>配置。 </p>
+<p><strong>seccomp.security.alpha.kubernetes.io/allowedProfileNames</strong> - 指定defaultProfileName可用的模板类型。取值为一个可用值的列表。 表中每项可以以下字段的取值之一，还可以是 <code>*</code>，用来表示允许所有的模版。 如果没有设置此字段，意味着默认的 seccomp 模版是不可更改的。</p>
+<p><strong>seccomp.security.alpha.kubernetes.io/defaultProfileName</strong>字段用来指定为容器配置默认的 seccomp 模版。可选值为：</p>
+<ol>
+<li><p><code>unconfined</code> - 不开启seccomp, Seccomp 不会被应用到容器进程上 （Kubernets 中的默认设置）。</p>
+</li>
+<li><p><code>runtime/default</code> - 使用默认的容器运行时模版。默认的容器系统调用配置<a target="_blank" rel="noopener" href="https://docs.docker.com/engine/security/seccomp/">Seccomp security profiles for Docker | Docker Documentation</a> ，默认的配置为绝大多数容器提供了合理权限，限制了部分系统调用，增强了安全性。</p>
+<p>此时可修改psp为:</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: policy/v1beta1</span><br><span class="line">kind: PodSecurityPolicy</span><br><span class="line">metadata:</span><br><span class="line">  annotations:</span><br><span class="line">    seccomp.security.alpha.kubernetes.io/allowedProfileNames: &#x27;*&#x27;</span><br><span class="line">    seccomp.security.alpha.kubernetes.io/defaultProfileName: runtime/default</span><br><span class="line">  name: default-psp</span><br><span class="line">spec:</span><br><span class="line">  allowPrivilegeEscalation: true</span><br><span class="line">  allowedCapabilities:</span><br><span class="line">  - &#x27;*&#x27;</span><br><span class="line">  fsGroup:</span><br><span class="line">    rule: RunAsAny</span><br><span class="line">  hostIPC: true</span><br><span class="line">  hostNetwork: true</span><br><span class="line">  hostPID: true</span><br><span class="line">  hostPorts:</span><br><span class="line">  - max: 65535</span><br><span class="line">    min: 0</span><br><span class="line">  privileged: true</span><br><span class="line">  runAsUser:</span><br><span class="line">    rule: RunAsAny</span><br><span class="line">  seLinux:</span><br><span class="line">    rule: RunAsAny</span><br><span class="line">  supplementalGroups:</span><br><span class="line">    rule: RunAsAny</span><br><span class="line">  volumes:</span><br><span class="line">  - &#x27;*&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>修改部分为添加<code>seccomp.security.alpha.kubernetes.io/defaultProfileName: runtime/default</code></p>
+<p>若部分容器需要特殊权限，就需要自定义配置seccomp模板。</p>
+<p>3 .  <code>localhost/&lt;路径名&gt;</code> - 指定节点上路径 <code>&lt;seccomp_root&gt;/&lt;路径名&gt;</code> 下的一个 文件作为其模版。其中 <code>&lt;seccomp_root&gt;</code> 是通过 <code>kubelet</code> 的标志 <code>--seccomp-profile-root</code> 来指定的，默认的路径为<code> /var/lib/kubelet/seccomp/</code>，若没有改目录，需创建。</p>
+</li>
+</ol>
+<p>seccomp模板可配置黑白名单，配置文件为json格式。</p>
+<p>默认禁止全部系统调用，开启白名单为 white_list.json示例：  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;defaultAction&quot;: &quot;SCMP_ACT_ERRNO&quot;,</span><br><span class="line">    &quot;syscalls&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;names&quot;: [</span><br><span class="line">                &quot;read&quot;,</span><br><span class="line">                &quot;write&quot;,</span><br><span class="line">                &quot;_exit&quot;,</span><br><span class="line">                &quot;_sigreturn&quot;</span><br><span class="line">            ],</span><br><span class="line">            &quot;action&quot;: &quot;SCMP_ACT_ALLOW&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br><span class="line"># 仅开启四种系统调用示例。</span><br></pre></td></tr></table></figure>
+
+<p>默认开放全部系统调用，开启黑名单为black_list.json： </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;defaultAction&quot;: &quot;SCMP_ACT_ALLOW&quot;,</span><br><span class="line">    &quot;syscalls&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;names&quot;: [&quot;mkdir&quot;, &quot;rmdir&quot;],</span><br><span class="line">            &quot;action&quot;: &quot;SCMP_ACT_ERRNO&quot;,</span><br><span class="line">            &quot;args&quot;: []</span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果对全局修改配置可直接修改默认psp，如果对部分服务新建特殊需要可新建psp</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: policy/v1beta1</span><br><span class="line">kind: PodSecurityPolicy</span><br><span class="line">metadata:</span><br><span class="line">  annotations:</span><br><span class="line">    seccomp.security.alpha.kubernetes.io/allowedProfileNames: &#x27;*&#x27;</span><br><span class="line">    seccomp.security.alpha.kubernetes.io/defaultProfileName: localhost/black_list.json</span><br><span class="line">  name: psp-test</span><br><span class="line">spec:</span><br><span class="line">  allowPrivilegeEscalation: true</span><br><span class="line">  allowedCapabilities:</span><br><span class="line">  - &#x27;*&#x27;</span><br><span class="line">  fsGroup:</span><br><span class="line">    rule: RunAsAny</span><br><span class="line">  hostIPC: true</span><br><span class="line">  hostNetwork: true</span><br><span class="line">  hostPID: true</span><br><span class="line">  hostPorts:</span><br><span class="line">  - max: 65535</span><br><span class="line">    min: 0</span><br><span class="line">  privileged: true</span><br><span class="line">  runAsUser:</span><br><span class="line">    rule: RunAsAny</span><br><span class="line">  seLinux:</span><br><span class="line">    rule: RunAsAny</span><br><span class="line">  supplementalGroups:</span><br><span class="line">    rule: RunAsAny</span><br><span class="line">  volumes:</span><br><span class="line">  - &#x27;*&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>配置<code> seccomp.security.alpha.kubernetes.io/defaultProfileName: localhost/black_list.json</code>， 需要将配置文件存储在调度psp的节点/var/lib/kubelet/seccomp/下。</p>
+<h4 id="2-3-rbac授权"><a href="#2-3-rbac授权" class="headerlink" title="2.3 rbac授权"></a>2.3 rbac授权</h4><p>配置完成psp后，需要通过rbac授予用户或者sa权限。配置示例如下：<PSPNAME>待绑定psp资源名称。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"># clusterrole</span><br><span class="line">cat &gt; cr-&lt;PSPNAME&gt;.yml &lt;&lt; EOF</span><br><span class="line">apiVersion: rbac.authorization.k8s.io/v1</span><br><span class="line">kind: ClusterRole</span><br><span class="line">metadata:</span><br><span class="line">  name: cr-&lt;PSPNAME&gt;</span><br><span class="line">rules:</span><br><span class="line">- apiGroups: [&#x27;policy&#x27;]</span><br><span class="line">  resources: [&#x27;podsecuritypolicies&#x27;]</span><br><span class="line">  verbs:     [&#x27;use&#x27;]</span><br><span class="line">  resourceNames:</span><br><span class="line">  - &lt;PSPNAME&gt;</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">#  clusterrolebing</span><br><span class="line">cat &gt; crb-cr-&lt;PSPNAME&gt;-authorization.yml &lt;&lt; EOF</span><br><span class="line">apiVersion: rbac.authorization.k8s.io/v1</span><br><span class="line">kind: ClusterRoleBinding</span><br><span class="line">metadata:</span><br><span class="line">  name: crb-cr-&lt;PSPNAME&gt;-authorization</span><br><span class="line">roleRef:</span><br><span class="line">  kind: ClusterRole</span><br><span class="line">  name: cr-&lt;PSPNAME&gt;</span><br><span class="line">  apiGroup: rbac.authorization.k8s.io</span><br><span class="line">subjects:</span><br><span class="line"># Authorize all service accounts in a namespace (recommended):# 授权命名空间下的所有服务账号（推荐）：</span><br><span class="line">- kind: Group</span><br><span class="line">  apiGroup: rbac.authorization.k8s.io</span><br><span class="line">  name: system:serviceaccounts:&lt;authorized namespace&gt;</span><br><span class="line"># Authorize specific service accounts (not recommended):# 授权特定的服务账号（不建议这样操作）：</span><br><span class="line">- kind: ServiceAccount</span><br><span class="line">  name: &lt;authorized service account name&gt;</span><br><span class="line">  namespace: &lt;authorized pod namespace&gt;</span><br><span class="line"># Authorize specific users (not recommended):# 授权特定的用户（不建议这样操作）</span><br><span class="line">- kind: User</span><br><span class="line">  apiGroup: rbac.authorization.k8s.io</span><br><span class="line">  name: &lt;authorized user name&gt;</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+
+
+
+<p>替换</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"># clusterrole</span><br><span class="line">cat &gt; cr-default-psp.yml &lt;&lt; EOF</span><br><span class="line">apiVersion: rbac.authorization.k8s.io/v1</span><br><span class="line">kind: ClusterRole</span><br><span class="line">metadata:</span><br><span class="line">  name: cr-default-psp</span><br><span class="line">rules:</span><br><span class="line">- apiGroups: [&#x27;policy&#x27;]</span><br><span class="line">  resources: [&#x27;podsecuritypolicies&#x27;]</span><br><span class="line">  verbs:     [&#x27;use&#x27;]</span><br><span class="line">  resourceNames:</span><br><span class="line">  - default-psp</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">cat &gt; crb-cr-default-psp-authorization.yml &lt;&lt; EOF</span><br><span class="line">apiVersion: rbac.authorization.k8s.io/v1</span><br><span class="line">kind: ClusterRoleBinding</span><br><span class="line">metadata:</span><br><span class="line">  name: crb-cr-default-psp-authorization</span><br><span class="line">roleRef:</span><br><span class="line">  kind: ClusterRole</span><br><span class="line">  name: cr-default-psp</span><br><span class="line">  apiGroup: rbac.authorization.k8s.io</span><br><span class="line">subjects:</span><br><span class="line">- kind: Group</span><br><span class="line">  apiGroup: rbac.authorization.k8s.io</span><br><span class="line">  name: system:serviceaccounts</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/02/21/django%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="prev" title="django学习笔记">
+                  <i class="fa fa-chevron-left"></i> django学习笔记
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuanwanli</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
