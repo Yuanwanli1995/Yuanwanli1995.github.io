@@ -5026,4 +5026,20 @@ dos2unix  filename
         <category>k8s</category>
       </categories>
   </entry>
+  <entry>
+    <title>rke up bug</title>
+    <url>/2022/03/18/2022-03-18-rke-up-bug/</url>
+    <content><![CDATA[<p><code>Failed to reconcile etcd plane: Etcd plane nodes are replaced. Stopping provisioning. Please restore your cluster from backup.</code></p>
+<p>因为没有清除干净，rke remove或者删除rkestate创建后遗留的文件。</p>
+<p><code>kubernetes_version</code>字段无效</p>
+<p>更新集群版本时，只指定kubernetes version无效，需要再指定</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">images:</span><br><span class="line">kubernetes: </span><br></pre></td></tr></table></figure>
+
+
+
+]]></content>
+      <categories>
+        <category>bug</category>
+      </categories>
+  </entry>
 </search>

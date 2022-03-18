@@ -157,13 +157,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">79</span>
+          <span class="site-state-item-count">80</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
   </nav>
@@ -193,6 +193,88 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2022/01/25/2022-01-25-python-shutil/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuanwanli">
+      <meta itemprop="description" content="等不是办法，干才有出路">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="brisk">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/01/25/2022-01-25-python-shutil/" class="post-title-link" itemprop="url">python shutil</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-01-25 00:00:00" itemprop="dateCreated datePublished" datetime="2022-01-25T00:00:00+08:00">2022-01-25</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-02-21 14:54:31" itemprop="dateModified" datetime="2022-02-21T14:54:31+08:00">2022-02-21</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="1-what-does-shutil-do"><a href="#1-what-does-shutil-do" class="headerlink" title="1 what does shutil do?"></a>1 what does shutil do?</h3><p>shutil模块提供了一系列对文件和文件集合的高阶操作。 特别是提供了一些支持文件拷贝和删除的函数</p>
+<h3 id="2-用法"><a href="#2-用法" class="headerlink" title="2 用法"></a>2 用法</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">import shutil</span><br><span class="line"># 拷贝内容</span><br><span class="line">shutil.copyfileobj(open(&#x27;old.txt&#x27;,&#x27;r&#x27;), open(&#x27;new.txt&#x27;, &#x27;w&#x27;))</span><br><span class="line"></span><br><span class="line"># 拷贝文件内容，与上面的区别是不需要打开</span><br><span class="line">shutil.copyfile(&#x27;old.txt&#x27;, &#x27;new.txt&#x27;)</span><br><span class="line"></span><br><span class="line"># 拷贝权限，仅拷贝权限。内容、组、用户均不变</span><br><span class="line">shutil.copymode(&#x27;f1.log&#x27;, &#x27;f2.log&#x27;) #目标文件必须存在。 </span><br><span class="line"></span><br><span class="line"># 拷贝状态，仅拷贝状态的信息，包括：mode bits, atime, mtime, flags</span><br><span class="line"># ctime不拷贝</span><br><span class="line">shutil.copystat(&#x27;f1.log&#x27;, &#x27;f2.log&#x27;) #目标文件必须存在</span><br><span class="line">    # 对于linux中的文件或者目录中有3个时间，分别是：atime、ctime、mtime.</span><br><span class="line">    # atime:Access time，最后一次访问文件（读取或执行）的时间。</span><br><span class="line">    # citme:Change time，最后一次改变文件（属性）或者目录（属性）的时间。</span><br><span class="line">    # mtime:Modify time,最后一次改变文件（内容）或目录（内容）的时间。</span><br><span class="line"># [root@nginx shutiltest]# stat f1.txt </span><br><span class="line">#   File: ‘f1.txt’</span><br><span class="line">#   Size: 23        	Blocks: 8          IO Block: 4096   regular file</span><br><span class="line"># Device: fd01h/64769d	Inode: 536206      Links: 1</span><br><span class="line"># Access: (0644/-rw-r--r--)  Uid: (    0/    root)   Gid: (    0/    root)</span><br><span class="line"># Access: 2022-01-25 16:54:57.450843315 +0800</span><br><span class="line"># Modify: 2022-01-25 16:54:14.193587451 +0800</span><br><span class="line"># Change: 2022-01-25 16:54:14.196587469 +0800</span><br><span class="line">#  Birth: -</span><br><span class="line"></span><br><span class="line">#拷贝文件和权限</span><br><span class="line">shutil.copy(&#x27;f1.log&#x27;, &#x27;f2.log&#x27;)</span><br><span class="line"></span><br><span class="line"># 拷贝文件和状态信息 </span><br><span class="line">shutil.copy2(&#x27;f1.log&#x27;, &#x27;f2.log&#x27;)</span><br><span class="line"></span><br><span class="line"># 递归拷贝 目录</span><br><span class="line">shutil.copytree(&#x27;f1.log&#x27;, &#x27;f2.log&#x27;, symlinks=False, ignore=None)</span><br><span class="line"></span><br><span class="line"># 递归删除文件</span><br><span class="line">shutil.rmtree(&#x27;dir&#x27;)</span><br><span class="line"></span><br><span class="line"># mv </span><br><span class="line">shutil.move(src, dst)</span><br><span class="line"></span><br><span class="line"># 压缩</span><br><span class="line">shutil.make_archive(base_name, format,...)</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1194,90 +1276,6 @@
 <p>问题分析： A仓库从ip访问不到B仓库，需要在B仓库添加解析。 之后可通过域名访问</p>
 <p>解决： harbor-core  harbor-jobservice容器中添加DNS记录</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cat /etc/hosts</span><br><span class="line">81.68.101.212 yourdomain.com</span><br><span class="line"># B仓库域名 ip</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2022/01/14/2022-01-14-helm3%E5%AE%89%E8%A3%85/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yuanwanli">
-      <meta itemprop="description" content="等不是办法，干才有出路">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="brisk">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/01/14/2022-01-14-helm3%E5%AE%89%E8%A3%85/" class="post-title-link" itemprop="url">helm3安装</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-01-14 00:00:00" itemprop="dateCreated datePublished" datetime="2022-01-14T00:00:00+08:00">2022-01-14</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-02-21 14:54:31" itemprop="dateModified" datetime="2022-02-21T14:54:31+08:00">2022-02-21</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/k8s/" itemprop="url" rel="index"><span itemprop="name">k8s</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>helm3安装</p>
-<h3 id="二进制"><a href="#二进制" class="headerlink" title="二进制"></a>二进制</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 下载 </span><br><span class="line">wget https://get.helm.sh/helm-v3.5.3-linux-amd64.tar.gz -O /opt</span><br><span class="line"># 解压</span><br><span class="line">tar zxf helm-v3.5.3-linux-amd64.tar.gz</span><br><span class="line"># 转存</span><br><span class="line">cp -pr linux-amd64/helm /usr/local/bin/</span><br><span class="line"># 测试 </span><br><span class="line">helm --help </span><br></pre></td></tr></table></figure>
-
-<h3 id="脚本"><a href="#脚本" class="headerlink" title="脚本"></a>脚本</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash</span><br></pre></td></tr></table></figure>
 
 
       
