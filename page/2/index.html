@@ -157,7 +157,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">80</span>
+          <span class="site-state-item-count">81</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -193,6 +193,102 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2022/02/18/2022-02-18-ansible%E4%BD%BF%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuanwanli">
+      <meta itemprop="description" content="等不是办法，干才有出路">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="brisk">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/02/18/2022-02-18-ansible%E4%BD%BF%E7%94%A8/" class="post-title-link" itemprop="url">ansible使用</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-02-18 00:00:00" itemprop="dateCreated datePublished" datetime="2022-02-18T00:00:00+08:00">2022-02-18</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-03-19 18:50:15" itemprop="dateModified" datetime="2022-03-19T18:50:15+08:00">2022-03-19</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="1-ansible是什么"><a href="#1-ansible是什么" class="headerlink" title="1 ansible是什么"></a>1 ansible是什么</h3><p>Ansilbe是一个部署一群远程s主机的工具。远程的主机可以是本地或者远程的虚拟机，也可以是远程的物理机。</p>
+<h3 id="2-Ansible能做什么？"><a href="#2-Ansible能做什么？" class="headerlink" title="2 Ansible能做什么？"></a>2 Ansible能做什么？</h3><p>Ansilbe是一个部署一群远程主机的工具。远程的主机可以是本地或者远程的虚拟机，也可以是远程的物理机。</p>
+<h3 id="3-ansible-配置"><a href="#3-ansible-配置" class="headerlink" title="3 ansible 配置"></a>3 ansible 配置</h3><ul>
+<li>安装</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># Redhat/CentOS Linux上，Ansible目前放在的epel源中</span><br><span class="line"># Fedora默认源中包含ansible，直接安装包既可</span><br><span class="line">yum install epel-release </span><br><span class="line">yum install ansible -y</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>配置Ansible管理节点和主机的连接</li>
+</ul>
+<p>其实就是配置从<strong>管理节点到远程主机</strong>之间基于key（无密码的方式）的<strong>SSH连接</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 复制代码$ # 生成ssh key$ ssh-keygen$ </span><br><span class="line"># 拷贝ssh key到远程主机，ssh的时候就不需要输入密码了$ ssh-copy-id remoteuser@remoteserver$ # ssh的时候不会提示是否保存key$ ssh-keyscan remote_servers &gt;&gt; ~/.ssh/known_hosts</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1339,244 +1435,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2022/01/28/2022-01-28-k8s-rbac/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yuanwanli">
-      <meta itemprop="description" content="等不是办法，干才有出路">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="brisk">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/01/28/2022-01-28-k8s-rbac/" class="post-title-link" itemprop="url">k8s-rbac</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-01-28 00:00:00" itemprop="dateCreated datePublished" datetime="2022-01-28T00:00:00+08:00">2022-01-28</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-03-19 18:50:15" itemprop="dateModified" datetime="2022-03-19T18:50:15+08:00">2022-03-19</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/k8s/" itemprop="url" rel="index"><span itemprop="name">k8s</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="1-rabc是什么？"><a href="#1-rabc是什么？" class="headerlink" title="1 rabc是什么？"></a>1 rabc是什么？</h3><p>K8s api 服务器可以配置使用一个授权插件来检查用户或sa是否有权限执行动作。</p>
-<p>什么是动作？ </p>
-<p>REST客户端发送get, post, put, delete和其他资源的HTTP请求到特定的url路径上，这些路径表示特定的REST资源，如pod, svs,secret等。  动作包含如下： </p>
-<table>
-<thead>
-<tr>
-<th>HTTP</th>
-<th>单一资源动词</th>
-<th>集合动词</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>get, head</td>
-<td>get、watch</td>
-<td>list、watch</td>
-</tr>
-<tr>
-<td>post</td>
-<td>create</td>
-<td>n/a</td>
-</tr>
-<tr>
-<td>put</td>
-<td>update</td>
-<td>n/a</td>
-</tr>
-<tr>
-<td>patch</td>
-<td>patch</td>
-<td>n/a</td>
-</tr>
-<tr>
-<td>delete</td>
-<td>patch</td>
-<td>n/a</td>
-</tr>
-<tr>
-<td>delete</td>
-<td>delete</td>
-<td>deletecollection</td>
-</tr>
-</tbody></table>
-<blockquote>
-<p>额外的动词use用于podsecurity policy资源</p>
-</blockquote>
-<p>资源可以通过<code>kubectl api-resources</code>查看, 当前 k8s 支持两类 API Groups：</p>
-<ol>
-<li>Core Groups（核心组）， 该分组也可以称之为 Legacy Groups，作为 k8s 最核心的 API ，其特点是没有组的概念，例如 “v1”，在资源对象的定义中表示为 “apiVersion: v1”，属于核心组的资源主要有pod， svc等等。</li>
-</ol>
-<blockquote>
-<p>注意核心组没有组名，只有版本，所以apiGroups的值为空。</p>
-</blockquote>
-<ol start="2">
-<li>具有分组信息的 API， 这种 API 接口以/apis/$GROUP_NAME/$VERSION URL 路径进行标识，在api-resources定义中表示为 “apiVersion: groupname/version”， 例如 “apiVersion: batch/v1”.</li>
-</ol>
-<h3 id="2-如何实现rbac"><a href="#2-如何实现rbac" class="headerlink" title="2 如何实现rbac?"></a>2 如何实现rbac?</h3><p>rbac授权通过两组四种资源来配置的： </p>
-<ol>
-<li> namespace级别的资源， role和rolebinding</li>
-<li>集群级别的资源， clusterrole和clusterrolebinding</li>
-</ol>
-<p>前一种是ns级别的限制，另一种是全局的，cluster级别的限制。 </p>
-<p>role和clusterrole声明一种角色，表明哪些<strong>动作</strong>可以在哪些<strong>资源</strong>上执行。</p>
-<p>binding和clusterbinding声明哪些用户或者SA被授权这些角色。 </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@node psptest]# kubectl api-resources | grep role</span><br><span class="line">clusterrolebindings                            rbac.authorization.k8s.io/v1      false        ClusterRoleBinding</span><br><span class="line">clusterroles                                   rbac.authorization.k8s.io/v1      false        ClusterRole</span><br><span class="line">rolebindings                                   rbac.authorization.k8s.io/v1      true         RoleBinding</span><br><span class="line">roles                                          rbac.authorization.k8s.io/v1      true         Role</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-测试"><a href="#3-测试" class="headerlink" title="3 测试"></a>3 测试</h3><h4 id="3-1-role与rolebinding"><a href="#3-1-role与rolebinding" class="headerlink" title="3.1 role与rolebinding"></a>3.1 role与rolebinding</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"># 新建一个测试ns ns-test01</span><br><span class="line">[root@node psptest]# kubectl create ns ns-test01</span><br><span class="line">namespace/ns-test01 created</span><br><span class="line"></span><br><span class="line"># 新建一个测试pod </span><br><span class="line">[root@node psptest]#  kubectl run test --image=luksa/kubectl-proxy -n ns-test01</span><br><span class="line">pod/test created</span><br><span class="line"></span><br><span class="line"># 集群启用rbac后，默认pod没有访问集群内资源的权限</span><br><span class="line">[root@node psptest]# kubectl exec test -n ns-test01 curl localhost:8001/api/v1/namespaces/ns-test01/services</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  &quot;kind&quot;: &quot;Status&quot;,</span><br><span class="line">  &quot;apiVersion&quot;: &quot;v1&quot;,</span><br><span class="line">  &quot;metadata&quot;: &#123;</span><br><span class="line">    </span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;status&quot;: &quot;Failure&quot;,</span><br><span class="line">  &quot;message&quot;: &quot;service is forbidden: User \&quot;system:serviceaccount:ns-test01:default\&quot; cannot list resource \&quot;service\&quot; in API group \&quot;\&quot; in the namespace \&quot;ns-test01\&quot;&quot;,</span><br><span class="line">  &quot;reason&quot;: &quot;Forbidden&quot;,</span><br><span class="line">  &quot;details&quot;: &#123;</span><br><span class="line">    &quot;kind&quot;: &quot;service&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;code&quot;: 403</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 确实不能访问，说明rbac生效了</span><br><span class="line"></span><br><span class="line"># 给定一个可get pod的role,并绑定到该ns的sa</span><br><span class="line">cat &gt;&gt; role-read-services.yml  &lt;&lt; EOF</span><br><span class="line">apiVersion: rbac.authorization.k8s.io/v1</span><br><span class="line">kind: Role</span><br><span class="line">metadata:</span><br><span class="line">  name: role-read-ns-services</span><br><span class="line">  namespace: ns-test01</span><br><span class="line">rules:</span><br><span class="line">- apiGroups: [&#x27;&#x27;]</span><br><span class="line">  verbs: [&#x27;get&#x27;, &#x27;list&#x27;]</span><br><span class="line">  resources: [&#x27;services&#x27;]</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">#因为资源是多个， services必须是复数，否则不能访问</span><br><span class="line"># 可以通过resourceNames 限定具体的资源</span><br><span class="line"></span><br><span class="line">[root@node psptest]# kubectl create -f role-read-services.yml </span><br><span class="line">role.rbac.authorization.k8s.io/role-read-ns-services created</span><br><span class="line"></span><br><span class="line">[root@node psptest]# kubectl create rolebinding rbd-read-pod-sa --role=role-read-ns-services --serviceaccount=ns-test01:default -n ns-test01</span><br><span class="line">rolebinding.rbac.authorization.k8s.io/rbd-read-pod-sa created</span><br><span class="line"></span><br><span class="line"># 再pod中再次访问</span><br><span class="line">[root@node psptest]# kubectl exec test -n ns-test01 curl localhost:8001/api/v1/namespaces/ns-test01/services</span><br><span class="line">&#123;</span><br><span class="line">  &quot;kind&quot;: &quot;ServiceList&quot;,</span><br><span class="line">  &quot;apiVersion&quot;: &quot;v1&quot;,</span><br><span class="line">  &quot;metadata&quot;: &#123;</span><br><span class="line">    &quot;selfLink&quot;: &quot;/api/v1/namespaces/ns-test01/services&quot;,</span><br><span class="line">    &quot;resourceVersion&quot;: &quot;129667&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;items&quot;: []</span><br><span class="line"> </span><br><span class="line"># 说明rbac授权成功</span><br></pre></td></tr></table></figure>
-
-<h4 id="3-2-clusterrole与clusterrolebinding"><a href="#3-2-clusterrole与clusterrolebinding" class="headerlink" title="3.2 clusterrole与clusterrolebinding"></a>3.2 clusterrole与clusterrolebinding</h4><p>clusterrole是集群级别资源， 它允许访问没有命名空间级别的资源或者非资源型的URL。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"># 新建clusterrole 可以访问集群级别资源node</span><br><span class="line">[root@node psptest]# cat &gt;&gt; clusterrole-node-reader.yaml &lt;&lt; EOF</span><br><span class="line">apiVersion: rbac.authorization.k8s.io/v1 </span><br><span class="line">kind: ClusterRole </span><br><span class="line">metadata: </span><br><span class="line">  name: node-reader</span><br><span class="line">rules: </span><br><span class="line">- apiGroups: [&#x27;&#x27;]</span><br><span class="line">  verbs: [&#x27;get&#x27;,&#x27;list&#x27;]</span><br><span class="line">  resources: [&#x27;nodes&#x27;]</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">[root@node psptest]# kubectl create -f clusterrole-node-reader.yaml </span><br><span class="line">clusterrole.rbac.authorization.k8s.io/node-reader created</span><br><span class="line"></span><br><span class="line"># 新建clusterrolebinding  </span><br><span class="line">[root@node psptest]# kubectl create clusterrolebinding crb-node-read --clusterrole=node-reader --serviceaccount=ns-test01:default</span><br><span class="line">clusterrolebinding.rbac.authorization.k8s.io/crb-node-read created</span><br><span class="line"></span><br><span class="line"># 未绑定之前无法访问，绑定之后可以访问</span><br><span class="line">[root@node psptest]# kubectl exec test -n ns-test01 curl localhost:8001/api/v1/nodes</span><br><span class="line">&#123;</span><br><span class="line">  &quot;kind&quot;: &quot;NodeList&quot;,</span><br><span class="line">  &quot;apiVersion&quot;: &quot;v1&quot;,</span><br><span class="line">  &quot;metadata&quot;: &#123;</span><br><span class="line">    &quot;selfLink&quot;: &quot;/api/v1/nodes&quot;,</span><br><span class="line">    &quot;resourceVersion&quot;: &quot;144316&quot;</span><br><span class="line">    ---</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<h1 id="224a31b93706e3592cb8961318638e3dca071f41"><a href="#224a31b93706e3592cb8961318638e3dca071f41" class="headerlink" title="224a31b93706e3592cb8961318638e3dca071f41"></a>224a31b93706e3592cb8961318638e3dca071f41</h1></blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-<hr>
-<p>title: k8s-rbac<br>date: 2022-01-28<br>categories: k8s</p>
-<hr>
-<h3 id="1-rabc是什么？-1"><a href="#1-rabc是什么？-1" class="headerlink" title="1 rabc是什么？"></a>1 rabc是什么？</h3><p>K8s api 服务器可以配置使用一个授权插件来检查用户或sa是否有权限执行动作。</p>
-<p>什么是动作？ </p>
-<p>REST客户端发送get, post, put, delete和其他资源的HTTP请求到特定的url路径上，这些路径表示特定的REST资源，如pod, svs,secret等。  动作包含如下： </p>
-<table>
-<thead>
-<tr>
-<th>HTTP</th>
-<th>单一资源动词</th>
-<th>集合动词</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>get, head</td>
-<td>get、watch</td>
-<td>list、watch</td>
-</tr>
-<tr>
-<td>post</td>
-<td>create</td>
-<td>n/a</td>
-</tr>
-<tr>
-<td>put</td>
-<td>update</td>
-<td>n/a</td>
-</tr>
-<tr>
-<td>patch</td>
-<td>patch</td>
-<td>n/a</td>
-</tr>
-<tr>
-<td>delete</td>
-<td>patch</td>
-<td>n/a</td>
-</tr>
-<tr>
-<td>delete</td>
-<td>delete</td>
-<td>deletecollection</td>
-</tr>
-</tbody></table>
-<blockquote>
-<p>额外的动词use用于podsecurity policy资源</p>
-</blockquote>
-<p>资源可以通过<code>kubectl api-resources</code>查看, 当前 k8s 支持两类 API Groups：</p>
-<ol>
-<li>Core Groups（核心组）， 该分组也可以称之为 Legacy Groups，作为 k8s 最核心的 API ，其特点是没有组的概念，例如 “v1”，在资源对象的定义中表示为 “apiVersion: v1”，属于核心组的资源主要有pod， svc等等。</li>
-</ol>
-<blockquote>
-<p>注意核心组没有组名，只有版本，所以apiGroups的值为空。</p>
-</blockquote>
-<ol start="2">
-<li>具有分组信息的 API， 这种 API 接口以/apis/$GROUP_NAME/$VERSION URL 路径进行标识，在api-resources定义中表示为 “apiVersion: groupname/version”， 例如 “apiVersion: batch/v1”.</li>
-</ol>
-<h3 id="2-如何实现rbac-1"><a href="#2-如何实现rbac-1" class="headerlink" title="2 如何实现rbac?"></a>2 如何实现rbac?</h3><p>rbac授权通过两组四种资源来配置的： </p>
-<ol>
-<li> namespace级别的资源， role和rolebinding</li>
-<li>集群级别的资源， clusterrole和clusterrolebinding</li>
-</ol>
-<p>前一种是ns级别的限制，另一种是全局的，cluster级别的限制。 </p>
-<p>role和clusterrole声明一种角色，表明哪些<strong>动作</strong>可以在哪些<strong>资源</strong>上执行。</p>
-<p>binding和clusterbinding声明哪些用户或者SA被授权这些角色。 </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@node psptest]# kubectl api-resources | grep role</span><br><span class="line">clusterrolebindings                            rbac.authorization.k8s.io/v1      false        ClusterRoleBinding</span><br><span class="line">clusterroles                                   rbac.authorization.k8s.io/v1      false        ClusterRole</span><br><span class="line">rolebindings                                   rbac.authorization.k8s.io/v1      true         RoleBinding</span><br><span class="line">roles                                          rbac.authorization.k8s.io/v1      true         Role</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-测试-1"><a href="#3-测试-1" class="headerlink" title="3 测试"></a>3 测试</h3><h4 id="3-1-role与rolebinding-1"><a href="#3-1-role与rolebinding-1" class="headerlink" title="3.1 role与rolebinding"></a>3.1 role与rolebinding</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"># 新建一个测试ns ns-test01</span><br><span class="line">[root@node psptest]# kubectl create ns ns-test01</span><br><span class="line">namespace/ns-test01 created</span><br><span class="line"></span><br><span class="line"># 新建一个测试pod </span><br><span class="line">[root@node psptest]#  kubectl run test --image=luksa/kubectl-proxy -n ns-test01</span><br><span class="line">pod/test created</span><br><span class="line"></span><br><span class="line"># 集群启用rbac后，默认pod没有访问集群内资源的权限</span><br><span class="line">[root@node psptest]# kubectl exec test -n ns-test01 curl localhost:8001/api/v1/namespaces/ns-test01/services</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  &quot;kind&quot;: &quot;Status&quot;,</span><br><span class="line">  &quot;apiVersion&quot;: &quot;v1&quot;,</span><br><span class="line">  &quot;metadata&quot;: &#123;</span><br><span class="line">    </span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;status&quot;: &quot;Failure&quot;,</span><br><span class="line">  &quot;message&quot;: &quot;service is forbidden: User \&quot;system:serviceaccount:ns-test01:default\&quot; cannot list resource \&quot;service\&quot; in API group \&quot;\&quot; in the namespace \&quot;ns-test01\&quot;&quot;,</span><br><span class="line">  &quot;reason&quot;: &quot;Forbidden&quot;,</span><br><span class="line">  &quot;details&quot;: &#123;</span><br><span class="line">    &quot;kind&quot;: &quot;service&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;code&quot;: 403</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 确实不能访问，说明rbac生效了</span><br><span class="line"></span><br><span class="line"># 给定一个可get pod的role,并绑定到该ns的sa</span><br><span class="line">cat &gt;&gt; role-read-services.yml  &lt;&lt; EOF</span><br><span class="line">apiVersion: rbac.authorization.k8s.io/v1</span><br><span class="line">kind: Role</span><br><span class="line">metadata:</span><br><span class="line">  name: role-read-ns-services</span><br><span class="line">  namespace: ns-test01</span><br><span class="line">rules:</span><br><span class="line">- apiGroups: [&#x27;&#x27;]</span><br><span class="line">  verbs: [&#x27;get&#x27;, &#x27;list&#x27;]</span><br><span class="line">  resources: [&#x27;services&#x27;]</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">#因为资源是多个， services必须是复数，否则不能访问</span><br><span class="line"># 可以通过resourceNames 限定具体的资源</span><br><span class="line"></span><br><span class="line">[root@node psptest]# kubectl create -f role-read-services.yml </span><br><span class="line">role.rbac.authorization.k8s.io/role-read-ns-services created</span><br><span class="line"></span><br><span class="line">[root@node psptest]# kubectl create rolebinding rbd-read-pod-sa --role=role-read-ns-services --serviceaccount=ns-test01:default -n ns-test01</span><br><span class="line">rolebinding.rbac.authorization.k8s.io/rbd-read-pod-sa created</span><br><span class="line"></span><br><span class="line"># 再pod中再次访问</span><br><span class="line">[root@node psptest]# kubectl exec test -n ns-test01 curl localhost:8001/api/v1/namespaces/ns-test01/services</span><br><span class="line">&#123;</span><br><span class="line">  &quot;kind&quot;: &quot;ServiceList&quot;,</span><br><span class="line">  &quot;apiVersion&quot;: &quot;v1&quot;,</span><br><span class="line">  &quot;metadata&quot;: &#123;</span><br><span class="line">    &quot;selfLink&quot;: &quot;/api/v1/namespaces/ns-test01/services&quot;,</span><br><span class="line">    &quot;resourceVersion&quot;: &quot;129667&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;items&quot;: []</span><br><span class="line"> </span><br><span class="line"># 说明rbac授权成功</span><br></pre></td></tr></table></figure>
-
-<h4 id="3-2-clusterrole与clusterrolebinding-1"><a href="#3-2-clusterrole与clusterrolebinding-1" class="headerlink" title="3.2 clusterrole与clusterrolebinding"></a>3.2 clusterrole与clusterrolebinding</h4><p>clusterrole是集群级别资源， 它允许访问没有命名空间级别的资源或者非资源型的URL。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"># 新建clusterrole 可以访问集群级别资源node</span><br><span class="line">[root@node psptest]# cat &gt;&gt; clusterrole-node-reader.yaml &lt;&lt; EOF</span><br><span class="line">apiVersion: rbac.authorization.k8s.io/v1 </span><br><span class="line">kind: ClusterRole </span><br><span class="line">metadata: </span><br><span class="line">  name: node-reader</span><br><span class="line">rules: </span><br><span class="line">- apiGroups: [&#x27;&#x27;]</span><br><span class="line">  verbs: [&#x27;get&#x27;,&#x27;list&#x27;]</span><br><span class="line">  resources: [&#x27;nodes&#x27;]</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">[root@node psptest]# kubectl create -f clusterrole-node-reader.yaml </span><br><span class="line">clusterrole.rbac.authorization.k8s.io/node-reader created</span><br><span class="line"></span><br><span class="line"># 新建clusterrolebinding  </span><br><span class="line">[root@node psptest]# kubectl create clusterrolebinding crb-node-read --clusterrole=node-reader --serviceaccount=ns-test01:default</span><br><span class="line">clusterrolebinding.rbac.authorization.k8s.io/crb-node-read created</span><br><span class="line"></span><br><span class="line"># 未绑定之前无法访问，绑定之后可以访问</span><br><span class="line">[root@node psptest]# kubectl exec test -n ns-test01 curl localhost:8001/api/v1/nodes</span><br><span class="line">&#123;</span><br><span class="line">  &quot;kind&quot;: &quot;NodeList&quot;,</span><br><span class="line">  &quot;apiVersion&quot;: &quot;v1&quot;,</span><br><span class="line">  &quot;metadata&quot;: &#123;</span><br><span class="line">    &quot;selfLink&quot;: &quot;/api/v1/nodes&quot;,</span><br><span class="line">    &quot;resourceVersion&quot;: &quot;144316&quot;</span><br><span class="line">    ---</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 </div>
