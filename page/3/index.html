@@ -157,7 +157,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">80</span>
+          <span class="site-state-item-count">79</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -202,168 +202,6 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2022/01/26/2022-01-26-psp--seccomp/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yuanwanli">
-      <meta itemprop="description" content="等不是办法，干才有出路">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="brisk">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/01/26/2022-01-26-psp--seccomp/" class="post-title-link" itemprop="url">podsecuritypolicy--seccomp</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-01-26 00:00:00" itemprop="dateCreated datePublished" datetime="2022-01-26T00:00:00+08:00">2022-01-26</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-02-21 14:54:31" itemprop="dateModified" datetime="2022-02-21T14:54:31+08:00">2022-02-21</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/k8s/" itemprop="url" rel="index"><span itemprop="name">k8s</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="1-seccomp-test-genxing"><a href="#1-seccomp-test-genxing" class="headerlink" title="1 seccomp test genxing"></a>1 seccomp test genxing</h3><p>seccomp（securecomputing mode）是linuxkernel从2.6.23版本开始所支持的一种安全机制。</p>
-<p>在Linux系统里，大量的系统调用（systemcall）直接暴露给用户态程序。但是，并不是所有的系统调用都被需要，而且不安全的代码滥用系统调用会对系统造成安全威胁。通过seccomp，我们限制程序使用某些系统调用，这样可以减少系统的暴露面，同时是程序进入一种“安全”的状态。   该模式下的进程只能调用4种系统调用（system call），即 read(), write(), exit() 和 sigreturn()，否则进程便会被终止。</p>
-<p>默认配置方法</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">[root@node101 ~]# kubectl get psp default-psp -o yaml </span><br><span class="line">apiVersion: policy/v1beta1</span><br><span class="line">kind: PodSecurityPolicy</span><br><span class="line">metadata:</span><br><span class="line">  annotations:</span><br><span class="line">    seccomp.security.alpha.kubernetes.io/allowedProfileNames: &#x27;*&#x27;</span><br><span class="line">  creationTimestamp: &quot;2022-01-26T08:29:11Z&quot;</span><br><span class="line">  name: default-psp</span><br><span class="line">  resourceVersion: &quot;29900&quot;</span><br><span class="line">  selfLink: /apis/policy/v1beta1/podsecuritypolicies/default-psp</span><br><span class="line">  uid: 09f4fef4-74a7-43a9-9b8c-49dabbbb249e</span><br><span class="line">spec:</span><br><span class="line">  allowPrivilegeEscalation: true</span><br><span class="line">  allowedCapabilities:</span><br><span class="line">  - &#x27;*&#x27;</span><br><span class="line">  fsGroup:</span><br><span class="line">    rule: RunAsAny</span><br><span class="line">  hostIPC: true</span><br><span class="line">  hostNetwork: true</span><br><span class="line">  hostPID: true</span><br><span class="line">  hostPorts:</span><br><span class="line">  - max: 65535</span><br><span class="line">    min: 0</span><br><span class="line">  privileged: true</span><br><span class="line">  runAsUser:</span><br><span class="line">    rule: RunAsAny</span><br><span class="line">  seLinux:</span><br><span class="line">    rule: RunAsAny</span><br><span class="line">  supplementalGroups:</span><br><span class="line">    rule: RunAsAny</span><br><span class="line">  volumes:</span><br><span class="line">  - &#x27;*&#x27;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rke config --list-version --all</span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line">cat &gt; violation-pod.yaml &lt;&lt; EOF</span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Pod</span><br><span class="line">metadata:</span><br><span class="line">  name: violation-pod</span><br><span class="line">  labels:</span><br><span class="line">    app: violation-pod</span><br><span class="line">spec:</span><br><span class="line">  securityContext:</span><br><span class="line">    seccompProfile:</span><br><span class="line">      type: Localhost</span><br><span class="line">      localhostProfile: profiles/violation.json</span><br><span class="line">  containers:</span><br><span class="line">  - name: test-container</span><br><span class="line">    image: hashicorp/http-echo:0.2.3</span><br><span class="line">    args:</span><br><span class="line">    - &quot;-text=just made some syscalls!&quot;</span><br><span class="line">    securityContext:</span><br><span class="line">      allowPrivilegeEscalation: false</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">cat &gt; violation-pod.yaml &lt;&lt; EOF</span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Pod</span><br><span class="line">metadata:</span><br><span class="line">  name: violation-pod</span><br><span class="line">  labels:</span><br><span class="line">    app: violation-pod</span><br><span class="line">  annotations:</span><br><span class="line">    seccomp.security.alpha.kubernetes.io/pod: localhost/profiles/violation.json</span><br><span class="line">spec:</span><br><span class="line">  containers:</span><br><span class="line">  - name: test-container</span><br><span class="line">    image: hashicorp/http-echo:0.2.3</span><br><span class="line">    args:</span><br><span class="line">    - &quot;-text=just made some syscalls!&quot;</span><br><span class="line">    securityContext:</span><br><span class="line">      allowPrivilegeEscalation: false</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">cat &gt; audit-pod,yaml &lt;&lt; EOF</span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Pod</span><br><span class="line">metadata:</span><br><span class="line">  name: audit-pod</span><br><span class="line">  labels:</span><br><span class="line">    app: audit-pod</span><br><span class="line">  annotations:</span><br><span class="line">    seccomp.security.alpha.kubernetes.io/pod: localhost/profiles/audit.json</span><br><span class="line">spec:</span><br><span class="line">  containers:</span><br><span class="line">  - name: test-container</span><br><span class="line">    image: hashicorp/http-echo:0.2.3</span><br><span class="line">    args:</span><br><span class="line">    - &quot;-text=just made some syscalls!&quot;</span><br><span class="line">    securityContext:</span><br><span class="line">      allowPrivilegeEscalation: false</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1</span><br><span class="line">kind: Pod</span><br><span class="line">metadata:</span><br><span class="line">  name: audit-pod</span><br><span class="line">  labels:</span><br><span class="line">    app: audit-pod</span><br><span class="line">spec:</span><br><span class="line">  serviceAccountName: sa-seccomp</span><br><span class="line">  containers:</span><br><span class="line">  - name: test-container</span><br><span class="line">    image: hashicorp/http-echo:0.2.3</span><br><span class="line">    args:</span><br><span class="line">    - &quot;-text=just made some syscalls!&quot;</span><br><span class="line">    securityContext:</span><br><span class="line">      allowPrivilegeEscalation: false</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br></pre></td><td class="code"><pre><span class="line">任意新建的sa  sa-seccomp 都可以创建pod </span><br><span class="line">那么肯定是某个crb绑定了所有认证的sa </span><br><span class="line">查看 crb s </span><br><span class="line">------------------------------clusterrolebindings 8-------------------------</span><br><span class="line">------------------------------system:basic-user-------------------------</span><br><span class="line">apiVersion: rbac.authorization.k8s.io/v1</span><br><span class="line">kind: ClusterRoleBinding</span><br><span class="line">metadata:</span><br><span class="line">  annotations:</span><br><span class="line">    rbac.authorization.kubernetes.io/autoupdate: &quot;true&quot;</span><br><span class="line">  creationTimestamp: &quot;2022-02-04T01:34:21Z&quot;</span><br><span class="line">  labels:</span><br><span class="line">    kubernetes.io/bootstrapping: rbac-defaults</span><br><span class="line">  name: system:basic-user</span><br><span class="line">  resourceVersion: &quot;95&quot;</span><br><span class="line">  selfLink: /apis/rbac.authorization.k8s.io/v1/clusterrolebindings/system%3Abasic-user</span><br><span class="line">  uid: 75d524ac-7876-4cfb-9413-3228e036b5d0</span><br><span class="line">roleRef:</span><br><span class="line">  apiGroup: rbac.authorization.k8s.io</span><br><span class="line">  kind: ClusterRole</span><br><span class="line">  name: system:basic-user</span><br><span class="line">subjects:</span><br><span class="line">- apiGroup: rbac.authorization.k8s.io</span><br><span class="line">  kind: Group</span><br><span class="line">  name: system:authenticated</span><br><span class="line">其指向   kind: ClusterRole   name: system:basic-user</span><br><span class="line">其权限 </span><br><span class="line">rules:</span><br><span class="line">- apiGroups:</span><br><span class="line">  - authorization.k8s.io</span><br><span class="line">  resources:</span><br><span class="line">  - selfsubjectaccessreviews</span><br><span class="line">  - selfsubjectrulesreviews</span><br><span class="line">  verbs:</span><br><span class="line">  - create</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line"></span><br><span class="line">------------------------------clusterrolebindings 37-------------------------</span><br><span class="line">------------------------------system:discovery-------------------------</span><br><span class="line">apiVersion: rbac.authorization.k8s.io/v1</span><br><span class="line">kind: ClusterRoleBinding</span><br><span class="line">metadata:</span><br><span class="line">  annotations:</span><br><span class="line">    rbac.authorization.kubernetes.io/autoupdate: &quot;true&quot;</span><br><span class="line">  creationTimestamp: &quot;2022-02-04T01:34:21Z&quot;</span><br><span class="line">  labels:</span><br><span class="line">    kubernetes.io/bootstrapping: rbac-defaults</span><br><span class="line">  name: system:discovery</span><br><span class="line">  resourceVersion: &quot;94&quot;</span><br><span class="line">  selfLink: /apis/rbac.authorization.k8s.io/v1/clusterrolebindings/system%3Adiscovery</span><br><span class="line">  uid: 4efe767c-2b60-4055-a7b5-52df76fe3633</span><br><span class="line">roleRef:</span><br><span class="line">  apiGroup: rbac.authorization.k8s.io</span><br><span class="line">  kind: ClusterRole</span><br><span class="line">  name: system:discovery</span><br><span class="line">subjects:</span><br><span class="line">- apiGroup: rbac.authorization.k8s.io</span><br><span class="line">  kind: Group</span><br><span class="line">  name: system:authenticated</span><br><span class="line">其指向   kind: ClusterRole name: system:discovery</span><br><span class="line">其权限</span><br><span class="line">rules:</span><br><span class="line">- nonResourceURLs:</span><br><span class="line">  - /api</span><br><span class="line">  - /api/*</span><br><span class="line">  - /apis</span><br><span class="line">  - /apis/*</span><br><span class="line">  - /healthz</span><br><span class="line">  - /livez</span><br><span class="line">  - /openapi</span><br><span class="line">  - /openapi/*</span><br><span class="line">  - /readyz</span><br><span class="line">  - /version</span><br><span class="line">  - /version/</span><br><span class="line">  verbs:</span><br><span class="line">  - get</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">------------------------------system:public-info-viewer-------------------------</span><br><span class="line">apiVersion: rbac.authorization.k8s.io/v1</span><br><span class="line">kind: ClusterRoleBinding</span><br><span class="line">metadata:</span><br><span class="line">  annotations:</span><br><span class="line">    rbac.authorization.kubernetes.io/autoupdate: &quot;true&quot;</span><br><span class="line">  creationTimestamp: &quot;2022-02-04T01:34:21Z&quot;</span><br><span class="line">  labels:</span><br><span class="line">    kubernetes.io/bootstrapping: rbac-defaults</span><br><span class="line">  name: system:public-info-viewer</span><br><span class="line">  resourceVersion: &quot;96&quot;</span><br><span class="line">  selfLink: /apis/rbac.authorization.k8s.io/v1/clusterrolebindings/system%3Apublic-info-viewer</span><br><span class="line">  uid: cb28ed46-27e9-40aa-9865-599791ef5ede</span><br><span class="line">roleRef:</span><br><span class="line">  apiGroup: rbac.authorization.k8s.io</span><br><span class="line">  kind: ClusterRole</span><br><span class="line">  name: system:public-info-viewer</span><br><span class="line">subjects:</span><br><span class="line">- apiGroup: rbac.authorization.k8s.io</span><br><span class="line">  kind: Group</span><br><span class="line">  name: system:authenticated</span><br><span class="line">- apiGroup: rbac.authorization.k8s.io</span><br><span class="line">  kind: Group</span><br><span class="line">  name: system:unauthenticated</span><br><span class="line"></span><br><span class="line">其指向   kind: ClusterRole name: system:public-info-viewer</span><br><span class="line">其权限   rules:</span><br><span class="line">- nonResourceURLs:</span><br><span class="line">  - /healthz</span><br><span class="line">  - /livez</span><br><span class="line">  - /readyz</span><br><span class="line">  - /version</span><br><span class="line">  - /version/</span><br><span class="line">  verbs:</span><br><span class="line">  - get</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<p>实际上， admin用户拥有全部权限， 搞不清楚 </p>
-<p>最好新建用户测试psp </p>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<h1 id="224a31b93706e3592cb8961318638e3dca071f41"><a href="#224a31b93706e3592cb8961318638e3dca071f41" class="headerlink" title="224a31b93706e3592cb8961318638e3dca071f41"></a>224a31b93706e3592cb8961318638e3dca071f41</h1></blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-<hr>
-<p>title: podsecuritypolicy–seccomp<br>date: 2022-01-26<br>categories: k8s    </p>
-<hr>
-<h3 id="1-seccomp-test-genxing-1"><a href="#1-seccomp-test-genxing-1" class="headerlink" title="1 seccomp test genxing"></a>1 seccomp test genxing</h3><p>seccomp（securecomputing mode）是linuxkernel从2.6.23版本开始所支持的一种安全机制。</p>
-<p>在Linux系统里，大量的系统调用（systemcall）直接暴露给用户态程序。但是，并不是所有的系统调用都被需要，而且不安全的代码滥用系统调用会对系统造成安全威胁。通过seccomp，我们限制程序使用某些系统调用，这样可以减少系统的暴露面，同时是程序进入一种“安全”的状态。   该模式下的进程只能调用4种系统调用（system call），即 read(), write(), exit() 和 sigreturn()，否则进程便会被终止。</p>
-<p>默认配置方法</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">[root@node101 ~]# kubectl get psp default-psp -o yaml </span><br><span class="line">apiVersion: policy/v1beta1</span><br><span class="line">kind: PodSecurityPolicy</span><br><span class="line">metadata:</span><br><span class="line">  annotations:</span><br><span class="line">    seccomp.security.alpha.kubernetes.io/allowedProfileNames: &#x27;*&#x27;</span><br><span class="line">  creationTimestamp: &quot;2022-01-26T08:29:11Z&quot;</span><br><span class="line">  name: default-psp</span><br><span class="line">  resourceVersion: &quot;29900&quot;</span><br><span class="line">  selfLink: /apis/policy/v1beta1/podsecuritypolicies/default-psp</span><br><span class="line">  uid: 09f4fef4-74a7-43a9-9b8c-49dabbbb249e</span><br><span class="line">spec:</span><br><span class="line">  allowPrivilegeEscalation: true</span><br><span class="line">  allowedCapabilities:</span><br><span class="line">  - &#x27;*&#x27;</span><br><span class="line">  fsGroup:</span><br><span class="line">    rule: RunAsAny</span><br><span class="line">  hostIPC: true</span><br><span class="line">  hostNetwork: true</span><br><span class="line">  hostPID: true</span><br><span class="line">  hostPorts:</span><br><span class="line">  - max: 65535</span><br><span class="line">    min: 0</span><br><span class="line">  privileged: true</span><br><span class="line">  runAsUser:</span><br><span class="line">    rule: RunAsAny</span><br><span class="line">  seLinux:</span><br><span class="line">    rule: RunAsAny</span><br><span class="line">  supplementalGroups:</span><br><span class="line">    rule: RunAsAny</span><br><span class="line">  volumes:</span><br><span class="line">  - &#x27;*&#x27;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rke config --list-version --all</span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line">cat &gt; violation-pod.yaml &lt;&lt; EOF</span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Pod</span><br><span class="line">metadata:</span><br><span class="line">  name: violation-pod</span><br><span class="line">  labels:</span><br><span class="line">    app: violation-pod</span><br><span class="line">spec:</span><br><span class="line">  securityContext:</span><br><span class="line">    seccompProfile:</span><br><span class="line">      type: Localhost</span><br><span class="line">      localhostProfile: profiles/violation.json</span><br><span class="line">  containers:</span><br><span class="line">  - name: test-container</span><br><span class="line">    image: hashicorp/http-echo:0.2.3</span><br><span class="line">    args:</span><br><span class="line">    - &quot;-text=just made some syscalls!&quot;</span><br><span class="line">    securityContext:</span><br><span class="line">      allowPrivilegeEscalation: false</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">cat &gt; violation-pod.yaml &lt;&lt; EOF</span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Pod</span><br><span class="line">metadata:</span><br><span class="line">  name: violation-pod</span><br><span class="line">  labels:</span><br><span class="line">    app: violation-pod</span><br><span class="line">  annotations:</span><br><span class="line">    seccomp.security.alpha.kubernetes.io/pod: localhost/profiles/violation.json</span><br><span class="line">spec:</span><br><span class="line">  containers:</span><br><span class="line">  - name: test-container</span><br><span class="line">    image: hashicorp/http-echo:0.2.3</span><br><span class="line">    args:</span><br><span class="line">    - &quot;-text=just made some syscalls!&quot;</span><br><span class="line">    securityContext:</span><br><span class="line">      allowPrivilegeEscalation: false</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">cat &gt; audit-pod,yaml &lt;&lt; EOF</span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Pod</span><br><span class="line">metadata:</span><br><span class="line">  name: audit-pod</span><br><span class="line">  labels:</span><br><span class="line">    app: audit-pod</span><br><span class="line">  annotations:</span><br><span class="line">    seccomp.security.alpha.kubernetes.io/pod: localhost/profiles/audit.json</span><br><span class="line">spec:</span><br><span class="line">  containers:</span><br><span class="line">  - name: test-container</span><br><span class="line">    image: hashicorp/http-echo:0.2.3</span><br><span class="line">    args:</span><br><span class="line">    - &quot;-text=just made some syscalls!&quot;</span><br><span class="line">    securityContext:</span><br><span class="line">      allowPrivilegeEscalation: false</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1</span><br><span class="line">kind: Pod</span><br><span class="line">metadata:</span><br><span class="line">  name: audit-pod</span><br><span class="line">  labels:</span><br><span class="line">    app: audit-pod</span><br><span class="line">spec:</span><br><span class="line">  serviceAccountName: sa-seccomp</span><br><span class="line">  containers:</span><br><span class="line">  - name: test-container</span><br><span class="line">    image: hashicorp/http-echo:0.2.3</span><br><span class="line">    args:</span><br><span class="line">    - &quot;-text=just made some syscalls!&quot;</span><br><span class="line">    securityContext:</span><br><span class="line">      allowPrivilegeEscalation: false</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br></pre></td><td class="code"><pre><span class="line">任意新建的sa  sa-seccomp 都可以创建pod </span><br><span class="line">那么肯定是某个crb绑定了所有认证的sa </span><br><span class="line">查看 crb s </span><br><span class="line">------------------------------clusterrolebindings 8-------------------------</span><br><span class="line">------------------------------system:basic-user-------------------------</span><br><span class="line">apiVersion: rbac.authorization.k8s.io/v1</span><br><span class="line">kind: ClusterRoleBinding</span><br><span class="line">metadata:</span><br><span class="line">  annotations:</span><br><span class="line">    rbac.authorization.kubernetes.io/autoupdate: &quot;true&quot;</span><br><span class="line">  creationTimestamp: &quot;2022-02-04T01:34:21Z&quot;</span><br><span class="line">  labels:</span><br><span class="line">    kubernetes.io/bootstrapping: rbac-defaults</span><br><span class="line">  name: system:basic-user</span><br><span class="line">  resourceVersion: &quot;95&quot;</span><br><span class="line">  selfLink: /apis/rbac.authorization.k8s.io/v1/clusterrolebindings/system%3Abasic-user</span><br><span class="line">  uid: 75d524ac-7876-4cfb-9413-3228e036b5d0</span><br><span class="line">roleRef:</span><br><span class="line">  apiGroup: rbac.authorization.k8s.io</span><br><span class="line">  kind: ClusterRole</span><br><span class="line">  name: system:basic-user</span><br><span class="line">subjects:</span><br><span class="line">- apiGroup: rbac.authorization.k8s.io</span><br><span class="line">  kind: Group</span><br><span class="line">  name: system:authenticated</span><br><span class="line">其指向   kind: ClusterRole   name: system:basic-user</span><br><span class="line">其权限 </span><br><span class="line">rules:</span><br><span class="line">- apiGroups:</span><br><span class="line">  - authorization.k8s.io</span><br><span class="line">  resources:</span><br><span class="line">  - selfsubjectaccessreviews</span><br><span class="line">  - selfsubjectrulesreviews</span><br><span class="line">  verbs:</span><br><span class="line">  - create</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line"></span><br><span class="line">------------------------------clusterrolebindings 37-------------------------</span><br><span class="line">------------------------------system:discovery-------------------------</span><br><span class="line">apiVersion: rbac.authorization.k8s.io/v1</span><br><span class="line">kind: ClusterRoleBinding</span><br><span class="line">metadata:</span><br><span class="line">  annotations:</span><br><span class="line">    rbac.authorization.kubernetes.io/autoupdate: &quot;true&quot;</span><br><span class="line">  creationTimestamp: &quot;2022-02-04T01:34:21Z&quot;</span><br><span class="line">  labels:</span><br><span class="line">    kubernetes.io/bootstrapping: rbac-defaults</span><br><span class="line">  name: system:discovery</span><br><span class="line">  resourceVersion: &quot;94&quot;</span><br><span class="line">  selfLink: /apis/rbac.authorization.k8s.io/v1/clusterrolebindings/system%3Adiscovery</span><br><span class="line">  uid: 4efe767c-2b60-4055-a7b5-52df76fe3633</span><br><span class="line">roleRef:</span><br><span class="line">  apiGroup: rbac.authorization.k8s.io</span><br><span class="line">  kind: ClusterRole</span><br><span class="line">  name: system:discovery</span><br><span class="line">subjects:</span><br><span class="line">- apiGroup: rbac.authorization.k8s.io</span><br><span class="line">  kind: Group</span><br><span class="line">  name: system:authenticated</span><br><span class="line">其指向   kind: ClusterRole name: system:discovery</span><br><span class="line">其权限</span><br><span class="line">rules:</span><br><span class="line">- nonResourceURLs:</span><br><span class="line">  - /api</span><br><span class="line">  - /api/*</span><br><span class="line">  - /apis</span><br><span class="line">  - /apis/*</span><br><span class="line">  - /healthz</span><br><span class="line">  - /livez</span><br><span class="line">  - /openapi</span><br><span class="line">  - /openapi/*</span><br><span class="line">  - /readyz</span><br><span class="line">  - /version</span><br><span class="line">  - /version/</span><br><span class="line">  verbs:</span><br><span class="line">  - get</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">------------------------------system:public-info-viewer-------------------------</span><br><span class="line">apiVersion: rbac.authorization.k8s.io/v1</span><br><span class="line">kind: ClusterRoleBinding</span><br><span class="line">metadata:</span><br><span class="line">  annotations:</span><br><span class="line">    rbac.authorization.kubernetes.io/autoupdate: &quot;true&quot;</span><br><span class="line">  creationTimestamp: &quot;2022-02-04T01:34:21Z&quot;</span><br><span class="line">  labels:</span><br><span class="line">    kubernetes.io/bootstrapping: rbac-defaults</span><br><span class="line">  name: system:public-info-viewer</span><br><span class="line">  resourceVersion: &quot;96&quot;</span><br><span class="line">  selfLink: /apis/rbac.authorization.k8s.io/v1/clusterrolebindings/system%3Apublic-info-viewer</span><br><span class="line">  uid: cb28ed46-27e9-40aa-9865-599791ef5ede</span><br><span class="line">roleRef:</span><br><span class="line">  apiGroup: rbac.authorization.k8s.io</span><br><span class="line">  kind: ClusterRole</span><br><span class="line">  name: system:public-info-viewer</span><br><span class="line">subjects:</span><br><span class="line">- apiGroup: rbac.authorization.k8s.io</span><br><span class="line">  kind: Group</span><br><span class="line">  name: system:authenticated</span><br><span class="line">- apiGroup: rbac.authorization.k8s.io</span><br><span class="line">  kind: Group</span><br><span class="line">  name: system:unauthenticated</span><br><span class="line"></span><br><span class="line">其指向   kind: ClusterRole name: system:public-info-viewer</span><br><span class="line">其权限   rules:</span><br><span class="line">- nonResourceURLs:</span><br><span class="line">  - /healthz</span><br><span class="line">  - /livez</span><br><span class="line">  - /readyz</span><br><span class="line">  - /version</span><br><span class="line">  - /version/</span><br><span class="line">  verbs:</span><br><span class="line">  - get</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<p>实际上， admin用户拥有全部权限， 搞不清楚 </p>
-<p>最好新建用户测试psp </p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2022/01/25/2022-01-25-python-shutil/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -395,7 +233,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-02-21 14:54:31" itemprop="dateModified" datetime="2022-02-21T14:54:31+08:00">2022-02-21</time>
+        <time title="修改时间：2022-03-19 18:50:15" itemprop="dateModified" datetime="2022-03-19T18:50:15+08:00">2022-03-19</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -477,7 +315,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-02-21 14:54:31" itemprop="dateModified" datetime="2022-02-21T14:54:31+08:00">2022-02-21</time>
+        <time title="修改时间：2022-03-19 18:50:15" itemprop="dateModified" datetime="2022-03-19T18:50:15+08:00">2022-03-19</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -666,7 +504,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-02-21 14:54:31" itemprop="dateModified" datetime="2022-02-21T14:54:31+08:00">2022-02-21</time>
+        <time title="修改时间：2022-03-19 18:50:15" itemprop="dateModified" datetime="2022-03-19T18:50:15+08:00">2022-03-19</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -846,7 +684,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-02-21 14:54:31" itemprop="dateModified" datetime="2022-02-21T14:54:31+08:00">2022-02-21</time>
+        <time title="修改时间：2022-03-19 18:50:15" itemprop="dateModified" datetime="2022-03-19T18:50:15+08:00">2022-03-19</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -981,7 +819,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-02-21 14:54:31" itemprop="dateModified" datetime="2022-02-21T14:54:31+08:00">2022-02-21</time>
+        <time title="修改时间：2022-03-19 18:50:15" itemprop="dateModified" datetime="2022-03-19T18:50:15+08:00">2022-03-19</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1073,7 +911,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-02-21 14:54:31" itemprop="dateModified" datetime="2022-02-21T14:54:31+08:00">2022-02-21</time>
+        <time title="修改时间：2022-03-19 18:50:15" itemprop="dateModified" datetime="2022-03-19T18:50:15+08:00">2022-03-19</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1170,7 +1008,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-02-21 14:54:31" itemprop="dateModified" datetime="2022-02-21T14:54:31+08:00">2022-02-21</time>
+        <time title="修改时间：2022-03-19 18:50:15" itemprop="dateModified" datetime="2022-03-19T18:50:15+08:00">2022-03-19</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1251,7 +1089,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-02-21 14:54:31" itemprop="dateModified" datetime="2022-02-21T14:54:31+08:00">2022-02-21</time>
+        <time title="修改时间：2022-03-19 18:50:15" itemprop="dateModified" datetime="2022-03-19T18:50:15+08:00">2022-03-19</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1330,7 +1168,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-02-21 14:54:31" itemprop="dateModified" datetime="2022-02-21T14:54:31+08:00">2022-02-21</time>
+        <time title="修改时间：2022-03-19 18:50:15" itemprop="dateModified" datetime="2022-03-19T18:50:15+08:00">2022-03-19</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1354,6 +1192,90 @@
     <div class="post-body" itemprop="articleBody">
           <p>有时把地址https 改为git可解决</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@VM-4-15-centos ~]# git clone https://github.com/sorintlab/stolon.git</span><br><span class="line">Cloning into &#x27;stolon&#x27;...</span><br><span class="line">^C</span><br><span class="line">[root@VM-4-15-centos ~]# git clone git://github.com/sorintlab/stolon.git</span><br><span class="line">Cloning into &#x27;stolon&#x27;...</span><br><span class="line">remote: Enumerating objects: 9244, done.</span><br><span class="line">remote: Counting objects: 100% (47/47), done.</span><br><span class="line">remote: Compressing objects: 100% (38/38), done.</span><br><span class="line">remote: Total 9244 (delta 12), reused 19 (delta 6), pack-reused 9197</span><br><span class="line">Receiving objects: 100% (9244/9244), 9.29 MiB | 221.00 KiB/s, done.</span><br><span class="line">Resolving deltas: 100% (4346/4346), done.</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2022/01/14/2022-01-14-harbor%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E6%97%A0%E6%B3%95%E8%AE%BF%E9%97%AE%E9%9C%80%E8%A6%81%E4%BF%AE%E6%94%B9hsots/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuanwanli">
+      <meta itemprop="description" content="等不是办法，干才有出路">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="brisk">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/01/14/2022-01-14-harbor%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E6%97%A0%E6%B3%95%E8%AE%BF%E9%97%AE%E9%9C%80%E8%A6%81%E4%BF%AE%E6%94%B9hsots/" class="post-title-link" itemprop="url">harbor主从复制无法访问需要修改hsots</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-01-14 00:00:00" itemprop="dateCreated datePublished" datetime="2022-01-14T00:00:00+08:00">2022-01-14</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-03-19 18:50:15" itemprop="dateModified" datetime="2022-03-19T18:50:15+08:00">2022-03-19</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/k8s/" itemprop="url" rel="index"><span itemprop="name">k8s</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>问题：设定主从复制时， 目标url可能联系不到。 </p>
+<p>问题分析： A仓库从ip访问不到B仓库，需要在B仓库添加解析。 之后可通过域名访问</p>
+<p>解决： harbor-core  harbor-jobservice容器中添加DNS记录</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cat /etc/hosts</span><br><span class="line">81.68.101.212 yourdomain.com</span><br><span class="line"># B仓库域名 ip</span><br></pre></td></tr></table></figure>
 
 
       

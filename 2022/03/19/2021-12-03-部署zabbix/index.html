@@ -23,23 +23,23 @@
 <meta name="description" content="Zabbix是当前主流开源的企业级分布式监控系统。Zabbix特点是：安装部署较简单，且默认自带了多种监控告警模板。也具备较强的仪表盘展示功能；提供API接口，支持脚本调用；支持自定义编写插件以及监控模板。  这里记一下zabbix部署方法。 主要是以下几步。    环境配置  yum安装  mariadb配置zabbix表结构数据   配置zabbix    登陆zabbix web   1 基">
 <meta property="og:type" content="article">
 <meta property="og:title" content="部署zabbix">
-<meta property="og:url" content="http://yuanwanli1995.github.io/2022/02/21/2021-12-03-%E9%83%A8%E7%BD%B2zabbix/index.html">
+<meta property="og:url" content="http://yuanwanli1995.github.io/2022/03/19/2021-12-03-%E9%83%A8%E7%BD%B2zabbix/index.html">
 <meta property="og:site_name" content="brisk">
 <meta property="og:description" content="Zabbix是当前主流开源的企业级分布式监控系统。Zabbix特点是：安装部署较简单，且默认自带了多种监控告警模板。也具备较强的仪表盘展示功能；提供API接口，支持脚本调用；支持自定义编写插件以及监控模板。  这里记一下zabbix部署方法。 主要是以下几步。    环境配置  yum安装  mariadb配置zabbix表结构数据   配置zabbix    登陆zabbix web   1 基">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/zabbix.png">
-<meta property="article:published_time" content="2022-02-21T06:54:32.008Z">
-<meta property="article:modified_time" content="2022-02-21T06:54:31.992Z">
+<meta property="article:published_time" content="2022-03-19T10:50:15.722Z">
+<meta property="article:modified_time" content="2022-03-19T10:50:15.705Z">
 <meta property="article:author" content="yuanwanli">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/zabbix.png">
 
 
-<link rel="canonical" href="http://yuanwanli1995.github.io/2022/02/21/2021-12-03-%E9%83%A8%E7%BD%B2zabbix/">
+<link rel="canonical" href="http://yuanwanli1995.github.io/2022/03/19/2021-12-03-%E9%83%A8%E7%BD%B2zabbix/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://yuanwanli1995.github.io/2022/02/21/2021-12-03-%E9%83%A8%E7%BD%B2zabbix/","path":"2022/02/21/2021-12-03-部署zabbix/","title":"部署zabbix"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://yuanwanli1995.github.io/2022/03/19/2021-12-03-%E9%83%A8%E7%BD%B2zabbix/","path":"2022/03/19/2021-12-03-部署zabbix/","title":"部署zabbix"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>部署zabbix | brisk</title>
@@ -162,7 +162,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">80</span>
+          <span class="site-state-item-count">79</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -208,7 +208,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2022/02/21/2021-12-03-%E9%83%A8%E7%BD%B2zabbix/">
+    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2022/03/19/2021-12-03-%E9%83%A8%E7%BD%B2zabbix/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -231,9 +231,8 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2022-02-21 14:54:32 / 修改时间：14:54:31" itemprop="dateCreated datePublished" datetime="2022-02-21T14:54:32+08:00">2022-02-21</time>
+      <time title="创建时间：2022-03-19 18:50:15" itemprop="dateCreated datePublished" datetime="2022-03-19T18:50:15+08:00">2022-03-19</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -319,12 +318,12 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2022/02/21/2022-02-21-docker%E5%88%A0%E9%99%A4%E9%95%9C%E5%83%8F%E5%A4%B1%E8%B4%A5/" rel="prev" title="docker删除镜像失败">
-                  <i class="fa fa-chevron-left"></i> docker删除镜像失败
+                <a href="/2022/03/18/2022-03-18-rke-up-bug/" rel="prev" title="rke up bug">
+                  <i class="fa fa-chevron-left"></i> rke up bug
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2022/02/21/2021-12-06-node.js-linux%E5%AE%89%E8%A3%85/" rel="next" title="node.js linux安装">
+                <a href="/2022/03/19/2021-12-06-node.js-linux%E5%AE%89%E8%A3%85/" rel="next" title="node.js linux安装">
                   node.js linux安装 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
