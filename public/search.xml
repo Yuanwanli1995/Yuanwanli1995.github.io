@@ -4815,4 +4815,17 @@ dos2unix  filename
         <category>编程笔记</category>
       </categories>
   </entry>
+  <entry>
+    <title>hexo bug</title>
+    <url>/2022/03/19/2022-03-19-hexo-bug/</url>
+    <content><![CDATA[<p>error: </p>
+<p>kex_exchange_identification: read: Connection reset by peer<br>Connection reset by 20.205.243.166 port 22<br>fatal: Could not read from remote repository.</p>
+<p>Please make sure you have the correct access rights<br>and the repository exists.<br>FATAL {<br>  err: Error: Spawn failed<br>      at ChildProcess.<anonymous> (/root/containerfile/Hexo/node_modules/hexo-util/lib/spawn.js:51:21)<br>      at ChildProcess.emit (events.js:210:5)<br>      at Process.ChildProcess._handle.onexit (internal/child_process.js:272:12) {<br>    code: 128<br>  }<br>} Something’s wrong. Maybe you can find the solution here: %s <a href="https://hexo.io/docs/troubleshooting.html">https://hexo.io/docs/troubleshooting.html</a></p>
+<p>更新密钥不行</p>
+<p>重启容器可以了，未知原因</p>
+]]></content>
+      <categories>
+        <category>bug</category>
+      </categories>
+  </entry>
 </search>
