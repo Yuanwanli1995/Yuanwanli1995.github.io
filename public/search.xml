@@ -5278,4 +5278,29 @@ dos2unix  filename
 
 ]]></content>
   </entry>
+  <entry>
+    <title></title>
+    <url>/2022/03/20/%E5%AE%B9%E5%99%A8%E4%BA%91%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2/</url>
+    <content><![CDATA[<h3 id="容器云服务部署"><a href="#容器云服务部署" class="headerlink" title="容器云服务部署"></a>容器云服务部署</h3><h4 id="1-安装docker"><a href="#1-安装docker" class="headerlink" title="1 安装docker"></a>1 安装docker</h4><p>yum -y install docker-ce-18.06.2.ce-3.el7 epel-release </p>
+<p>配置harbor仓库白名单</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat &gt; /etc/docker/daemon.json &lt;&lt;EOF</span><br><span class="line">&#123;</span><br><span class="line">	&quot;insecure-registries&quot;: [&quot;0.0.0.0/0&quot;]</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+
+<p>登陆harbor </p>
+<p>docker login hub.komect.com:10443 </p>
+<h4 id="2-同步仓库"><a href="#2-同步仓库" class="headerlink" title="2 同步仓库"></a>2 同步仓库</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone -b yuanwanli http://172.21.27.67/yubinbin/cluster.git</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-部署服务"><a href="#3-部署服务" class="headerlink" title="3 部署服务"></a>3 部署服务</h3><ol>
+<li> 修改 配置</li>
+</ol>
+<p>服务地址，/root/cluster/rancher_cluster/config.py </p>
+<ul>
+<li>host_ip  部署主机地址</li>
+</ul>
+<ol start="2">
+<li> 启动服务</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">. start_service.sh</span><br></pre></td></tr></table></figure>
+
+]]></content>
+  </entry>
 </search>
