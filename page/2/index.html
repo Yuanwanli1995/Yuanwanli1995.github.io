@@ -1124,7 +1124,7 @@ dos2unix  filename
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-03-19 18:50:15" itemprop="dateModified" datetime="2022-03-19T18:50:15+08:00">2022-03-19</time>
+        <time title="修改时间：2022-03-21 09:42:57" itemprop="dateModified" datetime="2022-03-21T09:42:57+08:00">2022-03-21</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1132,7 +1132,7 @@ dos2unix  filename
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+          <a href="/categories/%E7%BC%96%E7%A8%8B%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">编程笔记</span></a>
         </span>
     </span>
 
@@ -1146,7 +1146,7 @@ dos2unix  filename
     
     
     <div class="post-body" itemprop="articleBody">
-          <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">导入</span><br><span class="line">pip install gitpython </span><br><span class="line">from git import Repo </span><br><span class="line"># 初始化</span><br><span class="line">repopath=&#x27;test&#x27;</span><br><span class="line">repo = Repo.init(path=&#x27;&#x27;) # 初始一个更新仓库， 若存在.git, 不会覆盖</span><br><span class="line"># clone # 克隆地址不要包含.git</span><br><span class="line">new_repo = git.Repo.clone_from(url=&#x27;git@github.com:USER/REPO.git&#x27;, to_path=repopath)</span><br><span class="line"># add # commit 	 </span><br><span class="line">repo.index.add(items=[&#x27;test.file&#x27;]) # 次路径是相对于repo路径，不是python cwd</span><br><span class="line">repo.index.commit(&#x27;write a line into test.file&#x27;)</span><br><span class="line"># 远端</span><br><span class="line">remote = repo.create_remote(name=&#x27;gitlab&#x27;, url=&#x27;git@gitlab.com:USER/REPO.git&#x27;) # 远端只要添加一次 </span><br><span class="line">remote = repo.remote()</span><br><span class="line">remote.fetch()</span><br><span class="line">remote.pull()</span><br><span class="line">remote.push()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+          <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">导入</span><br><span class="line">pip install gitpython </span><br><span class="line">from git import Repo </span><br><span class="line"># 初始化</span><br><span class="line">repopath=&#x27;md&#x27;</span><br><span class="line">repo = Repo.init(path=&#x27;md&#x27;) # 初始一个更新仓库， 若存在.git, 不会覆盖</span><br><span class="line"># clone # 克隆地址不要包含.git</span><br><span class="line">new_repo = git.Repo.clone_from(url=&#x27;git@github.com:USER/REPO.git&#x27;, to_path=repopath)</span><br><span class="line"># add # commit 	 </span><br><span class="line">repo.index.add(items=[&#x27;test.file&#x27;]) # 次路径是相对于repo路径，不是python cwd</span><br><span class="line">repo.index.commit(&#x27;write a line into test.file&#x27;)</span><br><span class="line"># 远端</span><br><span class="line">remote = repo.create_remote(name=&#x27;gitlab&#x27;, url=&#x27;git@gitlab.com:USER/REPO.git&#x27;) # 远端只要添加一次 </span><br><span class="line">remote = repo.remote()</span><br><span class="line">remote.fetch()</span><br><span class="line">remote.pull()</span><br><span class="line">remote.push()</span><br><span class="line"># gitpython使用ssh 只要配置好ssh 即可</span><br></pre></td></tr></table></figure>
 
 
       

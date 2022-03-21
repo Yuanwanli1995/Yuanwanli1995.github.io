@@ -1947,8 +1947,14 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 可以配置记住密码</span><br><span class="line">git config --global credential.helper store</span><br><span class="line"># 产生一个文件 /root/.gitconfig</span><br><span class="line">[root@VM-4-15-centos ~]# cat .gitconfig </span><br><span class="line">[credential]</span><br><span class="line">	helper = store</span><br><span class="line">[user]</span><br><span class="line">	email = yuan.wanli@qq.com</span><br><span class="line">	name = yuanwl</span><br><span class="line"># 记录了账号与用户 </span><br><span class="line"># 然后执行git pull 之后， 就会记住密码，存在/root/.git-credentials以后就不用输入了</span><br><span class="line">[root@VM-4-15-centos ~]# cat .git-credentials </span><br><span class="line">https://yuanwl:123456789@gitee.com</span><br><span class="line"># 这问题明显了，密码明文可见，一点都不安全，平时自己用用测试是可以的</span><br></pre></td></tr></table></figure>
 
 <p>ssh免密登陆</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 删除原有的通信方式 # 可选</span><br><span class="line">git remote rm origin </span><br><span class="line"># 生成密钥</span><br><span class="line">ssh-keygen </span><br><span class="line"># 将公钥~/.ssh/id_rsa.pub放在gitee公钥上，设置--ssh公钥--添加</span><br><span class="line"># 添加ssh路径，git开头，和http路径不同 </span><br><span class="line">git init git remote add origin </span><br><span class="line">git remote add origin git@gitee.com:uxpi/zsites.git</span><br><span class="line"># 测试 </span><br><span class="line">[root@node61 ~]# ssh -T git@gitee.com</span><br><span class="line">Hi yuanwanli! You&#x27;ve successfully authenticated, but GITEE.COM does not provide shell access. </span><br><span class="line"># 然后就可以免密提交了</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 生成密钥</span><br><span class="line">ssh-keygen </span><br><span class="line"># 将公钥~/.ssh/id_rsa.pub放在gitee公钥上，设置--ssh公钥--添加</span><br><span class="line"># 添加ssh路径，git开头，和http路径不同  或者修改</span><br><span class="line">[root@node61 ~]# ssh -T git@gitee.com</span><br><span class="line">Hi yuanwanli! You&#x27;ve successfully authenticated, but GITEE.COM does not provide shell access. </span><br><span class="line"># 这时就可以直接 clone 了 </span><br><span class="line"># 如果要push , 远端路径也要ssh协议的。不然还是走密码 </span><br><span class="line">git remote add git@gitee.com:yuanwl/autoblog.git </span><br><span class="line"># 也可以直接修改 .git/config</span><br><span class="line"># 然后就可以免密提交了</span><br><span class="line"># 配置git私钥地址</span><br><span class="line">#Windows环境中使用/作为路径分隔符，--global表示全局配置，不加则只对当前Git项目生效。</span><br><span class="line">git config [--global] core.sshCommand &quot;ssh -i /path/to/your/privateKey&quot;</span><br><span class="line">#或者修改.git/config</span><br><span class="line">[root@nginx autoblog]# cat  .git/config</span><br><span class="line">[core]</span><br><span class="line">        repositoryformatversion = 0</span><br><span class="line">        filemode = true</span><br><span class="line">        bare = false</span><br><span class="line">        logallrefupdates = true</span><br><span class="line">        sshCommand = ssh -i /path/to/your/privateKey</span><br><span class="line">[remote &quot;origin&quot;]</span><br><span class="line">        url = git@gitee.com:yuanwl/autoblog.git</span><br><span class="line">        fetch = +refs/heads/*:refs/remotes/origin/*</span><br><span class="line">[branch &quot;master&quot;]</span><br><span class="line">        remote = origin</span><br><span class="line">        merge = refs/heads/master</span><br><span class="line"></span><br><span class="line">[root@nginx ~]#  ssh -T git@gitee.com</span><br><span class="line">Permission denied (publickey).</span><br><span class="line"># 确认私钥是否正确 </span><br><span class="line"># 不行清空 .ssh ,可以</span><br></pre></td></tr></table></figure>
 
+<blockquote>
+<p>1、id_rsa：本机（服务端）的私钥文件。</p>
+<p>2、id_rsa.pub：本机（服务端）的公钥文件。</p>
+<p>3、authorized_key：存放想要通过公私钥校验方式连接本机（服务端）的客户端公钥。</p>
+<p>4、known_hosts：本地的客户端存放成功连接本机（服务端）的服务端信息，服务端信息变更的话会再次询问，是否连接。（即存放曾经连接成功过的远程服务器信息</p>
+</blockquote>
 <h3 id="windows"><a href="#windows" class="headerlink" title="windows"></a>windows</h3><p>我很多时候是在window多台主机上做修改。windows中在官网<a href="https://www.git-scm.com/download/win">Git - Downloading Package (git-scm.com)</a>下载git应用，安装一路next即可。 </p>
 <p>新建同步文件夹之后，右键选择 git bash here. 之后操作就和linux一样了。 </p>
 <h3 id="进一步使用"><a href="#进一步使用" class="headerlink" title="进一步使用"></a>进一步使用</h3><p><strong>删除文件</strong>， 如果删除了一个文件， 就不能git add filename ，可以使用 <code>git rm</code>确认删除了，然后commit.</p>
@@ -2690,11 +2696,11 @@
   <entry>
     <title>gitpython基础用法</title>
     <url>/2022/02/09/2022-02-09-gitpython%E5%9F%BA%E7%A1%80%E7%94%A8%E6%B3%95/</url>
-    <content><![CDATA[<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">导入</span><br><span class="line">pip install gitpython </span><br><span class="line">from git import Repo </span><br><span class="line"># 初始化</span><br><span class="line">repopath=&#x27;test&#x27;</span><br><span class="line">repo = Repo.init(path=&#x27;&#x27;) # 初始一个更新仓库， 若存在.git, 不会覆盖</span><br><span class="line"># clone # 克隆地址不要包含.git</span><br><span class="line">new_repo = git.Repo.clone_from(url=&#x27;git@github.com:USER/REPO.git&#x27;, to_path=repopath)</span><br><span class="line"># add # commit 	 </span><br><span class="line">repo.index.add(items=[&#x27;test.file&#x27;]) # 次路径是相对于repo路径，不是python cwd</span><br><span class="line">repo.index.commit(&#x27;write a line into test.file&#x27;)</span><br><span class="line"># 远端</span><br><span class="line">remote = repo.create_remote(name=&#x27;gitlab&#x27;, url=&#x27;git@gitlab.com:USER/REPO.git&#x27;) # 远端只要添加一次 </span><br><span class="line">remote = repo.remote()</span><br><span class="line">remote.fetch()</span><br><span class="line">remote.pull()</span><br><span class="line">remote.push()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+    <content><![CDATA[<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">导入</span><br><span class="line">pip install gitpython </span><br><span class="line">from git import Repo </span><br><span class="line"># 初始化</span><br><span class="line">repopath=&#x27;md&#x27;</span><br><span class="line">repo = Repo.init(path=&#x27;md&#x27;) # 初始一个更新仓库， 若存在.git, 不会覆盖</span><br><span class="line"># clone # 克隆地址不要包含.git</span><br><span class="line">new_repo = git.Repo.clone_from(url=&#x27;git@github.com:USER/REPO.git&#x27;, to_path=repopath)</span><br><span class="line"># add # commit 	 </span><br><span class="line">repo.index.add(items=[&#x27;test.file&#x27;]) # 次路径是相对于repo路径，不是python cwd</span><br><span class="line">repo.index.commit(&#x27;write a line into test.file&#x27;)</span><br><span class="line"># 远端</span><br><span class="line">remote = repo.create_remote(name=&#x27;gitlab&#x27;, url=&#x27;git@gitlab.com:USER/REPO.git&#x27;) # 远端只要添加一次 </span><br><span class="line">remote = repo.remote()</span><br><span class="line">remote.fetch()</span><br><span class="line">remote.pull()</span><br><span class="line">remote.push()</span><br><span class="line"># gitpython使用ssh 只要配置好ssh 即可</span><br></pre></td></tr></table></figure>
 
 ]]></content>
       <categories>
-        <category>python</category>
+        <category>编程笔记</category>
       </categories>
   </entry>
   <entry>
@@ -3457,12 +3463,18 @@ dos2unix  filename
     <title>rke up bug</title>
     <url>/2022/03/18/2022-03-18-rke-up-bug/</url>
     <content><![CDATA[<p><code>Failed to reconcile etcd plane: Etcd plane nodes are replaced. Stopping provisioning. Please restore your cluster from backup.</code></p>
-<p>因为没有清除干净，rke remove或者删除rkestate创建后遗留的文件。</p>
+<p>因为没有清除干净，rke remove或者删除cluster.rkestate创建后遗留的文件。</p>
 <p><code>kubernetes_version</code>字段无效</p>
 <p>更新集群版本时，只指定kubernetes version无效，需要再指定</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">images:</span><br><span class="line">kubernetes: </span><br></pre></td></tr></table></figure>
 
 
+
+
+
+<p><code>Unable to connect to the server: x509: certificate signed by unknown authority (possibly because of &quot;crypto/rsa: verification error&quot; while trying to verify candidate authority certificate &quot;kube-ca&quot;)</code></p>
+<p>这是因为rke更新了， kubectl认证的文件没有更新</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cp kubeconfig---  /root/.kube/config</span><br></pre></td></tr></table></figure>
 
 ]]></content>
       <categories>
@@ -5279,31 +5291,6 @@ dos2unix  filename
 ]]></content>
   </entry>
   <entry>
-    <title></title>
-    <url>/2022/03/20/%E5%AE%B9%E5%99%A8%E4%BA%91%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2/</url>
-    <content><![CDATA[<h3 id="容器云服务部署"><a href="#容器云服务部署" class="headerlink" title="容器云服务部署"></a>容器云服务部署</h3><h4 id="1-安装docker"><a href="#1-安装docker" class="headerlink" title="1 安装docker"></a>1 安装docker</h4><p>yum -y install docker-ce-18.06.2.ce-3.el7 epel-release </p>
-<p>配置harbor仓库白名单</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat &gt; /etc/docker/daemon.json &lt;&lt;EOF</span><br><span class="line">&#123;</span><br><span class="line">	&quot;insecure-registries&quot;: [&quot;0.0.0.0/0&quot;]</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
-
-<p>登陆harbor </p>
-<p>docker login hub.komect.com:10443 </p>
-<h4 id="2-同步仓库"><a href="#2-同步仓库" class="headerlink" title="2 同步仓库"></a>2 同步仓库</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone -b yuanwanli http://172.21.27.67/yubinbin/cluster.git</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-部署服务"><a href="#3-部署服务" class="headerlink" title="3 部署服务"></a>3 部署服务</h3><ol>
-<li> 修改 配置</li>
-</ol>
-<p>服务地址，/root/cluster/rancher_cluster/config.py </p>
-<ul>
-<li>host_ip  部署主机地址</li>
-</ul>
-<ol start="2">
-<li> 启动服务</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">. start_service.sh</span><br></pre></td></tr></table></figure>
-
-]]></content>
-  </entry>
-  <entry>
     <title>rancher bug</title>
     <url>/2022/03/21/2022-03-21-rancher-bug/</url>
     <content><![CDATA[<p>导入集群之后一直在pending状态</p>
@@ -5311,6 +5298,16 @@ dos2unix  filename
 <p>发现po没有起</p>
 <p>查看日志， 发现连不通rancher服务443端口</p>
 <p>解决： 新增策略</p>
+]]></content>
+      <categories>
+        <category>bug</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>docker build bug</title>
+    <url>/2022/03/19/2022-03-19-docker-build-bug/</url>
+    <content><![CDATA[<p>docker build </p>
+<p>entrypoint 与 cmd  运行脚本失败， 是因为 容器必须要有镜像前台运行， 不能后台运行，否则容器会关闭</p>
 ]]></content>
       <categories>
         <category>bug</category>

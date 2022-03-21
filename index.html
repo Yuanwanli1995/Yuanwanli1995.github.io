@@ -280,89 +280,6 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2022/03/20/%E5%AE%B9%E5%99%A8%E4%BA%91%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yuanwanli">
-      <meta itemprop="description" content="等不是办法，干才有出路">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="brisk">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/03/20/%E5%AE%B9%E5%99%A8%E4%BA%91%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2/" class="post-title-link" itemprop="url">未命名</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-03-20 14:50:24" itemprop="dateCreated datePublished" datetime="2022-03-20T14:50:24+08:00">2022-03-20</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="容器云服务部署"><a href="#容器云服务部署" class="headerlink" title="容器云服务部署"></a>容器云服务部署</h3><h4 id="1-安装docker"><a href="#1-安装docker" class="headerlink" title="1 安装docker"></a>1 安装docker</h4><p>yum -y install docker-ce-18.06.2.ce-3.el7 epel-release </p>
-<p>配置harbor仓库白名单</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cat &gt; /etc/docker/daemon.json &lt;&lt;EOF</span><br><span class="line">&#123;</span><br><span class="line">	&quot;insecure-registries&quot;: [&quot;0.0.0.0/0&quot;]</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
-
-<p>登陆harbor </p>
-<p>docker login hub.komect.com:10443 </p>
-<h4 id="2-同步仓库"><a href="#2-同步仓库" class="headerlink" title="2 同步仓库"></a>2 同步仓库</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone -b yuanwanli http://172.21.27.67/yubinbin/cluster.git</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-部署服务"><a href="#3-部署服务" class="headerlink" title="3 部署服务"></a>3 部署服务</h3><ol>
-<li> 修改 配置</li>
-</ol>
-<p>服务地址，/root/cluster/rancher_cluster/config.py </p>
-<ul>
-<li>host_ip  部署主机地址</li>
-</ul>
-<ol start="2">
-<li> 启动服务</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">. start_service.sh</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2022/03/19/2021-12-23-harbor%E6%98%AF%E4%BB%80%E4%B9%88/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1236,6 +1153,87 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2022/03/19/2022-03-19-docker-build-bug/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuanwanli">
+      <meta itemprop="description" content="等不是办法，干才有出路">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="brisk">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/03/19/2022-03-19-docker-build-bug/" class="post-title-link" itemprop="url">docker build bug</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-03-19 00:00:00" itemprop="dateCreated datePublished" datetime="2022-03-19T00:00:00+08:00">2022-03-19</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-03-21 09:42:57" itemprop="dateModified" datetime="2022-03-21T09:42:57+08:00">2022-03-21</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/bug/" itemprop="url" rel="index"><span itemprop="name">bug</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>docker build </p>
+<p>entrypoint 与 cmd  运行脚本失败， 是因为 容器必须要有镜像前台运行， 不能后台运行，否则容器会关闭</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2022/03/18/2022-03-18-rke-up-bug/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1267,7 +1265,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-03-19 18:50:15" itemprop="dateModified" datetime="2022-03-19T18:50:15+08:00">2022-03-19</time>
+        <time title="修改时间：2022-03-21 09:42:57" itemprop="dateModified" datetime="2022-03-21T09:42:57+08:00">2022-03-21</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1290,12 +1288,18 @@
     
     <div class="post-body" itemprop="articleBody">
           <p><code>Failed to reconcile etcd plane: Etcd plane nodes are replaced. Stopping provisioning. Please restore your cluster from backup.</code></p>
-<p>因为没有清除干净，rke remove或者删除rkestate创建后遗留的文件。</p>
+<p>因为没有清除干净，rke remove或者删除cluster.rkestate创建后遗留的文件。</p>
 <p><code>kubernetes_version</code>字段无效</p>
 <p>更新集群版本时，只指定kubernetes version无效，需要再指定</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">images:</span><br><span class="line">kubernetes: </span><br></pre></td></tr></table></figure>
 
 
+
+
+
+<p><code>Unable to connect to the server: x509: certificate signed by unknown authority (possibly because of &quot;crypto/rsa: verification error&quot; while trying to verify candidate authority certificate &quot;kube-ca&quot;)</code></p>
+<p>这是因为rke更新了， kubectl认证的文件没有更新</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp kubeconfig---  /root/.kube/config</span><br></pre></td></tr></table></figure>
 
 
       
