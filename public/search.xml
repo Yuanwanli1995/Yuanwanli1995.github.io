@@ -5303,4 +5303,17 @@ dos2unix  filename
 
 ]]></content>
   </entry>
+  <entry>
+    <title>rancher bug</title>
+    <url>/2022/03/21/2022-03-21-rancher-bug/</url>
+    <content><![CDATA[<p>导入集群之后一直在pending状态</p>
+<p>查找到集群的rancher agent,   deploy, pods </p>
+<p>发现po没有起</p>
+<p>查看日志， 发现连不通rancher服务443端口</p>
+<p>解决： 新增策略</p>
+]]></content>
+      <categories>
+        <category>bug</category>
+      </categories>
+  </entry>
 </search>
