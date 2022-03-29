@@ -5313,4 +5313,14 @@ dos2unix  filename
         <category>bug</category>
       </categories>
   </entry>
+  <entry>
+    <title>pip install bug</title>
+    <url>/2022/02/27/2022-02-27-pip-install-bug/</url>
+    <content><![CDATA[<p>error: Microsoft Visual C++ 14.0 is required. Get it with “Build Tools for Visual Studio”: <a href="https://visualstudio.microsoft.com/downloads/">https://visualstudio.microsoft.com/downloads/</a> </p>
+<p>python版本问题， pip3.7不行， 换成pip3.6可以</p>
+]]></content>
+      <categories>
+        <category>编程笔记</category>
+      </categories>
+  </entry>
 </search>

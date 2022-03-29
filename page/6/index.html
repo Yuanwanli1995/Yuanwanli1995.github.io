@@ -157,7 +157,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-count">84</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -193,6 +193,233 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2021/12/09/2021-12-09-promQL/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuanwanli">
+      <meta itemprop="description" content="等不是办法，干才有出路">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="brisk">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/12/09/2021-12-09-promQL/" class="post-title-link" itemprop="url">promQL</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-12-09 00:00:00" itemprop="dateCreated datePublished" datetime="2021-12-09T00:00:00+08:00">2021-12-09</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-03-19 18:50:15" itemprop="dateModified" datetime="2022-03-19T18:50:15+08:00">2022-03-19</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BC%96%E7%A8%8B%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">编程笔记</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>Prometheus的自定义查询语言PromQL(promtheus query language) 。通过PromQL用户可以非常方便地对监控样本数据进行统计分析，PromQL支持常见的运算操作符，同时PromQL中还提供了大量的内置函数可以实现对数据的高级处理。PromQL作为Prometheus的核心能力除了实现数据的对外查询和展现，同时告警监控也是依赖PromQL实现的。</p>
+<p>promql本质上和sql没什么不同，根据不同的标签查询数据麻。只是promtheus是时序性数据库，使其和关系性数据库有区别。所系我们需要先了解Prometheus的样本数据模型。</p>
+<h3 id="1-prometheus样本数据模型"><a href="#1-prometheus样本数据模型" class="headerlink" title="1 prometheus样本数据模型"></a>1 prometheus样本数据模型</h3><p>Prometheus会将所有采集到的样本数据以时间序列（time-series）的方式保存在内存数据库中，并且定时保存到硬盘上。</p>
+<p>在time-series中的每一个点称为一个样本（sample），样本由以下三部分组成：</p>
+<ul>
+<li>指标(metric)：metric name和描述当前样本特征的labelsets;</li>
+<li>时间戳(timestamp)：一个精确到毫秒的时间戳;</li>
+<li>样本值(value)： 一个float64的浮点型数据表示当前样本的值。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;--------------- metric ---------------------&gt;&lt;-timestamp -&gt;&lt;-value-&gt;</span><br><span class="line">http_request_total&#123;status=&quot;200&quot;, method=&quot;GET&quot;&#125;@1434417560938 =&gt; 94355</span><br><span class="line">http_request_total&#123;status=&quot;200&quot;, method=&quot;GET&quot;&#125;@1434417561287 =&gt; 94334</span><br><span class="line"></span><br><span class="line">http_request_total&#123;status=&quot;404&quot;, method=&quot;GET&quot;&#125;@1434417560938 =&gt; 38473</span><br><span class="line">http_request_total&#123;status=&quot;404&quot;, method=&quot;GET&quot;&#125;@1434417561287 =&gt; 38544</span><br><span class="line"></span><br><span class="line">http_request_total&#123;status=&quot;200&quot;, method=&quot;POST&quot;&#125;@1434417560938 =&gt; 4748</span><br><span class="line">http_request_total&#123;status=&quot;200&quot;, method=&quot;POST&quot;&#125;@1434417561287 =&gt; 4785</span><br></pre></td></tr></table></figure>
+
+<p>样本点的集合成为集合(vector)</p>
+<h3 id="2-指标-metric"><a href="#2-指标-metric" class="headerlink" title="2 指标(metric)"></a>2 指标(metric)</h3><p>在形式上，所有的指标(Metric)都通过如下格式标示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;metric name&gt;&#123;&lt;label name&gt;=&lt;label value&gt;, ...&#125;</span><br></pre></td></tr></table></figure>
+
+<p>指标的名称(metric name)可以反映被监控样本的含义（比如，<code>http_request_total</code> - 表示当前系统接收到的HTTP请求总量）。</p>
+<p>标签(label)反映了当前样本的特征维度，通过这些维度Prometheus可以对样本数据进行过滤，聚合等。</p>
+<p>在Prometheus的存储实现上所有的监控样本都是以time-series的形式保存在Prometheus内存的TSDB（时序数据库）中，而time-series所对应的监控指标(metric)也是通过labelset进行唯一命名的。</p>
+<p>从存储上来讲所有的监控指标metric都是相同的，但是根据不同的展示需求，可以讲metric分为不同的类型。</p>
+<p>Prometheus定义了4中不同的指标类型(metric type)：Counter（计数器）、Gauge（仪表盘）、Histogram（直方图）、Summary（摘要）。如果要看累计的值，比如访问总量就是Counter。看瞬时的值比如当前内存剩余就是gauge。而histogram</p>
+<p>在Exporter返回的样本数据中，其注释中也包含了该样本的类型。例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># HELP node_cpu Seconds the cpus spent in each mode.</span><br><span class="line"># TYPE node_cpu counter</span><br><span class="line">node_cpu&#123;cpu=&quot;cpu0&quot;,mode=&quot;idle&quot;&#125; 362812.7890625</span><br></pre></td></tr></table></figure>
+
+<h4 id="Counter：只增不减的计数器"><a href="#Counter：只增不减的计数器" class="headerlink" title="Counter：只增不减的计数器"></a>Counter：只增不减的计数器</h4><p>Counter类型的指标其工作方式和计数器一样，只增不减（除非系统发生重置）。常见的监控指标，如http_requests_total，node_cpu都是Counter类型的监控指标。 一般在定义Counter类型指标的名称时推荐使用_total作为后缀。</p>
+<p>Counter是一个简单但有强大的工具，例如我们可以在应用程序中记录某些事件发生的次数，通过以时序的形式存储这些数据，我们可以轻松的了解该事件产生速率的变化。 PromQL内置的聚合操作和函数可以让用户对这些数据进行进一步的分析：</p>
+<p>例如，通过rate()函数获取HTTP请求量的增长率：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rate(http_requests_total[5m])</span><br></pre></td></tr></table></figure>
+
+<p>查询当前系统中，访问量前10的HTTP地址：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">topk(10, http_requests_total)</span><br></pre></td></tr></table></figure>
+
+<h4 id="Gauge：可增可减的仪表盘"><a href="#Gauge：可增可减的仪表盘" class="headerlink" title="Gauge：可增可减的仪表盘"></a>Gauge：可增可减的仪表盘</h4><p>与Counter不同，Gauge类型的指标侧重于反应系统的当前状态。因此这类指标的样本数据可增可减。常见指标如：node_memory_MemFree（主机当前空闲的内容大小）、node_memory_MemAvailable（可用内存大小）都是Gauge类型的监控指标。</p>
+<p>通过Gauge指标，用户可以直接查看系统的当前状态：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node_memory_MemFree</span><br></pre></td></tr></table></figure>
+
+<p>对于Gauge类型的监控指标，通过PromQL内置函数delta()可以获取样本在一段时间返回内的变化情况。例如，计算CPU温度在两个小时内的差异：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">delta(cpu_temp_celsius&#123;host=&quot;zeus&quot;&#125;[2h])</span><br></pre></td></tr></table></figure>
+
+<p>还可以使用deriv()计算样本的线性回归模型，甚至是直接使用predict_linear()对数据的变化趋势进行预测。例如，预测系统磁盘空间在4个小时之后的剩余情况：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">predict_linear(node_filesystem_free&#123;job=&quot;node&quot;&#125;[1h], 4 * 3600)</span><br></pre></td></tr></table></figure>
+
+<h4 id="分布情况——Histogram和Summary"><a href="#分布情况——Histogram和Summary" class="headerlink" title="分布情况——Histogram和Summary"></a>分布情况——Histogram和Summary</h4><p>除了Counter和Gauge类型的监控指标以外，Prometheus还定义了Histogram和Summary的指标类型。Histogram和Summary主用用于统计和分析样本的分布情况。</p>
+<p>在大多数情况下人们都倾向于使用某些量化指标的平均值，例如CPU的平均使用率、页面的平均响应时间。这种方式的问题很明显，以系统API调用的平均响应时间为例：如果大多数API请求都维持在100ms的响应时间范围内，而个别请求的响应时间需要5s，那么就会导致某些WEB页面的响应时间落到中位数的情况，而这种现象被称为长尾问题。</p>
+<p>为了区分是平均的慢还是长尾的慢，最简单的方式就是按照请求延迟的范围进行分组。例如，统计延迟在0<del>10ms之间的请求数有多少而10</del>20ms之间的请求数又有多少。通过这种方式可以快速分析系统慢的原因。Histogram和Summary都是为了能够解决这样问题的存在，通过Histogram和Summary类型的监控指标，我们可以快速了解监控样本的分布情况。</p>
+<p>例如，指标prometheus_tsdb_wal_fsync_duration_seconds的指标类型为Summary。 它记录了Prometheus Server中wal_fsync处理的处理时间，通过访问Prometheus Server的/metrics地址，可以获取到以下监控样本数据：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># HELP prometheus_tsdb_wal_fsync_duration_seconds Duration of WAL fsync.</span><br><span class="line"># TYPE prometheus_tsdb_wal_fsync_duration_seconds summary</span><br><span class="line">prometheus_tsdb_wal_fsync_duration_seconds&#123;quantile=&quot;0.5&quot;&#125; 0.012352463</span><br><span class="line">prometheus_tsdb_wal_fsync_duration_seconds&#123;quantile=&quot;0.9&quot;&#125; 0.014458005</span><br><span class="line">prometheus_tsdb_wal_fsync_duration_seconds&#123;quantile=&quot;0.99&quot;&#125; 0.017316173</span><br><span class="line">prometheus_tsdb_wal_fsync_duration_seconds_sum 2.888716127000002</span><br><span class="line">prometheus_tsdb_wal_fsync_duration_seconds_count 216</span><br></pre></td></tr></table></figure>
+
+<p>从上面的样本中可以得知当前Prometheus Server进行wal_fsync操作的总次数为216次，耗时2.888716127000002s。其中中位数（quantile=0.5）的耗时为0.012352463，9分位数（quantile=0.9）的耗时为0.014458005s。</p>
+<p>在Prometheus Server自身返回的样本数据中，我们还能找到类型为Histogram的监控指标prometheus_tsdb_compaction_chunk_range_bucket。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># HELP prometheus_tsdb_compaction_chunk_range Final time range of chunks on their first compaction</span><br><span class="line"># TYPE prometheus_tsdb_compaction_chunk_range histogram</span><br><span class="line">prometheus_tsdb_compaction_chunk_range_bucket&#123;le=&quot;100&quot;&#125; 0</span><br><span class="line">prometheus_tsdb_compaction_chunk_range_bucket&#123;le=&quot;400&quot;&#125; 0</span><br><span class="line">prometheus_tsdb_compaction_chunk_range_bucket&#123;le=&quot;1600&quot;&#125; 0</span><br><span class="line">prometheus_tsdb_compaction_chunk_range_bucket&#123;le=&quot;6400&quot;&#125; 0</span><br><span class="line">prometheus_tsdb_compaction_chunk_range_bucket&#123;le=&quot;25600&quot;&#125; 0</span><br><span class="line">prometheus_tsdb_compaction_chunk_range_bucket&#123;le=&quot;102400&quot;&#125; 0</span><br><span class="line">prometheus_tsdb_compaction_chunk_range_bucket&#123;le=&quot;409600&quot;&#125; 0</span><br><span class="line">prometheus_tsdb_compaction_chunk_range_bucket&#123;le=&quot;1.6384e+06&quot;&#125; 260</span><br><span class="line">prometheus_tsdb_compaction_chunk_range_bucket&#123;le=&quot;6.5536e+06&quot;&#125; 780</span><br><span class="line">prometheus_tsdb_compaction_chunk_range_bucket&#123;le=&quot;2.62144e+07&quot;&#125; 780</span><br><span class="line">prometheus_tsdb_compaction_chunk_range_bucket&#123;le=&quot;+Inf&quot;&#125; 780</span><br><span class="line">prometheus_tsdb_compaction_chunk_range_sum 1.1540798e+09</span><br><span class="line">prometheus_tsdb_compaction_chunk_range_count 780</span><br></pre></td></tr></table></figure>
+
+<p>与Summary类型的指标相似之处在于Histogram类型的样本同样会反应当前指标的记录的总数(以_count作为后缀)以及其值的总量（以_sum作为后缀）。不同在于Histogram指标直接反应了在不同区间内样本的个数，区间通过标签len进行定义。</p>
+<p>同时对于Histogram的指标，我们还可以通过histogram_quantile()函数计算出其值的分位数。不同在于Histogram通过histogram_quantile函数是在服务器端计算的分位数。 而Sumamry的分位数则是直接在客户端计算完成。因此对于分位数的计算而言，Summary在通过PromQL进行查询时有更好的性能表现，而Histogram则会消耗更多的资源。反之对于客户端而言Histogram消耗的资源更少。在选择这两种方式时用户应该按照自己的实际场景进行选择。</p>
+<h3 id="3-promQL"><a href="#3-promQL" class="headerlink" title="3 promQL"></a>3 promQL</h3><p>Prometheus通过指标名称（metrics name）以及对应的一组标签（labelset）唯一定义一条时间序列。指标名称反映了监控样本的基本标识，而label则在这个基本特征上为采集到的数据提供了多种特征维度。用户可以基于这些特征维度过滤，聚合，统计从而产生新的计算后的一条时间序列。</p>
+<p>PromQL是Prometheus内置的数据查询语言，其提供对时间序列数据丰富的查询，聚合以及逻辑运算能力的支持。并且被广泛应用在Prometheus的日常应用当中，包括对数据查询、可视化、告警处理当中。</p>
+<h4 id="查询时间序列"><a href="#查询时间序列" class="headerlink" title="查询时间序列"></a>查询时间序列</h4><p>当Prometheus通过Exporter采集到相应的监控指标样本数据后，我们就可以通过PromQL对监控样本数据进行查询。</p>
+<p>当我们直接使用监控指标名称查询时，可以查询该指标下的所有时间序列。如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http_requests_total</span><br></pre></td></tr></table></figure>
+
+<p>等同于：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http_requests_total&#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>该表达式会返回指标名称为http_requests_total的所有时间序列：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">http_requests_total&#123;code=&quot;200&quot;,handler=&quot;alerts&quot;,instance=&quot;localhost:9090&quot;,job=&quot;prometheus&quot;,method=&quot;get&quot;&#125;=(20889@1518096812.326)</span><br><span class="line">http_requests_total&#123;code=&quot;200&quot;,handler=&quot;graph&quot;,instance=&quot;localhost:9090&quot;,job=&quot;prometheus&quot;,method=&quot;get&quot;&#125;=(21287@1518096812.326)</span><br></pre></td></tr></table></figure>
+
+<p>PromQL还支持用户根据时间序列的标签匹配模式来对时间序列进行过滤，目前主要支持两种匹配模式：完全匹配和正则匹配。</p>
+<p>PromQL支持使用<code>=</code>和<code>!=</code>两种完全匹配模式：</p>
+<ul>
+<li>通过使用<code>label=value</code>可以选择那些标签满足表达式定义的时间序列；</li>
+<li>反之使用<code>label!=value</code>则可以根据标签匹配排除时间序列；</li>
+</ul>
+<p>例如，如果我们只需要查询所有http_requests_total时间序列中满足标签instance为localhost:9090的时间序列，则可以使用如下表达式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http_requests_total&#123;instance=&quot;localhost:9090&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>反之使用<code>instance!=&quot;localhost:9090&quot;</code>则可以排除这些时间序列：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http_requests_total&#123;instance!=&quot;localhost:9090&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>除了使用完全匹配的方式对时间序列进行过滤以外，PromQL还可以支持使用正则表达式作为匹配条件，多个表达式之间使用<code>|</code>进行分离：</p>
+<ul>
+<li>使用<code>label=~regx</code>表示选择那些标签符合正则表达式定义的时间序列；</li>
+<li>反之使用<code>label!~regx</code>进行排除；</li>
+</ul>
+<p>例如，如果想查询多个环节下的时间序列序列可以使用如下表达式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http_requests_total&#123;environment=~&quot;staging|testing|development&quot;,method!=&quot;GET&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="范围查询"><a href="#范围查询" class="headerlink" title="范围查询"></a>范围查询</h2><p>直接通过类似于PromQL表达式http*requests*total查询时间序列时，返回值中只会包含该时间序列中的最新的一个样本值，这样的返回结果我们称之为<strong>瞬时向量</strong>。而相应的这样的表达式称之为__瞬时向量表达式**。</p>
+<p>而如果我们想过去一段时间范围内的样本数据时，我们则需要使用<strong>区间向量表达式</strong>。区间向量表达式和瞬时向量表达式之间的差异在于在区间向量表达式中我们需要定义时间选择的范围，时间范围通过时间范围选择器<code>[]</code>进行定义。例如，通过以下表达式可以选择最近5分钟内的所有样本数据：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http_request_total&#123;&#125;[5m]</span><br></pre></td></tr></table></figure>
+
+<p>该表达式将会返回查询到的时间序列中最近5分钟的所有样本数据：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">http_requests_total&#123;code=&quot;200&quot;,handler=&quot;alerts&quot;,instance=&quot;localhost:9090&quot;,job=&quot;prometheus&quot;,method=&quot;get&quot;&#125;=[</span><br><span class="line">    1@1518096812.326</span><br><span class="line">    1@1518096817.326</span><br><span class="line">    1@1518096822.326</span><br><span class="line">    1@1518096827.326</span><br><span class="line">    1@1518096832.326</span><br><span class="line">    1@1518096837.325</span><br><span class="line">]</span><br><span class="line">http_requests_total&#123;code=&quot;200&quot;,handler=&quot;graph&quot;,instance=&quot;localhost:9090&quot;,job=&quot;prometheus&quot;,method=&quot;get&quot;&#125;=[</span><br><span class="line">    4 @1518096812.326</span><br><span class="line">    4@1518096817.326</span><br><span class="line">    4@1518096822.326</span><br><span class="line">    4@1518096827.326</span><br><span class="line">    4@1518096832.326</span><br><span class="line">    4@1518096837.325</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>通过区间向量表达式查询到的结果我们称为<strong>区间向量</strong>。</p>
+<p>除了使用m表示分钟以外，PromQL的时间范围选择器支持其它时间单位：</p>
+<ul>
+<li>s - 秒</li>
+<li>m - 分钟</li>
+<li>h - 小时</li>
+<li>d - 天</li>
+<li>w - 周</li>
+<li>y - 年</li>
+</ul>
+<h2 id="时间位移操作"><a href="#时间位移操作" class="headerlink" title="时间位移操作"></a>时间位移操作</h2><p>在瞬时向量表达式或者区间向量表达式中，都是以当前时间为基准：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">http_request_total&#123;&#125; # 瞬时向量表达式，选择当前最新的数据</span><br><span class="line">http_request_total&#123;&#125;[5m] # 区间向量表达式，选择以当前时间为基准，5分钟内的数据</span><br></pre></td></tr></table></figure>
+
+<p>而如果我们想查询，5分钟前的瞬时样本数据，或昨天一天的区间内的样本数据呢? 这个时候我们就可以使用位移操作，位移操作的关键字为<strong>offset</strong>。</p>
+<p>可以使用offset时间位移操作：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">http_request_total&#123;&#125; offset 5m</span><br><span class="line">http_request_total&#123;&#125;[1d] offset 1d</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用聚合操作"><a href="#使用聚合操作" class="headerlink" title="使用聚合操作"></a>使用聚合操作</h2><p>一般来说，如果描述样本特征的标签(label)在并非唯一的情况下，通过PromQL查询数据，会返回多条满足这些特征维度的时间序列。而PromQL提供的聚合操作可以用来对这些时间序列进行处理，形成一条新的时间序列：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 查询系统所有http请求的总量</span><br><span class="line">sum(http_request_total)</span><br><span class="line"></span><br><span class="line"># 按照mode计算主机CPU的平均使用时间</span><br><span class="line">avg(node_cpu) by (mode)</span><br><span class="line"></span><br><span class="line"># 按照主机查询各个主机的CPU使用率</span><br><span class="line">sum(sum(irate(node_cpu&#123;mode!=&#x27;idle&#x27;&#125;[5m]))  / sum(irate(node_cpu[5m]))) by (instance)</span><br></pre></td></tr></table></figure>
+
+<h2 id="标量和字符串"><a href="#标量和字符串" class="headerlink" title="标量和字符串"></a>标量和字符串</h2><p>除了使用瞬时向量表达式和区间向量表达式以外，PromQL还直接支持用户使用标量(Scalar)和字符串(String)。</p>
+<h3 id="标量（Scalar）：一个浮点型的数字值"><a href="#标量（Scalar）：一个浮点型的数字值" class="headerlink" title="标量（Scalar）：一个浮点型的数字值"></a>标量（Scalar）：一个浮点型的数字值</h3><p>标量只有一个数字，没有时序。</p>
+<p>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">10</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>需要注意的是，当使用表达式count(http_requests_total)，返回的数据类型，依然是瞬时向量。用户可以通过内置函数scalar()将单个瞬时向量转换为标量。</p>
+</blockquote>
+<h3 id="字符串（String）：一个简单的字符串值"><a href="#字符串（String）：一个简单的字符串值" class="headerlink" title="字符串（String）：一个简单的字符串值"></a>字符串（String）：一个简单的字符串值</h3><p>直接使用字符串，作为PromQL表达式，则会直接返回字符串。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&quot;this is a string&quot;</span><br><span class="line">&#x27;these are unescaped: \n \\ \t&#x27;</span><br><span class="line">`these are not unescaped: \n &#x27; &quot; \t`</span><br></pre></td></tr></table></figure>
+
+<h2 id="合法的PromQL表达式"><a href="#合法的PromQL表达式" class="headerlink" title="合法的PromQL表达式"></a>合法的PromQL表达式</h2><p>所有的PromQL表达式都必须至少包含一个指标名称(例如http_request_total)，或者一个不会匹配到空字符串的标签过滤器(例如{code=”200”})。</p>
+<p>因此以下两种方式，均为合法的表达式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">http_request_total # 合法</span><br><span class="line">http_request_total&#123;&#125; # 合法</span><br><span class="line">&#123;method=&quot;get&quot;&#125; # 合法</span><br></pre></td></tr></table></figure>
+
+<p>而如下表达式，则不合法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;job=~&quot;.*&quot;&#125; # 不合法</span><br></pre></td></tr></table></figure>
+
+<p>同时，除了使用<code>&lt;metric name&gt;&#123;label=value&#125;</code>的形式以外，我们还可以使用内置的<code>__name__</code>标签来指定监控指标名称：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;__name__=~&quot;http_request_total&quot;&#125; # 合法</span><br><span class="line">&#123;__name__=~&quot;node_disk_bytes_read|node_disk_bytes_written&quot;&#125; # 合法</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>224a31b93706e3592cb8961318638e3dca071f41</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1163,141 +1390,6 @@
 <p><img src="https://cdn.jsdelivr.net/gh/Yuanwanli1995/markdown_pic@main/blogpic/shell%E9%85%8D%E7%BD%AE.png"></p>
 <p>将LineSpace，CharSpace改为1就改回来了。 </p>
 <p>原来shell会话很多设置都可以在default中配置。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://yuanwanli1995.github.io/2021/11/16/2021-11-16-EFK%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86%E6%A1%86%E6%9E%B6%E9%83%A8%E7%BD%B2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yuanwanli">
-      <meta itemprop="description" content="等不是办法，干才有出路">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="brisk">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/11/16/2021-11-16-EFK%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86%E6%A1%86%E6%9E%B6%E9%83%A8%E7%BD%B2/" class="post-title-link" itemprop="url">EFK日志管理框架部署</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-11-16 00:00:00" itemprop="dateCreated datePublished" datetime="2021-11-16T00:00:00+08:00">2021-11-16</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-03-19 18:50:15" itemprop="dateModified" datetime="2022-03-19T18:50:15+08:00">2022-03-19</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%BC%96%E7%A8%8B%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">编程笔记</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="1-工具介绍"><a href="#1-工具介绍" class="headerlink" title="1 工具介绍"></a>1 工具介绍</h1><p>Kubernetes 中比较流行的日志收集解决方案是 <code>Elasticsearch</code>、<code>Fluentd</code> 和 <code>Kibana</code>（EFK）技术栈，也是官方现在比较推荐的一种方案。 </p>
-<p><code>Elasticsearch</code> 是一个实时的、分布式的可扩展的搜索引擎，允许进行全文、结构化搜索，它通常用于<strong>索引和搜索大量日志数据</strong>，也可用于搜索许多不同类型的文档。</p>
-<p><code>Kibana</code> 是一个功能强大的数<strong>据可视化 Dashboard</strong>，Kibana 允许你通过 web 界面来浏览 Elasticsearch 日志数据。</p>
-<p><code>Fluentd</code>是一个流行的开源<strong>数据收集器</strong>，通过获取容器日志文件、过滤和转换日志数据，然后将数据传递到 Elasticsearch 集群，在该集群中对其进行索引和存储。</p>
-<p><img src="E:\blogpic\efk.png"></p>
-<h1 id="2-配置-Elasticsearch-集群"><a href="#2-配置-Elasticsearch-集群" class="headerlink" title="2 配置 Elasticsearch 集群"></a>2 配置 Elasticsearch 集群</h1><p>2.1 命名空间 </p>
-<p>创建集群之前，我们先建立一个日志管理的命名空间，用来存放日志分析的所有资源，方便查看和管理。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl create namespace logging</span><br></pre></td></tr></table></figure>
-
-<p> 2.2 创建es服务</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">cat &gt; elasticsearch-svc.yaml &lt;&lt; EOF </span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Service</span><br><span class="line">metadata:</span><br><span class="line">  name: elasticsearch</span><br><span class="line">  namespace: logging</span><br><span class="line">  labels:</span><br><span class="line">    app: elasticsearch</span><br><span class="line">spec:</span><br><span class="line">  selector:</span><br><span class="line">    app: elasticsearch</span><br><span class="line">  clusterIP: None</span><br><span class="line">  ports:</span><br><span class="line">    - port: 9200</span><br><span class="line">      name: rest</span><br><span class="line">    - port: 9300</span><br><span class="line">      name: inter-node</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">kubectl create -f elasticsearch-svc.yaml</span><br><span class="line"># 查看 </span><br><span class="line">kubectl get svc --namespace=logging</span><br></pre></td></tr></table></figure>
-
-<p>2.3 statfulset </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line">cat &gt; elasticsearch-storageclass.yaml &lt;&lt; EOF </span><br><span class="line">apiVersion: apps/v1</span><br><span class="line">kind: StatefulSet</span><br><span class="line">metadata:</span><br><span class="line">  name: es-cluster</span><br><span class="line">  namespace: logging</span><br><span class="line">spec:</span><br><span class="line">  serviceName: elasticsearch</span><br><span class="line">  replicas: 3</span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      app: elasticsearch</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      labels:</span><br><span class="line">        app: elasticsearch</span><br><span class="line">    spec:</span><br><span class="line">      containers:</span><br><span class="line">      - name: elasticsearch</span><br><span class="line">        image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.4.3</span><br><span class="line">        resources:</span><br><span class="line">            limits:</span><br><span class="line">              cpu: 1000m</span><br><span class="line">            requests:</span><br><span class="line">              cpu: 100m</span><br><span class="line">        ports:</span><br><span class="line">        - containerPort: 9200</span><br><span class="line">          name: rest</span><br><span class="line">          protocol: TCP</span><br><span class="line">        - containerPort: 9300</span><br><span class="line">          name: inter-node</span><br><span class="line">          protocol: TCP</span><br><span class="line">        volumeMounts:</span><br><span class="line">        - name: data</span><br><span class="line">          mountPath: /usr/share/elasticsearch/data</span><br><span class="line">        env:</span><br><span class="line">          - name: cluster.name</span><br><span class="line">            value: k8s-logs</span><br><span class="line">          - name: node.name</span><br><span class="line">            valueFrom:</span><br><span class="line">              fieldRef:</span><br><span class="line">                fieldPath: metadata.name</span><br><span class="line">          - name: discovery.zen.ping.unicast.hosts</span><br><span class="line">            value: &quot;es-cluster-0.elasticsearch,es-cluster-1.elasticsearch,es-cluster-2.elasticsearch&quot;</span><br><span class="line">          - name: discovery.zen.minimum_master_nodes</span><br><span class="line">            value: &quot;2&quot;</span><br><span class="line">          - name: ES_JAVA_OPTS</span><br><span class="line">            value: &quot;-Xms512m -Xmx512m&quot;</span><br><span class="line">      initContainers:</span><br><span class="line">      - name: fix-permissions</span><br><span class="line">        image: busybox</span><br><span class="line">        command: [&quot;sh&quot;, &quot;-c&quot;, &quot;chown -R 1000:1000 /usr/share/elasticsearch/data&quot;]</span><br><span class="line">        securityContext:</span><br><span class="line">          privileged: true</span><br><span class="line">        volumeMounts:</span><br><span class="line">        - name: data</span><br><span class="line">          mountPath: /usr/share/elasticsearch/data</span><br><span class="line">      - name: increase-vm-max-map</span><br><span class="line">        image: busybox</span><br><span class="line">        command: [&quot;sysctl&quot;, &quot;-w&quot;, &quot;vm.max_map_count=262144&quot;]</span><br><span class="line">        securityContext:</span><br><span class="line">          privileged: true</span><br><span class="line">      - name: increase-fd-ulimit</span><br><span class="line">        image: busybox</span><br><span class="line">        command: [&quot;sh&quot;, &quot;-c&quot;, &quot;ulimit -n 65536&quot;]</span><br><span class="line">        securityContext:</span><br><span class="line">          privileged: true</span><br><span class="line">  volumeClaimTemplates:</span><br><span class="line">  - metadata:</span><br><span class="line">      name: data</span><br><span class="line">      labels:</span><br><span class="line">        app: elasticsearch</span><br><span class="line">    spec:</span><br><span class="line">      accessModes: [ &quot;ReadWriteOnce&quot; ]</span><br><span class="line">      storageClassName: es-data-db</span><br><span class="line">      resources:</span><br><span class="line">        requests:</span><br><span class="line">          storage: 20Gi</span><br><span class="line">EOF </span><br></pre></td></tr></table></figure>
-
-<p>2.4 部署es-storageclass </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">cat &gt;  elasticsearch-storageclass.yaml &lt;&lt; EOF</span><br><span class="line">apiVersion: storage.k8s.io/v1</span><br><span class="line">kind: StorageClass</span><br><span class="line">metadata:</span><br><span class="line">  name: es-data-db</span><br><span class="line">provisioner: fuseim.pri/ifs </span><br><span class="line">EOF</span><br><span class="line"># 该值需要和 provisioner 配置的保持一致</span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># 部署es-storageclass </span><br><span class="line">kubectl create -f elasticsearch-storageclass.yaml</span><br><span class="line">storageclass.storage.k8s.io &quot;es-data-db&quot; created</span><br><span class="line"></span><br><span class="line"># 部署es-statefulset</span><br><span class="line">kubectl create -f elasticsearch-statefulset.yaml</span><br><span class="line">statefulset.apps/es-cluster created</span><br><span class="line"></span><br><span class="line"># 查看 </span><br><span class="line">kubectl get sts -n logging</span><br><span class="line"></span><br><span class="line">kubectl get pods -n logging</span><br></pre></td></tr></table></figure>
-
-<p>Pods 部署完成后，我们可以通过请求一个 REST API 来检查 Elasticsearch 集群是否正常运行。使用下面的命令将本地端口9200转发到 Elasticsearch 节点（如es-cluster-0）对应的端口：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">kubectl port-forward es-cluster-0 9200:9200 --namespace=logging</span><br><span class="line">Forwarding from 127.0.0.1:9200 -&gt; 9200</span><br><span class="line">Forwarding from [::1]:9200 -&gt; 9200</span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl http://localhost:9200/_cluster/state?pretty</span><br></pre></td></tr></table></figure>
-
-<h1 id="3-kibana部署"><a href="#3-kibana部署" class="headerlink" title="3 kibana部署"></a>3 kibana部署</h1><p>Elasticsearch 集群启动成功了，接下来我们可以来部署 Kibana 服务，新建一个名为 kibana.yaml 的文件，对应的文件内容如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">cat &gt; kibana.yaml &lt;&lt; EOF</span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Service</span><br><span class="line">metadata:</span><br><span class="line">  name: kibana</span><br><span class="line">  namespace: logging</span><br><span class="line">  labels:</span><br><span class="line">    app: kibana</span><br><span class="line">spec:</span><br><span class="line">  ports:</span><br><span class="line">  - port: 5601</span><br><span class="line">  type: NodePort</span><br><span class="line">  selector:</span><br><span class="line">    app: kibana</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line">apiVersion: apps/v1</span><br><span class="line">kind: Deployment</span><br><span class="line">metadata:</span><br><span class="line">  name: kibana</span><br><span class="line">  namespace: logging</span><br><span class="line">  labels:</span><br><span class="line">    app: kibana</span><br><span class="line">spec:</span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      app: kibana</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      labels:</span><br><span class="line">        app: kibana</span><br><span class="line">    spec:</span><br><span class="line">      containers:</span><br><span class="line">      - name: kibana</span><br><span class="line">        image: docker.elastic.co/kibana/kibana-oss:6.4.3</span><br><span class="line">        resources:</span><br><span class="line">          limits:</span><br><span class="line">            cpu: 1000m</span><br><span class="line">          requests:</span><br><span class="line">            cpu: 100m</span><br><span class="line">        env:</span><br><span class="line">          - name: ELASTICSEARCH_URL</span><br><span class="line">            value: http://elasticsearch:9200</span><br><span class="line">        ports:</span><br><span class="line">        - containerPort: 5601</span><br><span class="line">EOF </span><br></pre></td></tr></table></figure>
-
-<p>上面我们定义了两个资源对象，一个 Service 和 Deployment，为了测试方便，我们将 Service 设置为了 NodePort 类型，Kibana Pod 中配置都比较简单，唯一需要注意的是我们使用 ELASTICSEARCH_URL 这个环境变量来设置Elasticsearch 集群的端点和端口，直接使用 Kubernetes DNS 即可，此端点对应服务名称为 elasticsearch，由于是一个 headless service，所以该域将解析为3个 Elasticsearch Pod 的 IP 地址列表。</p>
-<p>配置完成后，直接使用 kubectl 工具创建：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">kubectl create -f kibana.yaml</span><br><span class="line"></span><br><span class="line">service/kibana created</span><br><span class="line">deployment.apps/kibana created</span><br></pre></td></tr></table></figure>
-
-<p>创建完成后，可以查看 Kibana Pod 的运行状态：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get pods --namespace=logging</span><br><span class="line">NAME                      READY     STATUS    RESTARTS   AGE</span><br><span class="line">es-cluster-0              1/1       Running   0          20h</span><br><span class="line">es-cluster-1              1/1       Running   0          20h</span><br><span class="line">es-cluster-2              1/1       Running   0          20h</span><br><span class="line">kibana-7558d4dc4d-5mqdz   1/1       Running   0          20h</span><br><span class="line">$ kubectl get svc --namespace=logging</span><br><span class="line">NAME            TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)             AGE</span><br><span class="line">elasticsearch   ClusterIP   None             &lt;none&gt;        9200/TCP,9300/TCP   20h</span><br><span class="line">kibana          NodePort    10.105.208.253   &lt;none&gt;        5601:31816/TCP      20h</span><br></pre></td></tr></table></figure>
-
-<p>如果 Pod 已经是 Running 状态了，证明应用已经部署成功了，然后可以通过 NodePort 来访问 Kibana 这个服务，在浏览器中打开<code>http://&lt;任意节点IP&gt;:31816</code>即可，如果看到如下欢迎界面证明 Kibana 已经成功部署到了 Kubernetes集群之中。</p>
-<h1 id="4-部署-Fluentd"><a href="#4-部署-Fluentd" class="headerlink" title="4 部署 Fluentd"></a>4 部署 Fluentd</h1><p>要收集 Kubernetes 集群的日志，直接用 DasemonSet 控制器来部署 Fluentd 应用，这样，它就可以从 Kubernetes 节点上采集日志，确保在集群中的每个节点上始终运行一个 Fluentd 容器。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></td><td class="code"><pre><span class="line">cat &gt; fluentd-configmap.yaml &lt;&lt; EOF </span><br><span class="line">kind: ConfigMap</span><br><span class="line">apiVersion: v1</span><br><span class="line">metadata:</span><br><span class="line">  name: fluentd-config</span><br><span class="line">  namespace: logging</span><br><span class="line">  labels:</span><br><span class="line">    addonmanager.kubernetes.io/mode: Reconcile</span><br><span class="line">data:</span><br><span class="line">  system.conf: |-</span><br><span class="line">    &lt;system&gt;</span><br><span class="line">      root_dir /tmp/fluentd-buffers/</span><br><span class="line">    &lt;/system&gt;</span><br><span class="line">  containers.input.conf: |-</span><br><span class="line">    &lt;source&gt;</span><br><span class="line">      @id fluentd-containers.log</span><br><span class="line">      @type tail</span><br><span class="line">      path /var/log/containers/*.log</span><br><span class="line">      pos_file /var/log/es-containers.log.pos</span><br><span class="line">      time_format %Y-%m-%dT%H:%M:%S.%NZ</span><br><span class="line">      localtime</span><br><span class="line">      tag raw.kubernetes.*</span><br><span class="line">      format json</span><br><span class="line">      read_from_head true</span><br><span class="line">    &lt;/source&gt;</span><br><span class="line">    # Detect exceptions in the log output and forward them as one log entry.</span><br><span class="line">    &lt;match raw.kubernetes.**&gt;</span><br><span class="line">      @id raw.kubernetes</span><br><span class="line">      @type detect_exceptions</span><br><span class="line">      remove_tag_prefix raw</span><br><span class="line">      message log</span><br><span class="line">      stream stream</span><br><span class="line">      multiline_flush_interval 5</span><br><span class="line">      max_bytes 500000</span><br><span class="line">      max_lines 1000</span><br><span class="line">    &lt;/match&gt;</span><br><span class="line">  system.input.conf: |-</span><br><span class="line">    # Logs from systemd-journal for interesting services.</span><br><span class="line">    &lt;source&gt;</span><br><span class="line">      @id journald-docker</span><br><span class="line">      @type systemd</span><br><span class="line">      filters [&#123; &quot;_SYSTEMD_UNIT&quot;: &quot;docker.service&quot; &#125;]</span><br><span class="line">      &lt;storage&gt;</span><br><span class="line">        @type local</span><br><span class="line">        persistent true</span><br><span class="line">      &lt;/storage&gt;</span><br><span class="line">      read_from_head true</span><br><span class="line">      tag docker</span><br><span class="line">    &lt;/source&gt;</span><br><span class="line">    &lt;source&gt;</span><br><span class="line">      @id journald-kubelet</span><br><span class="line">      @type systemd</span><br><span class="line">      filters [&#123; &quot;_SYSTEMD_UNIT&quot;: &quot;kubelet.service&quot; &#125;]</span><br><span class="line">      &lt;storage&gt;</span><br><span class="line">        @type local</span><br><span class="line">        persistent true</span><br><span class="line">      &lt;/storage&gt;</span><br><span class="line">      read_from_head true</span><br><span class="line">      tag kubelet</span><br><span class="line">    &lt;/source&gt;</span><br><span class="line">  forward.input.conf: |-</span><br><span class="line">    # Takes the messages sent over TCP</span><br><span class="line">    &lt;source&gt;</span><br><span class="line">      @type forward</span><br><span class="line">    &lt;/source&gt;</span><br><span class="line">  output.conf: |-</span><br><span class="line">    # Enriches records with Kubernetes metadata</span><br><span class="line">    &lt;filter kubernetes.**&gt;</span><br><span class="line">      @type kubernetes_metadata</span><br><span class="line">    &lt;/filter&gt;</span><br><span class="line">    &lt;match **&gt;</span><br><span class="line">      @id elasticsearch</span><br><span class="line">      @type elasticsearch</span><br><span class="line">      @log_level info</span><br><span class="line">      include_tag_key true</span><br><span class="line">      host elasticsearch</span><br><span class="line">      port 9200</span><br><span class="line">      logstash_format true</span><br><span class="line">      request_timeout    30s</span><br><span class="line">      &lt;buffer&gt;</span><br><span class="line">        @type file</span><br><span class="line">        path /var/log/fluentd-buffers/kubernetes.system.buffer</span><br><span class="line">        flush_mode interval</span><br><span class="line">        retry_type exponential_backoff</span><br><span class="line">        flush_thread_count 2</span><br><span class="line">        flush_interval 5s</span><br><span class="line">        retry_forever</span><br><span class="line">        retry_max_interval 30</span><br><span class="line">        chunk_limit_size 2M</span><br><span class="line">        queue_limit_length 8</span><br><span class="line">        overflow_action block</span><br><span class="line">      &lt;/buffer&gt;</span><br><span class="line">    &lt;/match&gt;</span><br><span class="line">EOF </span><br></pre></td></tr></table></figure>
-
-<p>上面配置文件中我们配置了 docker 容器日志目录以及 docker、kubelet 应用的日志的收集，收集到数据经过处理后发送到 elasticsearch:9200 服务。</p>
-<p>然后新建一个 fluentd-daemonset.yaml 的文件，文件内容如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1</span><br><span class="line">kind: ServiceAccount</span><br><span class="line">metadata:</span><br><span class="line">  name: fluentd-es</span><br><span class="line">  namespace: logging</span><br><span class="line">  labels:</span><br><span class="line">    k8s-app: fluentd-es</span><br><span class="line">    kubernetes.io/cluster-service: &quot;true&quot;</span><br><span class="line">    addonmanager.kubernetes.io/mode: Reconcile</span><br><span class="line">---</span><br><span class="line">kind: ClusterRole</span><br><span class="line">apiVersion: rbac.authorization.k8s.io/v1</span><br><span class="line">metadata:</span><br><span class="line">  name: fluentd-es</span><br><span class="line">  labels:</span><br><span class="line">    k8s-app: fluentd-es</span><br><span class="line">    kubernetes.io/cluster-service: &quot;true&quot;</span><br><span class="line">    addonmanager.kubernetes.io/mode: Reconcile</span><br><span class="line">rules:</span><br><span class="line">- apiGroups:</span><br><span class="line">  - &quot;&quot;</span><br><span class="line">  resources:</span><br><span class="line">  - &quot;namespaces&quot;</span><br><span class="line">  - &quot;pods&quot;</span><br><span class="line">  verbs:</span><br><span class="line">  - &quot;get&quot;</span><br><span class="line">  - &quot;watch&quot;</span><br><span class="line">  - &quot;list&quot;</span><br><span class="line">---</span><br><span class="line">kind: ClusterRoleBinding</span><br><span class="line">apiVersion: rbac.authorization.k8s.io/v1</span><br><span class="line">metadata:</span><br><span class="line">  name: fluentd-es</span><br><span class="line">  labels:</span><br><span class="line">    k8s-app: fluentd-es</span><br><span class="line">    kubernetes.io/cluster-service: &quot;true&quot;</span><br><span class="line">    addonmanager.kubernetes.io/mode: Reconcile</span><br><span class="line">subjects:</span><br><span class="line">- kind: ServiceAccount</span><br><span class="line">  name: fluentd-es</span><br><span class="line">  namespace: logging</span><br><span class="line">  apiGroup: &quot;&quot;</span><br><span class="line">roleRef:</span><br><span class="line">  kind: ClusterRole</span><br><span class="line">  name: fluentd-es</span><br><span class="line">  apiGroup: &quot;&quot;</span><br><span class="line">---</span><br><span class="line">apiVersion: apps/v1</span><br><span class="line">kind: DaemonSet</span><br><span class="line">metadata:</span><br><span class="line">  name: fluentd-es</span><br><span class="line">  namespace: logging</span><br><span class="line">  labels:</span><br><span class="line">    k8s-app: fluentd-es</span><br><span class="line">    version: v2.0.4</span><br><span class="line">    kubernetes.io/cluster-service: &quot;true&quot;</span><br><span class="line">    addonmanager.kubernetes.io/mode: Reconcile</span><br><span class="line">spec:</span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      k8s-app: fluentd-es</span><br><span class="line">      version: v2.0.4</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      labels:</span><br><span class="line">        k8s-app: fluentd-es</span><br><span class="line">        kubernetes.io/cluster-service: &quot;true&quot;</span><br><span class="line">        version: v2.0.4</span><br><span class="line">      # This annotation ensures that fluentd does not get evicted if the node</span><br><span class="line">      # supports critical pod annotation based priority scheme.</span><br><span class="line">      # Note that this does not guarantee admission on the nodes (#40573).</span><br><span class="line">      annotations:</span><br><span class="line">        scheduler.alpha.kubernetes.io/critical-pod: &#x27;&#x27;</span><br><span class="line">    spec:</span><br><span class="line">      priorityClassName: system-node-critical</span><br><span class="line">      serviceAccountName: fluentd-es</span><br><span class="line">      containers:</span><br><span class="line">      - name: fluentd-es</span><br><span class="line">        image: cnych/fluentd-elasticsearch:v2.0.4</span><br><span class="line">        env:</span><br><span class="line">        - name: FLUENTD_ARGS</span><br><span class="line">          value: --no-supervisor -q</span><br><span class="line">        resources:</span><br><span class="line">          limits:</span><br><span class="line">            memory: 500Mi</span><br><span class="line">          requests:</span><br><span class="line">            cpu: 100m</span><br><span class="line">            memory: 200Mi</span><br><span class="line">        volumeMounts:</span><br><span class="line">        - name: varlog</span><br><span class="line">          mountPath: /var/log</span><br><span class="line">        - name: varlibdockercontainers</span><br><span class="line">          mountPath: /data/docker/containers</span><br><span class="line">          readOnly: true</span><br><span class="line">        - name: config-volume</span><br><span class="line">          mountPath: /etc/fluent/config.d</span><br><span class="line">      nodeSelector:</span><br><span class="line">        beta.kubernetes.io/fluentd-ds-ready: &quot;true&quot;</span><br><span class="line">      tolerations:</span><br><span class="line">      - key: node-role.kubernetes.io/master</span><br><span class="line">        operator: Exists</span><br><span class="line">        effect: NoSchedule</span><br><span class="line">      terminationGracePeriodSeconds: 30</span><br><span class="line">      volumes:</span><br><span class="line">      - name: varlog</span><br><span class="line">        hostPath:</span><br><span class="line">          path: /var/log</span><br><span class="line">      - name: varlibdockercontainers</span><br><span class="line">        hostPath:</span><br><span class="line">          path: /data/docker/containers</span><br><span class="line">      - name: config-volume</span><br><span class="line">        configMap:</span><br><span class="line">          name: fluentd-config</span><br></pre></td></tr></table></figure>
-
-<p>我们将上面创建的 fluentd-config 这个 ConfigMap 对象通过 volumes 挂载到了 Fluentd 容器中.</p>
-<p>创建完成后，查看对应的 Pods 列表，检查是否部署成功：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get pods -n logging</span><br><span class="line">NAME                      READY     STATUS    RESTARTS   AGE</span><br><span class="line">es-cluster-0              1/1       Running   0          1d</span><br><span class="line">es-cluster-1              1/1       Running   0          1d</span><br><span class="line">es-cluster-2              1/1       Running   0          1d</span><br><span class="line">fluentd-es-2z9jg          1/1       Running   1          35s</span><br><span class="line">fluentd-es-6dfdd          1/1       Running   0          35s</span><br><span class="line">fluentd-es-bfkg7          1/1       Running   0          35s</span><br><span class="line">kibana-7558d4dc4d-5mqdz   1/1       Running   0          1d</span><br></pre></td></tr></table></figure>
-
-<p>Fluentd 启动成功后，我们可以前往 Kibana 的 Dashboard 页面中，点击左侧的<code>Discover</code>，可以看到如下配置页面：</p>
 
       
     </div>
